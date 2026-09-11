@@ -1,0 +1,754 @@
+{
+  "version": 1,
+  "status": "concept-only",
+  "provenance": "Original visual variants of this project. STUDY codes are demonstration identifiers, not actual company SKU numbers. No brand assignment is inferred.",
+  "items": [
+    {
+      "id": "lipstick-01",
+      "productId": "lipstick",
+      "code": "STUDY-LP-01",
+      "name": [
+        "玫瑰缎光",
+        "Rose satin"
+      ],
+      "colors": [
+        "#bf506e",
+        "#d7b983"
+      ],
+      "material": [
+        "金属与缎光膏体",
+        "Metal & satin color"
+      ],
+      "form": [
+        "单支与分离盖体",
+        "Stick & separate cap"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": "lipstick",
+        "images": [
+          {
+            "src": "studies/lipstick-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/lipstick-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/lipstick-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/lipstick.webm",
+        "default": "model"
+      }
+    },
+    {
+      "id": "serum-01",
+      "productId": "serum",
+      "code": "STUDY-SR-01",
+      "name": [
+        "澄海蓝",
+        "Ocean blue"
+      ],
+      "colors": [
+        "#5c98b0",
+        "#d7b983"
+      ],
+      "material": [
+        "通透瓶体与金属细节",
+        "Translucent body & metallic detail"
+      ],
+      "form": [
+        "滴管瓶",
+        "Dropper bottle"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": "serum",
+        "images": [
+          {
+            "src": "studies/serum-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/serum-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/serum-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/serum.webm",
+        "default": "model"
+      }
+    },
+    {
+      "id": "compact-01",
+      "productId": "compact",
+      "code": "STUDY-CP-01",
+      "name": [
+        "柔雾色盘",
+        "Soft palette"
+      ],
+      "colors": [
+        "#d78c99",
+        "#aaa5d4"
+      ],
+      "material": [
+        "金属外壳与柔雾色块",
+        "Metal casing & soft color"
+      ],
+      "form": [
+        "翻盖色盘",
+        "Hinged palette"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": "compact",
+        "images": [
+          {
+            "src": "studies/compact-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/compact-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/compact-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/compact.webm",
+        "default": "model"
+      }
+    },
+    {
+      "id": "rings-01",
+      "productId": "rings",
+      "code": "STUDY-RG-01",
+      "name": [
+        "柔和彩虹",
+        "Soft rainbow"
+      ],
+      "colors": [
+        "#8aa6a9",
+        "#d99796",
+        "#e2c487",
+        "#a7bfd4",
+        "#bbc9a3"
+      ],
+      "material": [
+        "木质触感与柔和漆面",
+        "Wood-like texture & soft coating"
+      ],
+      "form": [
+        "五层彩环与底座",
+        "Five rings & base"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": "rings",
+        "images": [
+          {
+            "src": "studies/rings-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/rings-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/rings-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/rings.webm",
+        "default": "model"
+      }
+    },
+    {
+      "id": "maraca-01",
+      "productId": "maraca",
+      "code": "STUDY-MR-01",
+      "name": [
+        "薄荷莓果",
+        "Mint & berry"
+      ],
+      "colors": [
+        "#98cbb5",
+        "#d78c99"
+      ],
+      "material": [
+        "柔光外壳与圆润握柄",
+        "Soft sheen & rounded handles"
+      ],
+      "form": [
+        "双支组合",
+        "Pair"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": "maraca",
+        "images": [
+          {
+            "src": "studies/maraca-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/maraca-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/maraca-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/maraca.webm",
+        "default": "model"
+      }
+    },
+    {
+      "id": "puzzle-01",
+      "productId": "puzzle",
+      "code": "STUDY-PZ-01",
+      "name": [
+        "柔色几何",
+        "Soft geometry"
+      ],
+      "colors": [
+        "#d78c99",
+        "#98cbb5",
+        "#aaa5d4"
+      ],
+      "material": [
+        "木质触感与柔和色块",
+        "Wood-like texture & soft colors"
+      ],
+      "form": [
+        "几何拼块与底板",
+        "Geometric pieces & tray"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": "puzzle",
+        "images": [
+          {
+            "src": "studies/puzzle-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/puzzle-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/puzzle-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/puzzle.webm",
+        "default": "model"
+      }
+    },
+    {
+      "id": "balloon-01",
+      "productId": "balloon",
+      "code": "STUDY-BL-01",
+      "name": [
+        "香槟庆典",
+        "Champagne celebration"
+      ],
+      "colors": [
+        "#d78c99",
+        "#c0b3e4",
+        "#dbc78f"
+      ],
+      "material": [
+        "珠光与金属光泽",
+        "Pearlescent & metallic sheen"
+      ],
+      "form": [
+        "三色气球组合",
+        "Three-color arrangement"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": "balloon",
+        "images": [
+          {
+            "src": "studies/balloon-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/balloon-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/balloon-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/balloon.webm",
+        "default": "model"
+      }
+    },
+    {
+      "id": "gift-01",
+      "productId": "gift",
+      "code": "STUDY-GF-01",
+      "name": [
+        "深蓝金缎",
+        "Midnight gold"
+      ],
+      "colors": [
+        "#143c60",
+        "#d7b983"
+      ],
+      "material": [
+        "深蓝盒体与缎带光泽",
+        "Navy body & ribbon sheen"
+      ],
+      "form": [
+        "方形礼盒与缎带",
+        "Square box & ribbon"
+      ],
+      "concept": true,
+      "palette": {},
+      "media": {
+        "model": null,
+        "images": [
+          {
+            "src": "studies/gift-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/gift-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/gift-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/gift.webm",
+        "default": "photos"
+      }
+    },
+    {
+      "id": "rings-02",
+      "productId": "rings",
+      "code": "STUDY-RG-02",
+      "name": [
+        "森林漫游",
+        "Forest walk"
+      ],
+      "colors": [
+        "#506f65",
+        "#b9cbb0",
+        "#c9a76f",
+        "#cdd6c5",
+        "#739686"
+      ],
+      "material": [
+        "木质触感与柔和漆面",
+        "Wood-like texture & soft coating"
+      ],
+      "form": [
+        "五层彩环与底座",
+        "Five rings & base"
+      ],
+      "concept": true,
+      "palette": {
+        "8aa6a9": "506f65",
+        "d99796": "b9cbb0",
+        "e2c487": "c9a76f",
+        "a7bfd4": "cdd6c5",
+        "bbc9a3": "739686"
+      },
+      "media": {
+        "model": "rings",
+        "default": "model",
+        "images": [
+          {
+            "src": "studies/rings-02-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/rings-02-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/rings-02-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/rings-02.webm"
+      }
+    },
+    {
+      "id": "rings-03",
+      "productId": "rings",
+      "code": "STUDY-RG-03",
+      "name": [
+        "落日暖调",
+        "Sunset tones"
+      ],
+      "colors": [
+        "#b66551",
+        "#d99374",
+        "#e2b66e",
+        "#dec4a8",
+        "#b99585"
+      ],
+      "material": [
+        "木质触感与柔和漆面",
+        "Wood-like texture & soft coating"
+      ],
+      "form": [
+        "五层彩环与底座",
+        "Five rings & base"
+      ],
+      "concept": true,
+      "palette": {
+        "8aa6a9": "b66551",
+        "d99796": "d99374",
+        "e2c487": "e2b66e",
+        "a7bfd4": "dec4a8",
+        "bbc9a3": "b99585"
+      },
+      "media": {
+        "model": "rings",
+        "default": "model",
+        "images": [
+          {
+            "src": "studies/rings-03-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/rings-03-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/rings-03-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/rings-03.webm"
+      }
+    },
+    {
+      "id": "lipstick-02",
+      "productId": "lipstick",
+      "code": "STUDY-LP-02",
+      "name": [
+        "赤陶暖棕",
+        "Terracotta"
+      ],
+      "colors": [
+        "#9a473b",
+        "#d7b983"
+      ],
+      "material": [
+        "金属与缎光膏体",
+        "Metal & satin color"
+      ],
+      "form": [
+        "单支与分离盖体",
+        "Stick & separate cap"
+      ],
+      "concept": true,
+      "palette": {
+        "bf506e": "9a473b"
+      },
+      "media": {
+        "model": "lipstick",
+        "default": "model",
+        "images": [
+          {
+            "src": "studies/lipstick-02-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/lipstick-02-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/lipstick-02-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/lipstick-02.webm"
+      }
+    },
+    {
+      "id": "lipstick-03",
+      "productId": "lipstick",
+      "code": "STUDY-LP-03",
+      "name": [
+        "莓果暮色",
+        "Berry dusk"
+      ],
+      "colors": [
+        "#853752",
+        "#d7b983"
+      ],
+      "material": [
+        "金属与缎光膏体",
+        "Metal & satin color"
+      ],
+      "form": [
+        "单支与分离盖体",
+        "Stick & separate cap"
+      ],
+      "concept": true,
+      "palette": {
+        "bf506e": "853752"
+      },
+      "media": {
+        "model": "lipstick",
+        "default": "model",
+        "images": [
+          {
+            "src": "studies/lipstick-03-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/lipstick-03-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/lipstick-03-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/lipstick-03.webm"
+      }
+    },
+    {
+      "id": "gift-02",
+      "productId": "gift",
+      "code": "STUDY-GF-02",
+      "name": [
+        "绯粉银缎",
+        "Blush silver"
+      ],
+      "colors": [
+        "#c88f98",
+        "#c4c8d2"
+      ],
+      "material": [
+        "柔光盒体与缎带光泽",
+        "Soft body & ribbon sheen"
+      ],
+      "form": [
+        "方形礼盒与缎带",
+        "Square box & ribbon"
+      ],
+      "concept": true,
+      "palette": {
+        "143c60": "c88f98",
+        "d7b983": "c4c8d2"
+      },
+      "media": {
+        "model": null,
+        "default": "photos",
+        "images": [
+          {
+            "src": "studies/gift-02-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/gift-02-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/gift-02-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/gift-02.webm"
+      }
+    },
+    {
+      "id": "gift-03",
+      "productId": "gift",
+      "code": "STUDY-GF-03",
+      "name": [
+        "松绿香槟",
+        "Forest champagne"
+      ],
+      "colors": [
+        "#3d665c",
+        "#c8ad7f"
+      ],
+      "material": [
+        "柔光盒体与缎带光泽",
+        "Soft body & ribbon sheen"
+      ],
+      "form": [
+        "方形礼盒与缎带",
+        "Square box & ribbon"
+      ],
+      "concept": true,
+      "palette": {
+        "143c60": "3d665c",
+        "d7b983": "c8ad7f"
+      },
+      "media": {
+        "model": null,
+        "default": "photos",
+        "images": [
+          {
+            "src": "studies/gift-03-0.png",
+            "label": [
+              "正面",
+              "Front"
+            ]
+          },
+          {
+            "src": "studies/gift-03-1.png",
+            "label": [
+              "侧面",
+              "Side"
+            ]
+          },
+          {
+            "src": "studies/gift-03-2.png",
+            "label": [
+              "细节",
+              "Detail"
+            ]
+          }
+        ],
+        "video": "studies/gift-03.webm"
+      }
+    }
+  ]
+}

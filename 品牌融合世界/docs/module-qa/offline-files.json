@@ -1,0 +1,16 @@
+[
+  {
+    "url": "http://127.0.0.1:5208/",
+    "files": 54,
+    "allBytesMatched": true,
+    "videoRangeStatus": 206,
+    "entrySHA256": "746155c654d15a809ebce46eefd781894452eb768b69062dd90c851ef77d712e"
+  },
+  {
+    "url": "http://127.0.0.1:5178/modules/product-explorer/",
+    "files": 54,
+    "allBytesMatched": true,
+    "videoRangeStatus": 206,
+    "entrySHA256": "746155c654d15a809ebce46eefd781894452eb768b69062dd90c851ef77d712e"
+  }
+]

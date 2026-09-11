@@ -1,0 +1,22 @@
+{
+  "name": "paramont-brand-fusion-world",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5208 --strictPort",
+    "check": "node scripts/check-data.mjs && node scripts/check-explorer.mjs && node --test tests/product-catalog.test.mjs",
+    "export:module": "node scripts/export-module.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "vite": "6.4.2",
+    "@vitejs/plugin-react": "5.0.4"
+  }
+}

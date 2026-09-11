@@ -1,0 +1,391 @@
+{
+  "retrieved_at_utc": "2026-09-10T03:54:59.119382+00:00",
+  "content_status": "官网事实整理与编辑短文案，用于内部视觉样稿；不是公司确认的最终发布文案。",
+  "naming": {
+    "display_name": "PARAMONT",
+    "group_name": "Paramont Group",
+    "official_chinese_footer": "宁波高山数智文化科技股份有限公司",
+    "official_english_history": "Ningbo Paramont Creative Digital Technology Co., Ltd.",
+    "source_urls": [
+      "https://www.paramontgroup.com/contact",
+      "https://www.paramontgroup.com/ParmontHistory"
+    ],
+    "needs_confirmation": "中文品牌简称，以及品牌、集团展示名与法律主体名称的正式对应。不可自译集团中文名。"
+  },
+  "hero_copy": {
+    "en": "Ideas that become everyday possibilities.",
+    "zh": "让创意，走进每一天。",
+    "status": "editorial-concept-not-official-slogan",
+    "basis": "https://www.paramontgroup.com/",
+    "supporting_copy_en": "An integrated partner for product design, development and marketing.",
+    "supporting_copy_zh": "连接产品设计、开发与市场的一站式伙伴。"
+  },
+  "company_groups": [
+    {
+      "name": "Paramont Global",
+      "description_zh": "面向商超客户的全球产品设计与制造开发服务团队。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies"
+    },
+    {
+      "name": "WeVeel",
+      "description_zh": "集团旗下品牌产品公司，官网明确为子公司。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies"
+    },
+    {
+      "name": "Evergreat",
+      "description_zh": "总部位于宁波的进出口贸易公司。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies"
+    },
+    {
+      "name": "Zhike",
+      "description_zh": "面向中国市场、专注儿童教育与娱乐的集团子公司。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "global",
+      "title": {
+        "en": "A global creative network",
+        "zh": "全球创意协同"
+      },
+      "description": {
+        "en": "Product development, branding, research and supply chain teams connect markets across the US, Europe, Australia and Asia.",
+        "zh": "连接美国、欧洲、澳大利亚与亚洲的产品开发、品牌、趋势研究及供应链团队。"
+      },
+      "source_url": "https://www.paramontgroup.com/"
+    },
+    {
+      "id": "development",
+      "title": {
+        "en": "From insight to product",
+        "zh": "从洞察走向产品"
+      },
+      "description": {
+        "en": "Category management, design, trend research, sourcing and manufacturing work within one development ecosystem.",
+        "zh": "品类管理、设计、趋势研究、采购与制造共同支撑产品开发。"
+      },
+      "source_url": "https://www.paramontgroup.com/End-to-endDevelopment"
+    },
+    {
+      "id": "quality",
+      "title": {
+        "en": "Quality throughout the journey",
+        "zh": "贯穿产品全程的质量管理"
+      },
+      "description": {
+        "en": "Quality assurance and control span concept, development, pre-production, production and consumer feedback.",
+        "zh": "质量保证与控制覆盖概念、开发、产前、生产及消费者反馈五个阶段。"
+      },
+      "source_url": "https://www.paramontgroup.com/QualityControl%26Assurance"
+    },
+    {
+      "id": "analytics",
+      "title": {
+        "en": "Insight that shapes collections",
+        "zh": "以洞察驱动系列开发"
+      },
+      "description": {
+        "en": "Global research and internal category and seasonal reports help shape product direction.",
+        "zh": "结合全球趋势研究与内部品类、季节报告，支持产品方向判断。"
+      },
+      "source_url": "https://www.paramontgroup.com/End-to-endDevelopment"
+    }
+  ],
+  "categories": [
+    {
+      "id": "category-01",
+      "name": {
+        "en": "Novelty Stationery",
+        "zh": "创意文具"
+      },
+      "description": {
+        "en": "Pens, markers, erasers and creative writing sets.",
+        "zh": "画笔、书写工具、橡皮与创意文具组合。"
+      },
+      "image": "assets/work-1-img-2-1.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-02",
+      "name": {
+        "en": "Journals & Notebooks",
+        "zh": "手账与笔记本"
+      },
+      "description": {
+        "en": "Thoughtful paper goods for everyday expression.",
+        "zh": "面向日常记录与创意表达的纸品。"
+      },
+      "image": "assets/work-1-img-2-2.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-03",
+      "name": {
+        "en": "Quality Crafts",
+        "zh": "创意手工"
+      },
+      "description": {
+        "en": "Materials and craft essentials for making things by hand.",
+        "zh": "手工材料与创作用品。"
+      },
+      "image": "assets/work-1-img-2-3.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-04",
+      "name": {
+        "en": "Educational Kits",
+        "zh": "益智套装"
+      },
+      "description": {
+        "en": "Creative kits designed around learning and discovery.",
+        "zh": "围绕学习与探索设计的创意套装。"
+      },
+      "image": "assets/work-1-img-2-4.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-05",
+      "name": {
+        "en": "Balloon Selection",
+        "zh": "气球"
+      },
+      "description": {
+        "en": "Colors and formats for celebrations of every kind.",
+        "zh": "适合庆祝场景的多彩气球系列。"
+      },
+      "image": "assets/work-1-img-2-5.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-06",
+      "name": {
+        "en": "Party",
+        "zh": "派对用品"
+      },
+      "description": {
+        "en": "Paper and plastic party goods across themes and styles.",
+        "zh": "覆盖不同主题的纸质与塑料派对用品。"
+      },
+      "image": "assets/work-1-img-2-6.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-07",
+      "name": {
+        "en": "Seasonal",
+        "zh": "季节节庆"
+      },
+      "description": {
+        "en": "Seasonal collections informed by global design trends.",
+        "zh": "参考全球设计趋势开发的季节与节庆系列。"
+      },
+      "image": "assets/work-1-img-2-7.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-08",
+      "name": {
+        "en": "Toys & Games",
+        "zh": "玩具与游戏"
+      },
+      "description": {
+        "en": "Magnetic play, card games and board games.",
+        "zh": "磁性玩具、卡牌与桌游。"
+      },
+      "image": "assets/work-1-img-2-8.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-09",
+      "name": {
+        "en": "Health & Beauty",
+        "zh": "健康与美妆"
+      },
+      "description": {
+        "en": "Personal care products with practical, thoughtful design.",
+        "zh": "兼顾实用与外观设计的个人护理产品。"
+      },
+      "image": "assets/work-1-img-2-9.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    },
+    {
+      "id": "category-10",
+      "name": {
+        "en": "Baking & Decorating",
+        "zh": "烘焙与装饰"
+      },
+      "description": {
+        "en": "Tools and accessories for baking and decorating.",
+        "zh": "烘焙与装饰工具及配件。"
+      },
+      "image": "assets/work-1-img-2-10.jpg",
+      "source_url": "https://www.paramontgroup.com/ProductCapabilities",
+      "evidence_type": "official-category-and-editorial-paraphrase",
+      "display_note": "官网品类示意图片，非单个产品型号；不据此推断规格或型号。"
+    }
+  ],
+  "brands": [
+    {
+      "id": "scentos",
+      "name": "Scentos",
+      "zh_descriptor": "香味创意文具",
+      "parent": "WeVeel",
+      "logo": "assets/logo-scentos.png",
+      "description_zh": "创立于 2009 年的旗舰品牌，围绕香味文具、画笔、创意美术用品展开。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies",
+      "evidence_type": "official-brand-and-editorial-paraphrase"
+    },
+    {
+      "id": "sugar-rush",
+      "name": "Sugar Rush",
+      "zh_descriptor": "糖果香味创作",
+      "parent": "WeVeel",
+      "logo": "assets/logo-sugar-rush.png",
+      "description_zh": "围绕糖果与甜点气味的文具、创意套装、贴纸和礼品。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies",
+      "evidence_type": "official-brand-and-editorial-paraphrase"
+    },
+    {
+      "id": "clean-colouring",
+      "name": "Scentos Clean Colouring",
+      "zh_descriptor": "洁净涂色",
+      "parent": "WeVeel",
+      "logo": "assets/logo-clean-colouring.png",
+      "description_zh": "将香味技术与减少涂色脏乱的画笔、颜料和纸张结合。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies",
+      "evidence_type": "official-brand-and-editorial-paraphrase"
+    },
+    {
+      "id": "influencer",
+      "name": "The Influencer Initiative",
+      "zh_descriptor": "创作者合作",
+      "parent": "WeVeel",
+      "logo": "assets/logo-influencer.png",
+      "description_zh": "与社交媒体内容创作者协作的产品设计系列；捐赠承诺另行复核后展示。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies",
+      "evidence_type": "official-brand-and-editorial-paraphrase"
+    },
+    {
+      "id": "yay-hooray",
+      "name": "YAY HOORAY!",
+      "zh_descriptor": "木质玩具与游戏",
+      "parent": "WeVeel",
+      "logo": "assets/logo-yay-hooray.png",
+      "description_zh": "在 2023 年纽约玩具展亮相，涵盖木质玩具、游戏、拼图、手工与户外玩耍。",
+      "source_url": "https://www.paramontgroup.com/OurCompanies",
+      "evidence_type": "official-brand-and-editorial-paraphrase"
+    }
+  ],
+  "history": [
+    {
+      "year": 2003,
+      "summary_zh": "宁波 Evergreat 进出口公司成立。",
+      "source_url": "https://www.paramontgroup.com/ParmontHistory"
+    },
+    {
+      "year": 2009,
+      "summary_zh": "宁波北仑钱源文具工厂与美国 WeVeel 成立。",
+      "source_url": "https://www.paramontgroup.com/ParmontHistory"
+    },
+    {
+      "year": 2013,
+      "summary_zh": "宁波 Paramont 进出口公司成立。",
+      "source_url": "https://www.paramontgroup.com/ParmontHistory"
+    },
+    {
+      "year": 2016,
+      "summary_zh": "Zhike 成立，开拓国内市场。",
+      "source_url": "https://www.paramontgroup.com/ParmontHistory"
+    },
+    {
+      "year": 2018,
+      "summary_zh": "美国业务公司成立并推进零售商自有品牌业务。",
+      "source_url": "https://www.paramontgroup.com/ParmontHistory"
+    },
+    {
+      "year": 2023,
+      "summary_zh": "官网记载公司更名为 Ningbo Paramont Creative Digital Technology Co., Ltd.；资本市场表述待确认，不推断已完成上市。",
+      "source_url": "https://www.paramontgroup.com/ParmontHistory"
+    }
+  ],
+  "official_metrics_requiring_date_confirmation": [
+    {
+      "value": "5000+",
+      "label_zh": "活跃产品库存单位",
+      "source_url": "https://www.paramontgroup.com/End-to-endDevelopment",
+      "status": "官网声明；未注明数据日期，待公司确认"
+    },
+    {
+      "value": "1200+",
+      "label_zh": "活跃配件、零部件与材料供应商",
+      "source_url": "https://www.paramontgroup.com/End-to-endDevelopment",
+      "status": "官网声明；未注明数据日期，待公司确认"
+    },
+    {
+      "value": "40+",
+      "label_zh": "美国与中国产品及包装设计员工",
+      "source_url": "https://www.paramontgroup.com/End-to-endDevelopment",
+      "status": "官网声明；未注明数据日期，待公司确认"
+    },
+    {
+      "value": "20+",
+      "label_zh": "质量保证与质量控制团队员工",
+      "source_url": "https://www.paramontgroup.com/End-to-endDevelopment",
+      "status": "官网声明；未注明数据日期，待公司确认"
+    }
+  ],
+  "cases": [
+    {
+      "id": "rewe-christmas",
+      "title_zh": "圣诞立体包装，从设计到交付",
+      "client": "REWE",
+      "published_date": "2025-08-20",
+      "source_url": "https://www.paramontgroup.com/Detail?id=6389125572233286351F8826",
+      "challenge_zh": "客户对原始设计速度、生产可行性与食品接触相关测试提出严格要求。",
+      "approach_zh": "官网记载团队在 48 小时提交 12 份方案，并走访 6 家工厂确认可行性，配合预检与分层报价。",
+      "outcome_zh": "官网记载方案首轮通过，初单通过测试与检查并获得季节性复购。",
+      "limits": "这是官网自述客户案例，可用于标源样稿；正式接待使用前由公司确认客户展示授权及口径；不是数据分析案例。"
+    },
+    {
+      "id": "seasonal-trends",
+      "title_zh": "从季节趋势到创意套装",
+      "published_date": "2025-08-12",
+      "source_url": "https://www.paramontgroup.com/Detail?id=63890561649933949129FCE2",
+      "themes_zh": [
+        "迷你手工套装",
+        "传统工艺",
+        "可持续材料",
+        "纸质套装",
+        "创意再利用"
+      ],
+      "limits": "2025 年观点与 2026 年预测，不当作 2026 年已验证结论。文中 18% 和 20% 未给原始研究来源，不可制作成果数据或市场份额图。QY Crafts 与集团关系待确认。"
+    }
+  ],
+  "visual_asset_rules": {
+    "official_web_photos": "以官网图片身份用于公司内部样稿；官网公开不等于可以伴随开源代码重新授权或打包再分发。",
+    "factory": "work-2-img-1.jpg 和 work-3-img-1.jpg 为官网概念横幅；未核实属于本公司实景，不能添加真实厂区或设备定位热点。",
+    "image_resolution": "横幅多数为 2000×1000；品类图约 500×400；可用于样稿，实屏大面积特写需补高清源图。",
+    "video": "30 个采集页面未发现 video/source/iframe 或 mp4/webm/YouTube/Vimeo 媒体链接。",
+    "logo": "logo.svg 是可缩放主标志；品牌标志多数仅有 360×240 PNG，最终大屏需矢量或高清透明底源文件。"
+  }
+}

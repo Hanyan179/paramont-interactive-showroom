@@ -1,0 +1,179 @@
+/* Continuous midnight-blue space with silver-lit objects and quiet glass.
+   Atlas and the embedded explorer share one shell; the other directions stay independent. */
+.showroom.atrium{--ink:#e6eef3;--muted:#b5c7d5;--line:#aac6d52e;--shell-reserve:max(102px,12vh);color:var(--ink);background:#071725}
+.atrium button:focus-visible,.atrium input:focus-visible{outline:2px solid #344c7d;outline-offset:4px}
+.atrium .world-loading{background:#071725;color:#e6eef3}
+.atrium .world-loading:before{border-color:#29477420;border-top-color:#344c7d}
+.atrium .company-story .eyebrow,.atrium .eyebrow{color:#b5c7d5}
+.atrium .company-story h1,.atrium .story-year,.atrium .atlas-copy h1{color:#e6eef3}
+.atrium .story-lead,.atrium.is-home .story-insight,.atrium.is-home .network-detail p,.atrium .story-reveal p,.atrium .supporting-copy{color:#b5c7d5}
+.atrium.is-home .overview-enter,.atrium .primary-link,.atrium .network-detail .text-button{color:#e6eef3;border-color:#304b7a50}
+.atrium.is-home .overview-enter:hover,.atrium .primary-link:hover{color:#e6eef3;border-color:#1c3e69}
+.atrium .story-capabilities button,.atrium .company-network button,.atrium .timeline-rail button,.atrium .timeline-arrows,.atrium .milestone-title,.atrium .story-destinations button{color:#b5c7d5;border-color:#1d304a25}
+.atrium .story-capabilities button.active,.atrium .company-network button.active,.atrium .timeline-rail button.active{color:#e6eef3;border-color:#344c7d}
+.atrium .story-capabilities button span{color:#b5c7d5}
+.atrium .story-chapters{background:linear-gradient(90deg,#102a3ec9,#102a3eb0);border-color:#23385730;box-shadow:inset 0 1px #fff7}
+.atrium .story-chapters button{color:#b5c7d5}.atrium .story-chapters button.active{color:#e6eef3}.atrium .story-chapters button i{background:#344c7d}
+.atrium .story-step-list button{color:#b5c7d5;background:#102a3e60;border-color:#263d612b}
+.atrium .story-step-list button.active{background:#344c7d;color:#fff;border-color:#344c7d}
+.atrium .story-reveal{background:#102a3e80;border-color:#344c7d40}
+.atrium .home-scene-node{color:#e6eef3;border-color:#ffffffc9;background:#102a3ebf;box-shadow:inset 0 1px #d6eaff26,0 8px 28px #30384714;backdrop-filter:blur(20px) saturate(115%);-webkit-backdrop-filter:blur(20px) saturate(115%)}
+.atrium .home-scene-node.active,.atrium .home-scene-node:hover{background:#344c7ded;border-color:#344c7d;color:#fff}
+.atrium .home-node-number{color:#b5c7d5}.atrium .home-scene-node:hover .home-node-number{color:#d8e2ef}
+.atrium .home-scene-caption{color:#e6eef3}.atrium .home-scene-caption small{color:#b5c7d5}
+.atrium .story-destinations button:hover{color:#e6eef3;border-color:#233857}
+.atrium .timeline-rail:before{background:#304b7a30}.atrium .timeline-rail i{background:#071725}.atrium .timeline-rail button.active i{background:#344c7d;box-shadow:0 0 0 5px #344c7d18}.atrium .story-time-slider{accent-color:#344c7d}
+.atrium .connected-location-copy .location-role{color:#e6eef3}
+.atrium .segmented-control{color:#b5c7d5;background:#102a3eba;border-color:#fff9;box-shadow:inset 0 1px #d6eaff26,0 8px 35px #27354614}
+.atrium .segmented-control button.active{background:#344c7d;color:#fff}
+.atrium .globe-pin{text-shadow:none;color:#e6eef3}.atrium .globe-pin span{background:#102a3edc;border:1px solid #fff9;backdrop-filter:blur(14px);border-radius:20px;padding:8px 15px}
+.atrium .globe-pin i{background:#344c7d;box-shadow:0 0 0 4px #f5f4ed90}.atrium .globe-pin.selected i{outline-color:#344c7d}
+.atrium .capability-experience{--glass-line:#2c436129;--glass-ink:#e6eef3}
+.atrium .capability-glass{background:linear-gradient(125deg,#102a3edf,#102a3eb8 65%,#102a3eb8);box-shadow:inset 0 1px #d6eaff26,0 24px 70px #293e531c;border-color:#fffffff0}
+.atrium .capability-glass .eyebrow,.atrium .capability-index,.atrium .capability-description,.atrium .capability-facts p,.atrium .capability-location-facts dt,.atrium .capability-links small{color:#b5c7d5}
+.atrium .capability-expand,.atrium .glass-back,.atrium .capability-disclaimer{color:#b5c7d5}
+.atrium .capability-links button{border-color:#2c43611a}.atrium .capability-links button:hover{background:#344c7d09}
+.atrium .capability-breadcrumb{color:#e6eef3;background:#102a3ec9;border-color:#fff9}.atrium .capability-breadcrumb button:hover{color:#e6eef3}
+.atrium .capability-dock{background:#102a3eba;border-color:#fff9;bottom:calc(var(--shell-reserve) + 10px);box-shadow:inset 0 1px #d6eaff26,0 10px 35px #2735460d}
+.atrium .capability-dock button{color:#b5c7d5}.atrium .capability-dock button.active{background:#344c7d;color:#fff;box-shadow:0 3px 18px #22385729}
+.atrium .capability-dock button:hover:not(.active){background:#344c7d0e;color:#e6eef3}
+.atrium .capability-scene-label{background:#102a3eb8}.atrium .capability-scene-label>span{color:#b5c7d5}.atrium .capability-scene-label strong{color:#e6eef3}
+.atrium .scene-stop{color:#e6eef3;background:#102a3ec9;border-color:#fff9}.atrium .scene-stop i{background:#071725;border-color:#344c7d40}
+.atrium .scene-stop:hover,.atrium .scene-stop.active{color:#fff;background:#344c7d;border-color:#344c7d}.atrium .scene-stop.active i{color:#fff;background:#223e69}
+.atrium .quality-journey button{color:#b5c7d5;border-color:#344c7d25}.atrium .quality-journey button.active{color:#fff;background:#344c7d}.atrium .stage-caption>span{color:#b5c7d5}
+.atrium.has-location-detail:after{background:linear-gradient(#102a3e9c,#102a3e00)}
+.atrium .modal-scrim{background:#53607466;backdrop-filter:blur(16px)}.atrium .modal{background:#071725;box-shadow:0 40px 130px #2f3c4b40}
+.atrium .toast{z-index:110;bottom:calc(var(--shell-reserve) + 16px);background:#071725;color:#e6eef3}
+.system-bar{position:absolute;z-index:80;left:3.5%;right:3.5%;bottom:max(15px,2.2vh);height:max(72px,7.3vh);display:flex;align-items:center;gap:clamp(16px,2.3vw,88px);padding:8px clamp(15px,1.5vw,58px);border:1px solid #a9c7dd36;border-radius:20px;background:linear-gradient(115deg,#102a3edf,#102a3ebf);box-shadow:inset 0 1px #d6eaff26,0 15px 50px #2938461a;backdrop-filter:blur(28px) saturate(120%);-webkit-backdrop-filter:blur(28px) saturate(120%)}
+.system-brand{padding:0;display:flex;align-items:center;justify-content:flex-start;flex:0 0 clamp(100px,9vw,345px);height:100%;min-height:48px}
+.system-brand img{width:100%;height:100%;max-height:6vh;object-fit:contain}
+.system-bar nav{display:flex;gap:clamp(4px,.7vw,27px);align-items:center;justify-content:center;flex:1;min-width:0;height:100%}
+.system-bar nav button{padding:0 clamp(14px,1.25vw,48px);min-height:max(48px,4.9vh);border-radius:12px;white-space:nowrap;font-size:clamp(14px,.92vw,35px);color:#b5c7d5;transition:background .3s,color .3s,box-shadow .3s}
+.system-bar nav button.active{background:#344c7d;color:#fff;box-shadow:0 4px 14px #20395620}
+.system-bar nav button:hover:not(.active),.system-tools button:hover{background:#344c7d0d;color:#e6eef3}
+.system-tools{display:flex;gap:2px;align-items:center;border-left:1px solid #344c7d20;padding-left:clamp(9px,.7vw,27px)}
+.system-tools button{display:grid;place-items:center;min-width:max(48px,2.7vw);height:max(48px,4.8vh);padding:0;border-radius:10px;color:#b5c7d5}
+.system-tools .system-language{font-size:clamp(12px,.85vw,30px)}.system-tools svg{width:clamp(20px,1.2vw,44px);height:clamp(20px,1.2vw,44px)}
+.system-tools button[aria-pressed=true]{background:#344c7d18;color:#e6eef3}
+.atrium .paramont-explorer-host{z-index:40;bottom:var(--shell-reserve);background:#071725;animation:none}
+.atrium .paramont-explorer-host iframe,.atrium .paramont-explorer-status{background:#071725;color:#e6eef3}
+.atrium .paramont-explorer-status button{color:#e6eef3;border-color:#344c7d50}
+@media(max-width:1250px){.system-bar{left:2%;right:2%;gap:12px;padding:8px 14px}.system-brand{flex-basis:92px}.system-bar nav{gap:2px}.system-bar nav button{padding:0 11px;font-size:13px}.system-tools{padding-left:6px}.system-tools button{min-width:44px}}
+@media(max-height:800px){.atrium.is-home .story-chapters,.atrium.is-home .story-destinations{bottom:calc(var(--shell-reserve) + 7px)}.atrium.is-home .company-story{max-height:calc(82% - var(--shell-reserve) - 72px)}.atrium .capability-glass{top:21%;max-height:calc(79% - var(--shell-reserve) - 90px)}.atrium .capability-breadcrumb{top:10%}.atrium .capability-scene-label{bottom:calc(var(--shell-reserve) + 95px)}}
+@media(prefers-reduced-motion:reduce){.system-bar button{transition:none}}
+
+/* Four-area showroom: progressive disclosure around the selected object. */
+.atrium{user-select:none;-webkit-user-select:none}
+.atrium .overview-context,.analysis-reveal{animation:context-arrive .48s ease both}
+@keyframes context-arrive{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.atrium.is-overview .company-story{top:17%;width:31%;max-height:55%;pointer-events:none}
+.atrium.is-overview .company-story h1{font-size:clamp(36px,3.35vw,125px);line-height:1.3;letter-spacing:.015em}
+.atrium.is-overview .company-story .story-lead{font-size:clamp(16px,1.1vw,36px);line-height:1.8;max-width:24em}
+.atrium .overview-context button{pointer-events:auto}
+.atrium .overview-clear{display:grid;place-items:center;width:48px;height:48px;margin:0 0 12px;border:1px solid #344c7d35;border-radius:50%;color:#e6eef3}
+.atrium .home-scene-node.overview-node:not(.is-selected){min-width:52px;width:52px;min-height:52px;height:52px;padding:0;border:0;box-shadow:none;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;border-radius:50%}
+.atrium .overview-node:not(.is-selected)>span,.atrium .overview-node:not(.is-selected)>svg{display:none}
+.atrium .overview-node:not(.is-selected):after{content:'';position:absolute;left:50%;top:50%;width:9px;height:9px;transform:translate(-50%,-50%);background:#071725;border:1px solid #859bb6;border-radius:50%;box-shadow:0 0 0 7px #e5ecf350,0 0 22px #a2cfe670}
+.atrium .overview-node:not(.is-selected):hover:after{box-shadow:0 0 0 11px #e5ecf3a0,0 0 28px #9abacc}
+.atrium .overview-node.is-selected{background:#274367e8;color:#fff;border-color:#cedce8}
+.atrium .overview-node.is-selected .home-node-number{color:#c8d8e8}
+.atrium .connected-location-copy h1{white-space:pre-line;font-size:clamp(38px,3.65vw,135px);line-height:1.25}
+.atrium .connected-location-copy .location-role{font-size:clamp(17px,1.25vw,42px);max-width:24em;line-height:1.7}
+.atrium .globe-concept-note{font-size:clamp(12px,.78vw,27px);line-height:1.8;color:#b5c7d5;max-width:30em;margin-top:2.5vh}
+.atrium .globe-overview-back{color:#b5c7d5;display:flex;gap:12px;margin-top:2vh;font-size:clamp(14px,.85vw,30px)}
+.atrium .location-controls{bottom:calc(var(--shell-reserve) + 18px);display:flex;justify-content:flex-end;align-items:center;gap:20px;right:4%;left:auto}
+.globe-layers{display:flex;border:1px solid #f7fafbbf;border-radius:16px;backdrop-filter:blur(22px);background:#102a3ea3;padding:5px;gap:4px}
+.globe-layers button{min-height:48px;padding:0 20px;font-size:clamp(14px,.88vw,32px);border-radius:11px;color:#b5c7d5}
+.globe-layers button[aria-pressed=true]{background:#314f72;color:#fff;box-shadow:0 4px 15px #27436a20}
+.analysis-copy{position:absolute;z-index:12;left:5%;top:18%;width:32%;max-height:calc(74% - var(--shell-reserve));overflow:auto;scrollbar-width:thin;overscroll-behavior:contain}
+.analysis-copy h1{font-size:clamp(34px,3.3vw,120px);font-weight:400;line-height:1.3;max-width:10em;letter-spacing:.01em;margin:3vh 0;color:#e6eef3}
+.analysis-description{font-size:clamp(16px,1.03vw,37px);line-height:1.85;color:#b5c7d5;max-width:28em}
+.analysis-topics{display:flex;flex-direction:column;gap:0;margin-top:2.2vh}
+.analysis-topics button{display:flex;justify-content:space-between;align-items:center;min-height:max(50px,5.2vh);text-align:left;font-size:clamp(15px,1vw,35px);padding:8px 0;border-bottom:1px solid #344c7d25;color:#e6eef3}
+.analysis-topics svg{width:20px;height:20px}.analysis-topics button[aria-pressed=true]{color:#e6eef3;border-color:#344c7d}
+.analysis-evidence{padding:1.5vh 1.2vw;background:#102a3eba;border:1px solid #ffffffab;border-radius:16px;margin-top:16px;backdrop-filter:blur(18px);font-size:clamp(14px,.87vw,31px);line-height:1.85;color:#b5c7d5}
+.analysis-evidence>div{display:flex;justify-content:space-between;align-items:center}.analysis-evidence strong{font-weight:500;color:#e6eef3}.analysis-evidence button{display:grid;place-items:center;width:48px;height:48px}.analysis-evidence p{margin:0}
+.analysis-back{display:flex;align-items:center;gap:10px;min-height:48px;margin-top:1.5vh;color:#b5c7d5;font-size:clamp(14px,.8vw,29px)}
+.analysis-stages{position:absolute;z-index:15;left:5%;bottom:calc(var(--shell-reserve) + 22px);width:62%;display:flex;gap:2vw;border-top:1px solid #9daec18a}
+.analysis-stages button{position:relative;display:flex;align-items:center;gap:.75vw;min-height:max(68px,8vh);flex:1;text-align:left;font-size:clamp(15px,1vw,35px);color:#b5c7d5}
+.analysis-stages small{font-size:.72em;color:#b5c7d5}.analysis-stages button[aria-pressed=true]{color:#e6eef3}.analysis-stages button[aria-pressed=true] i{position:absolute;left:0;right:0;top:-2px;height:3px;background:#344c7d}
+.analysis-note{position:absolute;right:4%;bottom:calc(var(--shell-reserve) + 34px);max-width:24%;font-size:clamp(11px,.7vw,26px);line-height:1.7;color:#b5c7d5;text-align:right}
+@media(min-width:2200px){.atrium .overview-node:not(.is-selected){transform-origin:center}.atrium .overview-node:not(.is-selected):after{width:14px;height:14px}.globe-layers button{min-height:5vh}.analysis-copy .eyebrow{font-size:.7vw}.analysis-copy svg{width:1.1vw;height:1.1vw}}
+@media(max-height:800px){.atrium.is-overview .company-story{top:14%;max-height:63%}.analysis-copy{top:11%;max-height:calc(83% - var(--shell-reserve) - 65px)}.analysis-copy h1{margin:2vh 0;font-size:clamp(34px,3.1vw,60px)}.analysis-topics{margin-top:1vh}.analysis-note{bottom:calc(var(--shell-reserve) + 26px)}.atrium .location-controls{gap:10px}.globe-layers button{padding:0 13px}}
+@media(prefers-reduced-motion:reduce){.atrium .overview-context,.analysis-reveal{animation:none}}
+
+/* Exhibition controls preserve the existing shell geometry. */
+.presentation-cover{position:absolute;inset:0;z-index:75;width:100%;height:100%;padding:0;border:0;background:transparent;cursor:pointer;touch-action:none}
+.presentation-status{position:absolute;left:50%;bottom:calc(var(--shell-reserve) + 12px);transform:translateX(-50%);display:flex;align-items:center;gap:9px;font-size:clamp(11px,.75vw,25px);letter-spacing:.08em;color:#aac2d3;pointer-events:none}
+.presentation-status i{width:5px;height:5px;border-radius:50%;background:#c7dbeb;box-shadow:0 0 12px #85b8db}
+.showroom.atrium.is-presenting .overview-node,.showroom.atrium.is-presenting .globe-pin{visibility:hidden}
+.showroom.atrium .system-bar{border-color:#b6cbd830;box-shadow:inset 0 1px #ffffff12,0 14px 48px #02091030;background:linear-gradient(115deg,#16334ac9,#0a1b2cce)}
+.showroom.atrium .system-tools{border-color:#a3c2d42b}
+.showroom.atrium .system-bar{background:linear-gradient(108deg,#b0c2cedb 0%,#56738bd4 15%,#102a3edb 31%,#102a3ebf 100%)}
+.showroom.atrium .system-brand{flex-basis:clamp(110px,8.5vw,326px);border-radius:0;overflow:visible;background:none}
+.showroom.atrium .system-brand .system-logo{display:block;width:100%;height:100%;max-height:none;overflow:visible}
+.showroom.atrium button:focus-visible{outline:2px solid #cae5f4;outline-offset:4px}
+.showroom.atrium .connected-location-copy{max-height:calc(70% - var(--shell-reserve) - 84px);overflow-y:auto;scrollbar-width:thin;padding-right:6px}
+.showroom.atrium:lang(en) .connected-location-copy h1{font-size:clamp(32px,2.7vw,103px);line-height:1.23}
+.showroom.atrium .globe-pin i{background:#bbd9eb;box-shadow:0 0 0 4px #6b9fb44d,0 0 20px #9bc4e344}
+.showroom.atrium .globe-pin.selected i{outline-color:#cadfea}
+.showroom.atrium .overview-node:not(.is-selected):after{background:#d7e7f0;border-color:#b7d5e8;box-shadow:0 0 0 7px #aecfe526,0 0 20px #80b2d245}
+.showroom.atrium .capability-glass{border-color:#b7d0df45;box-shadow:inset 0 1px #ffffff1a,0 24px 70px #00000026}
+
+/* A shared crossfade keeps the 3D scene in place while the product room arrives. */
+.atrium .paramont-explorer-host{opacity:0;transform:scale(1.025);filter:blur(5px);transform-origin:60% 50%;transition:opacity .85s cubic-bezier(.22,.7,.2,1),transform 1.05s cubic-bezier(.22,.7,.2,1),filter .85s,bottom 1.8s ease;pointer-events:none}
+.atrium .paramont-explorer-host[data-entered=true]{opacity:1;transform:scale(1);filter:blur(0);pointer-events:auto}
+.atrium .paramont-explorer-host[data-open=false]{pointer-events:none}
+.atrium .analysis-copy h1{white-space:pre-line;text-wrap:balance}
+.atrium:lang(en) .capability-dock button{font-size:clamp(12px,.85vw,30px);gap:10px;line-height:1.35}
+.atrium:lang(en) .capability-dock button span{white-space:normal}
+@media(prefers-reduced-motion:reduce){.atrium .paramont-explorer-host{transition:none;filter:none;transform:none}}
+/* Reserve only the shared bottom bar; chapter controls now live inside it. */
+.atrium .analysis-copy{--analysis-top:18%;top:var(--analysis-top);max-height:calc(100% - var(--analysis-top) - var(--shell-reserve) - 20px);padding-bottom:6px}
+@media(max-height:800px){.atrium .analysis-copy{--analysis-top:8%}}
+@media(max-height:800px){
+  .atrium .analysis-copy h1{margin:10px 0;font-size:36px}
+  .atrium .analysis-description{margin:10px 0}
+  .atrium .analysis-topics{margin-top:4px}
+  .atrium .analysis-topics button{min-height:46px;padding:5px 0}
+  .atrium .analysis-evidence{margin-top:10px;padding-top:8px;padding-bottom:8px}
+  .atrium .analysis-evidence>div>button{width:44px;height:44px}
+  .atrium .analysis-back{margin-top:4px}
+}
+
+/* Wall display: UI retreats while the real camera uses the whole composition. */
+.showroom.atrium :is(.company-story,.story-chapters,.home-scene-caption,.story-destinations,.home-scene-node,.connected-location-copy,.location-controls,.globe-pin,.scene-stop,.capability-experience,.analysis-copy,.analysis-stages,.analysis-note,.system-bar){transition:opacity .65s ease;}
+.showroom.atrium.is-cinematic :is(.company-story,.story-chapters,.home-scene-caption,.story-destinations,.home-scene-node,.connected-location-copy,.location-controls,.globe-pin,.scene-stop,.capability-experience,.analysis-copy,.analysis-stages,.analysis-note,.system-bar){opacity:0!important;pointer-events:none!important;transition:opacity 2.4s ease;}
+.showroom.atrium .presentation-cover{z-index:130;cursor:default;outline:none;border:0;padding:0;}
+.presentation-boundary{position:absolute;bottom:3.4vh;left:0;width:100%;font-size:clamp(10px,.72vw,20px);letter-spacing:.16em;color:rgba(188,209,222,.55);text-align:center;}
+@media(prefers-reduced-motion:reduce){.showroom.atrium.is-cinematic :is(.company-story,.story-chapters,.system-bar,.capability-experience,.analysis-copy){transition-duration:.3s;}}
+
+.atrium.is-cinematic .paramont-explorer-host{bottom:0;}
+
+/* One bottom bar: area switch + current scene chapters + shared tools. */
+.showroom.atrium .system-bar{gap:clamp(8px,1.2vw,46px)}
+.showroom.atrium .system-brand{flex-basis:clamp(86px,6vw,230px)}
+.system-area{position:relative;flex:0 0 auto;max-width:19%;height:100%;display:flex;align-items:center}
+.system-area-trigger{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;padding:0 10px;color:#edf6ff;font-size:clamp(14px,.95vw,36px);text-align:left}
+.system-area-trigger svg{width:18px;height:18px;flex-shrink:0;transition:transform .2s}
+.system-area-trigger[aria-expanded=true] svg{transform:rotate(180deg)}
+.system-area-menu{position:absolute;bottom:calc(100% + 20px);left:0;width:max(250px,18vw);padding:12px;border:1px solid #b0cfdf55;border-radius:16px;background:#0b2436fa;box-shadow:0 20px 50px #0007;backdrop-filter:blur(28px)}
+.system-area-menu p{margin:8px 12px 12px;color:#9cb5c8;font-size:clamp(12px,.75vw,28px)}
+.system-area-menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:max(54px,5vh);border-radius:10px;padding:10px 14px;text-align:left;font-size:clamp(15px,1vw,38px);color:#d8e8f1}
+.system-area-menu button:hover,.system-area-menu button[aria-current]{background:#344c7d}
+.system-area-menu svg{width:20px;height:20px}
+.showroom.atrium .system-bar nav{gap:3px;justify-content:stretch}
+.showroom.atrium .system-bar nav button{flex:1;white-space:normal;line-height:1.35;padding:7px clamp(7px,.65vw,25px);font-size:clamp(13px,.85vw,33px)}
+.showroom.atrium .system-tools{flex-shrink:0}
+.showroom.atrium .system-bar button:focus-visible{outline:2px solid #c6e9f8;outline-offset:-3px}
+.showroom.atrium .company-story{max-height:calc(82% - var(--shell-reserve));padding-bottom:20px}
+.showroom.atrium .capability-glass{max-height:calc(79% - var(--shell-reserve) - 25px)}
+.showroom.atrium .capability-scene-label{bottom:calc(var(--shell-reserve) + 15px)}
+@media(max-width:1250px){.showroom.atrium .system-brand{flex-basis:76px}.system-area-trigger{font-size:13px;padding:0 5px}.showroom.atrium .system-bar nav button{font-size:12px;padding:5px}.showroom.atrium .system-bar{gap:7px}}
+.showroom.atrium .scene-stop{padding-left:14px}
+.showroom.atrium .scene-stop i{width:8px;height:8px;border:0;background:#a5c6db;box-shadow:0 0 12px #a5c6db30;flex-shrink:0}
+.showroom.atrium .scene-stop.active i{background:#9ae5ec;box-shadow:0 0 14px #9ae5ec66}
+@media(min-width:2400px){.showroom.atrium .scene-stop{padding-left:.7vw}.showroom.atrium .scene-stop i{width:.4vw;height:.4vw}}
+.system-area-trigger{min-height:max(48px,4.9vh)}
+.system-area-trigger svg{width:clamp(18px,1.1vw,42px);height:clamp(18px,1.1vw,42px)}
+.document-entry svg{width:clamp(20px,1.2vw,44px);height:clamp(20px,1.2vw,44px)}

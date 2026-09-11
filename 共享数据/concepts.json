@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "lipstick",
+      "domain": "beauty",
+      "subcategoryId": "040",
+      "name": [
+        "鎏光唇色",
+        "Lustre lip color"
+      ],
+      "topic": [
+        "色彩与表面",
+        "Color & finish"
+      ],
+      "description": [
+        "缎光膏体、金属包覆与细腻刻纹形成柔与硬的对比。",
+        "A satin-like color core pairs with a metallic shell and fine surface grooves."
+      ],
+      "application": [
+        "唇妆、礼赠、旅行随行",
+        "Lip rituals, gifting and on-the-go use"
+      ],
+      "designPoints": [
+        "膏体色彩",
+        "金属光泽",
+        "包装开合"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    },
+    {
+      "id": "serum",
+      "domain": "beauty",
+      "subcategoryId": "308",
+      "name": [
+        "澄蓝护理瓶",
+        "Blue ritual vessel"
+      ],
+      "topic": [
+        "透明与光线",
+        "Clarity & light"
+      ],
+      "description": [
+        "透蓝瓶体、香槟金瓶肩与柔雾表面，探索护理包装的材质关系。",
+        "A blue vessel, champagne-gold shoulder and frosted surfaces explore skincare packaging."
+      ],
+      "application": [
+        "日常护理、梳妆台陈列",
+        "Daily care and vanity display"
+      ],
+      "designPoints": [
+        "瓶体比例",
+        "透光层次",
+        "标签布局"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    },
+    {
+      "id": "compact",
+      "domain": "beauty",
+      "subcategoryId": "024",
+      "name": [
+        "映光色盘",
+        "Color compact"
+      ],
+      "topic": [
+        "色彩组合",
+        "Color composition"
+      ],
+      "description": [
+        "打开的镜盖与四色粉盘，让色彩搭配和包装结构同时被看见。",
+        "An open mirrored lid and four color pans reveal color composition and packaging structure."
+      ],
+      "application": [
+        "妆容搭配、礼盒组合",
+        "Makeup looks and gift collections"
+      ],
+      "designPoints": [
+        "配色方向",
+        "镜面结构",
+        "触感表面"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    },
+    {
+      "id": "rings",
+      "domain": "play",
+      "subcategoryId": "266",
+      "name": [
+        "层叠彩环",
+        "Stacking colors"
+      ],
+      "topic": [
+        "形状与触感",
+        "Shape & touch"
+      ],
+      "description": [
+        "柔和色彩、圆润边缘与层叠关系，表现木质玩具的探索感。",
+        "Soft colors, rounded edges and layered forms explore the character of wooden toys."
+      ],
+      "application": [
+        "形状探索、亲子互动",
+        "Shape discovery and shared play"
+      ],
+      "designPoints": [
+        "圆润轮廓",
+        "色彩层级",
+        "组合方式"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    },
+    {
+      "id": "maraca",
+      "domain": "play",
+      "subcategoryId": "190",
+      "name": [
+        "节奏小沙锤",
+        "Little rhythm"
+      ],
+      "topic": [
+        "声音与动作",
+        "Sound & movement"
+      ],
+      "description": [
+        "饱满的造型、握柄和细腻分色，呈现节奏玩具的趣味形态。",
+        "A rounded body, tactile handle and color blocking explore a playful rhythm toy."
+      ],
+      "application": [
+        "节奏启蒙、互动游戏",
+        "Rhythm discovery and interactive play"
+      ],
+      "designPoints": [
+        "握持比例",
+        "表面触感",
+        "色彩组合"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    },
+    {
+      "id": "puzzle",
+      "domain": "play",
+      "subcategoryId": "295",
+      "name": [
+        "几何拼合",
+        "Shape together"
+      ],
+      "topic": [
+        "组合与发现",
+        "Arrange & discover"
+      ],
+      "description": [
+        "圆、方、三角与木色底座形成简单而有秩序的形状探索。",
+        "Circle, square and triangle forms meet a wood-tone base for shape discovery."
+      ],
+      "application": [
+        "形状认知、桌面探索",
+        "Shape recognition and tabletop play"
+      ],
+      "designPoints": [
+        "形状辨识",
+        "木色对比",
+        "拼合关系"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    },
+    {
+      "id": "balloon",
+      "domain": "party",
+      "subcategoryId": "016",
+      "name": [
+        "轻盈庆典",
+        "Floating celebration"
+      ],
+      "topic": [
+        "轻盈与反光",
+        "Lightness & reflection"
+      ],
+      "description": [
+        "珠光气球与细线共同呈现轻盈、上升的庆祝情绪。",
+        "Pearlescent balloons and fine strings create an uplifting celebratory mood."
+      ],
+      "application": [
+        "生日布置、派对场景",
+        "Birthday settings and party scenes"
+      ],
+      "designPoints": [
+        "珠光色彩",
+        "空间组合",
+        "轻盈动态"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    },
+    {
+      "id": "gift",
+      "domain": "party",
+      "subcategoryId": "198",
+      "name": [
+        "缎带礼遇",
+        "Ribbon moment"
+      ],
+      "topic": [
+        "包装与仪式",
+        "Wrap & ritual"
+      ],
+      "description": [
+        "深蓝盒体与柔软缎带，在克制的构图中呈现礼赠的仪式感。",
+        "A deep-blue box and flowing ribbon create a considered gifting moment."
+      ],
+      "application": [
+        "庆典装饰、主题陈列",
+        "Celebration decor and themed displays"
+      ],
+      "designPoints": [
+        "包装比例",
+        "缎带材质",
+        "主题配色"
+      ],
+      "concept": true,
+      "brandId": null,
+      "materialStatus": [
+        "材质为视觉设计设定，非真实产品规格。",
+        "Materials are visual design studies, not actual product specifications."
+      ],
+      "source": "2026.9.10 存档.xlsx · 品类",
+      "provenance": "Original procedural 3D concept by this project; category existence is sourced, product design is conceptual."
+    }
+  ]
+}

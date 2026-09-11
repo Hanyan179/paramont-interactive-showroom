@@ -1,0 +1,41 @@
+{
+  "films": [
+    {
+      "id": "creative-film-study",
+      "title": [
+        "创意的流动",
+        "Creative motion"
+      ],
+      "description": [
+        "视觉概念短片，用于体验影像展厅。",
+        "A visual study for the film theatre."
+      ],
+      "status": [
+        "概念预览 · 非公司宣传片",
+        "Concept preview · Not a company film"
+      ],
+      "src": "/media/generated/concept-film.mp4",
+      "poster": "/media/generated/a3-paper-mountains.png",
+      "concept": true
+    },
+    {
+      "id": "product-motion-study",
+      "title": [
+        "形态与光",
+        "Form and light"
+      ],
+      "description": [
+        "产品运动概念，用于体验影片选择与连续播放。",
+        "A product motion study for the film collection."
+      ],
+      "status": [
+        "概念预览 · 非实际产品",
+        "Concept preview · Not an actual product"
+      ],
+      "src": "/modules/product-explorer/studies/serum.webm",
+      "poster": "/media/generated/a2-sketchbook.png",
+      "concept": true
+    }
+  ],
+  "publications": []
+}

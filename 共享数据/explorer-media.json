@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "description": "展示媒介配置。所有现有素材均为原创概念，brandId 为空，不据此建立品牌关系。",
+  "items": {
+    "lipstick": {
+      "model": "lipstick",
+      "images": [
+        {
+          "src": "studies/lipstick-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/lipstick-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/lipstick-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/lipstick.webm",
+      "default": "model"
+    },
+    "serum": {
+      "model": "serum",
+      "images": [
+        {
+          "src": "studies/serum-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/serum-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/serum-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/serum.webm",
+      "default": "model"
+    },
+    "compact": {
+      "model": "compact",
+      "images": [
+        {
+          "src": "studies/compact-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/compact-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/compact-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/compact.webm",
+      "default": "model"
+    },
+    "rings": {
+      "model": "rings",
+      "images": [
+        {
+          "src": "studies/rings-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/rings-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/rings-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/rings.webm",
+      "default": "model"
+    },
+    "maraca": {
+      "model": "maraca",
+      "images": [
+        {
+          "src": "studies/maraca-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/maraca-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/maraca-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/maraca.webm",
+      "default": "model"
+    },
+    "puzzle": {
+      "model": "puzzle",
+      "images": [
+        {
+          "src": "studies/puzzle-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/puzzle-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/puzzle-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/puzzle.webm",
+      "default": "model"
+    },
+    "balloon": {
+      "model": "balloon",
+      "images": [
+        {
+          "src": "studies/balloon-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/balloon-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/balloon-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/balloon.webm",
+      "default": "model"
+    },
+    "gift": {
+      "model": null,
+      "images": [
+        {
+          "src": "studies/gift-0.png",
+          "label": [
+            "正面",
+            "Front"
+          ]
+        },
+        {
+          "src": "studies/gift-1.png",
+          "label": [
+            "侧面",
+            "Side"
+          ]
+        },
+        {
+          "src": "studies/gift-2.png",
+          "label": [
+            "细节",
+            "Detail"
+          ]
+        }
+      ],
+      "video": "studies/gift.webm",
+      "default": "photos"
+    }
+  }
+}

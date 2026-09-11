@@ -1,0 +1,60 @@
+{
+  "status": "user-confirmed-presentation-domains",
+  "note": "categoryId follows workbook main category; no brand ownership or product-brand relationships inferred.",
+  "domains": [
+    {
+      "id": "beauty",
+      "categoryId": "15",
+      "name": [
+        "美妆与护理",
+        "Beauty & care"
+      ],
+      "word": "BEAUTY",
+      "subtitle": [
+        "细腻之处，自有光芒。",
+        "Beauty, in every detail."
+      ],
+      "description": [
+        "探索色彩、光泽与精致的日常护理。",
+        "Explore color, lustre and considered daily rituals."
+      ],
+      "color": "#e7b7ae"
+    },
+    {
+      "id": "play",
+      "categoryId": "13",
+      "name": [
+        "儿童玩具",
+        "Toys & play"
+      ],
+      "word": "PLAY",
+      "subtitle": [
+        "让好奇，尽情生长。",
+        "Let curiosity take shape."
+      ],
+      "description": [
+        "从触感到色彩，让每一次探索充满发现。",
+        "From tactile forms to joyful colors, every interaction invites discovery."
+      ],
+      "color": "#c3d98f"
+    },
+    {
+      "id": "party",
+      "categoryId": "06",
+      "name": [
+        "派对与庆典",
+        "Party & celebration"
+      ],
+      "word": "CELEBRATE",
+      "subtitle": [
+        "把每一刻，变成庆祝。",
+        "Make room for celebration."
+      ],
+      "description": [
+        "气球、礼物与缎带，共同点亮值得记住的时刻。",
+        "Balloons, gifts and ribbons bring memorable moments to life."
+      ],
+      "color": "#b5bce9"
+    }
+  ]
+}

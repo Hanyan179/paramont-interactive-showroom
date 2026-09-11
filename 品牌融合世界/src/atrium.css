@@ -1,0 +1,90 @@
+/* Integration-only palette. The standalone product theatre retains its own theme. */
+.world.shared-shell{--muted:#b5c7d5;--line:#aac6d52e;--gold:#344c7d;--blue:#344c7d;color:#e6eef3;background:#071725;min-height:0}
+body:has(.shared-shell),body:has(.shared-shell) #root{background:#071725;min-height:0}
+.shared-shell .atmosphere{background:linear-gradient(90deg,#102a3e25,transparent 47%),linear-gradient(0deg,#102a3eaa,transparent 23%)}
+.shared-shell button:hover{color:#e6eef3}.shared-shell button:focus-visible,.shared-shell input:focus-visible,.shared-shell select:focus-visible,.shared-shell canvas:focus-visible{outline-color:#344c7d}
+.shared-shell .eyebrow,.shared-shell .hero-copy p,.shared-shell .domain-copy p,.shared-shell .domain-copy h2{color:#b5c7d5}
+.shared-shell .hero-copy{top:18%;width:40%}.shared-shell .hero-copy h1{font-size:clamp(56px,5.3vw,110px);font-weight:400;line-height:1.25}
+.shared-shell .primary{background:#344c7d;color:#fff;box-shadow:0 6px 20px #344c7d21}.shared-shell .primary:hover{background:#243d6d;color:#fff}
+.shared-shell .catalog-link{display:inline-flex;align-items:center;gap:20px;margin-left:24px;font-size:13px;border-bottom:1px solid #344c7d45;padding:0;min-height:52px}
+.shared-shell .back{top:5%;color:#e6eef3}.shared-shell .domain-copy{top:20%}
+.shared-shell .world-footer{bottom:10px}.shared-shell .domain-nav{gap:42px}.shared-shell .domain-nav>button.active{border-color:#344c7d}
+.shared-shell .domain-index,.shared-shell .domain-nav small,.shared-shell .domain-nav i,.shared-shell .footer-meta{color:#b5c7d5}
+.shared-shell .text-link span,.shared-shell .strip-heading,.shared-shell .product-links small,.shared-shell .product-links i,.shared-shell .detail-description,.shared-shell .detail-disclaimer{color:#b5c7d5}
+.shared-shell .strip-heading select,.shared-shell select{color:#e6eef3;background:#071725}
+.shared-shell .product-links button{background:#102a3e75;border-color:#fff8}.shared-shell .product-links button:hover{background:#102a3ec9}
+.shared-shell .library-overlay{padding:3.6vh 3.5vw 1vh;background:#071725;backdrop-filter:none}
+.shared-shell .explorer-library{width:100%;max-width:none;background:linear-gradient(125deg,#102a3ef5,#102a3edf);border:1px solid #a9c7dd36;border-radius:22px;box-shadow:inset 0 1px #d6eaff26,0 20px 60px #23344b10}
+.shared-shell .library-header{gap:32px;padding:16px 35px;min-height:80px}.shared-shell .library-section-title{font-size:clamp(24px,1.75vw,54px);font-weight:400;letter-spacing:.04em;line-height:1.3}
+.shared-shell .library-close{color:#e6eef3}.shared-shell .library-toolbar input{color:#e6eef3;border-color:#344c7d40;min-height:48px}
+.shared-shell .library-toolbar input::placeholder{color:#b5c7d5}.shared-shell .library-toolbar p,.shared-shell .library-toolbar p span{color:#b5c7d5}
+.shared-shell .segmented{background:#102a3e80;border-color:#344c7d26}.shared-shell .segmented button{color:#b5c7d5}.shared-shell .segmented button.active{background:#344c7d;color:#fff}
+.shared-shell .brand-rail button{opacity:1}.shared-shell .brand-rail button.active{background:linear-gradient(90deg,#344c7d10,transparent);border-color:#344c7d}.shared-shell .brand-rail span{color:#b5c7d5}
+.shared-shell .brand-rail img{background:#071725}.shared-shell .brand-emblem{box-shadow:inset -9px -10px 35px #b5ac9630,0 35px 65px #243a541c}.shared-shell .brand-orbit{border-color:#77879735}
+.shared-shell .brand-story>p,.shared-shell .brand-story .text-link,.shared-shell .brand-pillars span,.shared-shell .brand-pillars small,.shared-shell .brand-intro-label,.shared-shell .art-caption,.shared-shell .archive-context{color:#b5c7d5}
+.shared-shell .brand-story h3{color:#e6eef3}.shared-shell .category-rail button.active{background:#344c7d0c;color:#e6eef3}
+.shared-shell .category-rail small,.shared-shell .category-source,.shared-shell .subcategory-list small,.shared-shell .subcategory-list b,.shared-shell .related-studies h3,.shared-shell .related-studies small,.shared-shell .category-detail-note>p{color:#b5c7d5}
+.shared-shell .subcategory-disclosure summary,.shared-shell .subcategory-disclosure summary span{color:#b5c7d5}
+.shared-shell .archive-card{color:#e6eef3;border-color:#344c7d26;background:#102a3e80}.shared-shell .archive-card small{color:#b5c7d5}
+.shared-shell .archive-table{color:#e6eef3}.shared-shell .archive-table th,.shared-shell .archive-table td{border-color:#344c7d26}
+.shared-shell .directory-heading .eyebrow,.shared-shell .directory-heading>p,.shared-shell .directory-heading>p>span{color:#b5c7d5}.shared-shell .directory-heading strong{color:#e6eef3}
+.shared-shell .filter-pills button{color:#b5c7d5}.shared-shell .filter-pills button[aria-pressed=true]{color:#e6eef3;border-color:#344c7d}.shared-shell .collection-filters select{color:#e6eef3;background:#102a3e80}
+.shared-shell .collection-image{background:#102b49;border-color:#344c7d25;border-radius:10px}.shared-shell .collection-image>img{mix-blend-mode:normal}.shared-shell .object-index{color:#c2cdd34d}.shared-shell .object-open,.shared-shell .object-media{color:#d6e1e8}
+.shared-shell .collection-caption h3{color:#e6eef3}.shared-shell .collection-caption>span,.shared-shell .collection-caption>p,.shared-shell .collection-variants small,.shared-shell .gallery-bottom>p{color:#b5c7d5}
+.shared-shell .gallery-progress{background:#344c7d25}.shared-shell .gallery-progress i{background:#344c7d}.shared-shell .gallery-bottom button{border-color:#344c7d35}
+.shared-shell .collection-empty{border-color:#344c7d25}.shared-shell .collection-empty p,.shared-shell .collection-empty>span,.shared-shell .collection-empty button{color:#b5c7d5}
+.shared-shell .mini-swatches i{border-color:#eeeee7}
+.shared-shell .product-breadcrumb{top:5%;color:#b5c7d5}.shared-shell .product-dossier.detail-panel{top:16%;bottom:3%;border-left:1px solid #fff9;padding-left:2vw;background:linear-gradient(90deg,#102a3e70,transparent);border-radius:18px 0 0 18px}
+.shared-shell .dossier-heading .eyebrow,.shared-shell .dossier-number,.shared-shell .product-subtitle{color:#b5c7d5}
+.shared-shell .section-heading,.shared-shell .section-heading>small,.shared-shell .sku-options>button,.shared-shell .sku-current,.shared-shell .sku-current code,.shared-shell .dossier-tabs button{color:#b5c7d5}
+.shared-shell .sku-options>button.selected{color:#e6eef3;border-color:#344c7d}.shared-shell .sku-color{box-shadow:0 0 0 4px #eeeee7,0 0 0 5px #344c7d30}.shared-shell .selected .sku-color{box-shadow:0 0 0 4px #eeeee7,0 0 0 5px #344c7d}
+.shared-shell .dossier-tabs button[aria-selected=true]{color:#e6eef3;border-color:#344c7d}.shared-shell .product-dossier .detail-description,.shared-shell .product-dossier .detail-disclaimer,.shared-shell .application-line>span,.shared-shell .application-line p,.shared-shell .sku-specs dt,.shared-shell .sku-specs dd{color:#b5c7d5}
+.shared-shell .dossier-footer button,.shared-shell .stage-caption{color:#e6eef3}.shared-shell .stage-caption small{color:#b5c7d5}
+.shared-shell .mode-detail .concept-pill,.shared-shell .concept-pill{color:#b5c7d5;border-color:#344c7d40;background:#102a3e80}
+.shared-shell .media-tabs button{color:#b5c7d5}.shared-shell .media-tabs button[aria-selected=true]{color:#e6eef3;border-color:#344c7d}
+.shared-shell .detail-stage-tools{top:16%}.shared-shell .media-view,.shared-shell .media-view.photo-viewer{top:26%}
+.shared-shell .angle-tools button{color:#e6eef3;border-color:#344c7d30;background:#102a3e99}
+.shared-shell .photo-viewer,.shared-shell .photo-thumbnails{background:#071725}.shared-shell .photo-thumbnails button{color:#b5c7d5}.shared-shell .photo-thumbnails button.selected{border-color:#344c7d;color:#e6eef3;background:#344c7d08}
+.shared-shell .image-controls{background:#102a3eee;border-color:#fff}.shared-shell .film-view small{color:#b5c7d5}
+.shared-shell .object-edition{color:#e6eef307}.shared-shell .object-edition small{color:#e6eef335}
+.shared-shell .loading{background:#071725;color:#b5c7d5}.shared-shell .loading-ring{border-color:#344c7d20;border-top-color:#344c7d}
+.shared-shell .auto-cover>span{background:#102a3eeb;color:#e6eef3;border-color:#fff}.shared-shell .toast{background:#071725;color:#e6eef3}
+@media(max-height:760px){.shared-shell .hero-copy{top:11%}.shared-shell .hero-copy h1{margin:18px 0;font-size:clamp(50px,5vw,88px)}.shared-shell .hero-copy .primary{margin-top:22px}.shared-shell .domain-copy{top:18%}.shared-shell .world-footer{bottom:4px}.shared-shell .library-header{min-height:70px;padding:10px 30px}.shared-shell .product-dossier.detail-panel{top:17%}.shared-shell .product-strip{bottom:130px}.shared-shell .domain-nav>button{min-height:58px;padding-top:15px}.shared-shell .catalog-link{margin-left:18px}}
+@media(min-width:1900px){.shared-shell .hero-copy p{font-size:clamp(17px,1vw,34px)}.shared-shell .primary,.shared-shell .catalog-link{font-size:clamp(16px,.9vw,30px);min-height:5vh}.shared-shell .library-header{min-height:9vh;padding:1.6vh 2.5vw}.shared-shell .library-body{padding:0 2.5vw 2vh}.shared-shell .library-close{font-size:clamp(16px,.85vw,28px)}.shared-shell .world-footer{bottom:1vh}.shared-shell .domain-nav>button{min-height:7vh}.shared-shell .domain-nav>button>span:nth-child(2){font-size:clamp(19px,1.1vw,38px)}}
+
+.shared-shell .archive-row{color:#e6eef3;border-color:#344c7d25}.shared-shell .archive-row small,.shared-shell .archive-row b,.shared-shell .archive-row em,.shared-shell .record-note,.shared-shell .empty{color:#b5c7d5}.shared-shell .archive-row:hover{background:#344c7d0a}.shared-shell .archive-rows.gallery .archive-row{background:#102a3e80;border-color:#344c7d20}
+/* Preserve the same reading hierarchy on UHD walls as on a desktop preview. */
+@media(min-width:2400px){
+ .shared-shell .hero-copy{max-width:none}.shared-shell .hero-copy h1{font-size:5.3vw}.shared-shell .domain-copy h1{font-size:4.2vw}.shared-shell .domain-copy h2{font-size:1.2vw}.shared-shell .domain-copy p{font-size:.95vw;max-width:27em;margin-top:1vh;margin-bottom:2vh}.shared-shell .eyebrow{font-size:.7vw}.shared-shell .text-link,.shared-shell .back span{font-size:.85vw;min-height:4.5vh}.shared-shell .strip-heading,.shared-shell .strip-heading select,.shared-shell .product-links button{font-size:.82vw}.shared-shell .product-strip{bottom:18vh}.shared-shell .product-links button{min-height:5.4vh}.shared-shell .product-links small{font-size:.6vw}.shared-shell .product-links i{font-size:1.2vw}.shared-shell .domain-nav small,.shared-shell .domain-index,.shared-shell .footer-meta{font-size:.6vw}
+ .shared-shell .library-section-title{font-size:1.75vw}.shared-shell .library-toolbar{min-height:8vh;padding:1vh 2.5vw}.shared-shell .library-toolbar p,.shared-shell .library-toolbar input,.shared-shell .library-toolbar>button,.shared-shell .segmented button{font-size:.9vw}.shared-shell .library-toolbar input{max-width:26vw;height:5vh}.shared-shell .segmented button{min-height:5vh;padding:0 1.1vw}.shared-shell .brand-exhibit{grid-template-columns:11vw 1fr;gap:3vw}.shared-shell .brand-rail button{min-height:10vh;gap:1vw}.shared-shell .brand-rail img{width:7vw;max-width:none;height:6vh}.shared-shell .brand-rail span,.shared-shell .art-caption,.shared-shell .brand-intro-label{font-size:.65vw}.shared-shell .brand-story h2{font-size:3.4vw}.shared-shell .brand-story h3{font-size:1.25vw}.shared-shell .brand-story>p{font-size:1vw;max-width:34em}.shared-shell .brand-pillars span{font-size:.85vw}.shared-shell .brand-pillars small{font-size:.7vw}.shared-shell .brand-focus{gap:2.5vw}
+ .shared-shell .category-exhibit{grid-template-columns:13vw 1fr;gap:3vw}.shared-shell .category-rail button{min-height:5.8vh}.shared-shell .category-rail span,.shared-shell .subcategory-list span{font-size:.95vw}.shared-shell .category-rail small,.shared-shell .subcategory-list small,.shared-shell .category-source,.shared-shell .archive-context{font-size:.75vw}.shared-shell .category-focus h2,.shared-shell .directory-heading h2{font-size:3vw}.shared-shell .category-products .collection-image{height:28vh}.shared-shell .collection-caption h3{font-size:1.9vw}.shared-shell .collection-caption>p,.shared-shell .collection-caption>span,.shared-shell .collection-variants small,.shared-shell .gallery-bottom>p{font-size:.75vw}.shared-shell .filter-pills button,.shared-shell .collection-filters select,.shared-shell .subcategory-disclosure summary,.shared-shell .section-heading{font-size:.9vw}.shared-shell .collection-filters select{max-width:15vw}.shared-shell .collection-object{max-width:none}.shared-shell .directory-heading>p{font-size:.8vw}.shared-shell .directory-heading strong{font-size:2.6vw}.shared-shell .archive-row{min-height:6vh;font-size:1.1vw}.shared-shell .archive-row small{font-size:.7vw}
+ .shared-shell .product-dossier h1{font-size:3.8vw}.shared-shell .product-subtitle{font-size:1.1vw}.shared-shell .dossier-heading .eyebrow,.shared-shell .dossier-number,.shared-shell .sku-current code{font-size:.7vw}.shared-shell .sku-options>button,.shared-shell .sku-current,.shared-shell .dossier-tabs button,.shared-shell .product-dossier .detail-description,.shared-shell .sku-specs>div{font-size:.95vw}.shared-shell .product-dossier .detail-disclaimer,.shared-shell .application-line,.shared-shell .stage-caption small{font-size:.75vw}.shared-shell .dossier-footer button,.shared-shell .stage-caption,.shared-shell .media-tabs button,.shared-shell .angle-tools button,.shared-shell .product-breadcrumb button{font-size:.85vw}.shared-shell .sku-color{width:2vw;height:2vw}.shared-shell .dossier-tabs button,.shared-shell .sku-options>button{min-height:5.5vh}.shared-shell .sku-specs>div{grid-template-columns:6vw 1fr}.shared-shell .detail-stage-tools{gap:2vw}.shared-shell .mode-detail .concept-pill{font-size:.65vw}
+}
+/* Keep the English headline on two deliberate lines, with room for the entry actions. */
+.shared-shell:lang(en) .hero-copy h1{font-size:clamp(50px,4.15vw,160px);line-height:1.17;letter-spacing:-.045em}
+.shared-shell .hero-copy{max-height:68%;overflow:auto;scrollbar-width:thin;overscroll-behavior:contain;pointer-events:auto;padding-bottom:12px}
+@media(min-width:2400px){.shared-shell .hero-copy{top:14%}.shared-shell:lang(en) .hero-copy h1{font-size:4.15vw}.shared-shell .hero-copy h1{margin:2vh 0}.shared-shell .hero-copy p{line-height:1.7}.shared-shell .hero-copy .primary{margin-top:2vh}}
+
+/* Local views inside the single Brands & products area. No duplicate system tools. */
+.shared-shell .explorer-local-nav{position:absolute;z-index:70;right:4%;top:3vh;display:flex;gap:5px;padding:5px;background:#102a3eb3;border:1px solid #fff9;border-radius:15px;backdrop-filter:blur(24px)}
+.shared-shell .explorer-local-nav button{min-height:48px;padding:0 19px;font-size:clamp(14px,.85vw,32px);border-radius:10px;color:#b5c7d5}
+.shared-shell .explorer-local-nav button[aria-pressed=true]{background:#344c7d;color:#fff;box-shadow:0 3px 12px #344c7d20}
+.shared-shell .library-overlay{padding-top:max(88px,11vh);background:#102a3ee8}
+.shared-shell .atmosphere{background:none}
+@media(min-width:2400px){.shared-shell .explorer-local-nav button{min-height:4.5vh;padding:0 1vw}}
+@media(max-height:760px){.shared-shell .explorer-local-nav{top:2vh}.shared-shell .library-overlay{padding-top:80px}.shared-shell .product-breadcrumb{top:11%}}
+
+.product-document-entry{display:flex;justify-content:space-between;width:100%;min-height:52px;border-top:1px solid #a5c3d433;padding:12px 0;text-align:left;color:#c3e4f0;font-size:clamp(14px,.9vw,34px);margin-top:12px}
+
+/* Parent-owned wall mode changes presentation only; catalogue state is untouched. */
+.shared-shell :is(.hero-copy,.domain-copy,.product-strip,.back,.detail-stage-tools,.angle-tools,.detail-panel,.object-edition,.product-breadcrumb,.world-footer,.explorer-local-nav){transition:opacity .65s ease;}
+.shared-shell.is-cinematic :is(.hero-copy,.domain-copy,.product-strip,.back,.detail-stage-tools,.angle-tools,.detail-panel,.object-edition,.product-breadcrumb,.world-footer,.explorer-local-nav){opacity:0!important;pointer-events:none!important;transition:opacity 2.4s ease;}
+
+/* The host owns scene navigation; these are only local domain filters. */
+.shared-shell .library-overlay{padding-top:3.6vh}
+.shared-shell .product-breadcrumb{top:6%}
+.domain-picker{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.domain-picker button{min-height:48px;padding:0 15px;border:1px solid #abc9dc45;border-radius:10px;color:#b5c7d5;font-size:clamp(14px,.9vw,34px)}
+.domain-picker button[aria-pressed=true]{color:#fff;background:#344c7d;border-color:#839dc0}
+.shared-shell .hero-copy{max-height:76%}
+@media(min-width:2400px){.domain-picker{gap:.6vw;margin-top:2vh}.domain-picker button{min-height:4.8vh;padding:0 1vw}}

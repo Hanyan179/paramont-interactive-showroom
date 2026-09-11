@@ -1,0 +1,17 @@
+{
+  "name": "paramont-interactive-showroom",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PARAMONT interactive showroom and embedded product explorer",
+  "scripts": {
+    "setup": "npm --prefix 品牌融合世界 ci && npm --prefix 展示应用 ci",
+    "dev": "npm --prefix 展示应用 run dev:lan",
+    "build": "npm --prefix 品牌融合世界 run build && npm --prefix 品牌融合世界 run export:module && npm --prefix 展示应用 run build",
+    "test": "npm --prefix 品牌融合世界 run check && npm --prefix 展示应用 test && npm --prefix 展示应用 run check:content",
+    "preview": "npm --prefix 展示应用 run preview -- --host 127.0.0.1 --port 5183 --strictPort"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module"
+}
