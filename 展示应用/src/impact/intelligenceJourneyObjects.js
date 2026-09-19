@@ -66,6 +66,20 @@ export function createCrystal(robotShell){
 
 function clipToPage(mesh){const band={value:new THREE.Vector2(-1e6,1e6)};mesh.userData.pageClip=band;mesh.material.onBeforeCompile=shader=>{shader.uniforms.pageClip=band;shader.vertexShader='varying float pageWorldY;\n'+shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\npageWorldY=(modelMatrix*vec4(transformed,1.)).y;');shader.fragmentShader='varying float pageWorldY;uniform vec2 pageClip;\n'+shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif(pageWorldY<pageClip.x||pageWorldY>pageClip.y) discard;');};mesh.material.customProgramCacheKey=()=> 'journey-page-clip';}
 
+function createDataRelationships(){
+ const anchors=[[-.78,.96,.42],[.77,.60,-.38],[-.52,.15,-.72],[.66,-.14,.64],[-.68,-.64,.48],[.47,-.95,-.34]];
+ const pairs=[[0,1],[0,2],[1,3],[2,3],[2,4],[3,5],[4,5]],revealed=new Float32Array(anchors.length);
+ const geometry=new THREE.BufferGeometry(),positions=new THREE.Float32BufferAttribute(new Float32Array(pairs.length*6),3);positions.setUsage(THREE.DynamicDrawUsage);geometry.setAttribute('position',positions);geometry.boundingSphere=new THREE.Sphere(new THREE.Vector3(),1.6);
+ const links=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:'#a9d6ee',transparent:true,depthWrite:false}));links.name='analysis-connections';
+ const nodeGeometry=new THREE.SphereGeometry(.042,12,8),nodes=anchors.map((anchor,i)=>{const node=new THREE.Mesh(nodeGeometry,new THREE.MeshBasicMaterial({color:'#d7f0ff',transparent:true,depthWrite:false}));node.name=`analysis-node-${i}`;node.userData.anchor=new THREE.Vector3(...anchor);return node;});
+ return {links,nodes,update(t,scanY){
+  const visible=ramp(t,19.2,20)*(1-ramp(t,26,29)),scale=1-ramp(t,25,29)*.90;
+  nodes.forEach((node,i)=>{revealed[i]=ramp(scanY,anchors[i][1]+.16,anchors[i][1]-.16);node.position.copy(node.userData.anchor).multiplyScalar(scale);alpha(node,visible*revealed[i]*.9);});
+  pairs.forEach(([a,b],i)=>{const from=nodes[a].position,to=nodes[b].position,growth=Math.min(revealed[a],revealed[b]);positions.setXYZ(i*2,from.x,from.y,from.z);positions.setXYZ(i*2+1,lerp(from.x,to.x,growth),lerp(from.y,to.y,growth),lerp(from.z,to.z,growth));});
+  positions.needsUpdate=true;alpha(links,visible*.62);
+ }};
+}
+
 export function createJourneyObjects(manager,quality){
  const root=new THREE.Group();root.name='continuous-value-journey';
  const robot=createMountainRobot(quality),crystal=createCrystal(robot.shell),body=new THREE.Group();body.name='data-to-assistant';body.add(crystal.shell,crystal.cells,robot.root);root.add(body);
@@ -73,26 +87,29 @@ export function createJourneyObjects(manager,quality){
  const floor=glow('contact-light','#6191ae');floor.position.set(0,-2.4,-.5);floor.scale.set(6,.6,1);root.add(floor);
  const scan=new THREE.Mesh(new THREE.PlaneGeometry(3,3),new THREE.MeshBasicMaterial({color:'#b3e3ff',transparent:true,side:THREE.DoubleSide,depthWrite:false}));scan.rotation.x=Math.PI/2;scan.name='analysis-scan';body.add(scan);
  const scanEdge=new THREE.LineSegments(new THREE.EdgesGeometry(scan.geometry),new THREE.LineBasicMaterial({color:'#d0eeff',transparent:true,depthWrite:false}));scan.add(scanEdge);
- const linkPoints=[];for(let i=0;i<6;i++){const a=i*1.04;linkPoints.push(Math.cos(a)*.95,Math.sin(a)*1.1,(i%3-1)*.6,Math.cos(a+1.4)*.95,Math.sin(a+1.4)*1.1,((i+1)%3-1)*.6);}
- const links=new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(linkPoints,3)),new THREE.LineBasicMaterial({color:'#91c5e6',transparent:true,depthWrite:false}));links.name='analysis-connections';body.add(links);
- const nodeGeometry=new THREE.SphereGeometry(.035,10,8);const nodes=Array.from({length:6},(_,i)=>{const m=new THREE.Mesh(nodeGeometry,new THREE.MeshBasicMaterial({color:'#c7ebff',transparent:true,depthWrite:false}));m.name=`analysis-node-${i}`;m.position.fromArray(linkPoints,i*6);m.userData.anchor=m.position.clone();body.add(m);return m;});
+ const relationships=createDataRelationships();body.add(relationships.links,...relationships.nodes);
+ const analysis={height:{value:1.5},strength:{value:0},toBody:{value:new THREE.Matrix4()}};
  const reviews=['Great product.','Perfect gift.','Love it.','Good quality.','Beautiful colours.','Soft texture.'];
  const texts=reviews;
  const reviewMap=reviewTexture();
  const records=Array.from({length:texts.length},(_,i)=>{const text=texts[i%texts.length],mesh=textPlane(text,`record-${i}`,i===0?3.8:2.5);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),i===0?3.8:2.5);const card=texturePlane(reviewMap,i===0?4.2:3.2,i===0?1.31:1,'feedback-frame');card.position.z=-.03;mesh.add(card);const purchase=texturePlane(purchaseReviewTexture(i),5.8,2.2,'purchase-review-frame');purchase.position.z=-.035;purchase.material.color.setScalar(.78);purchase.renderOrder=5;card.renderOrder=5;mesh.renderOrder=6;mesh.add(purchase);mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;});
  const reportPaper=new THREE.Color('#102337');
  const reportFaces=Array.from({length:6},(_,i)=>{
-  const face=texturePlane(reportTexture(i),2.65,2.65,`report-face-${i}`),reveal={value:0};face.material.side=THREE.FrontSide;face.userData.reportReveal=reveal;
+  const face=texturePlane(reportTexture(i),2.65,2.65,`report-face-${i}`),reveal={value:0};face.material.side=THREE.FrontSide;face.userData.reportReveal=reveal;face.userData.analysis=analysis;
   // The same page first receives the source stream, then reveals its writing
   // from heading to conclusion. The contour remains present during both steps.
   face.material.onBeforeCompile=shader=>{
    shader.uniforms.reportReveal=reveal;shader.uniforms.reportPaper={value:reportPaper};
-   shader.fragmentShader='uniform float reportReveal;uniform vec3 reportPaper;\n'+shader.fragmentShader.replace('#include <map_fragment>',`#include <map_fragment>
+   shader.uniforms.analysisHeight=analysis.height;shader.uniforms.analysisStrength=analysis.strength;shader.uniforms.analysisToBody=analysis.toBody;
+   shader.vertexShader='uniform mat4 analysisToBody;varying float analysisBodyY;\n'+shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\nanalysisBodyY=(analysisToBody*modelMatrix*vec4(transformed,1.)).y;');
+   shader.fragmentShader='uniform float reportReveal;uniform vec3 reportPaper;uniform float analysisHeight;uniform float analysisStrength;varying float analysisBodyY;\n'+shader.fragmentShader.replace('#include <map_fragment>',`#include <map_fragment>
     float interior=step(.04,vMapUv.x)*step(vMapUv.x,.96)*step(.04,vMapUv.y)*step(vMapUv.y,.96);
     float ink=max(1.-interior,smoothstep(1.-reportReveal,1.-reportReveal+.06,vMapUv.y));
     diffuseColor.rgb=mix(reportPaper,diffuseColor.rgb,ink);
+    float scanned=smoothstep(analysisHeight-.08,analysisHeight+.08,analysisBodyY)*analysisStrength;
+    diffuseColor.a*=1.-scanned*.93;
    `);
-  };face.material.customProgramCacheKey=()=> 'report-ink-reveal';root.add(face);return face;
+  };face.material.customProgramCacheKey=()=> 'report-ink-and-analysis-reveal';root.add(face);return face;
  });
  const fragmentPairs=informationFragments;
  const dataFragments=fragmentPairs.map((pair,i)=>{const map=canvasTexture((c,w,h)=>{c.textAlign='center';c.textBaseline='middle';label(c,pair[c.journeyLang==='zh'?1:0],w/2,h/2,76);},1024,150);const mesh=texturePlane(map,2.4,.35,`data-fragment-${i}`);mesh.userData.category=Math.floor(i/6);root.add(mesh);return mesh;});
@@ -120,5 +137,5 @@ export function createJourneyObjects(manager,quality){
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);clipToPage(details);
  const commerceMetrics=[];for(let i=0;i<4;i++){const mesh=textPlane(`${[128,136,148,162][i]} orders   /   ${[24,27,31,36][i]} reviews`,`commerce-metrics-${i}`,3.0);mesh.material.color.set('#594c3f');mesh.position.set(1.8,2.32,.12);commerce.add(mesh);commerceMetrics.push(mesh);}
  function setLanguage(lang){const maps=new Set();root.traverse(mesh=>{if(mesh.material?.map)maps.add(mesh.material.map);});maps.forEach(map=>map.userData.redraw?.(lang));records.forEach((mesh,i)=>installTyping(mesh,translate(texts[i],lang),mesh.material.map.image.getContext('2d'),i===0?3.8:2.5));root.userData.language=lang;}
- return {craft,directionModels,reviewBadges,reviewNotes,setLanguage,reportFaces,dataFragments,root,body,robot,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
+ return {craft,directionModels,reviewBadges,reviewNotes,setLanguage,reportFaces,dataFragments,analysis,relationships,root,body,robot,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,records,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
 }

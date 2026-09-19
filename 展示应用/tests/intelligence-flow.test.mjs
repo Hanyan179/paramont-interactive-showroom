@@ -181,6 +181,23 @@ test('reports and relationships finish gathering before the newborn robot expres
  update(30.8);assert.equal(links.visible,false);for(let i=0;i<6;i++)assert.equal(world.root.getObjectByName(`report-face-${i}`).visible,false);
  assert.ok(eye.material.opacity>wakingEye);assert.equal(world.root.getObjectByName('mountain-robot').userData.expression,'happy');disposeTree(world.root);
 });
+test('the scanning slice reveals nodes from top to bottom before all links connect and gather',()=>{
+ const {world,update}=rig(),links=world.root.getObjectByName('analysis-connections'),nodes=Array.from({length:6},(_,i)=>world.root.getObjectByName(`analysis-node-${i}`)),p=new THREE.Vector3();
+ let count=0;for(const t of [19.5,20.4,21.4,22.4,24]){update(t);const shown=nodes.filter(n=>n.material.opacity>.5).length;assert.ok(shown>=count);count=shown;for(let i=1;i<nodes.length;i++)assert.ok(nodes[i-1].material.opacity>=nodes[i].material.opacity-.001);}
+ assert.equal(count,6);
+ for(const t of [24,25.8,27.5]){update(t);const positions=links.geometry.attributes.position;assert.equal(positions.count,14);
+  for(let i=0;i<positions.count;i++){p.fromBufferAttribute(positions,i);assert.ok(nodes.some(n=>n.position.distanceTo(p)<1e-6),`a relation ends in empty space at ${t}`);}
+ }
+ update(29);assert.equal(links.visible,false);assert.ok(nodes.every(n=>!n.visible));disposeTree(world.root);
+});
+test('all six report surfaces share the moving scan plane in the rotated cube coordinate system',()=>{
+ const {world,update}=rig(),scan=world.root.getObjectByName('analysis-scan'),faces=Array.from({length:6},(_,i)=>world.root.getObjectByName(`report-face-${i}`)),p=new THREE.Vector3();
+ update(16);assert.ok(faces.every(f=>f.material.depthWrite));near(faces[0].userData.analysis.strength.value,0);
+ for(const t of [19.5,21.5,24,26]){update(t);const analysis=faces[0].userData.analysis;scan.getWorldPosition(p);p.applyMatrix4(analysis.toBody.value);near(p.y,analysis.height.value);
+  assert.ok(faces.every(f=>f.userData.analysis===analysis&&!f.material.depthWrite));assert.ok(analysis.strength.value>.99);
+ }
+ disposeTree(world.root);
+});
 
 
 test('manual stage dwell retains subtle motion while the paused shared clock freezes it',()=>{const {world}=rig(),camera=new THREE.Vector3(),target=new THREE.Vector3(),body=world.root.getObjectByName('data-to-assistant'),frame={...intelligenceCycle(16),mode:'manual',seeking:false};for(let i=0;i<=60;i++)world.update({camera,target,intelligence:frame,time:i*.05});const moving=body.rotation.y;for(let i=61;i<=120;i++)world.update({camera,target,intelligence:frame,time:i*.05});assert.ok(Math.abs(body.rotation.y-moving)>.02);const stopped=body.rotation.y;for(let i=0;i<20;i++)world.update({camera,target,intelligence:frame,time:6});near(body.rotation.y,stopped);disposeTree(world.root);});

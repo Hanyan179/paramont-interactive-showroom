@@ -41,7 +41,7 @@ export function intelligenceWorld(quality,manager){
    const cubeTurn=.45+.24*(t-8)*ramp(t,7,12),turnDelta=Math.atan2(Math.sin(.12-cubeTurn),Math.cos(.12-cubeTurn)),bodyTurn=cubeTurn+turnDelta*f.crystal;
    o.body.rotation.set(lerp(.17,.025,f.crystal)+presencePose.float.x*.4,Math.atan2(Math.sin(bodyTurn),Math.cos(bodyTurn))-presencePose.turn*.7+presencePose.float.y*.6+Math.sin((t-38)*1.15-.35)*.20*presencePose.look,lerp(-.04,-.02,f.crystal)+presencePose.float.z);o.body.rotation.y+=idleSway;o.body.position.y+=idleSway*.35;
    o.crystal.morph(f.crystal,t);alpha(o.crystal.shell,glassVisibility*lerp(.12,.34,ramp(t,25,28.6)));alpha(o.crystal.edges,glassVisibility*.23*(1-ramp(t,29.2,30.5)));
-   alpha(o.crystal.cells,ramp(t,13,16)*(1-ramp(t,26,29))*.48);
+   alpha(o.crystal.cells,ramp(t,13,16)*(1-ramp(t,26,29))*.48*lerp(1,.38,ramp(t,20,24)));
    const robotAlpha=ramp(t,28.6,31.2)*(1-ramp(t,86,88));
    // The same robot stays beside the files and product, then docks as the page logo.
    const logoDock=ramp(t,79,85),reviewDock=ramp(t,34,38);
@@ -53,8 +53,11 @@ export function intelligenceWorld(quality,manager){
    o.body.rotation.x*=1-logoDock;o.body.rotation.y*=1-logoDock;o.body.rotation.z*=1-logoDock;
    o.robot.root.scale.setScalar(1);o.cursor.visible=false;
    o.floor.position.set(o.body.position.x,lerp(-2.45,-1.67,dock),-.3);o.floor.scale.set(lerp(5.5,2.9,dock),.55,1);alpha(o.floor,Math.max(glassVisibility,robotAlpha)*.22*(1-ramp(t,79,83)));
-   const scanPhase=ramp(t,18.8,24);o.scan.position.y=lerp(1.5,-1.5,scanPhase);const scanAlpha=ramp(t,18,19)*(1-ramp(t,24,25));alpha(o.scan,scanAlpha*.12);alpha(o.scanEdge,scanAlpha*.8);
-   const relation=ramp(t,21,24)*(1-ramp(t,26,29)),relationScale=1-ramp(t,25,29)*.90;o.links.scale.setScalar(relationScale);alpha(o.links,relation*.6);o.nodes.forEach((node,i)=>{node.position.copy(node.userData.anchor).multiplyScalar(relationScale);alpha(node,relation*(.45+.4*Math.sin(t*.8+i)**2));});
+   const scanPhase=ramp(t,18.8,24);o.scan.position.y=lerp(1.5,-1.5,scanPhase);const scanAlpha=ramp(t,18,19)*(1-ramp(t,24,25));alpha(o.scan,scanAlpha*.07);alpha(o.scanEdge,scanAlpha*.55);
+   // The scanning slice opens the same report surface and reveals connected
+   // information underneath. Every line shares its endpoints with live nodes.
+   o.analysis.height.value=o.scan.position.y;o.analysis.strength.value=ramp(t,18.6,19.4);o.body.updateWorldMatrix(true,false);o.analysis.toBody.value.copy(o.body.matrixWorld).invert();
+   o.relationships.update(t,o.scan.position.y);
    o.records.forEach((mesh,i)=>{
     let a=0,x=0,y=0,z=0,s=1,framing=0,purchase=0,reframe=1;const count=(t<34||i===0)?typedCount(t,mesh.userData.typing.text.length,i):mesh.userData.typing.text.length;const letterOffset=typeMesh(mesh,count);
     if(t<34){
@@ -92,7 +95,7 @@ export function intelligenceWorld(quality,manager){
     seatRotation.setFromEuler(seatEuler.set(seat[3],seat[4],0));cardRotation.copy(o.body.quaternion).multiply(seatRotation);face.quaternion.slerpQuaternions(flatRotation,cardRotation,g);
     face.userData.reportReveal.value=ramp(t,9.6+i*.09,11.3+i*.07);alpha(face,ramp(t,8.6+i*.09,10.5+i*.09)*(1-ramp(t,26,28.8))*.94);
     // Crossing pages must occlude one another while folding into cube faces.
-    face.material.depthWrite=face.material.opacity>.90;
+    face.material.depthWrite=face.material.opacity>.90&&o.analysis.strength.value<.001;
    });
    o.dataFragments.forEach((mesh,i)=>{
     const group=mesh.userData.category,g=ramp(t,7.8+group*.08,10.3+group*.08),[startX,startY]=informationSlots[i],order=(i*13)%36;
