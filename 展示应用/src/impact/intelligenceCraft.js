@@ -69,20 +69,22 @@ export function createPaletteCraft(productTexture){
  const labels=[['提取四色用途','Extract the colour roles'],['让色彩找到位置','Bring each shade into place'],['装配镜面与随行盒体','Assemble mirror and compact'],['从研究提案，到柔雾四色','From research to Soft Haze']].map((pair,i)=>stageLabel(pair,`craft-step-${i}`));
  const captionRoot=new THREE.Group();captionRoot.name='palette-craft-captions';captionRoot.add(...labels);
  const chips=['香槟 · 提亮','灰褐 · 加深','玫瑰 · 过渡','象牙 · 打底'].map((text,i)=>stageLabel([text,['Champagne / light','Taupe / define','Rose / blend','Ivory / base'][i]],`craft-role-${i}`,true));captionRoot.add(...chips);
- const temp=new THREE.Vector3();
+ const temp=new THREE.Vector3(),front=new THREE.Quaternion();
  return {root,captionRoot,pans,lid,
   focusAt(t,target){
    const index=Math.min(3,Math.max(0,Math.floor((t-58.7)/1.2))),previous=Math.max(0,index-1),blend=ramp(t,58.7+index*1.2,59.3+index*1.2);
-   target.lerpVectors(pans[previous].position,pans[index].position,blend);target.z+=.012;target.multiplyScalar(root.scale.x).add(root.position);
+   target.lerpVectors(pans[previous].position,pans[index].position,blend);target.z+=.012;target.multiplyScalar(root.scale.x).applyQuaternion(root.quaternion).add(root.position);
    target.y=lerp(target.y,root.position.y+root.scale.x*.23,ramp(t,64,67));root.userData.processingIndex=index;return target;
   },
   update(t,selected,product){
    const take=ramp(t,51,57),toHero=ramp(t,68,73);
    temp.set(-.55,-.04,.22).multiplyScalar(selected.scale.x).applyQuaternion(selected.quaternion).add(selected.position);
    root.position.set(lerp(temp.x,-.85,take),lerp(temp.y,.18,take),lerp(temp.z,1.2,take));
-   root.scale.setScalar(lerp(selected.scale.x*1.10,4.15,take));root.rotation.set(0,0,0);
+   root.scale.setScalar(lerp(selected.scale.x*1.10,4.15,take));root.quaternion.slerpQuaternions(selected.quaternion,front,take);
    root.position.lerp(product.position,toHero);root.scale.setScalar(lerp(root.scale.x,product.scale.x,toHero));
-   const visible=ramp(t,37,40)*lerp(selected.material.opacity,1,take)*(1-ramp(t,75.5,76));root.visible=visible>.001;
+   // The object keeps its opacity as the printed proposal retires behind it.
+   // Its growing mirror and separated pans must not carry the page heading.
+   const visible=ramp(t,37,40)*lerp(selected.material.opacity,1,ramp(t,50.5,51.2))*(1-ramp(t,75.5,76));root.visible=visible>.001;
    const extract=ramp(t,51,56),assemble=ramp(t,59,65);
    pans.forEach((pan,i)=>{
     const spread=extract*(1-ramp(t,59.6+i*1.05,62.45+i*1.05)),arc=Math.sin(spread*Math.PI),pivot=pan.userData.pivot;
@@ -94,7 +96,7 @@ export function createPaletteCraft(productTexture){
    const housing=1-extract*(1-assemble);opacity(shell,visible*housing);opacity(lid,visible*housing);
    shell.position.z=-.08*extract*(1-assemble);lid.position.y=lid.userData.pivot.y+.20*extract*(1-ramp(t,62,68));lid.rotation.x=-.25*extract*(1-ramp(t,62,68));
    labels.forEach((mesh,i)=>{const at=[52,56.5,61.5,66.5][i],end=[56.5,61.5,66.5,73][i],enter=ramp(t,at,at+.7),leave=ramp(t,end-.7,end),a=enter*(1-leave);mesh.position.set(-.65,-2.72+.32*leave-.32*(1-enter),.7);mesh.visible=a>.001;mesh.material.opacity=a;});
-   chips.forEach((mesh,i)=>{const a=ramp(t,54+i*.15,55+i*.15)*(1-ramp(t,60.4+i*.85,62+i*.85)),rect=rectangles[i],pan=pans[i];temp.set(0,-(rect[3]-rect[1])/2,0).applyQuaternion(pan.quaternion).add(pan.position).multiplyScalar(root.scale.x).add(root.position);mesh.position.copy(temp);mesh.position.y-=.30;mesh.position.z+=.05;mesh.renderOrder=15;mesh.visible=a>.001;mesh.material.opacity=a;});
+   chips.forEach((mesh,i)=>{const a=ramp(t,54+i*.15,55+i*.15)*(1-ramp(t,60.4+i*.85,62+i*.85)),rect=rectangles[i],pan=pans[i];temp.set(0,-(rect[3]-rect[1])/2,0).applyQuaternion(pan.quaternion).add(pan.position).multiplyScalar(root.scale.x).applyQuaternion(root.quaternion).add(root.position);mesh.position.copy(temp);mesh.position.y-=.30;mesh.position.z+=.05;mesh.renderOrder=15;mesh.visible=a>.001;mesh.material.opacity=a;});
    root.userData.phase=t<51?'proposal':t<58?'extract':t<65?'compose':t<73?'finish':'photograph';
   }
  };

@@ -34,12 +34,15 @@ export function intelligenceWorld(quality,manager){
    idlePhase+=dt;const idleTarget=intelligence?.mode==='manual'&&!intelligence?.seeking?1:0;idleMix+=(idleTarget-idleMix)*(1-Math.exp(-dt*4));
    const idleSway=Math.sin(idlePhase*.55)*.13*idleMix*ramp(t,8,14)*(1-ramp(t,49,54));
    const presencePose=presenceAt(t);
-   const glassVisibility=ramp(t,13,16)*(1-ramp(t,25,30)),dock=ramp(t,33,37);
+   const glassVisibility=ramp(t,13,16)*(1-ramp(t,29.5,31.2)),dock=ramp(t,33,37);
    o.body.position.set(lerp(0,3.25,dock),lerp(.2,.18,dock)+presencePose.float.lift+Math.sin(t*.65)*.065*ramp(t,8,13)*(1-f.crystal),0);o.body.scale.setScalar(lerp(1.22,.78,dock));
-   o.body.rotation.set(lerp(.17,.025,f.crystal)+presencePose.float.x*.4,lerp(.45+.24*(t-8)*ramp(t,7,12),.12,f.crystal)-presencePose.turn*.7+presencePose.float.y*.6+Math.sin((t-38)*1.15-.35)*.20*presencePose.look,lerp(-.04,-.02,f.crystal)+presencePose.float.z);o.body.rotation.y+=idleSway;o.body.position.y+=idleSway*.35;
-   o.crystal.morph(f.crystal,t);alpha(o.crystal.shell,glassVisibility*.12*(1-ramp(t,27,32)));alpha(o.crystal.inner,glassVisibility*f.crystal*.4*(1-ramp(t,28,32)));alpha(o.crystal.edges,glassVisibility*.23*(1-ramp(t,27,32)));
-   alpha(o.crystal.cells,ramp(t,13,16)*(1-ramp(t,28,32))*.48);
-   const robotAlpha=ramp(t,27,32)*(1-ramp(t,86,88));
+   // Continue the cube's turn into the nearest front-facing orientation. Raw
+   // Euler interpolation would reverse through nearly a full revolution.
+   const cubeTurn=.45+.24*(t-8)*ramp(t,7,12),turnDelta=Math.atan2(Math.sin(.12-cubeTurn),Math.cos(.12-cubeTurn)),bodyTurn=cubeTurn+turnDelta*f.crystal;
+   o.body.rotation.set(lerp(.17,.025,f.crystal)+presencePose.float.x*.4,Math.atan2(Math.sin(bodyTurn),Math.cos(bodyTurn))-presencePose.turn*.7+presencePose.float.y*.6+Math.sin((t-38)*1.15-.35)*.20*presencePose.look,lerp(-.04,-.02,f.crystal)+presencePose.float.z);o.body.rotation.y+=idleSway;o.body.position.y+=idleSway*.35;
+   o.crystal.morph(f.crystal,t);alpha(o.crystal.shell,glassVisibility*lerp(.12,.34,ramp(t,25,28.6)));alpha(o.crystal.edges,glassVisibility*.23*(1-ramp(t,29.2,30.5)));
+   alpha(o.crystal.cells,ramp(t,13,16)*(1-ramp(t,26,29))*.48);
+   const robotAlpha=ramp(t,28.6,31.2)*(1-ramp(t,86,88));
    // The same robot stays beside the files and product, then docks as the page logo.
    const logoDock=ramp(t,79,85),reviewDock=ramp(t,34,38);
    // An upper arc keeps the whole face clear of the product on its way to the
@@ -48,7 +51,7 @@ export function intelligenceWorld(quality,manager){
    o.body.position.x=lerp(o.body.position.x+.16*ramp(t,70,76),-3.65,logoTravel);o.body.position.y=o.body.position.y*logoRest**3+13.2*logoRest*logoDock+2.67*logoDock**3;o.body.position.z=lerp(0,.34,logoDock);
    o.body.scale.setScalar(lerp(lerp(1.22,.64,reviewDock),.17,logoDock));
    o.body.rotation.x*=1-logoDock;o.body.rotation.y*=1-logoDock;o.body.rotation.z*=1-logoDock;
-   o.robot.root.scale.setScalar(lerp(.7,1,ramp(t,27,32)));o.cursor.visible=false;
+   o.robot.root.scale.setScalar(1);o.cursor.visible=false;
    o.floor.position.set(o.body.position.x,lerp(-2.45,-1.67,dock),-.3);o.floor.scale.set(lerp(5.5,2.9,dock),.55,1);alpha(o.floor,Math.max(glassVisibility,robotAlpha)*.22*(1-ramp(t,79,83)));
    const scanPhase=ramp(t,18.8,24);o.scan.position.y=lerp(1.5,-1.5,scanPhase);const scanAlpha=ramp(t,18,19)*(1-ramp(t,24,25));alpha(o.scan,scanAlpha*.12);alpha(o.scanEdge,scanAlpha*.8);
    const relation=ramp(t,21,24)*(1-ramp(t,26,29)),relationScale=1-ramp(t,25,29)*.90;o.links.scale.setScalar(relationScale);alpha(o.links,relation*.6);o.nodes.forEach((node,i)=>{node.position.copy(node.userData.anchor).multiplyScalar(relationScale);alpha(node,relation*(.45+.4*Math.sin(t*.8+i)**2));});
@@ -110,7 +113,7 @@ export function intelligenceWorld(quality,manager){
     const size=lerp(.76,.89,ring)+attention*.86;
     card.position.set(lerp(lerp(-.8,x,appear),-1.25,attention*.86)*(1-focus),lerp(lerp(.2,y,appear),.10,attention*.86)*(1-focus),lerp(lerp(-.4,z,appear)+attention*.9,1.8,focus));card.scale.setScalar(lerp(size,1.65,focus));
     card.rotation.set(.035*(1-focus),Math.sin(angle)*.12*(1-focus),Math.sin(angle)*-.025*(1-ring)*(1-focus));
-    const visible=appear*(1-ramp(t,i===4?54:50,i===4?57:56));
+    const visible=appear*(1-ramp(t,i===4?50.8:50,53));
     const rejected=(i===1?ramp(t,41,42):i===2?ramp(t,44,45):0),dim=(i===4?1:lerp(1,.30,Math.max(rejected*(1-attention),ramp(t,48,51))))*(1-(reviewFocus-attention)*.58);
     alpha(card,visible*dim);card.material.depthWrite=visible>.99;alpha(o.cardDepths[i],visible*.7*dim);
     if(i<4)o.directionModels[i].update(visible*dim);

@@ -72,7 +72,7 @@ export function createMountainRobot(quality) {
   const pupils=eyeMeshes.map((eye,i)=>{const pupil=new THREE.Mesh(new THREE.CircleGeometry(.025,24),new THREE.MeshBasicMaterial({color:'#183747',transparent:true,depthWrite:false,depthTest:false}));pupil.name=`robot-pupil-${i}`;pupil.position.z=.01;pupil.renderOrder=21;eye.add(pupil);return pupil;});
   const glints=eyeMeshes.map((eye,i)=>{const glint=new THREE.Mesh(new THREE.CircleGeometry(.010,16),new THREE.MeshBasicMaterial({color:'#effcff',transparent:true,depthWrite:false,depthTest:false,toneMapped:false}));glint.name=`robot-eye-glint-${i}`;glint.renderOrder=22;glint.position.set(-.023,.033,.018);eye.add(glint);return glint;});
   const materials=[shellMaterial,faceMaterial];
-  return {root,eyes,projector,
+  return {root,shell,eyes,projector,
     update(pose,opacity){
       root.visible=opacity>.001;for(const mat of materials)mat.opacity=opacity;
       const eyeOpacity=opacity*(pose.awake??1);eyeMaterial.opacity=eyeOpacity;

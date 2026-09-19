@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import * as THREE from 'three';
 import {resolveQuality} from '../../共享组件/renderQuality.js';
 import {createIntelligenceDirector,intelligenceCycle,intelligenceTiming} from '../src/impact/intelligenceDirector.js';
-import {journeyFrame,stageStarts,stageFrames,crystalVertex,intelligencePresentation} from '../src/impact/intelligenceTimeline.js';
+import {journeyFrame,stageStarts,stageFrames,intelligencePresentation} from '../src/impact/intelligenceTimeline.js';
 import {intelligenceWorld} from '../src/impact/intelligenceWorld.js';
 import {intelligenceStages} from '../src/impact/intelligenceContent.js';
 import {blinkAt} from '../src/impact/intelligencePresence.js';
@@ -29,7 +29,6 @@ test('case reading protects the exact time and returns to the prior playback mod
 test('manual inactivity resumes after 90 seconds and activity restarts the interval',()=>{const d=createIntelligenceDirector();d.select(3);advance(d,12);advance(d,60);d.activity();advance(d,89);assert.equal(d.snapshot().mode,'manual');advance(d,1.1);assert.equal(d.snapshot().mode,'auto');});
 test('reduced motion remains static and allows direct stage selection',()=>{const d=createIntelligenceDirector({reduced:true});advance(d,200);near(d.snapshot().time,16);d.select(5);near(d.snapshot().time,100);d.resume();advance(d,200);near(d.snapshot().time,100);});
 test('invalid selections and modified snapshots cannot corrupt the clock',()=>{const d=createIntelligenceDirector();for(const x of [-1,6,NaN,null,'2'])assert.equal(d.select(x),false);const s=d.snapshot();s.weights.fill(9);s.time=22;near(d.snapshot().time,0);assert.deepEqual(d.snapshot().weights,[1,0,0,0,0,0]);});
-test('cube geometry actually becomes an elongated diamond with invariant vertex correspondence',()=>{assert.deepEqual(crystalVertex(1.4,1.4,1.4,0),[1.4,1.4,1.4]);const top=crystalVertex(0,1.4,0,1),side=crystalVertex(1.4,0,0,1);near(top[1],2.1);near(side[0],1.5);for(let p=0;p<=1;p+=.05)assert.ok(crystalVertex(1.4,1.4,-1.4,p).every(Number.isFinite));});
 function rig(aspect=16/9){
  const originalDocument=globalThis.document,load=THREE.TextureLoader.prototype.load;
  const context=new Proxy({createLinearGradient:()=>({addColorStop(){}}),measureText:text=>({width:text.length*55})},{get:(o,key)=>o[key]??(()=>{}),set:(o,key,v)=>(o[key]=v,true)});
@@ -41,6 +40,26 @@ function rig(aspect=16/9){
  return {world,camera,loaded,update};
 }
 function visibleState(root){const a=[];root.traverseVisible(o=>{if(o.material)a.push([o.name,...o.matrixWorld.elements,o.material.opacity]);});return a;}
+test('the cube surface reconstructs into the approved mountain shell before its material handoff',()=>{
+ const {world,update}=rig(),glass=world.root.getObjectByName('persistent-data-crystal'),robot=world.root.getObjectByName('robot-silver-shell');
+ const source=glass.geometry.attributes.position,target=glass.geometry.morphAttributes.position[0],bounds=new THREE.Box3().setFromBufferAttribute(target);
+ robot.geometry.computeBoundingBox();const shellBounds=robot.geometry.boundingBox.clone().applyMatrix4(robot.matrix);
+ assert.equal(source.count,target.count);assert.ok(Array.from(target.array).every(Number.isFinite));
+ for(const axis of ['x','y','z']){near(bounds.min[axis],shellBounds.min[axis],.065);near(bounds.max[axis],shellBounds.max[axis],.065);}
+ update(24);near(glass.morphTargetInfluences[0],0);update(30.5);near(glass.morphTargetInfluences[0],1);
+ assert.ok(glass.visible&&robot.parent.visible);near(robot.parent.scale.x,1);
+ update(29);assert.equal(world.root.getObjectByName('data-lattice').visible,false);
+ update(31.2);assert.equal(glass.visible,false);assert.ok(robot.material.opacity>.99);
+ disposeTree(world.root);
+});
+test('reconstruction continues the cube rotation and settles without a backwards revolution',()=>{
+ const {world,update}=rig(),body=world.root.getObjectByName('data-to-assistant');update(24);let previous=body.rotation.y,total=0;
+ for(let t=24.05;t<=30.5;t+=.05){
+  update(t);const delta=Math.atan2(Math.sin(body.rotation.y-previous),Math.cos(body.rotation.y-previous));
+  assert.ok(delta>-.003&&delta<.06,`abrupt reconstruction turn at ${t}: ${delta}`);total+=delta;previous=body.rotation.y;
+ }
+ assert.ok(total>1&&total<3);disposeTree(world.root);
+});
 test('only the product asset is loaded; all textures stay reachable for shared disposal',()=>{const {world,loaded}=rig();assert.equal(loaded.length,1);const reachable=new Set();world.root.traverse(o=>{if(o.material?.map)reachable.add(o.material.map);});assert.ok(reachable.has(loaded[0]));for(let i=1;i<5;i++)for(let status=0;status<3;status++)assert.equal(world.root.getObjectByName(`file-status-${i}-${status}`).material.map,world.root.getObjectByName(`file-status-0-${status}`).material.map);const resources=new Map();world.root.traverse(o=>{for(const r of [o.geometry,o.material,o.material?.map])if(r)resources.set(r,0);});resources.forEach((_,r)=>r.addEventListener('dispose',()=>resources.set(r,resources.get(r)+1)));disposeTree(world.root);assert.ok([...resources.values()].every(n=>n===1));});
 test('three complete loops reuse every object, geometry, index buffer and product texture',()=>{const {world,update}=rig(),before=[];world.root.traverse(o=>before.push([o,o.geometry,o.material]));for(let t=0;t<324;t+=.5){update(t);let n=0;world.root.traverse(o=>{assert.equal(o,before[n][0]);assert.equal(o.geometry,before[n][1]);assert.equal(o.material,before[n][2]);assert.ok(o.matrixWorld.elements.every(Number.isFinite));n++;});assert.equal(n,before.length);}disposeTree(world.root);});
 test('the exact visual loop seam retains one identical review, with no foreign visible objects',()=>{const {world,update}=rig();update(0);const first=visibleState(world.root);update(107.9999);const last=visibleState(world.root);assert.equal(last.length,first.length);first.forEach((record,i)=>record.forEach((v,j)=>typeof v==='number'?near(v,last[i][j],.0001):assert.equal(v,last[i][j])));assert.ok(first.some(v=>v[0]==='record-0'));disposeTree(world.root);});
@@ -58,7 +77,7 @@ test('the centre letter and surrounding interface share an exact opening and clo
  }
  disposeTree(world.root);
 });
-test('every temporal boundary has continuous visible object transforms and opacity',()=>{const {world,update}=rig();for(const time of [7,17,18,25,27,30,32,33,34,37,39,40.5,43,45.5,48,49,50,51,54,55,56,56.5,58.7,59,59.3,60.5,61.5,62.9,64,65,66.5,68,70,73,75.5,76,79,85,90,93,95,96,97,98,100,106]){update(time-.00001);const before=new Map();world.root.traverse(o=>before.set(o,{matrix:[...o.matrixWorld.elements],opacity:o.material?.opacity,color:o.material?.color?.toArray(),visible:o.visible}));update(time+.00001);world.root.traverse(o=>{const b=before.get(o);if(o.visible&&b.visible&&o.material?.opacity>.01){o.matrixWorld.elements.forEach((v,i)=>near(v,b.matrix[i],.003));near(o.material.opacity,b.opacity,.003);o.material.color?.toArray().forEach((v,i)=>near(v,b.color[i],.003));}});}disposeTree(world.root);});
+test('every temporal boundary has continuous visible object transforms and opacity',()=>{const {world,update}=rig();for(const time of [7,17,18,25,27,28.6,29,29.2,29.5,30,30.5,31.2,32,33,34,37,39,40.5,43,45.5,48,49,50,51,54,55,56,56.5,58.7,59,59.3,60.5,61.5,62.9,64,65,66.5,68,70,73,75.5,76,79,85,90,93,95,96,97,98,100,106]){update(time-.00001);const before=new Map();world.root.traverse(o=>before.set(o,{matrix:[...o.matrixWorld.elements],opacity:o.material?.opacity,color:o.material?.color?.toArray(),visible:o.visible}));update(time+.00001);world.root.traverse(o=>{const b=before.get(o);if(o.visible&&b.visible&&o.material?.opacity>.01){o.matrixWorld.elements.forEach((v,i)=>near(v,b.matrix[i],.003));near(o.material.opacity,b.opacity,.003);o.material.color?.toArray().forEach((v,i)=>near(v,b.color[i],.003));}});}disposeTree(world.root);});
 for(const [w,h] of [[1366,768],[1920,1080],[3840,2160],[1200,900]])test(`hero contents stay in the right-side safe area at ${w}x${h}`,()=>{const {world,camera,update}=rig(w/h);for(const t of [0,16,31,47,67,77,85,100,107]){update(t);for(const name of ['record-0','persistent-beauty-product','continuous-palette-craft']){const object=world.root.getObjectByName(name);if(!object.visible)continue;const center=new THREE.Vector3();object.getWorldPosition(center);const p=center.project(camera);assert.ok(p.x>=-.22&&p.x<=.94,`${name} at ${t}: ${p.x}`);assert.ok(p.y>-.57&&p.y<.7,`${name} at ${t}: ${p.y}`);}}disposeTree(world.root);});
 test('all six stages retain distinct bilingual beauty examples without invented business outcomes',()=>{assert.equal(intelligenceStages.length,6);assert.equal(new Set(intelligenceStages.map(s=>s.id)).size,6);for(const s of intelligenceStages){for(const value of [s.name,s.description,s.example.title,s.example.summary,s.example.outcome,...s.example.steps])assert.ok(value.length===2&&value.every(t=>typeof t==='string'&&t.length));assert.doesNotMatch(JSON.stringify(s.example),/儿童|香水|\d+%/);}});
 
@@ -94,6 +113,19 @@ test('independently pivoted colour pans and hinge register exactly with the fini
   }
   for(let i=0;i<4;i++)assert.equal(world.root.getObjectByName(`palette-pan-wall-${i}`).visible,false);
  }
+ disposeTree(world.root);
+});
+test('the palette belongs to its proposal plane before turning toward the processing view',()=>{
+ const {world,update}=rig(),craft=world.root.getObjectByName('continuous-palette-craft'),card=world.root.getObjectByName('analysis-card-4'),front=new THREE.Quaternion();
+ for(const t of [40,47,50,51]){update(t);near(craft.quaternion.angleTo(card.quaternion),0);}
+ update(53);assert.ok(craft.quaternion.angleTo(front)<card.quaternion.angleTo(front));
+ update(57);near(craft.quaternion.angleTo(front),0);disposeTree(world.root);
+});
+test('proposal writing retires before the expanding palette reaches its heading',()=>{
+ const {world,update}=rig(),palette=world.root.getObjectByName('palette-pan-0');
+ for(const t of [51.2,52,52.8,53.5]){update(t);assert.ok(palette.material.opacity>.99,`product faded with the printed proposal at ${t}`);}
+ update(52.8);for(let i=0;i<5;i++)assert.ok(world.root.getObjectByName(`analysis-card-${i}`).material.opacity<.02);
+ update(53.5);for(let i=0;i<5;i++)assert.equal(world.root.getObjectByName(`analysis-card-${i}`).visible,false);
  disposeTree(world.root);
 });
 

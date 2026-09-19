@@ -4,7 +4,7 @@ import {createDirectionModel,createPaletteCraft} from './intelligenceCraft.js';
 import {informationFragments} from './intelligenceResearch.js';
 import {createMountainRobot} from './intelligenceRobot.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
-import {crystalVertex,lerp,ramp} from './intelligenceTimeline.js';
+import {lerp,ramp} from './intelligenceTimeline.js';
 import {canvasTexture,label,rounded,cardTexture,reviewTexture,commerceTexture,commerceDetails,purchaseReviewTexture,reportTexture,translate} from './intelligenceSurfaces.js';
 export {canvasTexture,label,rounded};
 export function texturePlane(texture,w,h,name){const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide});const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),material);mesh.name=name;return mesh;}
@@ -14,30 +14,47 @@ export function textPlane(text,name,width=3.2){return texturePlane(textTexture(t
 function glow(name,color='#76bce9'){
  const mesh=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{opacity:{value:0},tint:{value:new THREE.Color(color)}},vertexShader:'varying vec2 v;void main(){v=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 v;uniform float opacity;uniform vec3 tint;void main(){float d=length((v-.5)*2.);float a=exp(-d*d*5.)*smoothstep(1.,.7,d);gl_FragColor=vec4(tint,a*opacity);}'}));mesh.name=name;return mesh;
 }
-export function createCrystal(){
- // Each cube surface triangle retains its identity as its vertices become crystal facets.
- const geometry=new THREE.BoxGeometry(2.8,2.8,2.8,2,2,2).toNonIndexed(),position=geometry.attributes.position;
- const target=geometry.clone();for(let i=0;i<position.count;i++)target.attributes.position.setXYZ(i,...crystalVertex(position.getX(i),position.getY(i),position.getZ(i),1));target.computeVertexNormals();
- geometry.setAttribute('gemTarget',target.attributes.position.clone());geometry.morphAttributes.position=[target.attributes.position.clone()];geometry.morphAttributes.normal=[target.attributes.normal.clone()];target.dispose();
- const material=new THREE.MeshPhysicalMaterial({color:'#c4dcf1',metalness:.12,roughness:.065,transmission:.96,thickness:1.7,ior:1.68,clearcoat:1,envMapIntensity:1.8,transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false,flatShading:true});
+function shellMapping(shell){
+ // Sample the approved shell once, before it joins the animated body. A radial
+ // mapping preserves the cube surface topology and its correspondence with the
+ // rounded mountain; no geometry or raycasts are created during playback.
+ shell.updateMatrixWorld(true);shell.geometry.computeBoundingBox();
+ const bounds=shell.geometry.boundingBox.clone().applyMatrix4(shell.matrixWorld),center=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3()).multiplyScalar(.5);
+ const ray=new THREE.Raycaster(),direction=new THREE.Vector3(),from=new THREE.Vector3(),cache=new Map();
+ return (x,y,z)=>{
+  const key=`${x},${y},${z}`;if(cache.has(key))return cache.get(key);
+  const radius=Math.max(Math.abs(x),Math.abs(y),Math.abs(z))/1.4;
+  direction.set(x*size.x,y*size.y,z*size.z).normalize();from.copy(center).addScaledVector(direction,16);ray.set(from,direction.negate());
+  const hit=ray.intersectObject(shell,false)[0];if(!hit)throw new Error('The cube-to-mountain surface projection missed its shell');
+  const point=hit.point.sub(center).multiplyScalar(radius).add(center).toArray();cache.set(key,point);return point;
+ };
+}
+export function createCrystal(robotShell){
+ // Each cube surface triangle becomes part of the same mountain silhouette.
+ const project=shellMapping(robotShell),geometry=new THREE.BoxGeometry(2.8,2.8,2.8,12,12,12).toNonIndexed(),position=geometry.attributes.position;
+ const target=position.clone();for(let i=0;i<position.count;i++)target.setXYZ(i,...project(position.getX(i),position.getY(i),position.getZ(i)));
+ // Keep the broad glass reflections quiet during reconstruction. The approved
+ // metallic shell supplies its own smooth bevels as the silhouette settles.
+ geometry.morphAttributes.position=[target];
+ const material=new THREE.MeshPhysicalMaterial({color:'#c4dcf1',metalness:.08,roughness:.18,transmission:.92,thickness:1.7,ior:1.45,clearcoat:.5,clearcoatRoughness:.24,envMapIntensity:1.15,transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false});
  const shell=new THREE.Mesh(geometry,material);shell.name='persistent-data-crystal';
- const cutMaterial=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,uniforms:{opacity:{value:0},morph:{value:0}},vertexShader:`attribute vec3 gemTarget;uniform float morph;varying vec3 viewP;void main(){vec4 p=modelViewMatrix*vec4(mix(position,gemTarget,morph),1.);viewP=p.xyz;gl_Position=projectionMatrix*p;}`,fragmentShader:`varying vec3 viewP;uniform float opacity;void main(){vec3 N=normalize(cross(dFdx(viewP),dFdy(viewP)));vec3 V=normalize(-viewP);if(dot(N,V)<0.)N=-N;vec3 R=reflect(-V,N);float f=pow(1.-abs(dot(N,V)),3.);float strip=pow(max(0.,1.-abs(R.x*.75+R.y*.4-.12)),34.);float second=pow(max(0.,1.-abs(R.x*.6-R.y*.8+.4)),26.);vec3 tint=vec3(.008,.019,.035)+vec3(.045,.09,.16)*(R.y*.5+.5)+vec3(.85,.94,1.)*strip+vec3(.3,.38,.46)*second;gl_FragColor=vec4(tint+vec3(.25,.45,.6)*f,opacity*(.3+.7*f+.75*strip+.3*second));}`});
- const inner=new THREE.Mesh(geometry,cutMaterial);inner.name='crystal-inner-facets';inner.scale.set(.92,.93,.90);inner.rotation.y=.14;shell.add(inner);
  const corners=[[-1.4,-1.4,-1.4],[1.4,-1.4,-1.4],[-1.4,1.4,-1.4],[1.4,1.4,-1.4],[-1.4,-1.4,1.4],[1.4,-1.4,1.4],[-1.4,1.4,1.4],[1.4,1.4,1.4]],segments=[];
  for(let i=0;i<8;i++)for(let j=i+1;j<8;j++)if(corners[i].filter((v,k)=>v!==corners[j][k]).length===1)for(let s=0;s<8;s++)for(const v of [s/8,(s+1)/8])segments.push(corners[i].map((p,k)=>lerp(p,corners[j][k],v)));
  const edgeGeometry=new THREE.BufferGeometry();edgeGeometry.setAttribute('position',new THREE.Float32BufferAttribute(segments.flat(),3));
+ const edgeTargets=segments.map(v=>project(...v));
  const edges=new THREE.LineSegments(edgeGeometry,new THREE.LineBasicMaterial({color:'#c9e8fa',transparent:true,opacity:.7,depthWrite:false}));edges.name='persistent-crystal-edges';shell.add(edges);
  // One instanced lattice, no object or material creation during playback.
  const cellPositions=[];for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])cellPositions.push(new THREE.Vector3(x*.69,y*.69,z*.69));
+ const cellTargets=cellPositions.map(v=>project(v.x,v.y,v.z));
  const cells=new THREE.InstancedMesh(new RoundedBoxGeometry(1.31,1.31,1.31,3,.045),new THREE.MeshPhysicalMaterial({color:'#a4c5df',metalness:.08,roughness:.08,transmission:.8,thickness:.7,ior:1.5,transparent:true,opacity:.7,depthWrite:false,envMapIntensity:1.3}),cellPositions.length);cells.name='data-lattice';cells.frustumCulled=false;
  cellPositions.forEach((v,i)=>cells.setColorAt(i,new THREE.Color().setHSL(.57+(i%4)*.012,.16,.58+(i%3)*.06)));
  const dummy=new THREE.Object3D();
- return {shell,inner,edges,cells,morph(value,time){
-  shell.morphTargetInfluences[0]=value;inner.morphTargetInfluences[0]=value;inner.material.uniforms.morph.value=value;
-  const p=edgeGeometry.attributes.position;segments.forEach((v,i)=>p.setXYZ(i,...crystalVertex(...v,value)));p.needsUpdate=true;
-  const collapse=ramp(time,24,32);
+ return {shell,edges,cells,morph(value,time){
+  shell.morphTargetInfluences[0]=value;material.thickness=lerp(1.7,.66,value);
+  const p=edgeGeometry.attributes.position;segments.forEach((v,i)=>p.setXYZ(i,...v.map((c,k)=>lerp(c,edgeTargets[i][k],value))));p.needsUpdate=true;
+  const collapse=ramp(time,24,29);
   cellPositions.forEach((v,i)=>{
-   const g=ramp(time,9+i*.35,12.3+i*.35),to=crystalVertex(v.x,v.y,v.z,value);
+   const g=ramp(time,9+i*.35,12.3+i*.35),to=[lerp(v.x,cellTargets[i][0],value),lerp(v.y,cellTargets[i][1],value),lerp(v.z,cellTargets[i][2],value)];
    const breathing=(.025+.025*Math.sin(time*.75+i*.45))*(1-collapse);
    const scanned=ramp(time,19+(1-v.y)*1.3,20+(1-v.y)*1.3)*(1-ramp(time,23,25));
    const spread=1+breathing+scanned*.17;
@@ -51,8 +68,7 @@ function clipToPage(mesh){const band={value:new THREE.Vector2(-1e6,1e6)};mesh.us
 
 export function createJourneyObjects(manager,quality){
  const root=new THREE.Group();root.name='continuous-value-journey';
- const crystal=createCrystal(),body=new THREE.Group();body.name='data-to-assistant';body.add(crystal.shell,crystal.cells);root.add(body);
- const robot=createMountainRobot(quality);body.add(robot.root);
+ const robot=createMountainRobot(quality),crystal=createCrystal(robot.shell),body=new THREE.Group();body.name='data-to-assistant';body.add(crystal.shell,crystal.cells,robot.root);root.add(body);
  const ambience=glow('exhibit-light-pool','#2d6094');ambience.position.set(.5,.1,-2);ambience.scale.set(12,9,1);root.add(ambience);
  const floor=glow('contact-light','#6191ae');floor.position.set(0,-2.4,-.5);floor.scale.set(6,.6,1);root.add(floor);
  const scan=new THREE.Mesh(new THREE.PlaneGeometry(3,3),new THREE.MeshBasicMaterial({color:'#b3e3ff',transparent:true,side:THREE.DoubleSide,depthWrite:false}));scan.rotation.x=Math.PI/2;scan.name='analysis-scan';body.add(scan);
