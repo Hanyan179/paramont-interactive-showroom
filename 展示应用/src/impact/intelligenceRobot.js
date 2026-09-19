@@ -77,7 +77,7 @@ export function createMountainRobot(quality) {
       root.visible=opacity>.001;for(const mat of materials)mat.opacity=opacity;
       const eyeOpacity=opacity*(pose.awake??1);eyeMaterial.opacity=eyeOpacity;
       const happy=pose.happy||0,rejected=pose.rejected||0,selected=pose.selected||0,thinking=pose.thinking||0,impatient=pose.impatient||0,t=pose.reactionTime||0;
-      const joy=Math.max(happy,selected*.50),surprise=pose.surprise||0;
+      const joy=Math.max(happy,selected*.72),surprise=pose.surprise||0,confirm=pose.confirm||0;
       eyes.position.set(pose.eyeX*.38+impatient*.035,.13+pose.eyeY*.24+impatient*.028,.385);eyes.scale.y=pose.blink;
       eyeMeshes.forEach((mesh,i)=>{
         const p=mesh.geometry.attributes.position,halfWidth=.160-surprise*.018;
@@ -94,10 +94,9 @@ export function createMountainRobot(quality) {
         glints[i].material.opacity=eyeOpacity*surprise*(1-joy);glints[i].visible=glints[i].material.opacity>.001;
       });
       // Anticipation, reaction and settle have different timing; movements remain restrained.
-      const nod=selected*Math.sin((t-48)*5)*Math.exp(-Math.max(0,t-48)*.55);
-      root.position.y=happy*.10+selected*.055+surprise*.025-impatient*.045;
+      root.position.y=happy*.10+selected*.055+surprise*.025-confirm*.065-impatient*.045;
       root.rotation.z=rejected*Math.sin((t-40.8)*7)*.026+thinking*Math.sin(t*1.2)*.012-impatient*.024;
-      root.rotation.x=nod*.12;
+      root.rotation.x=confirm*.105;
       root.userData.expression=selected>.5?'selected':happy>.5?'happy':rejected>.5?'skeptical':impatient>.5?'impatient':thinking>.4?'focused':'neutral';
     }
   };

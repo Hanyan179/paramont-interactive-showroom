@@ -318,6 +318,15 @@ test('the robot blinks between reactions without hiding their expressive peaks',
  for(const t of [41.4,41.6,42,44.5,47.9,48.6,49,69.8])assert.ok(blinkAt(t)>.99,`expression hidden at ${t}`);
  for(const t of [40.8,55.35,62.55,70.75,76.25])assert.ok(blinkAt(t)<.2,`missing natural blink at ${t}`);
 });
+test('recognition follows the palette focus and one confirming nod settles before craft',()=>{
+ const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),eye=world.root.getObjectByName('robot-left-eye'),glint=world.root.getObjectByName('robot-eye-glint-0'),palette=world.root.getObjectByName('analysis-card-4'),previous=world.root.getObjectByName('analysis-card-3');
+ for(const t of [46.6,47.4,47.8,47.99]){update(t);assert.equal(glint.visible,false,`recognition starts on the previous proposal at ${t}`);near(eye.userData.curvature,0);}
+ update(48.35);assert.ok(palette.position.z>previous.position.z);assert.ok(glint.material.opacity>.3);assert.ok(eye.userData.aperture>.09);near(robot.rotation.x,0);
+ update(49);assert.equal(robot.userData.expression,'selected');assert.ok(eye.userData.curvature>.65);assert.ok(robot.rotation.x>.09);
+ for(let t=49.6;t<53;t+=.1){update(t);near(robot.rotation.x,0);}
+ update(60.2);const gaze=world.root.getObjectByName('robot-eyes').position.toArray();update(61.5);assert.notDeepEqual(world.root.getObjectByName('robot-eyes').position.toArray(),gaze);near(robot.rotation.x,0);
+ disposeTree(world.root);
+});
 
 test('one robot remains alongside the selected product and becomes the commerce header logo',()=>{const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),body=robot.parent,product=world.root.getObjectByName('persistent-beauty-product');update(77);assert.ok(robot.visible&&product.visible);assert.equal(robot.userData.expression,'happy');const size=body.scale.x;update(85);assert.equal(world.root.getObjectByName('mountain-robot'),robot);assert.ok(robot.visible&&product.visible);assert.ok(body.scale.x<size*.3);assert.ok(body.position.x<-3&&body.position.y>2.5);update(90);assert.equal(robot.visible,false);disposeTree(world.root);});
 test('the complete robot clears the product silhouette throughout its flight into the header',()=>{

@@ -24,8 +24,11 @@ export function presenceAt(t){
  const pulse=(a,b,c,d)=>ramp(t,a,b)*(1-ramp(t,c,d));
  const rejected=pulse(41,41.4,42,42.6),impatient=pulse(44,44.4,45,45.6);
  const happy=Math.max(pulse(30.3,30.9,33.2,34),pulse(69,69.6,77,80));
- const selected=pulse(48,48.6,51,52),surprise=pulse(47.4,47.9,48.7,49.3),thinking=Math.max(pulse(35,37,40.5,41),pulse(53,55,67,69));
- return {awake,look,rejected,impatient,happy,selected,surprise,thinking,reactionTime:t,turn:ramp(t,34.6,37.4)*(1-ramp(t,75,83)),float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:(-.16+Math.sin((t-37)*1.15)*.46)*look,scanX:Math.sin((t-37)*1.15)*1.7};
+ // Recognition belongs to the palette entering the foreground at 48 seconds,
+ // not to the previous highlighter. One confirming nod follows that glance.
+ const surprise=pulse(48.05,48.4,48.6,49.05),selected=pulse(48.45,49,51,52),confirm=pulse(48.5,48.85,49.15,49.55);
+ const search=look*(1-ramp(t,48.5,50)),thinking=Math.max(pulse(35,37,40.5,41),pulse(53,55,67,69));
+ return {awake,look,search,rejected,impatient,happy,selected,surprise,confirm,thinking,reactionTime:t,turn:ramp(t,34.6,37.4)*(1-ramp(t,75,83)),float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:(-.16+Math.sin((t-37)*1.15)*.46)*look,scanX:Math.sin((t-37)*1.15)*1.7};
 }
 // Discrete letters over a smooth layout envelope; reverse at the end makes G → G seamless.
 export function typedCount(t,length,index=0){

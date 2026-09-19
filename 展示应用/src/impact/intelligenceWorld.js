@@ -40,7 +40,7 @@ export function intelligenceWorld(quality,manager){
    // Continue the cube's turn into the nearest front-facing orientation. Raw
    // Euler interpolation would reverse through nearly a full revolution.
    const cubeTurn=.45+.24*(t-8)*ramp(t,7,12),turnDelta=Math.atan2(Math.sin(.12-cubeTurn),Math.cos(.12-cubeTurn)),bodyTurn=cubeTurn+turnDelta*f.crystal;
-   o.body.rotation.set(lerp(.17,.025,f.crystal)+presencePose.float.x*.4,Math.atan2(Math.sin(bodyTurn),Math.cos(bodyTurn))-presencePose.turn*.7+presencePose.float.y*.6+Math.sin((t-38)*1.15-.35)*.20*presencePose.look,lerp(-.04,-.02,f.crystal)+presencePose.float.z);o.body.rotation.y+=idleSway;o.body.position.y+=idleSway*.35;
+   o.body.rotation.set(lerp(.17,.025,f.crystal)+presencePose.float.x*.4,Math.atan2(Math.sin(bodyTurn),Math.cos(bodyTurn))-presencePose.turn*.7+presencePose.float.y*.6+Math.sin((t-38)*1.15-.35)*.20*presencePose.search,lerp(-.04,-.02,f.crystal)+presencePose.float.z);o.body.rotation.y+=idleSway;o.body.position.y+=idleSway*.35;
    o.crystal.morph(f.crystal,t);alpha(o.crystal.shell,glassVisibility*lerp(.12,.34,ramp(t,25,28.6)));alpha(o.crystal.edges,glassVisibility*.23*(1-ramp(t,29.2,30.5)));
    alpha(o.crystal.cells,ramp(t,13,16)*(1-ramp(t,26,29))*.48*lerp(1,.38,ramp(t,20,24)));
    const robotAlpha=ramp(t,28.6,31.2)*(1-ramp(t,86,88));
