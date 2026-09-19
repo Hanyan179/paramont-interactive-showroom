@@ -6,12 +6,11 @@ export const intelligenceLayout={heroX:.70,heroY:.44,detailX:.70,detailY:.44};
 const HEIGHT=2*Math.tan(THREE.MathUtils.degToRad(23))*32,TAU=Math.PI*2;
 const reportStarts=[[-2.6,1.3],[0,1.8],[2.6,1.3],[-2.6,-1.3],[0,-1.8],[2.6,-1.3]];
 const reviewSlots=[[0,0],[3.1,1.6],[-3.1,1.6],[0,2.4],[-3.1,-1.7],[3.1,-1.7]];
-// Editorial rows leave space for the six larger review cards. The coprime stride
-// distributes the entrances across the field without random text collisions.
-const informationSlots=[3.15,2.45,1.75,1.05,.35,-.35,-1.05,-1.75,-2.45,-3.15].flatMap(y=>
- [-4.15,-2.49,-.83,.83,2.49,4.15].filter(x=>!reviewSlots.some(([rx,ry],i)=>
-  Math.abs(x-rx)<(i===0?2.1:.9)+.77&&Math.abs(y-ry)<(i===0?.66:.31)+.13
- )).map(x=>[x,y]));
+// Each report receives its own two-column stream. Matching source and target
+// order preserves reading gaps during convergence, as well as at rest.
+const streamColumns=[[-4.15,-2.49],[-.83,.83],[2.49,4.15]];
+const streamRows=[[3.15,2.45,1.05],[3.15,1.75,1.05],[3.15,2.45,1.05],[-1.05,-2.45,-3.15],[-1.05,-1.75,-2.45],[-1.05,-2.45,-3.15]];
+const informationSlots=streamRows.flatMap((rows,group)=>rows.flatMap(y=>streamColumns[group%3].map(x=>[x,y])));
 // Each of the six source cards has one destination on a broad cube face.
 const cardSeats=[[0,0,1.48,0,0],[1.48,0,0,0,Math.PI/2],[0,0,-1.48,0,Math.PI],[-1.48,0,0,0,-Math.PI/2],[0,1.48,0,-Math.PI/2,0],[0,-1.48,0,Math.PI/2,0]];
 export function intelligenceWorld(quality,manager){
@@ -43,7 +42,10 @@ export function intelligenceWorld(quality,manager){
    const robotAlpha=ramp(t,27,32)*(1-ramp(t,86,88));
    // The same robot stays beside the files and product, then docks as the page logo.
    const logoDock=ramp(t,79,85),reviewDock=ramp(t,34,38);
-   o.body.position.x=lerp(o.body.position.x,-3.65,logoDock);o.body.position.y=lerp(o.body.position.y,2.67,logoDock);o.body.position.z=lerp(0,.34,logoDock);
+   // An upper arc keeps the whole face clear of the product on its way to the
+   // header. A straight line would send the eyes through the palette mirror.
+   const logoRest=1-logoDock,logoTravel=ramp(logoDock,.12,1);
+   o.body.position.x=lerp(o.body.position.x+.16*ramp(t,70,76),-3.65,logoTravel);o.body.position.y=o.body.position.y*logoRest**3+13.2*logoRest*logoDock+2.67*logoDock**3;o.body.position.z=lerp(0,.34,logoDock);
    o.body.scale.setScalar(lerp(lerp(1.22,.64,reviewDock),.17,logoDock));
    o.body.rotation.x*=1-logoDock;o.body.rotation.y*=1-logoDock;o.body.rotation.z*=1-logoDock;
    o.robot.root.scale.setScalar(lerp(.7,1,ramp(t,27,32)));o.cursor.visible=false;
@@ -90,8 +92,8 @@ export function intelligenceWorld(quality,manager){
     face.material.depthWrite=face.material.opacity>.90;
    });
    o.dataFragments.forEach((mesh,i)=>{
-    const group=mesh.userData.category,g=ramp(t,7.8+(i%6)*.13,10.3+(i%6)*.13),[startX,startY]=informationSlots[(i*13)%informationSlots.length];
-    const [rx,ry]=reportStarts[group];mesh.position.set(lerp(startX,rx+(i%3-1)*.35,g)+Math.sin(g*Math.PI)*.3,lerp(startY,ry+(i%2?-.22:.22),g),lerp(0,.65,g));mesh.scale.setScalar(lerp(.63,.16,g));alpha(mesh,ramp(t,3.8+i*.055,4.8+i*.055)*(1-ramp(g,.48,.94))*.82);
+    const group=mesh.userData.category,g=ramp(t,7.8+group*.08,10.3+group*.08),[startX,startY]=informationSlots[i],order=(i*13)%36;
+    const [rx,ry]=reportStarts[group];mesh.position.set(lerp(startX,rx+(i%2?.18:-.18),g),lerp(startY,ry+.25-Math.floor(i%6/2)*.25,g),lerp(0,.65,g));mesh.scale.setScalar(lerp(.63,.14,g));alpha(mesh,ramp(t,3.8+order*.055,4.8+order*.055)*(1-ramp(g,.48,.94))*.82);
    });
    const first=o.records[0],typing=first.userData.typing;
    const cursorVisible=(1-ramp(t,2.3,2.8))+ramp(t,104,107.5);

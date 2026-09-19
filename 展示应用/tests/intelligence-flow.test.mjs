@@ -176,6 +176,20 @@ test('source text retires before the six reports hold a clear reading beat',()=>
  }
  disposeTree(world.root);
 });
+test('the six information streams preserve reading gaps throughout convergence',()=>{
+ const {world,update}=rig();
+ for(let t=7.5;t<=11;t+=.05){
+  update(t);const bounds=[];world.root.traverseVisible(object=>{
+   if(!object.name.startsWith('data-fragment-')||object.material.opacity<.2)return;
+   object.geometry.computeBoundingBox();bounds.push({name:object.name,box:object.geometry.boundingBox.clone().applyMatrix4(object.matrixWorld)});
+  });
+  for(let i=0;i<bounds.length;i++)for(let j=i+1;j<bounds.length;j++){
+   const a=bounds[i].box,b=bounds[j].box,overlapX=Math.min(a.max.x,b.max.x)-Math.max(a.min.x,b.min.x),overlapY=Math.min(a.max.y,b.max.y)-Math.max(a.min.y,b.min.y);
+   assert.ok(overlapX<0||overlapY<0,`${bounds[i].name} crosses ${bounds[j].name} at ${t}`);
+  }
+ }
+ disposeTree(world.root);
+});
 test('the Data Assets stage stop holds six completed cube faces',()=>{
  const {world,update}=rig();update(stageFrames[0]);const body=world.root.getObjectByName('data-to-assistant'),point=new THREE.Vector3();
  for(let i=0;i<6;i++){
@@ -198,6 +212,26 @@ test('the robot blinks between reactions without hiding their expressive peaks',
 });
 
 test('one robot remains alongside the selected product and becomes the commerce header logo',()=>{const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),body=robot.parent,product=world.root.getObjectByName('persistent-beauty-product');update(77);assert.ok(robot.visible&&product.visible);assert.equal(robot.userData.expression,'happy');const size=body.scale.x;update(85);assert.equal(world.root.getObjectByName('mountain-robot'),robot);assert.ok(robot.visible&&product.visible);assert.ok(body.scale.x<size*.3);assert.ok(body.position.x<-3&&body.position.y>2.5);update(90);assert.equal(robot.visible,false);disposeTree(world.root);});
+test('the complete robot clears the product silhouette throughout its flight into the header',()=>{
+ // Alpha bounds of the authored 1254 px product image, excluding transparent
+ // margins. Project both objects because the hero sits in front of the robot.
+ const productBounds=new THREE.Box3(new THREE.Vector3(160/1254-.5,.5-1161/1254,0),new THREE.Vector3(1094/1254-.5,.5-78/1254,0));
+ for(const aspect of [1366/768,1920/1080,3840/2160,1200/900]){
+  const {world,camera,update}=rig(aspect),robot=world.root.getObjectByName('robot-silver-shell'),product=world.root.getObjectByName('persistent-beauty-product');
+  robot.geometry.computeBoundingBox();
+  const projected=(mesh,box)=>{
+   const result=new THREE.Box2();for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z]){
+    const p=new THREE.Vector3(x,y,z).applyMatrix4(mesh.matrixWorld).project(camera);result.expandByPoint(new THREE.Vector2(p.x,p.y));
+   }return result;
+  };
+  for(let t=79;t<=85;t+=.05){
+   update(t);const a=projected(robot,robot.geometry.boundingBox),b=projected(product,productBounds);
+   assert.ok(!a.intersectsBox(b),`robot crosses product at ${t} with aspect ${aspect}`);
+   assert.ok(a.min.x>-.22&&a.max.x<.94&&a.max.y<.90,`robot leaves the clear stage area at ${t}`);
+  }
+  disposeTree(world.root);
+ }
+});
 
 test('five proposal pages retain five distinct physical product silhouettes',()=>{const {world,update}=rig();update(47);for(const name of ['lip-oil-vial','blush-tube','skin-tint-bottle','palette-mirror']){const object=world.root.getObjectByName(name);assert.ok(object);assert.ok(object.material.opacity>.1);}assert.equal(world.root.getObjectByName('forecast-relief'),undefined);disposeTree(world.root);});
 test('fading products render after their own page instead of disappearing behind it',()=>{
