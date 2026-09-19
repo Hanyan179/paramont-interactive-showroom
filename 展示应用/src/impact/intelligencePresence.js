@@ -6,9 +6,9 @@ export function createProjection(){
  const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(new Float32Array(36*3),3));geometry.setAttribute('uv',new THREE.Float32BufferAttribute(new Float32Array(36*2),2));
  const mesh=new THREE.Mesh(geometry,volumeMaterial());mesh.name='right-to-left-projection';mesh.frustumCulled=false;
  const eye=new THREE.Vector3(),corners=Array.from({length:4},()=>new THREE.Vector3()),point=new THREE.Vector3();
- function aim(source,screen,root,scanY,progress,scanX=0){
+ function aim(source,screen,root,scanY,progress,scanX=0,halfHeight=1.95){
   root.updateMatrixWorld(true);source.getWorldPosition(eye);root.worldToLocal(eye);
-  const w=.22*progress,h=1.95;
+  const w=.22*progress,h=halfHeight;
   [[-w,scanY-h],[w,scanY-h],[w,scanY+h],[-w,scanY+h]].forEach(([x,y],i)=>{point.set(x+scanX,y,.12);screen.localToWorld(point);corners[i].copy(root.worldToLocal(point));});
   const p=geometry.attributes.position,u=geometry.attributes.uv;let index=0;
   for(let i=0;i<4;i++)for(const [v,uv] of [[eye,[.5,0]],[corners[i],[0,1]],[corners[(i+1)%4],[1,1]]]){p.setXYZ(index,v.x,v.y,v.z);u.setXY(index,...uv);index++;}
@@ -18,7 +18,15 @@ export function createProjection(){
  return {mesh,aim};
 }
 export function blinkAt(t){let blink=0;for(const at of [31.8,35.15,41.35,48.1])blink=Math.max(blink,ramp(t,at,at+.13)*(1-ramp(t,at+.16,at+.42)));return 1-.94*blink;}
-export function presenceAt(t){const awake=ramp(t,28,33),look=ramp(t,34,37),float=floatPose(t-28,.85*awake);return{awake,look,turn:ramp(t,34.6,37.4),float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:(-.16+Math.sin((t-37)*1.15)*.46)*look,scanX:Math.sin((t-37)*1.15)*1.7};}
+// Birth, professional review, rejection, choice and a shared product-page landing.
+export function presenceAt(t){
+ const awake=ramp(t,28,33),look=ramp(t,34,37)*(1-ramp(t,76,83)),float=floatPose(t-28,.85*awake);
+ const pulse=(a,b,c,d)=>ramp(t,a,b)*(1-ramp(t,c,d));
+ const rejected=Math.max(pulse(41,41.4,42,42.6),pulse(44,44.4,45,45.6));
+ const happy=Math.max(pulse(30.3,30.9,33.2,34),pulse(69,69.6,77,80));
+ const selected=pulse(48,48.6,52,53);
+ return {awake,look,rejected,happy,selected,reactionTime:t,turn:ramp(t,34.6,37.4)*(1-ramp(t,75,83)),float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:(-.16+Math.sin((t-37)*1.15)*.46)*look,scanX:Math.sin((t-37)*1.15)*1.7};
+}
 // Discrete letters over a smooth layout envelope; reverse at the end makes G → G seamless.
 export function typedCount(t,length,index=0){
  if(index===0){if(t>=104)return Math.max(1,length-Math.floor(ramp(t,104,107.5)*(length-1)));return Math.min(length,1+Math.floor(Math.max(0,t-.45)/.14));}

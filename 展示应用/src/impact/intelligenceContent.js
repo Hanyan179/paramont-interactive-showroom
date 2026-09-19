@@ -97,8 +97,8 @@ export const intelligenceStages = [
       "Reveal"
     ],
     "description": [
-      "从关联中提出明确的问题，让产品、趋势、客户感受与机会逐项显现。",
-      "Let product context, trends, customer sentiment and possible opportunities emerge from connected evidence."
+      "逐份审查趋势、偏好与机会资料，比较依据、排除不适合的方向，让值得继续的商品方案显现。",
+      "Review trend, preference and opportunity files, set unsuitable directions aside, and identify a product concept worth developing."
     ],
     "example": {
       "title": [
@@ -140,8 +140,8 @@ export const intelligenceStages = [
       "Choose"
     ],
     "description": [
-      "把市场趋势、客户偏好、预测与机会放在同一视野中，让推荐有依据、取舍可解释。",
-      "Bring trends, preferences, forecasts and opportunities into one view so recommendations have a clear rationale."
+      "聚焦选中的商品方案，保留推荐依据，让设计从信息卡片逐步成为可见的产品。",
+      "Focus the selected concept, retain its rationale, and let the design emerge from the information card as a tangible product."
     ],
     "example": {
       "title": [
