@@ -97,8 +97,8 @@ export const intelligenceStages = [
       "Reveal"
     ],
     "description": [
-      "将使用反馈、商品规格与设计研究汇成五个美妆方向，逐份检查形态与体验，选出值得继续的提案。",
-      "Bring feedback, product formats and design research into five beauty directions. Review their form and experience, then choose a proposal to develop."
+      "围绕随行彩妆的使用需求，比较五个美妆方向，检查形态、取用与待验证问题，再选出下一步提案。",
+      "Review five directions for portable beauty, comparing format, application and questions still to test before choosing what to develop."
     ],
     "example": {
       "title": [
@@ -106,26 +106,26 @@ export const intelligenceStages = [
         "Which of five beauty directions should move forward?"
       ],
       "summary": [
-        "比较唇油、腮红、轻透底妆、高光棒与眼影盘的形态和体验，演示如何形成一份值得打样的产品提案。",
-        "Compare lip oil, blush, skin tint, highlighter and a palette to illustrate how form and experience inform a proposal for sampling."
+        "以用途清楚、便于随行为本轮设计要求，比较唇油、腮红、轻透底妆、高光棒与眼影盘，演示如何选择下一份打样提案。",
+        "Use clear roles and portability as this design brief. Compare lip oil, blush, skin tint, highlighter and a palette to choose the next sampling proposal."
       ],
       "steps": [
         [
-          "查看形成判断的原始依据",
-          "Inspect the original evidence behind the hypothesis"
+          "按使用部位、产品形态和取用方式比较",
+          "Compare use area, product format and application"
         ],
         [
-          "区分公开规格、演示评价与原创判断",
-          "Distinguish public specifications, illustrative feedback and design judgments"
+          "将底妆兼容、色调匹配列为待验证项",
+          "Flag base compatibility and shade matching for testing"
         ],
         [
-          "明确仍需开展的使用验证",
-          "Identify the use testing still needed"
+          "选中四色与镜面组合，继续制作样品",
+          "Choose four shade roles with a mirror for sampling"
         ]
       ],
       "outcome": [
-        "留下机会假设及其依据。",
-        "Retain the opportunity hypothesis and its evidence."
+        "选择适合本轮设计任务的提案，保留验证边界。",
+        "Choose a proposal for this brief, keeping testing questions explicit."
       ]
     }
   },

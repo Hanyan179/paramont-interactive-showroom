@@ -5,7 +5,7 @@ import {informationFragments} from './intelligenceResearch.js';
 import {createMountainRobot} from './intelligenceRobot.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
 import {lerp,ramp} from './intelligenceTimeline.js';
-import {canvasTexture,label,rounded,cardTexture,reviewTexture,commerceTexture,commerceDetails,purchaseReviewTexture,reportTexture,translate} from './intelligenceSurfaces.js';
+import {canvasTexture,label,rounded,cardTexture,reviewNoteTexture,reviewTexture,commerceTexture,commerceDetails,purchaseReviewTexture,reportTexture,translate} from './intelligenceSurfaces.js';
 export {canvasTexture,label,rounded};
 export function texturePlane(texture,w,h,name){const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide});const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),material);mesh.name=name;return mesh;}
 export function alpha(mesh,value){mesh.visible=value>.001;if(mesh.material){mesh.material.opacity=value;if(mesh.material.uniforms?.opacity)mesh.material.uniforms.opacity.value=value;}}
@@ -108,6 +108,7 @@ export function createJourneyObjects(manager,quality){
  const directionModels=cards.slice(0,4).map((card,i)=>{const model=createDirectionModel(i);const positions=[[-.72,-.26,.20],[.80,-.42,.20],[.82,-.20,.20],[-.49,-.08,.20]];model.root.position.fromArray(positions[i]);model.root.scale.setScalar(i===1?.58:i===3?.67:.70);card.add(model.root);return model;});
  const statusMaps=['Reviewing','Passed over','Selected'].map(textTexture);
  const reviewBadges=cards.map((card,i)=>statusMaps.map((map,j)=>{const badge=texturePlane(map,1.15,1.15*160/1024,`file-status-${i}-${j}`);badge.position.set(i===1?-.55:.65,-.75,.15);badge.material.color.set(j===1?'#a39b97':j===2?'#b9e9df':'#aecce2');badge.renderOrder=12;card.add(badge);return badge;}));
+ const reviewNotes=cards.map((_,i)=>{const note=texturePlane(reviewNoteTexture(i),6.3,6.3*170/1280,`proposal-review-note-${i}`);note.renderOrder=15;root.add(note);return note;});
  const loader=new THREE.TextureLoader(manager),productTexture=loader.load('/media/intelligence-v3/beauty-palette.png');productTexture.colorSpace=THREE.SRGBColorSpace;
  const product=texturePlane(productTexture,1,1,'persistent-beauty-product');product.renderOrder=10;clipToPage(product);root.add(product);
  const craft=createPaletteCraft(productTexture);root.add(craft.root,craft.captionRoot);
@@ -119,5 +120,5 @@ export function createJourneyObjects(manager,quality){
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);clipToPage(details);
  const commerceMetrics=[];for(let i=0;i<4;i++){const mesh=textPlane(`${[128,136,148,162][i]} orders   /   ${[24,27,31,36][i]} reviews`,`commerce-metrics-${i}`,3.0);mesh.material.color.set('#594c3f');mesh.position.set(1.8,2.32,.12);commerce.add(mesh);commerceMetrics.push(mesh);}
  function setLanguage(lang){const maps=new Set();root.traverse(mesh=>{if(mesh.material?.map)maps.add(mesh.material.map);});maps.forEach(map=>map.userData.redraw?.(lang));records.forEach((mesh,i)=>installTyping(mesh,translate(texts[i],lang),mesh.material.map.image.getContext('2d'),i===0?3.8:2.5));root.userData.language=lang;}
- return {craft,directionModels,reviewBadges,setLanguage,reportFaces,dataFragments,root,body,robot,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
+ return {craft,directionModels,reviewBadges,reviewNotes,setLanguage,reportFaces,dataFragments,root,body,robot,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
 }

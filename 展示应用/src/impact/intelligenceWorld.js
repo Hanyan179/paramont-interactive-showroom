@@ -120,6 +120,10 @@ export function intelligenceWorld(quality,manager){
     o.reviewBadges[i].forEach((badge,j)=>{const status=j===0?Number(reviewing===i)*(1-ramp(rejected,0,.4))*(1-ramp(t,47.6,48)):j===1?ramp(rejected,.6,1)*(1-ramp(t,64,68)):Number(i===4)*ramp(t,48.2,49);alpha(badge,visible*status*(1-ramp(t,51,54)));});
     card.userData.reviewState=i===4&&t>=49?'selected':rejected>.5?'rejected':reviewing===i&&t<48?'reviewing':'waiting';
    });
+   o.reviewNotes.forEach((note,i)=>{
+    const start=38+i*2.5,end=i===4?51.4:start+2.5,enter=ramp(t,start,start+.3),leave=ramp(t,end-.3,end);
+    note.position.set(-.65,-3.10+.16*leave-.16*(1-enter),.7);alpha(note,enter*(1-leave));
+   });
    // The authored product is resolved at a fixed matching camera before the page pull-back.
    const imageToHero=ramp(t,68,75),imageToPage=ramp(t,79,85);
    o.product.position.set(lerp(-.65,-2.26,imageToPage),lerp(.25,.18,imageToPage),lerp(2,.3,imageToPage));o.product.scale.setScalar(lerp(lerp(4.15,4.9,imageToHero),3.48,imageToPage));o.product.rotation.set(0,0,0);alpha(o.product,ramp(t,73,75.5)*(1-ramp(t,88,91)));

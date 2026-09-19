@@ -56,6 +56,11 @@ export function cardTexture(index){
   line(cn?'原创概念 / 需样品验证':'AUTHORED CONCEPT / SAMPLE TESTING REQUIRED',48,h-23,18,'#8099ad');
  },1024,720);
 }
+export function reviewNoteTexture(index){return canvasTexture((c,w)=>{
+ const l=c.journeyLang==='zh'?0:1;c.textAlign='center';
+ label(c,l===0?'随行彩妆 / 概念评审':'PORTABLE BEAUTY / CONCEPT REVIEW',w/2,45,25,MUTED);
+ label(c,proposalDirections[index].review[l],w/2,126,49,INK);
+},1280,170);}
 export function reviewTexture(){return canvasTexture((c,w,h)=>{surface(c,w,h);label(c,'CUSTOMER FEEDBACK',42,52,21,BLUE);label(c,'5.0  /  5',w-170,52,22,INK);rule(c,42,79,w-84);label(c,'SOFT HAZE  ·  COLOUR COLLECTION',42,h-32,19,MUTED);},768,240);}
 export function commerceTexture(){return canvasTexture((c,w,h)=>{
  rounded(c,3,3,w-6,h-6,24);c.fillStyle='#eeeae3';c.fill();c.strokeStyle='#bcb7b0';c.lineWidth=3;c.stroke();

@@ -83,6 +83,19 @@ test('all six stages retain distinct bilingual beauty examples without invented 
 
 test('data lattice converges, reconstructs and retires without replacing its instances',()=>{const {world,update}=rig();const lattice=world.root.getObjectByName('data-lattice');assert.equal(lattice.count,8);update(9);const spread=[...lattice.instanceMatrix.array];update(16);const cube=[...lattice.instanceMatrix.array];assert.notDeepEqual(spread,cube);update(28);assert.notDeepEqual([...lattice.instanceMatrix.array],cube);update(33);assert.equal(lattice.visible,false);assert.ok([...lattice.instanceMatrix.array].every(Number.isFinite));disposeTree(world.root);});
 test('insights foreground the same files that carry the selected design into decisioning',()=>{const {world,update}=rig(),card=world.root.getObjectByName('analysis-card-4');update(40);assert.ok(world.root.getObjectByName('analysis-card-0').visible);update(42);assert.equal(world.root.getObjectByName('file-status-1-0').visible,false);assert.ok(world.root.getObjectByName('file-status-1-1').visible);update(49);assert.equal(card.userData.reviewState,'selected');assert.equal(world.root.getObjectByName('analysis-card-1').userData.reviewState,'rejected');update(67);assert.equal(world.root.getObjectByName('analysis-card-4'),card);assert.equal(card.visible,false);assert.ok(world.root.getObjectByName('continuous-palette-craft').visible);disposeTree(world.root);});
+test('one review explanation follows the active proposal and retires before processing captions',()=>{
+ const {world,update}=rig(),notes=Array.from({length:5},(_,i)=>world.root.getObjectByName(`proposal-review-note-${i}`));
+ [39,41.8,44.3,46.6,49.3].forEach((t,i)=>{update(t);assert.ok(notes[i].material.opacity>.9);assert.equal(notes.filter(o=>o.visible).length,1);});
+ for(let t=35;t<=53;t+=.05){update(t);assert.ok(notes.filter(o=>o.visible).length<=1,`overlapping explanations at ${t}`);}
+ update(53);assert.ok(notes.every(o=>!o.visible));assert.ok(world.root.getObjectByName('craft-step-0').visible);disposeTree(world.root);
+});
+test('review explanations stay above the navigation across exhibition screen proportions',()=>{
+ for(const aspect of [1366/768,1920/1080,3840/2160,1200/900]){
+  const {world,camera,update}=rig(aspect);update(49.3);const note=world.root.getObjectByName('proposal-review-note-4'),p=new THREE.Vector3();
+  for(let i=0;i<4;i++){p.fromBufferAttribute(note.geometry.attributes.position,i).applyMatrix4(note.matrixWorld).project(camera);assert.ok(p.x>-.22&&p.x<.94&&p.y>-.65);}
+  disposeTree(world.root);
+ }
+});
 test('emerging proposals stay clear of the mountain face as it moves into the review role',()=>{
  const {world,update}=rig();for(let t=35;t<=38;t+=.1){update(t);const face=new THREE.Box3().setFromObject(world.root.getObjectByName('robot-blue-face'));for(let i=0;i<5;i++){
   const card=world.root.getObjectByName(`analysis-card-${i}`);if(card.material.opacity<.05)continue;
