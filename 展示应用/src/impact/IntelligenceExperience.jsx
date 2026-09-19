@@ -80,7 +80,6 @@ export function IntelligenceExperience({
         <span className="intelligence-stage-number" aria-hidden="true">{number}</span>
         <div>
           <p className="intelligence-stage-name">{current.name[l]}</p>
-          <p className="intelligence-name-en" lang={l === 0 ? 'en' : 'zh'}>{current.name[l === 0 ? 1 : 0]}</p>
         </div>
       </header>
       <h1>{stageHeadlines[index][l]}</h1>

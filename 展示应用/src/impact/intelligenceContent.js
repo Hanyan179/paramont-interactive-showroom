@@ -46,7 +46,7 @@ export const intelligenceStages = [
   {
     "id": "analytics",
     "name": [
-      "AI 驱动分析",
+      "智能驱动分析",
       "AI-Powered Analytics"
     ],
     "action": [
