@@ -162,7 +162,7 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
       interact();
     };
     runtime.current={wake,read,openDepth,closeDepth,interact,intelligenceExample,
-      intelligenceInspect(seconds){intelligenceDirector.inspect(seconds);latest.current.setPlaying(false);publishIntelligence();wake();},
+      intelligenceInspect(seconds){intelligenceDirector.inspect(seconds);latest.current.setPlaying(false);publishIntelligence();interact();},
       intelligenceSelect(index){if(!state.depth||state.depth.id!=='intelligence')return;intelligenceDirector.select(index);publishIntelligence();state.yaw=state.tilt=0;interact();},
       intelligenceResume(){intelligenceDirector.resume();latest.current.setPlaying(true);publishIntelligence();interact();},
       intelligenceActivity(){intelligenceDirector.activity();interact();},

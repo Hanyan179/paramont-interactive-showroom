@@ -10,7 +10,7 @@ const stageHeadlines = [
   ['让信息相遇，\n让创造有据。', 'Bring information together.\nGive creation a foundation.'],
   ['让数据被理解，\n释放更深层的价值。', 'Understand the data.\nDiscover deeper value.'],
   ['看见关联中的信号，\n找到下一种可能。', 'See the signal.\nDiscover the possibility.'],
-  ['展开选择，\n让方向更加清晰。', 'Explore the choices.\nFind a clearer direction.'],
+  ['让想法成形，\n让决策可见。', 'Give ideas their form.\nMake decisions tangible.'],
   ['让洞察成形，\n让创造走向市场。', 'Give insight a form.\nBring creation to market.'],
   ['每一次创造，\n都是下一次的起点。', 'Every creation becomes\na new beginning.'],
 ];

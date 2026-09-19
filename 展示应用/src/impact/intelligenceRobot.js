@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import {modelDetail} from '../../../共享组件/renderQuality.js';
 
@@ -70,50 +69,46 @@ export function createMountainRobot(quality) {
   const eyes = new THREE.Group();
   eyes.name = 'robot-eyes';
   root.add(eyes);
-  const eyeMaterial = new THREE.MeshPhysicalMaterial({
-    color: '#b5e1f3', emissive: '#90cbec', emissiveIntensity: 1.15,
-    metalness: 0, roughness: .3, transparent: true, depthWrite: false,
+  // Two continuous ribbons change curvature, aperture and asymmetry; no icon swapping.
+  const eyeMaterial=new THREE.MeshBasicMaterial({color:'#bce3f4',transparent:true,depthWrite:false,depthTest:false,toneMapped:false,side:THREE.DoubleSide});
+  const eyeMeshes=[-.37,.37].map((x,i)=>{
+    const geometry=new THREE.BufferGeometry(),vertices=new Float32Array(42*3),indices=[];
+    for(let n=0;n<20;n++){const k=n*2;indices.push(k,k+1,k+2,k+1,k+3,k+2);}
+    geometry.setAttribute('position',new THREE.BufferAttribute(vertices,3));geometry.setIndex(indices);
+    const mesh=new THREE.Mesh(geometry,eyeMaterial);mesh.name=i?'robot-right-eye':'robot-left-eye';mesh.position.x=x;mesh.renderOrder=20;mesh.frustumCulled=false;eyes.add(mesh);return mesh;
   });
-  const eyeGeometry = new RoundedBoxGeometry(.21, .095, .035, detail.segment(3, 'rounded'), .045);
-  for (const [i, x] of [-.37, .37].entries()) {
-    const eye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-    eye.name = i === 0 ? 'robot-left-eye' : 'robot-right-eye';
-    eye.position.x = x;
-    eyes.add(eye);
-  }
-  // A projection source attached to the near eye follows the gaze and body pose.
-  const projector = new THREE.Object3D();
-  projector.name = 'robot-projector';
-  projector.position.set(-.37, 0, .028);
-  eyes.add(projector);
-  const happyEyes=new THREE.Group(),rejectedEyes=new THREE.Group(),selectedEyes=new THREE.Group();
-  happyEyes.name='robot-happy-eyes';rejectedEyes.name='robot-rejected-eyes';selectedEyes.name='robot-selected-eyes';
-  const expressionMaterials=[0,1,2].map(()=>new THREE.MeshBasicMaterial({color:'#b5e1f3',transparent:true,depthWrite:false,depthTest:false,toneMapped:false}));
-  for(const x of [-.37,.37]){
-    const points=Array.from({length:21},(_,i)=>{const u=i/20;return new THREE.Vector3(x+(u-.5)*.26,Math.sin(u*Math.PI)*.10-.025,.025);});
-    happyEyes.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points),24,.019,8,false),expressionMaterials[0]));
-    for(const angle of [-Math.PI/4,Math.PI/4]){const bar=new THREE.Mesh(new RoundedBoxGeometry(.24,.031,.035,3,.015),expressionMaterials[1]);bar.position.set(x,0,.025);bar.rotation.z=angle;rejectedEyes.add(bar);}
-    const eye=new THREE.Mesh(new THREE.RingGeometry(.053,.077,32),expressionMaterials[2]);eye.position.set(x,.01,.025);selectedEyes.add(eye);
-  }
-  eyes.add(happyEyes,rejectedEyes,selectedEyes);
-  for(const group of [happyEyes,rejectedEyes,selectedEyes])group.traverse(child=>{if(child.isMesh)child.renderOrder=20;});
-  const check=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(-.065,-.13,.39),new THREE.Vector3(-.015,-.18,.39),new THREE.Vector3(.09,-.065,.39)]),12,.015,6,false),expressionMaterials[2]);check.name='robot-selection-check';check.renderOrder=20;root.add(check);
-  const materials = [shellMaterial, faceMaterial, eyeMaterial,...expressionMaterials];
-  return {
-    root, eyes, projector,
-    update(pose, opacity) {
-      root.visible = opacity > .001;
-      for (const material of materials) material.opacity = opacity;
-      eyes.position.set(pose.eyeX * .45, .105 + pose.eyeY * .28, .355);
-      eyes.scale.y = pose.blink;
-      const happy=pose.happy||0,rejected=pose.rejected||0,selected=pose.selected||0;
-      eyeMaterial.opacity=opacity*(1-Math.max(happy,rejected,selected));for(const name of ['robot-left-eye','robot-right-eye'])eyes.getObjectByName(name).visible=eyeMaterial.opacity>.001;
-      [happyEyes,rejectedEyes,selectedEyes].forEach((group,i)=>{const weight=[happy,rejected,selected][i];group.visible=weight>.001;expressionMaterials[i].opacity=opacity*weight;});
-      check.visible=selected>.001;
-      root.position.y=happy*.10+selected*.055*Math.sin((pose.reactionTime-46)*6);
-      root.rotation.z=rejected*Math.sin((pose.reactionTime-38)*16)*.06;
-      root.rotation.x=selected*Math.sin((pose.reactionTime-46)*7)*.09;
-      root.userData.expression=selected>.5?'selected':happy>.5?'happy':rejected>.5?'rejected':'neutral';
-    },
+  const projector = new THREE.Object3D();projector.name='robot-projector';projector.position.set(-.37,0,.028);eyes.add(projector);
+  const pupils=eyeMeshes.map((eye,i)=>{const pupil=new THREE.Mesh(new THREE.CircleGeometry(.025,24),new THREE.MeshBasicMaterial({color:'#183747',transparent:true,depthWrite:false,depthTest:false}));pupil.name=`robot-pupil-${i}`;pupil.position.z=.01;pupil.renderOrder=21;eye.add(pupil);return pupil;});
+  const glints=eyeMeshes.map((eye,i)=>{const glint=new THREE.Mesh(new THREE.CircleGeometry(.010,16),new THREE.MeshBasicMaterial({color:'#effcff',transparent:true,depthWrite:false,depthTest:false,toneMapped:false}));glint.name=`robot-eye-glint-${i}`;glint.renderOrder=22;glint.position.set(-.023,.033,.018);eye.add(glint);return glint;});
+  const materials=[shellMaterial,faceMaterial];
+  return {root,eyes,projector,
+    update(pose,opacity){
+      root.visible=opacity>.001;for(const mat of materials)mat.opacity=opacity;
+      const eyeOpacity=opacity*(pose.awake??1);eyeMaterial.opacity=eyeOpacity;
+      const happy=pose.happy||0,rejected=pose.rejected||0,selected=pose.selected||0,thinking=pose.thinking||0,impatient=pose.impatient||0,t=pose.reactionTime||0;
+      const joy=Math.max(happy,selected*.50),surprise=pose.surprise||0;
+      eyes.position.set(pose.eyeX*.38+impatient*.035,.13+pose.eyeY*.24+impatient*.028,.385);eyes.scale.y=pose.blink;
+      eyeMeshes.forEach((mesh,i)=>{
+        const p=mesh.geometry.attributes.position,halfWidth=.160-surprise*.018;
+        const aperture=(.066+surprise*.050)*(1-rejected*(i===0?.73:.42))*(1-thinking*.16)*(1-impatient*.68);
+        const tilt=rejected*(i===0?-.045:.024);
+        for(let n=0;n<=20;n++){
+          const u=n/20,edge=Math.pow(Math.max(0,Math.sin(u*Math.PI)),.42),curve=Math.sin(u*Math.PI)*(joy*.116-impatient*.025)+tilt*(u-.5);
+          const thickness=lerpEye(aperture,.017,joy)*edge;
+          p.setXYZ(n*2,(u-.5)*halfWidth*2,curve+thickness,0);p.setXYZ(n*2+1,(u-.5)*halfWidth*2,curve-thickness,0);
+        }
+        p.needsUpdate=true;mesh.userData.aperture=aperture;mesh.userData.curvature=joy;
+        pupils[i].position.x=pose.eyeX*.034+impatient*.023;pupils[i].position.y=pose.eyeY*.04;
+        pupils[i].scale.y=1-rejected*.45;pupils[i].material.opacity=eyeOpacity*(1-joy)*(1-rejected*.35)*(1-impatient*.6);pupils[i].visible=pupils[i].material.opacity>.001;
+        glints[i].material.opacity=eyeOpacity*surprise*(1-joy);glints[i].visible=glints[i].material.opacity>.001;
+      });
+      // Anticipation, reaction and settle have different timing; movements remain restrained.
+      const nod=selected*Math.sin((t-48)*5)*Math.exp(-Math.max(0,t-48)*.55);
+      root.position.y=happy*.10+selected*.055+surprise*.025-impatient*.045;
+      root.rotation.z=rejected*Math.sin((t-40.8)*7)*.026+thinking*Math.sin(t*1.2)*.012-impatient*.024;
+      root.rotation.x=nod*.12;
+      root.userData.expression=selected>.5?'selected':happy>.5?'happy':rejected>.5?'skeptical':impatient>.5?'impatient':thinking>.4?'focused':'neutral';
+    }
   };
 }
+const lerpEye=(a,b,t)=>a+(b-a)*t;

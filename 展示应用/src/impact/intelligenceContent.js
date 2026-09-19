@@ -97,17 +97,17 @@ export const intelligenceStages = [
       "Reveal"
     ],
     "description": [
-      "逐份审查趋势、偏好与机会资料，比较依据、排除不适合的方向，让值得继续的商品方案显现。",
-      "Review trend, preference and opportunity files, set unsuitable directions aside, and identify a product concept worth developing."
+      "将使用反馈、商品规格与设计研究汇成五个美妆方向，逐份检查形态与体验，选出值得继续的提案。",
+      "Bring feedback, product formats and design research into five beauty directions. Review their form and experience, then choose a proposal to develop."
     ],
     "example": {
       "title": [
-        "柔和日常配色，是否值得进一步验证？",
-        "Are soft everyday colours worth testing?"
+        "五个美妆方向，怎样选出下一步？",
+        "Which of five beauty directions should move forward?"
       ],
       "summary": [
-        "将“容易搭配”作为演示假设，关联眼影盘的色彩组合、使用反馈与研究资料。",
-        "Treat easy-to-combine colours as a demonstration hypothesis, linked to palette choices, feedback and research."
+        "比较唇油、腮红、轻透底妆、高光棒与眼影盘的形态和体验，演示如何形成一份值得打样的产品提案。",
+        "Compare lip oil, blush, skin tint, highlighter and a palette to illustrate how form and experience inform a proposal for sampling."
       ],
       "steps": [
         [
@@ -115,8 +115,8 @@ export const intelligenceStages = [
           "Inspect the original evidence behind the hypothesis"
         ],
         [
-          "分开呈现趋势、感受与机会",
-          "Distinguish trends, sentiment and opportunities"
+          "区分公开规格、演示评价与原创判断",
+          "Distinguish public specifications, illustrative feedback and design judgments"
         ],
         [
           "明确仍需开展的使用验证",
@@ -140,8 +140,8 @@ export const intelligenceStages = [
       "Choose"
     ],
     "description": [
-      "聚焦选中的商品方案，保留推荐依据，让设计从信息卡片逐步成为可见的产品。",
-      "Focus the selected concept, retain its rationale, and let the design emerge from the information card as a tangible product."
+      "从选中的提案里提取四色用途，让色彩、镜面与盒体逐步组合，把设计依据转化为可见的商品。",
+      "Extract four colour roles from the selected proposal. Bring the shades, mirror and compact together, turning design intent into a visible product."
     ],
     "example": {
       "title": [
@@ -149,21 +149,21 @@ export const intelligenceStages = [
         "Why recommend this four-shade palette?"
       ],
       "summary": [
-        "在同一组分析信息中聚焦一个概念商品，展示推荐与依据的关系，不把演示当作真实预测。",
-        "Focus one concept product within the analysis, showing how evidence informs a recommendation without claiming a real forecast."
+        "把“日常配色”和“少带几件”的使用要求转成一盘四色、内置镜面的提案，再由机器人逐步组合颜色与结构。",
+        "Turn everyday colour and less-to-carry needs into a four-shade compact with a mirror, then let the assistant bring its colours and construction together."
       ],
       "steps": [
         [
-          "比较配色与目标使用场景",
-          "Compare colours with the intended use context"
+          "从提案里提取色彩、用途与结构要求",
+          "Extract colours, roles and construction requirements from the proposal"
         ],
         [
-          "检查材料、结构与开发约束",
-          "Review materials, construction and development constraints"
+          "让四色归位，再组合盒体与镜面",
+          "Seat the four shades, then combine the compact and mirror"
         ],
         [
-          "保留推荐理由和待确认事项",
-          "Keep the rationale and unresolved questions"
+          "形成概念商品，保留样品验证事项",
+          "Form the concept product and retain the sample-testing questions"
         ]
       ],
       "outcome": [
@@ -192,8 +192,8 @@ export const intelligenceStages = [
         "From recommendation to a product experience worth testing."
       ],
       "summary": [
-        "四色眼影盘从推荐卡中展开，进入无平台品牌的商品详情页。价格、评分和销量均为演示数据。",
-        "The palette emerges from its recommendation card into an unbranded product page. Price, ratings and sales are demonstration data."
+        "完成的四色眼影盘与山形助手一起进入商品详情页：商品落入图片区域，助手收拢为页头标志。价格、评分和订单为演示数据。",
+        "The assembled palette and mountain assistant enter one product page. The product becomes its hero image; the assistant becomes its logo. Price, ratings and orders are illustrative."
       ],
       "steps": [
         [

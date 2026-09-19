@@ -17,15 +17,15 @@ export function createProjection(){
  }
  return {mesh,aim};
 }
-export function blinkAt(t){let blink=0;for(const at of [31.8,35.15,41.35,48.1])blink=Math.max(blink,ramp(t,at,at+.13)*(1-ramp(t,at+.16,at+.42)));return 1-.94*blink;}
+export function blinkAt(t){let blink=0;for(const at of [31.8,35.15,40.65,47.1,55.2,62.4,70.6,76.1,83.2])blink=Math.max(blink,ramp(t,at,at+.13)*(1-ramp(t,at+.16,at+.42)));return 1-.94*blink;}
 // Birth, professional review, rejection, choice and a shared product-page landing.
 export function presenceAt(t){
  const awake=ramp(t,28,33),look=ramp(t,34,37)*(1-ramp(t,76,83)),float=floatPose(t-28,.85*awake);
  const pulse=(a,b,c,d)=>ramp(t,a,b)*(1-ramp(t,c,d));
- const rejected=Math.max(pulse(41,41.4,42,42.6),pulse(44,44.4,45,45.6));
+ const rejected=pulse(41,41.4,42,42.6),impatient=pulse(44,44.4,45,45.6);
  const happy=Math.max(pulse(30.3,30.9,33.2,34),pulse(69,69.6,77,80));
- const selected=pulse(48,48.6,52,53);
- return {awake,look,rejected,happy,selected,reactionTime:t,turn:ramp(t,34.6,37.4)*(1-ramp(t,75,83)),float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:(-.16+Math.sin((t-37)*1.15)*.46)*look,scanX:Math.sin((t-37)*1.15)*1.7};
+ const selected=pulse(48,48.6,51,52),surprise=pulse(47.4,47.9,48.7,49.3),thinking=Math.max(pulse(35,37,40.5,41),pulse(53,55,67,69));
+ return {awake,look,rejected,impatient,happy,selected,surprise,thinking,reactionTime:t,turn:ramp(t,34.6,37.4)*(1-ramp(t,75,83)),float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:(-.16+Math.sin((t-37)*1.15)*.46)*look,scanX:Math.sin((t-37)*1.15)*1.7};
 }
 // Discrete letters over a smooth layout envelope; reverse at the end makes G → G seamless.
 export function typedCount(t,length,index=0){
