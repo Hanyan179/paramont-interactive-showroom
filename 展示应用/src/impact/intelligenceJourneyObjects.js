@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
+import {createMountainRobot} from './intelligenceRobot.js';
 import {crystalVertex,lerp,ramp} from './intelligenceTimeline.js';
 import {canvasTexture,label,rounded,cardTexture,screenTexture,reviewTexture,commerceTexture,commerceDetails} from './intelligenceSurfaces.js';
 export {canvasTexture,label,rounded};
@@ -39,17 +40,10 @@ export function createCrystal(){
   });cells.instanceMatrix.needsUpdate=true;
  }};
 }
-export function createJourneyObjects(manager){
+export function createJourneyObjects(manager,quality){
  const root=new THREE.Group();root.name='continuous-value-journey';
- const crystal=createCrystal(),body=new THREE.Group();body.name='data-to-diamond';body.add(crystal.shell,crystal.cells);root.add(body);
- const core=new THREE.Mesh(new THREE.SphereGeometry(.15,32,24),new THREE.MeshBasicMaterial({color:new THREE.Color('#c9f1ff').multiplyScalar(3),transparent:true,depthWrite:false}));core.name='diamond-core';core.position.z=1.03;core.renderOrder=12;core.material.depthTest=false;body.add(core);
- const coreRim=new THREE.Mesh(new THREE.TorusGeometry(.27,.018,12,80),new THREE.MeshBasicMaterial({color:'#9dcce8',transparent:true,depthWrite:false}));coreRim.position.z=1.01;coreRim.renderOrder=13;body.add(coreRim);
- const halo=glow('core-optical-halo');halo.position.z=1.04;halo.scale.setScalar(1.5);halo.renderOrder=11;body.add(halo);
- const eye=new THREE.Group();eye.name='robot-eye';eye.position.z=1.0;body.add(eye);
- const housing=new THREE.Mesh(new THREE.SphereGeometry(.36,40,24),new THREE.MeshPhysicalMaterial({color:'#061424',metalness:.55,roughness:.19,clearcoat:1,transparent:true,depthWrite:false}));housing.scale.z=.38;housing.name='eye-housing';eye.add(housing);
- const iris=new THREE.Mesh(new THREE.TorusGeometry(.215,.044,16,64),new THREE.MeshBasicMaterial({color:'#7acfff',transparent:true,depthWrite:false}));iris.position.z=.15;iris.name='eye-iris';eye.add(iris);
- const pupil=new THREE.Mesh(new THREE.SphereGeometry(.115,32,20),new THREE.MeshBasicMaterial({color:'#071322',transparent:true,depthWrite:false}));pupil.position.z=.18;pupil.scale.z=.35;pupil.name='eye-pupil';eye.add(pupil);
- const glint=new THREE.Mesh(new THREE.SphereGeometry(.035,12,12),new THREE.MeshBasicMaterial({color:'#f1fbff',transparent:true,depthWrite:false}));glint.position.set(-.065,.085,.23);glint.name='eye-glint';eye.add(glint);
+ const crystal=createCrystal(),body=new THREE.Group();body.name='data-to-assistant';body.add(crystal.shell,crystal.cells);root.add(body);
+ const robot=createMountainRobot(quality);body.add(robot.root);
  const ambience=glow('exhibit-light-pool','#2d6094');ambience.position.set(.5,.1,-2);ambience.scale.set(12,9,1);root.add(ambience);
  const floor=glow('contact-light','#6191ae');floor.position.set(0,-2.4,-.5);floor.scale.set(6,.6,1);root.add(floor);
  const scan=new THREE.Mesh(new THREE.PlaneGeometry(3,3),new THREE.MeshBasicMaterial({color:'#b3e3ff',transparent:true,side:THREE.DoubleSide,depthWrite:false}));scan.rotation.x=Math.PI/2;scan.name='analysis-scan';body.add(scan);
@@ -79,5 +73,5 @@ export function createJourneyObjects(manager){
  const page=texturePlane(commerceTexture(),8.8,6.2,'commerce-frame');commerce.add(page);
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);
  const commerceMetrics=[];for(let i=0;i<4;i++){const mesh=textPlane(`${[128,136,148,162][i]} orders   /   ${[24,27,31,36][i]} reviews`,`commerce-metrics-${i}`,3.0);mesh.material.color.set('#594c3f');mesh.position.set(1.8,-2.3,.12);commerce.add(mesh);commerceMetrics.push(mesh);}
- return {root,body,crystal,core,coreRim,halo,eye,iris,pupil,glint,housing,cursor,projection,screenBody,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,screen,cards,product,reflection,heroLight,productCaption,orbit,commerce,details,commerceMetrics,thumbnails};
+ return {root,body,crystal,robot,cursor,projection,screenBody,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,screen,cards,product,reflection,heroLight,productCaption,orbit,commerce,details,commerceMetrics,thumbnails};
 }
