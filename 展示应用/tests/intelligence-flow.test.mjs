@@ -242,6 +242,17 @@ test('review metadata changes without overlapping labels or interrupting the mai
  update(98);for(const record of records){near(record.userData.reviewSkins.exhibitInk.material.opacity,record.material.opacity);assert.equal(record.userData.reviewSkins.purchaseInk.visible,false);}
  disposeTree(world.root);
 });
+test('feedback cards leave the page without crossing one another in screen space',()=>{
+ for(const aspect of [1366/768,1920/1080,3840/2160,1200/900]){
+  const {world,camera,update}=rig(aspect),records=Array.from({length:6},(_,i)=>world.root.getObjectByName(`record-${i}`)),p=new THREE.Vector3(),collisions=[];
+  for(let t=94;t<=101;t+=.025){update(t);const bounds=records.map(record=>{
+   const card=record.children[0],box=new THREE.Box2();for(let v=0;v<4;v++){p.fromBufferAttribute(card.geometry.attributes.position,v).applyMatrix4(card.matrixWorld).project(camera);assert.ok(p.x>-.22&&p.x<.94&&p.y>-.65&&p.y<.7,`${record.name} leaves the exhibit safe area at ${t}`);box.expandByPoint(new THREE.Vector2(p.x,p.y));}return box;
+  });
+   for(let i=0;i<6;i++)for(let j=i+1;j<6;j++){const a=bounds[i],b=bounds[j],gapX=Math.max(b.min.x-a.max.x,a.min.x-b.max.x),gapY=Math.max(b.min.y-a.max.y,a.min.y-b.max.y);if(Math.max(gapX,gapY)<.003)collisions.push({t:Number(t.toFixed(3)),i,j,gapX,gapY});}
+  }
+  assert.equal(collisions.length,0,JSON.stringify(collisions.slice(0,6)));disposeTree(world.root);
+ }
+});
 test('automatic playback is 25 percent faster while inactivity remains real time',()=>{const d=createIntelligenceDirector();advance(d,8);near(d.snapshot().time,10);});
 
 test('dense information becomes six report panels before the cube is reconstructed',()=>{const {world,update}=rig();update(6);const fragments=[];world.root.traverseVisible(o=>{if(o.name.startsWith('data-fragment-'))fragments.push(o);});assert.equal(fragments.length,36);update(17);for(let i=0;i<6;i++){const face=world.root.getObjectByName(`report-face-${i}`);assert.ok(face.visible);assert.equal(face.material.side,THREE.FrontSide);}assert.ok(fragments.every(o=>!o.visible));update(33);for(let i=0;i<6;i++)assert.equal(world.root.getObjectByName(`report-face-${i}`).visible,false);disposeTree(world.root);});

@@ -77,8 +77,13 @@ export function intelligenceWorld(quality,manager){
      const emerge=ramp(t,89+i*.65,90+i*.65),release=ramp(t,95,100),closing=ramp(t,100,106);
      const pageX=(i%2?2.05:-2.05),pageY=1.1-Math.floor(i/2)*1.48-(1-pageScroll)*5.86;
      const [spreadX,spreadY]=reviewSlots[i];
-     x=lerp(pageX,spreadX,release);y=lerp(pageY,spreadY,release);z=lerp(.3,i===0?.35:(i%3-1)*.7,release);
-     if(i===0){x=lerp(x,0,closing);y=lerp(y,0,closing);z=lerp(z,0,closing);s=lerp(.65,1,release);a=emerge;}
+     const outward=ramp(t,95,98);
+     x=lerp(pageX,spreadX,outward);y=lerp(pageY,spreadY,outward);z=lerp(.3,i===0?.35:(i%3-1)*.7,ramp(t,98.8,100));
+     // Open room before lifting the middle row. The left card travels around
+     // the main review; the right one rises through the gap between columns.
+     if(i===2){x=lerp(lerp(pageX,-4.4,ramp(t,95,96.8)),spreadX,ramp(t,98.5,100));y=lerp(pageY,spreadY,ramp(t,96.3,98.8));}
+     if(i===3){x=lerp(lerp(pageX,1.1,ramp(t,95.2,97.2)),spreadX,ramp(t,98.6,100));y=lerp(pageY,spreadY,ramp(t,96.6,98.9));}
+     if(i===0){const centre=ramp(t,96.8,100);x=lerp(lerp(pageX,0,centre),0,closing);y=lerp(lerp(pageY,0,centre),0,closing);z=lerp(z,0,closing);s=lerp(.65,1,ramp(t,97,100));a=emerge;}
      else{s=lerp(.60,i>8?.38:.6,release);a=emerge*(1-ramp(t,99+i*.37,101+i*.4));if(i>3)a*=lerp(1,.78,release);}
      reframe=ramp(t,94,98);framing=reframe*(1-ramp(t,101,104));purchase=1-reframe;
     }
