@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
-import {createProjection,installTyping} from './intelligencePresence.js';
 import {createMountainRobot} from './intelligenceRobot.js';
+import {createProjection,installTyping} from './intelligencePresence.js';
 import {crystalVertex,lerp,ramp} from './intelligenceTimeline.js';
 import {canvasTexture,label,rounded,cardTexture,screenTexture,reviewTexture,commerceTexture,commerceDetails} from './intelligenceSurfaces.js';
 export {canvasTexture,label,rounded};
@@ -25,18 +25,21 @@ export function createCrystal(){
  const edgeGeometry=new THREE.BufferGeometry();edgeGeometry.setAttribute('position',new THREE.Float32BufferAttribute(segments.flat(),3));
  const edges=new THREE.LineSegments(edgeGeometry,new THREE.LineBasicMaterial({color:'#c9e8fa',transparent:true,opacity:.7,depthWrite:false}));edges.name='persistent-crystal-edges';shell.add(edges);
  // One instanced lattice, no object or material creation during playback.
- const cellPositions=[];for(let x=-2;x<=2;x++)for(let y=-2;y<=2;y++)for(let z=-2;z<=2;z++)if(Math.max(Math.abs(x),Math.abs(y),Math.abs(z))===2)cellPositions.push(new THREE.Vector3(x*.55,y*.55,z*.55));
- const cells=new THREE.InstancedMesh(new RoundedBoxGeometry(.51,.51,.51,2,.035),new THREE.MeshPhysicalMaterial({color:'#82b7e3',metalness:.17,roughness:.1,transmission:.48,thickness:.36,ior:1.5,transparent:true,opacity:.7,depthWrite:false,envMapIntensity:1.3}),cellPositions.length);cells.name='data-lattice';cells.frustumCulled=false;
- cellPositions.forEach((v,i)=>cells.setColorAt(i,new THREE.Color().setHSL(.57+(i%4)*.012,.25,.38+(i%5)*.1)));
+ const cellPositions=[];for(const x of [-1,1])for(const y of [-1,1])for(const z of [-1,1])cellPositions.push(new THREE.Vector3(x*.69,y*.69,z*.69));
+ const cells=new THREE.InstancedMesh(new RoundedBoxGeometry(1.31,1.31,1.31,3,.045),new THREE.MeshPhysicalMaterial({color:'#a4c5df',metalness:.08,roughness:.08,transmission:.8,thickness:.7,ior:1.5,transparent:true,opacity:.7,depthWrite:false,envMapIntensity:1.3}),cellPositions.length);cells.name='data-lattice';cells.frustumCulled=false;
+ cellPositions.forEach((v,i)=>cells.setColorAt(i,new THREE.Color().setHSL(.57+(i%4)*.012,.16,.58+(i%3)*.06)));
  const dummy=new THREE.Object3D();
  return {shell,inner,edges,cells,morph(value,time){
   shell.morphTargetInfluences[0]=value;inner.morphTargetInfluences[0]=value;inner.material.uniforms.morph.value=value;
   const p=edgeGeometry.attributes.position;segments.forEach((v,i)=>p.setXYZ(i,...crystalVertex(...v,value)));p.needsUpdate=true;
   const gather=ramp(time,8,17),collapse=ramp(time,24,32);
   cellPositions.forEach((v,i)=>{
-   const delay=(i%7)*.06,g=ramp(gather,delay,1);const to=crystalVertex(v.x,v.y,v.z,value);
-   dummy.position.set(lerp(v.x*2.6,to[0]*(1-collapse*.8),g),lerp(v.y*2.1,to[1]*(1-collapse*.8),g),lerp(v.z*1.8,to[2]*(1-collapse*.8),g));
-   const scanned=ramp(time,19+(1.1-v.y)*1.55,20+(1.1-v.y)*1.55)*(1-collapse);dummy.position.x+=Math.sin(time*.7+i)*.065*scanned;dummy.position.z+=Math.cos(time*.7+i)*.065*scanned;dummy.rotation.set((1-g)*.15*Math.sin(i),collapse*(i%3)*.45+scanned*.13,(1-g)*.16*Math.cos(i));dummy.scale.setScalar((.6+.4*g)*(1-collapse*.94));dummy.updateMatrix();cells.setMatrixAt(i,dummy.matrix);
+   const g=ramp(time,9+i*.35,12.3+i*.35),to=crystalVertex(v.x,v.y,v.z,value);
+   const breathing=(.025+.025*Math.sin(time*.75+i*.45))*(1-collapse);
+   const scanned=ramp(time,19+(1-v.y)*1.3,20+(1-v.y)*1.3)*(1-ramp(time,23,25));
+   const spread=1+breathing+scanned*.17;
+   dummy.position.set(lerp(to[0]*1.16,to[0]*spread,g)*(1-collapse*.82),lerp(to[1]*1.16,to[1]*spread,g)*(1-collapse*.82),lerp(to[2]*1.16,to[2]*spread,g)*(1-collapse*.82));
+   dummy.rotation.set(0,scanned*(v.y>0?.12:-.12),0);dummy.scale.setScalar(g*(1-collapse*.94));dummy.updateMatrix();cells.setMatrixAt(i,dummy.matrix);
   });cells.instanceMatrix.needsUpdate=true;
  }};
 }
@@ -48,22 +51,20 @@ export function createJourneyObjects(manager,quality){
  const floor=glow('contact-light','#6191ae');floor.position.set(0,-2.4,-.5);floor.scale.set(6,.6,1);root.add(floor);
  const scan=new THREE.Mesh(new THREE.PlaneGeometry(3,3),new THREE.MeshBasicMaterial({color:'#b3e3ff',transparent:true,side:THREE.DoubleSide,depthWrite:false}));scan.rotation.x=Math.PI/2;scan.name='analysis-scan';body.add(scan);
  const scanEdge=new THREE.LineSegments(new THREE.EdgesGeometry(scan.geometry),new THREE.LineBasicMaterial({color:'#d0eeff',transparent:true,depthWrite:false}));scan.add(scanEdge);
- const linkPoints=[];for(let i=0;i<18;i++){const a=i*.72;linkPoints.push(Math.cos(a)*.95,Math.sin(a)*1.1,(i%3-1)*.6,Math.cos(a+1.4)*.95,Math.sin(a+1.4)*1.1,((i+1)%3-1)*.6);}
+ const linkPoints=[];for(let i=0;i<6;i++){const a=i*1.04;linkPoints.push(Math.cos(a)*.95,Math.sin(a)*1.1,(i%3-1)*.6,Math.cos(a+1.4)*.95,Math.sin(a+1.4)*1.1,((i+1)%3-1)*.6);}
  const links=new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(linkPoints,3)),new THREE.LineBasicMaterial({color:'#91c5e6',transparent:true,depthWrite:false}));body.add(links);
- const nodeGeometry=new THREE.SphereGeometry(.035,10,8),nodeMaterial=new THREE.MeshBasicMaterial({color:'#c7ebff',transparent:true});const nodes=Array.from({length:18},(_,i)=>{const m=new THREE.Mesh(nodeGeometry,nodeMaterial.clone());m.position.fromArray(linkPoints,i*6);body.add(m);return m;});
+ const nodeGeometry=new THREE.SphereGeometry(.035,10,8),nodeMaterial=new THREE.MeshBasicMaterial({color:'#c7ebff',transparent:true,depthWrite:false});const nodes=Array.from({length:6},(_,i)=>{const m=new THREE.Mesh(nodeGeometry,nodeMaterial.clone());m.position.fromArray(linkPoints,i*6);body.add(m);return m;});
  const reviews=['Great product.','Perfect gift.','Love it.','Good quality.','Beautiful colours.','Soft texture.'];
- const texts=[...reviews,...reviews,'Four shades','Customer reviews','Colour preference','Product detail','Warm neutrals','Market research'];
+ const texts=reviews;
  const reviewMap=reviewTexture();
- const records=Array.from({length:42},(_,i)=>{const text=texts[i%texts.length],mesh=textPlane(text,`record-${i}`,i===0?3.8:2.5);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),i===0?3.8:2.5);const card=texturePlane(reviewMap,i===0?4.2:3.2,i===0?1.31:1,'feedback-frame');card.position.z=-.03;mesh.add(card);root.add(mesh);return mesh;});
+ const records=Array.from({length:texts.length},(_,i)=>{const text=texts[i%texts.length],mesh=textPlane(text,`record-${i}`,i===0?3.8:2.5);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),i===0?3.8:2.5);const card=texturePlane(reviewMap,i===0?4.2:3.2,i===0?1.31:1,'feedback-frame');card.position.z=-.03;mesh.add(card);root.add(mesh);return mesh;});
  const projection=createProjection(),beam=projection.mesh;root.add(beam);
  const cursor=new THREE.Mesh(new THREE.PlaneGeometry(.025,.35),new THREE.MeshBasicMaterial({color:'#bdeaff',transparent:true,depthWrite:false}));cursor.name='typing-cursor';root.add(cursor);
- const screen=texturePlane(screenTexture(),6.6,4.65,'analysis-screen');root.add(screen);
- const screenBody=new THREE.Mesh(new RoundedBoxGeometry(6.68,4.73,.13,3,.06),new THREE.MeshPhysicalMaterial({color:'#183247',metalness:.65,roughness:.22,transparent:true,depthWrite:false}));screenBody.position.z=-.09;screenBody.name='analysis-screen-depth';screen.add(screenBody);
- const scanLine=new THREE.Mesh(new THREE.PlaneGeometry(6.42,.025),new THREE.MeshBasicMaterial({color:'#b7eaff',transparent:true,depthWrite:false}));scanLine.name='screen-scan-contact';scanLine.position.z=.15;screen.add(scanLine);
- const cards=Array.from({length:5},(_,i)=>{const mesh=texturePlane(cardTexture(i),2.65,1.86,`analysis-card-${i}`);const analysis=texturePlane(cardTexture(i,true),2.65,1.86,`analysis-content-${i}`);analysis.position.z=.008;analysis.userData.reveal={value:1};analysis.material.onBeforeCompile=shader=>{shader.uniforms.journeyReveal=analysis.userData.reveal;shader.fragmentShader='uniform float journeyReveal;\n'+shader.fragmentShader.replace('#include <map_fragment>','#include <map_fragment>\nif(vMapUv.x>journeyReveal) discard;');};analysis.material.customProgramCacheKey=()=> 'journey-reveal';mesh.add(analysis);root.add(mesh);return mesh;});
+ const screen=texturePlane(screenTexture(),6.6,4.65,'analysis-screen');screen.renderOrder=2;root.add(screen);
+ const screenBody=new THREE.Mesh(new RoundedBoxGeometry(6.68,4.73,.13,3,.06),new THREE.MeshPhysicalMaterial({color:'#183247',metalness:.65,roughness:.22,transparent:true,depthWrite:false}));screenBody.position.z=-.09;screenBody.name='analysis-screen-depth';screenBody.renderOrder=1;screen.add(screenBody);
+ const scanLine=new THREE.Mesh(new THREE.PlaneGeometry(6.42,.025),new THREE.MeshBasicMaterial({color:'#b7eaff',transparent:true,depthWrite:false}));scanLine.name='screen-scan-contact';scanLine.renderOrder=11;scanLine.position.z=.15;screen.add(scanLine);
+ const cards=Array.from({length:5},(_,i)=>{const mesh=texturePlane(cardTexture(i),2.65,1.86,`analysis-card-${i}`);const analysis=texturePlane(cardTexture(i,true),2.65,1.86,`analysis-content-${i}`);mesh.renderOrder=3;analysis.renderOrder=4;analysis.position.z=.008;analysis.userData.reveal={value:1};analysis.material.onBeforeCompile=shader=>{shader.uniforms.journeyReveal=analysis.userData.reveal;shader.fragmentShader='uniform float journeyReveal;\n'+shader.fragmentShader.replace('#include <map_fragment>','#include <map_fragment>\nif(vMapUv.x>journeyReveal) discard;');};analysis.material.customProgramCacheKey=()=> 'journey-reveal';mesh.add(analysis);root.add(mesh);return mesh;});
  const loader=new THREE.TextureLoader(manager),productTexture=loader.load('/media/intelligence-v3/beauty-palette.png');productTexture.colorSpace=THREE.SRGBColorSpace;
- const dataMaps=[productTexture,cardTexture(0,true),cardTexture(1,true),reviewMap];
- const thumbnails=Array.from({length:50},(_,i)=>{const tile=texturePlane(dataMaps[i%4],.43,.43,`product-record-${i}`);body.add(tile);return tile;});
  const product=texturePlane(productTexture,1,1,'persistent-beauty-product');product.renderOrder=10;root.add(product);
  const reflection=texturePlane(productTexture,1,1,'product-reflection');reflection.renderOrder=2;root.add(reflection);
  const heroLight=glow('product-studio-light','#bd9a7e');heroLight.position.set(0,0,.5);heroLight.scale.set(8,7,1);root.add(heroLight);
@@ -73,5 +74,5 @@ export function createJourneyObjects(manager,quality){
  const page=texturePlane(commerceTexture(),8.8,6.2,'commerce-frame');commerce.add(page);
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);
  const commerceMetrics=[];for(let i=0;i<4;i++){const mesh=textPlane(`${[128,136,148,162][i]} orders   /   ${[24,27,31,36][i]} reviews`,`commerce-metrics-${i}`,3.0);mesh.material.color.set('#594c3f');mesh.position.set(1.8,-2.3,.12);commerce.add(mesh);commerceMetrics.push(mesh);}
- return {root,body,crystal,robot,cursor,projection,screenBody,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,screen,cards,product,reflection,heroLight,productCaption,orbit,commerce,details,commerceMetrics,thumbnails};
+ return {root,body,robot,crystal,cursor,projection,screenBody,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,screen,cards,product,reflection,heroLight,productCaption,orbit,commerce,details,commerceMetrics};
 }
