@@ -1,0 +1,200 @@
+{
+  "source": "https://pdm.paramontgroup.com/",
+  "confirmedBy": "User supplied brand overview and explicit ownership confirmation",
+  "confirmedAt": "2026-09-14",
+  "notes": "Tooblerz follows the supplied logo lettering; the portal accessibility label currently says Gooberz. Mane Street Accessories and Couture are identity variants shown separately in the supplied overview.",
+  "brands": [
+    {
+      "id": "scentos",
+      "name": "Scentos",
+      "logo": "pdm-scentos.png",
+      "descriptor": [
+        "香味创意文具",
+        "SCENTED CREATIVE STATIONERY"
+      ],
+      "description": [
+        "创立于 2009 年的旗舰品牌，围绕香味文具、画笔、创意美术用品展开。",
+        "Founded in 2009, this flagship brand focuses on scented stationery, markers and creative art supplies."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "introductionSource": "https://www.paramontgroup.com/OurCompanies"
+    },
+    {
+      "id": "cozy-craftworks",
+      "name": "Cozy Craftworks",
+      "logo": "pdm-cozycraftworks.png",
+      "descriptor": [
+        "流动字形，温暖表达",
+        "FLOWING LETTERS. WARM CHARACTER."
+      ],
+      "description": [
+        "黑白字形以舒展的手写线条组成，大小笔画相互呼应，呈现柔和、亲切的品牌气质。",
+        "Flowing black-and-white lettering balances broad strokes with fine handwritten lines for a warm, approachable identity."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "kind-mind",
+      "name": "Kind Mind",
+      "logo": "pdm-kindmind.png",
+      "descriptor": [
+        "明快色彩，自由想象",
+        "BRIGHT COLOURS. OPEN IMAGINATION."
+      ],
+      "description": [
+        "太阳图形与多彩字母共同组成标志，不同方向与大小的字形带来轻松、活泼的视觉节奏。",
+        "A sun motif and multicoloured letters create a playful visual rhythm through varied sizes and orientations."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "sugar-rush",
+      "name": "Sugar Rush",
+      "logo": "pdm-sugar-rush.png",
+      "descriptor": [
+        "糖果香味创作",
+        "CANDY-SCENTED CREATIVITY"
+      ],
+      "description": [
+        "围绕糖果与甜点气味的文具、创意套装、贴纸和礼品。",
+        "Stationery, creative kits, stickers and gifts inspired by the scents of candy and desserts."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "introductionSource": "https://www.paramontgroup.com/OurCompanies"
+    },
+    {
+      "id": "tooblerz",
+      "name": "Tooblerz",
+      "logo": "pdm-tooblerz.png",
+      "descriptor": [
+        "趣味字形，鲜明个性",
+        "PLAYFUL LETTERING. VIVID CHARACTER."
+      ],
+      "description": [
+        "绒感字母、眼睛与高饱和色彩共同构成鲜明标识，视觉中保留扭转、拼搭与游戏的趣味表达。",
+        "Fuzzy letterforms, eyes and saturated colours create a distinctive identity with visual cues of twisting, building and play."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "yay-hooray",
+      "name": "Yay Hooray!",
+      "logo": "pdm-yay-hooray.png",
+      "descriptor": [
+        "木质玩具与游戏",
+        "WOODEN TOYS & GAMES"
+      ],
+      "description": [
+        "在 2023 年纽约玩具展亮相，涵盖木质玩具、游戏、拼图、手工与户外玩耍。",
+        "Introduced at the 2023 New York Toy Fair, the brand includes wooden toys, games, puzzles, crafts and outdoor play."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "introductionSource": "https://www.paramontgroup.com/OurCompanies"
+    },
+    {
+      "id": "crafty-creations",
+      "name": "Crafty Creations",
+      "logo": "pdm-crafty-creations.png",
+      "descriptor": [
+        "手写线条，金色温度",
+        "HANDWRITTEN LINES. GOLDEN WARMTH."
+      ],
+      "description": [
+        "金色手写字形以连续线条展开，搭配细小的 CRAFT-RITE 字样，形成细腻而温暖的品牌识别。",
+        "Continuous gold handwriting paired with the small CRAFT-RITE signature creates a delicate, warm visual identity."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "yumzee-care",
+      "name": "Yumzee Care",
+      "logo": "pdm-yumzee.png",
+      "descriptor": [
+        "简洁字形，柔和节奏",
+        "SIMPLE LETTERING. SOFT RHYTHM."
+      ],
+      "description": [
+        "黑色圆润手写字形与简洁的 CARE 字样形成对比，整体识别清晰、柔和。",
+        "Rounded black handwriting contrasts with a clean CARE signature, creating a clear and gentle identity."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "koko-milo",
+      "name": "Koko & Milo Beauty",
+      "logo": "pdm-koko-milo-clean.png",
+      "descriptor": [
+        "温暖色调，亲和美感",
+        "WARM TONES. APPROACHABLE BEAUTY."
+      ],
+      "description": [
+        "温暖的棕色手写字形搭配 BEAUTY 字样，以柔和笔触传递亲切、自然的视觉感受。",
+        "Warm brown handwriting paired with the BEAUTY signature conveys an approachable, natural visual character."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "mane-accessories",
+      "name": "Mane Street Accessories",
+      "logo": "pdm-mane-street.png",
+      "descriptor": [
+        "纤细线条，柔粉光彩",
+        "FINE LINES. SOFT PINK."
+      ],
+      "description": [
+        "柔粉色高对比字形以细密线条构成，搭配 ACCESSORIES 字样，强调精致、轻盈的视觉表达。",
+        "Fine-lined, high-contrast pink letterforms and the ACCESSORIES signature give the identity a refined, delicate expression."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "mane-couture",
+      "name": "Mane Street Couture",
+      "logo": "pdm-mane-street-couture.png",
+      "descriptor": [
+        "经典字形，鲜明风格",
+        "CLASSIC LETTERFORMS. DISTINCTIVE STYLE."
+      ],
+      "description": [
+        "黑白高对比字形与 COUTURE 字样共同构成标识，细密线条与宽阔结构形成鲜明的时尚感。",
+        "High-contrast black-and-white letterforms and the COUTURE signature combine fine lines with broad structures for a distinctive fashion identity."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    },
+    {
+      "id": "sweet-shop",
+      "name": "Sweet Shop",
+      "logo": "pdm-sweetshop.png",
+      "descriptor": [
+        "缤纷色彩，甜美印象",
+        "COLOURFUL LETTERS. SWEET CHARACTER."
+      ],
+      "description": [
+        "玫红圆环包围多彩字母，圆形徽章与明快色彩形成活泼、易于识别的视觉形象。",
+        "A magenta ring surrounds multicoloured lettering, creating a lively, recognisable circular identity."
+      ],
+      "source_url": "https://pdm.paramontgroup.com/",
+      "ownership": "company-confirmed",
+      "descriptionBasis": "Editorial description of the supplied official identity; not a product-range claim."
+    }
+  ]
+}

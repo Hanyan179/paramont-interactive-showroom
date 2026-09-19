@@ -1,0 +1,100 @@
+.impact-theatre{position:fixed;inset:0;overflow:hidden;background:#061725;color:#edf3f6;font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;--moment-progress:0%;--impact-navigation-bottom:7%;--impact-navigation-height:clamp(60px,6vh,130px);}
+.impact-stage{position:absolute;inset:0;touch-action:none;outline:none;transition:opacity .16s;}
+.impact-stage canvas{display:block;width:100%;height:100%;}
+.impact-stage:focus-visible{outline:1px solid #b3d8ea66;outline-offset:-8px;}
+.impact-vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#03101ce8 0%,transparent 24%,transparent 78%,#030e1b5e 100%),linear-gradient(90deg,#041420aa,transparent 46%);}
+.impact-header{position:absolute;left:4%;right:4%;top:4.5%;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;}
+.impact-logo{width:clamp(135px,10vw,384px);height:auto;filter:drop-shadow(0 0 20px #b7dcff70);}
+.impact-edition{font-size:clamp(10px,.65vw,25px);letter-spacing:.2em;color:#a4bccd;}
+.impact-copy{position:absolute;left:4%;bottom:23%;width:36%;pointer-events:none;animation:impact-copy-in 1s both;}
+.impact-eyebrow{display:flex;align-items:center;gap:16px;font-size:clamp(11px,.72vw,28px);letter-spacing:.2em;color:#c3b397;margin:0 0 2.2vh;}
+.impact-eyebrow i{display:block;width:32px;height:1px;background:#c3b397;}
+.impact-copy h1{font-family:'Songti SC','STSong',Georgia,serif;font-size:clamp(40px,4.2vw,158px);font-weight:400;line-height:1.22;letter-spacing:.015em;text-wrap:balance;margin:0 0 2.7vh;text-shadow:0 4px 30px #02132160;}
+.impact-description{max-width:88%;font-size:clamp(15px,1.02vw,39px);line-height:1.9;color:#bdcedc;margin:0;}
+.impact-enter{display:inline-flex;align-items:center;gap:30px;min-height:max(48px,4.8vh);margin-top:3vh;padding:0 0 6px;border:0;border-bottom:1px solid #a4bfd36b;background:transparent;color:#e4eef5;font-size:clamp(14px,.92vw,35px);cursor:pointer;pointer-events:auto;}
+.impact-enter svg{width:clamp(20px,1.3vw,50px);height:clamp(20px,1.3vw,50px);transition:transform .3s;}
+.impact-enter:hover svg{transform:translateX(6px);}
+/* Balanced outer tracks keep the chapters centered when tools appear or disappear. */
+.impact-footer{position:absolute;left:4%;right:4%;bottom:var(--impact-navigation-bottom);min-height:var(--impact-navigation-height);display:grid;grid-template-columns:minmax(0,1fr) 52vw minmax(0,1fr);align-items:center;column-gap:clamp(12px,1.4vw,54px);}
+.impact-footer nav{grid-column:2;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(12px,1.2vw,46px);align-items:center;}
+.impact-footer nav button{position:relative;display:flex;align-items:center;justify-content:center;gap:clamp(8px,.65vw,25px);padding:0;min-width:0;min-height:var(--impact-navigation-height);background:transparent;border:0;color:#8da5b8;font-size:clamp(14px,.95vw,36px);line-height:1.2;text-align:center;cursor:pointer;white-space:nowrap;touch-action:manipulation;}
+.impact-footer nav small{font-size:.64em;color:#68869c;font-variant-numeric:tabular-nums;}
+.impact-footer nav button[aria-current]{color:#f0f4f6;}
+.impact-footer nav button i{position:absolute;left:8%;right:8%;height:1px;bottom:0;background:#3f5c724d;}
+.impact-footer nav button[aria-current] i:after{content:'';position:absolute;left:0;top:0;height:1px;width:clamp(0%,var(--moment-progress),100%);background:#d5bd8f;}
+.impact-tools{grid-column:3;justify-self:end;display:flex;align-items:center;gap:clamp(8px,.65vw,25px);}
+.impact-tools button{display:flex;align-items:center;justify-content:center;min-width:max(48px,3.2vw);height:max(48px,4.7vh);border:0;background:transparent;color:#c7dae8;cursor:pointer;}
+.impact-tools svg{width:clamp(20px,1.2vw,46px);height:clamp(20px,1.2vw,46px);}
+.impact-language{font-size:clamp(12px,.8vw,31px);}
+.impact-scrub{width:clamp(65px,7.3vw,280px);height:48px;accent-color:#c5b18d;cursor:pointer;}
+.impact-note{position:absolute;bottom:3%;left:4%;font-size:clamp(10px,.64vw,25px);color:#788fa1;letter-spacing:.07em;pointer-events:none;}
+.impact-loading{position:absolute;left:4%;bottom:28%;font-size:clamp(18px,1.3vw,50px);color:#acc4d5;letter-spacing:.13em;}
+.impact-theatre button:focus-visible,.impact-scrub:focus-visible{outline:2px solid #b5d9ec;outline-offset:5px;}
+.moment-brands .impact-copy{width:34%;}
+.moment-brands .impact-copy h1{font-family:Arial,'PingFang SC',sans-serif;font-size:clamp(38px,3.5vw,134px);line-height:1.13;font-weight:500;}
+.moment-intelligence .impact-copy h1{font-size:clamp(40px,4vw,152px);}
+@keyframes impact-copy-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1450px){.impact-tools{gap:3px}.impact-scrub{width:65px}.impact-copy{width:39%;}.impact-copy h1{font-size:4.2vw;}}
+@media(max-aspect-ratio:3/2){.impact-copy{bottom:22%;width:41%}.impact-footer nav button{font-size:12px;gap:7px}.impact-scrub{display:none;}.impact-tools button{min-width:48px}.impact-edition{display:none;}}
+@media(prefers-reduced-motion:reduce){.impact-copy{animation:none;}.impact-stage,.impact-enter svg{transition:none;}}
+
+.impact-scrub{-webkit-appearance:none;appearance:none;background:transparent;touch-action:none;}.impact-scrub::-webkit-slider-runnable-track{height:1px;background:#7e9ab180;}.impact-scrub::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;border-radius:50%;background:#d3c19e;margin-top:-4px;}.impact-scrub::-moz-range-track{height:1px;background:#7e9ab180;}.impact-scrub::-moz-range-thumb{width:9px;height:9px;border:0;border-radius:50%;background:#d3c19e;}
+
+.impact-header:before{content:"";position:absolute;z-index:-1;left:-6vw;top:-7vh;width:26vw;height:30vh;background:radial-gradient(ellipse at 44% 43%,#c1dcecdd, #7193b066 36%,transparent 68%);pointer-events:none;}.impact-header{isolation:isolate;}
+
+.impact-hotspots{position:absolute;inset:0;pointer-events:none;}
+.impact-region{position:absolute;display:flex;align-items:center;gap:14px;min-height:64px;padding:10px 18px 10px 0;transform:translate(-24px,-50%);border:0;border-radius:0;background:linear-gradient(90deg,transparent,#031323b3 28%,#03132300);color:#edf4fa;text-align:left;white-space:nowrap;cursor:pointer;pointer-events:auto;touch-action:none;user-select:none;text-shadow:0 2px 12px #00101b;}
+.impact-region[hidden]{display:none;}
+.impact-region>i{width:48px;height:48px;flex-shrink:0;position:relative;border:1px solid #d0b38477;border-radius:50%;background:radial-gradient(circle,#f7dca4 0 4px,#ddba7140 5px,transparent 16px);box-shadow:0 0 30px #9bd6fb22;}
+.impact-region strong{display:block;font-size:clamp(18px,1.25vw,48px);font-weight:500;letter-spacing:.08em;}
+.impact-region small{display:block;margin-top:5px;color:#a6c3d8;font-size:clamp(12px,.72vw,27px);letter-spacing:.09em;}
+.impact-region>svg{width:clamp(18px,1.1vw,42px);height:clamp(18px,1.1vw,42px);margin-left:6px;color:#dabd8b;}
+.impact-region:hover>i,.impact-region:focus-visible>i,.impact-region.is-selected>i{border-color:#efd4a5;box-shadow:0 0 34px #abcdea77;}
+.impact-region.is-selected{color:#ffe6be;}
+.is-entering .impact-copy,.is-entering .impact-footer{opacity:0;pointer-events:none;transition:opacity .3s;}
+.is-entering .impact-stage{pointer-events:none;}
+@media(min-width:2500px){.impact-region{gap:26px;min-height:112px;transform:translate(-40px,-50%)}.impact-region>i{width:80px;height:80px;background:radial-gradient(circle,#f7dca4 0 7px,#ddba7140 9px,transparent 26px)}}
+
+.impact-region.align-left{flex-direction:row-reverse;transform:translate(calc(-100% + 24px),-50%);padding:10px 0 10px 18px;background:linear-gradient(270deg,transparent,#031323b3 28%,#03132300);text-align:right;}
+@media(min-width:2500px){.impact-region.align-left{transform:translate(calc(-100% + 40px),-50%)}}
+
+/* Quiet article access leaves the visual stage open. */
+.impact-copy{bottom:27%;}
+.impact-description{white-space:pre-line;}
+.impact-reading-entry{position:absolute;left:4%;bottom:17%;}
+
+
+
+.impact-reel-control{position:absolute;bottom:19%;left:58%;transform:translateX(-50%);display:flex;align-items:center;gap:1.5vw;}
+.impact-reel-control>button{width:max(56px,3.4vw);height:max(56px,5vh);display:grid;place-items:center;border:1px solid #a6cce42e;border-radius:50%;background:#06172655;color:#d0dde7;cursor:pointer;touch-action:manipulation;}
+.impact-reel-control>button:hover{border-color:#dbc5a0;}
+.impact-reel-control svg{width:clamp(22px,1.2vw,46px);height:clamp(22px,1.2vw,46px);}
+.impact-reel-control>span{display:flex;flex-direction:column;align-items:center;gap:9px;min-width:8vw;}
+.impact-reel-control small{color:#92aabd;font-size:clamp(10px,.62vw,24px);letter-spacing:.16em;}
+.impact-reel-control b{font-size:clamp(16px,.95vw,36px);font-weight:400;color:#e3cfab;font-variant-numeric:tabular-nums;letter-spacing:.14em;}
+.impact-reel-control i{color:#7690a5;font-style:normal;font-size:.8em;}
+.moment-brands .impact-stage,.moment-categories .impact-stage{cursor:grab;}.moment-brands .impact-stage:active,.moment-categories .impact-stage:active{cursor:grabbing;}
+.moment-categories .impact-copy{width:32%;bottom:29%;}
+.moment-categories .impact-copy h1{font-size:clamp(38px,3.5vw,134px);line-height:1.2;}
+.moment-categories .impact-description{max-width:100%;font-size:clamp(14px,.92vw,35px);}
+.impact-category-facets{list-style:none;display:flex;flex-wrap:wrap;gap:12px 1.25vw;margin:3vh 0 0;padding:0;color:#d3be9c;font-size:clamp(11px,.67vw,26px);letter-spacing:.09em;}
+.impact-category-facets li{padding-bottom:10px;border-bottom:1px solid #c5ad833d;}
+@media(max-width:1450px){.impact-footer nav button{font-size:13px;gap:8px}}
+@media(max-aspect-ratio:3/2){.moment-categories .impact-copy{width:36%;bottom:29%}.moment-categories .impact-description{font-size:14px}.impact-footer nav button{font-size:12px}}
+.moment-supply .impact-vignette{background:linear-gradient(0deg,#02101c 0,transparent 27%,transparent 87%,#03101b77),linear-gradient(90deg,#041421bc,transparent 50%);}
+.moment-supply .impact-copy{bottom:30%;width:36%;}
+.moment-supply .impact-copy h1{font-size:clamp(48px,5.3vw,200px);letter-spacing:.045em;}
+.moment-supply .impact-description{max-width:97%;font-size:clamp(14px,.96vw,37px);line-height:2;}
+.moment-supply .impact-eyebrow{letter-spacing:.28em;}
+@media(max-aspect-ratio:3/2){.impact-copy{bottom:29%}.impact-reel-control{bottom:17%;left:68%}.moment-supply .impact-copy{width:45%}.impact-reading-entry{bottom:17%}}
+
+/* Real-company architecture takes the stage; copy stays in the left quiet area. */
+.moment-company .impact-copy{left:5.5%;bottom:31%;width:30%;text-align:left;}
+.moment-company .impact-copy h1{font-size:clamp(38px,3.6vw,138px);letter-spacing:.04em;line-height:1.28;}
+.moment-company .impact-eyebrow{font-size:clamp(12px,.78vw,30px);color:#adc3d0;}
+.moment-company .impact-description{font-size:clamp(13px,.9vw,35px);max-width:95%;color:#a9c0d1;}
+.moment-company .impact-reading-entry{left:5.5%;bottom:20%;}
+.moment-company .impact-vignette{background:linear-gradient(0deg,#03101ce0,transparent 24%),linear-gradient(90deg,#031421bd,transparent 45%);}
+.moment-company .impact-scrub{display:none;}
+.impact-header:before{opacity:.62;filter:blur(14px);width:24vw;height:27vh;}
+@media(max-aspect-ratio:3/2){.moment-company .impact-copy{width:32%;bottom:35%;}.moment-company .impact-copy h1{font-size:3.8vw;}}

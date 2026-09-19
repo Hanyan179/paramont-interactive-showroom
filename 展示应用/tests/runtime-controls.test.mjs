@@ -40,7 +40,7 @@ function pointerRig(options = {}) {
   host.hasPointerCapture = id => captured.has(id);
   host.releasePointerCapture = id => captured.delete(id);
   const controls = bindScenePointer(host, { ...options, onStart: () => calls.push('start'), onMove: () => calls.push('move'),
-    onTap: (...args) => { calls.push('tap'); options.onTap?.(...args); }, onEnd: ({ cancelled }) => calls.push(cancelled ? 'cancel' : 'end') });
+    onTap: (...args) => { calls.push('tap'); options.onTap?.(...args); }, onEnd: result => { calls.push(result.cancelled ? 'cancel' : 'end'); options.onEnd?.(result); } });
   const send = (type, x = 0, pointerId = 1, extras = {}) => {
     const event = new Event(type,{cancelable:true}); Object.assign(event, { clientX: x, clientY: 0, pointerId, isPrimary: true, button: 0, ...extras }); host.dispatchEvent(event);return event;
   };

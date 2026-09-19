@@ -1,0 +1,37 @@
+{
+  "mode": "Built-in image_gen tool, image edits",
+  "date": "2026-09-14",
+  "usage": "Original concept products. Black studio matte rendered with a live luma key in Three.js; not transparent PNGs and not actual SKU photos.",
+  "assets": [
+    {
+      "id": "kids-craft",
+      "prompt": "Edit target: this concept product assortment. Keep the product cluster and photographic detail unchanged. Replace the ENTIRE grey checkerboard background with perfectly uniform pure RGB black (#000000), including spaces between products and within handles. No checkerboard at all. No shadows on the background, no floor, no pedestal, no horizon, no fog, no vignette. Preserve white/light product elements and the product colours. Soft cool edge light on the objects only. Keep all objects away from image edges with 8% empty black margins. Landscape 1536 by 1024 product matte for a 2.5D projection. This is a BLACK background request, not transparency.",
+      "file": "kids-craft-matte.png"
+    },
+    {
+      "id": "stationery",
+      "prompt": "Edit target: this concept product assortment. Keep the product cluster and photographic detail unchanged. Replace the ENTIRE grey checkerboard background with perfectly uniform pure RGB black (#000000), including spaces between products and within handles. No checkerboard at all. No shadows on the background, no floor, no pedestal, no horizon, no fog, no vignette. Preserve white/light product elements and the product colours. Soft cool edge light on the objects only. Keep all objects away from image edges with 8% empty black margins. Landscape 1536 by 1024 product matte for a 2.5D projection. This is a BLACK background request, not transparency.",
+      "file": "stationery-matte.png"
+    },
+    {
+      "id": "party",
+      "prompt": "Edit target: this concept product assortment. Keep the product cluster and photographic detail unchanged. Replace the ENTIRE grey checkerboard background with perfectly uniform pure RGB black (#000000), including spaces between products and within handles. No checkerboard at all. No shadows on the background, no floor, no pedestal, no horizon, no fog, no vignette. Preserve white/light product elements and the product colours. Soft cool edge light on the objects only. Keep all objects away from image edges with 8% empty black margins. Landscape 1536 by 1024 product matte for a 2.5D projection. This is a BLACK background request, not transparency.",
+      "file": "party-matte.png"
+    },
+    {
+      "id": "toys",
+      "prompt": "Edit target: this concept product assortment. Keep the product cluster and photographic detail unchanged. Replace the ENTIRE grey checkerboard background with perfectly uniform pure RGB black (#000000), including spaces between products and within handles. No checkerboard at all. No shadows on the background, no floor, no pedestal, no horizon, no fog, no vignette. Preserve white/light product elements and the product colours. Soft cool edge light on the objects only. Keep all objects away from image edges with 8% empty black margins. Landscape 1536 by 1024 product matte for a 2.5D projection. This is a BLACK background request, not transparency.",
+      "file": "toys-matte.png"
+    },
+    {
+      "id": "beauty",
+      "prompt": "Edit target: this concept product assortment. Keep the product cluster and photographic detail unchanged. Replace the ENTIRE grey checkerboard background with perfectly uniform pure RGB black (#000000), including spaces between products and within handles. No checkerboard at all. No shadows on the background, no floor, no pedestal, no horizon, no fog, no vignette. Preserve white/light product elements and the product colours. Soft cool edge light on the objects only. Keep all objects away from image edges with 8% empty black margins. Landscape 1536 by 1024 product matte for a 2.5D projection. This is a BLACK background request, not transparency.",
+      "file": "beauty-matte.png"
+    },
+    {
+      "id": "general-craft",
+      "prompt": "Edit target: this concept product assortment. Keep the product cluster and photographic detail unchanged. Replace the ENTIRE grey checkerboard background with perfectly uniform pure RGB black (#000000), including spaces between products and within handles. No checkerboard at all. No shadows on the background, no floor, no pedestal, no horizon, no fog, no vignette. Preserve white/light product elements and the product colours. Soft cool edge light on the objects only. Keep all objects away from image edges with 8% empty black margins. Landscape 1536 by 1024 product matte for a 2.5D projection. This is a BLACK background request, not transparency.",
+      "file": "general-craft-matte.png"
+    }
+  ]
+}

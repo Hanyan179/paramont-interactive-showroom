@@ -1,0 +1,63 @@
+{
+  "date": "2026-09-14",
+  "method": "built-in image_gen; reference-based relighting and recomposition",
+  "boundary": "Category concept imagery; not photographs of actual inventory or company premises.",
+  "assets": [
+    {
+      "file": "beauty.png",
+      "width": 948,
+      "height": 1659,
+      "prompt": "beauty-prompt.txt",
+      "source": "../portraits-v2/beauty.png"
+    },
+    {
+      "file": "category-room-dark.png",
+      "width": 1659,
+      "height": 948,
+      "prompt": "category-room-dark-prompt.txt",
+      "source": "category-room-light.png"
+    },
+    {
+      "file": "category-room-light.png",
+      "width": 1660,
+      "height": 948,
+      "prompt": "category-room-light-prompt.txt",
+      "source": "user-provided-gallery-reference"
+    },
+    {
+      "file": "general-craft.png",
+      "width": 948,
+      "height": 1659,
+      "prompt": "general-craft-prompt.txt",
+      "source": "../portraits-v2/general-craft.png"
+    },
+    {
+      "file": "kids-craft.png",
+      "width": 948,
+      "height": 1659,
+      "prompt": "kids-craft-prompt.txt",
+      "source": "../portraits-v2/kids-craft.png"
+    },
+    {
+      "file": "party.png",
+      "width": 948,
+      "height": 1659,
+      "prompt": "party-prompt.txt",
+      "source": "../portraits-v2/party.png"
+    },
+    {
+      "file": "stationery.png",
+      "width": 948,
+      "height": 1659,
+      "prompt": "stationery-prompt.txt",
+      "source": "../portraits-v2/stationery.png"
+    },
+    {
+      "file": "toys.png",
+      "width": 948,
+      "height": 1659,
+      "prompt": "toys-prompt.txt",
+      "source": "../portraits-v2/toys.png"
+    }
+  ]
+}

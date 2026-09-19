@@ -1,0 +1,19 @@
+Built-in image_gen edit workflow
+Reference: 展示应用/public/media/categories/portraits-v2/kids-craft.png
+Final source: generated-image:exec-edde3d67-8078-418d-8529-5f9ad497164b.png
+Requested size: 1024 x 1792.
+Verified actual size: 948 x 1659, exact 4:7 portrait.
+No external resizing, cropping or image editing applied.
+Prior dark v2 retained, bright v3 saved separately.
+
+FULL PROMPT
+Use case: precise-object-edit
+Asset type: single portrait children's craft category photograph for a refined contemporary design showroom.
+Input image: supplied portrait craft display is the edit target. Preserve recognizable product identities and material realism, while replacing its entire lighting and environment.
+Primary request: create a bright editorial still-life product photograph in a warm modern creative studio. One full-bleed independent 4:7 portrait image, target 1024 x 1792 pixels.
+Style consistency: bright editorial still-life photography, warm ivory plaster #ece7de, limestone #d4c7b7, soft daylight from upper left, gentle shadows, realistic material detail, refined contemporary design showroom.
+Scene: warm ivory plaster wall, pale sand and cream limestone countertop and low plinths. Replace ALL dark navy stands, the dark background, and dark surfaces with the light warm ivory / natural limestone scene. Use only three quiet display levels with natural front-to-back depth. The pipe-cleaner vessel may be warm ivory ceramic instead of navy to suit the new environment. A welcoming high-end lifestyle product photograph, well exposed but not blown out.
+Subject invariants: preserve the purple-and-yellow felt butterfly with blue dots, pink fuzzy body, googly eyes and curled pink antennae; colorful chenille pipe cleaners; colorful pom-poms in a clear glass jar; colorful felt sheets and craft paper; red, orange, yellow, green, blue and purple crayons; colored beads in a clear glass bowl; felt stars, hearts, flowers and circles. Include a small complete pair of child-safe scissors as a supporting craft object. Keep vivid recognizable material colors, saturated but not fluorescent. Retain clear fiber texture of felt, pipe cleaners and pom-poms, transparency of glass, smooth beads and crayons.
+Composition: simplify the display into a coherent three-layer vertical arrangement. Center the recognizable handmade butterfly prominently. Place jar and upright pipe cleaners above and behind, layered colored paper / felt to one side, with crayons, a bead bowl, scissors and a few cutout shapes below. All main objects fully visible and clear, no object cropped at the edges. Products occupy at least 70 percent of the overall image, with large readable visual presence. Top approximately 10 percent is soft warm ivory wall; bottom approximately 12 percent is calm natural limestone tabletop left clear for a later editable title. Narrow natural side margins. Keep the photograph physically plausible and subtly asymmetrical, with foreground, middle and rear depth rather than many theatrical stair steps.
+Lighting: soft bright natural daylight from upper left, gentle realistic shadows, neutral-warm white balance, crisp material detail and full-scene clarity. Preserve original product colors without a color filter.
+Avoid: dark navy steps, black backdrop, navy background, dramatic dim lighting, color wash or color overlay, overexposed white haze, fog, bloom, smoke, hard flash, neon color, rendered text, letters, logos, brands, watermarks, borders, frames, UI, people, collage or split panels. No added caption. Conceptual craft products, not branded retail SKUs.

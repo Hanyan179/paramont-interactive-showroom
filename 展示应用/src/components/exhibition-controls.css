@@ -1,0 +1,17 @@
+/* Keep the wall clear; the existing navigation opens only for a selection. */
+.showroom.atrium .exhibition-controls{transition:background .4s,border-color .4s,opacity .65s;}
+.exhibition-controls .system-panel{display:flex;align-items:center;gap:clamp(6px,.9vw,34px);flex:1;min-width:0;height:100%;}
+.exhibition-controls .system-panel[hidden]{display:none;}
+.exhibition-controls .system-rest-actions{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0;}
+.exhibition-controls .system-explore-toggle,.exhibition-controls .system-present-toggle{display:flex;align-items:center;justify-content:center;gap:10px;min-height:max(48px,4.9vh);padding:0 clamp(14px,1.15vw,42px);color:#e6eef3;font-size:clamp(14px,.9vw,34px);border:1px solid #b3ccde42;border-radius:28px;background:#102b49b3;white-space:nowrap;touch-action:manipulation;}
+.exhibition-controls .system-present-toggle{width:max(48px,4.9vh);padding:0;border-color:transparent;background:transparent;}
+.exhibition-controls .system-rest-actions svg{width:clamp(20px,1.15vw,44px);height:clamp(20px,1.15vw,44px);}
+.showroom.atrium .exhibition-controls.controls-resting{background:transparent;border-color:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;pointer-events:none;}
+.exhibition-controls.controls-resting>button,.exhibition-controls.controls-resting .system-rest-actions{pointer-events:auto;}
+.showroom.atrium .exhibition-controls.controls-resting .system-brand{border-radius:12px;background:linear-gradient(115deg,#bdcbd9d9,#91a7bbc4);padding:9px 14px;flex-basis:clamp(112px,8vw,307px);height:max(54px,5.6vh);}
+.exhibition-controls.controls-open .system-explore-toggle{border:0;padding:0 10px;background:transparent;min-width:max(48px,4.9vh);}
+.exhibition-controls.controls-open .system-explore-toggle span{display:none;}
+.exhibition-controls.controls-open .system-rest-actions{margin-left:0;}
+.showroom.atrium .exhibition-controls .system-area{max-width:23%;}
+@media(max-width:1250px){.exhibition-controls .system-panel{gap:4px}.exhibition-controls .system-rest-actions{gap:3px}.showroom.atrium .exhibition-controls.controls-open .system-brand{flex-basis:65px}.exhibition-controls.controls-open .system-explore-toggle{padding:0 4px;min-width:44px;}}
+@media(prefers-reduced-motion:reduce){.showroom.atrium .exhibition-controls{transition:none;}}

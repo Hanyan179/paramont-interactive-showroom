@@ -1,0 +1,25 @@
+// Editorial selection from confirmed focus areas; order does not encode sales or volume.
+// Catalog references identify category scope only, never ownership or commercial SKUs.
+export const categoryReel=[
+  {id:'beauty',catalogId:'15',officialIds:['category-09'],name:['美妆个护','BEAUTY & CARE'],
+    description:['从一抹色彩，到日常护理。\n让质感，融入每一个细节。','From a touch of colour to everyday care.\nThoughtful form, material and detail.'],
+    facets:[['彩妆','COLOUR COSMETICS'],['护肤','SKINCARE'],['美妆工具','BEAUTY TOOLS']],
+    examples:[{id:'040',name:['口红','Lip Stick']},{id:'024',name:['眼影','Eye Shadow']},{id:'308',name:['护肤','Skincare']},{id:'021',name:['化妆刷','Cosmetic Brushes']}],
+    detail:['围绕彩妆、护理与美妆工具展开，结合包装结构、表面光泽、色彩和使用体验，呈现这一领域的产品设计语言。','Colour cosmetics, care and beauty tools bring together packaging structure, surface finish, colour and use experience.'],
+    material:['玻璃的通透、金属的精致与色彩的层次，为不同的日常护理场景建立统一而细腻的产品表达。','Transparent glass, refined metal and layered colour offer different expressions for daily care.'],
+    scene:[{id:'lipstick',p:[-.75,.45,.5],scale:1.45,r:[.05,0,-.13]},{id:'serum',p:[1.45,.25,-.95],scale:1.25,r:[.03,-.25,.12]},{id:'compact',p:[1.6,-1.0,1.15],scale:1.08,r:[.23,-.42,.04]}]},
+  {id:'toys',catalogId:'13',officialIds:['category-08','category-04'],name:['儿童玩具','TOYS & PLAY'],
+    description:['色彩、触感与探索。\n把成长的乐趣，变成触手可及的体验。','Colour, texture and discovery.\nBring the joy of play within reach.'],
+    facets:[['木质玩具','WOODEN PLAY'],['益智拼图','PUZZLES'],['游戏套装','PLAY SETS']],
+    examples:[{id:'266',name:['木质玩具','Wood - Toy']},{id:'295',name:['拼图','Puzzles']},{id:'190',name:['迷你沙锤','Mini Maracas']},{id:'263',name:['玩具套装','Toy Kit']}],
+    detail:['通过拼搭、配对、节奏与触感等互动形式，展示玩具与游戏的多样性。不同产品围绕材料、结构与探索方式形成各自特点。','Building, matching, rhythm and tactile play express a variety of toys and games, with distinct materials, structures and ways to explore.'],
+    material:['木作轮廓、柔和配色和圆润细节共同构成亲近的视觉语言；具体适用年龄与产品规格需以真实样品资料为准。','Wood-inspired forms, soft colours and rounded details create an approachable visual language. Actual sample records determine age suitability and specifications.'],
+    scene:[{id:'rings',p:[-.65,.2,0],scale:1.65,r:[.02,0,-.08]},{id:'maraca',p:[1.7,.3,-.8],scale:1.2,r:[0,-.2,-.1]},{id:'puzzle',p:[1.15,-1.0,1.5],scale:1.1,r:[.23,-.3,.05]}]},
+  {id:'party',catalogId:'06',officialIds:['category-05','category-06'],name:['派对庆典','PARTY & CELEBRATION'],
+    description:['生日、派对与每一次欢聚。\n用色彩和细节，让特别的时刻被记住。','Birthdays, parties and moments together.\nMake every occasion feel special.'],
+    facets:[['气球','BALLOONS'],['派对装饰','DECORATIONS'],['派对餐具','TABLEWARE']],
+    examples:[{id:'016',name:['气球','Balloons']},{id:'198',name:['派对装饰与赠品','Party Decor/Favors']},{id:'197',name:['纸质餐具','Paper Tableware']},{id:'180',name:['派对蜡烛','Candle - Party']}],
+    detail:['围绕生日、主题派对与欢庆时刻，将气球、装饰、餐具及小赠品组成协调的场景，让色彩与主题贯穿细节。','Balloons, decorations, tableware and party favours create coordinated settings for birthdays and themed celebrations.'],
+    material:['从气球的轻盈光泽到纸品的色彩与纹理，不同材质共同形成丰富而统一的庆祝氛围。','Airy balloon finishes, paper colours and textures come together in a coordinated celebration.'],
+    scene:[{id:'balloon',p:[-.6,1.2,-.45],scale:1.55,r:[0,.06,-.08]}]},
+];

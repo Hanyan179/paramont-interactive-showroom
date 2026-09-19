@@ -1,0 +1,52 @@
+/* Both palettes belong to the theatre's continuous blue space. */
+.category-portals{position:absolute;inset:0;z-index:2;pointer-events:none;color:var(--gallery-ink);}
+.category-portals-title{position:absolute;left:24%;right:24%;top:5.5%;text-align:center;pointer-events:none;transition:opacity .3s;}
+.category-portals-title>p{font-size:clamp(11px,.72vw,28px);letter-spacing:.22em;color:var(--gallery-muted);margin:0 0 1.1vh;font-weight:400;}
+.category-portals-title h1{font-family:'Songti SC','STSong',Georgia,serif;font-size:clamp(32px,3.15vw,121px);font-weight:400;line-height:1.17;letter-spacing:.025em;margin:0;color:var(--gallery-ink);}
+.category-portals.is-focused .category-portals-title{opacity:0;}
+.category-theme-switch{position:absolute;right:4%;top:5%;display:flex;gap:3px;padding:3px;border:1px solid var(--gallery-line);border-radius:30px;background:var(--gallery-button);pointer-events:auto;}
+.category-theme-switch button{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:82px;padding:0 16px;border:0;border-radius:25px;color:var(--gallery-muted);background:transparent;cursor:pointer;font-size:clamp(12px,.77vw,29px);touch-action:none;}
+.category-theme-switch button[aria-pressed=true]{background:var(--gallery-ink);color:var(--gallery-surface);}
+.category-theme-switch svg{width:20px;height:20px;}
+.category-portal-target{position:absolute;pointer-events:auto;touch-action:none;border:0;background:transparent;cursor:pointer;}
+.category-portal-target[hidden]{display:none;}
+.category-portal-target:hover{box-shadow:inset 0 0 0 2px #ffffff7a;}
+.category-portal-target:focus-visible{box-shadow:inset 0 0 0 3px var(--gallery-accent);outline:0!important;}
+.category-portals-footer{position:absolute;top:80.5%;left:20%;right:20%;text-align:center;font-family:'Songti SC','STSong',Georgia,serif;font-size:clamp(15px,1.05vw,40px);font-weight:400;letter-spacing:.09em;color:var(--gallery-ink);margin:0;}
+.category-portals-note{position:absolute;left:4%;bottom:3%;margin:0;color:var(--gallery-muted);font-size:clamp(10px,.64vw,25px);}
+.category-portal-detail{position:absolute;left:9%;top:29%;width:28%;animation:impact-copy-in .5s both;pointer-events:none;}
+.category-portal-number{font-size:clamp(12px,.78vw,30px);letter-spacing:.13em;color:var(--gallery-accent);display:flex;align-items:center;gap:2vw;}
+.category-portal-number span{font-size:.85em;color:var(--gallery-muted);}
+.category-portal-detail h1{font-family:'Songti SC','STSong',Georgia,serif;font-size:clamp(36px,3.9vw,150px);line-height:1.18;font-weight:400;color:var(--gallery-ink);text-wrap:balance;margin:3vh 0;}
+.category-portal-description{font-size:clamp(14px,.95vw,36px);color:var(--gallery-muted);line-height:1.85;text-wrap:balance;}
+.category-portal-actions{margin-top:3vh;display:flex;flex-direction:column;align-items:flex-start;gap:.4vh;pointer-events:auto;}
+.category-portal-actions button{border:0;border-bottom:1px solid var(--gallery-line);background:none;color:var(--gallery-ink);display:flex;gap:1.5vw;align-items:center;min-height:max(48px,4.3vh);font-size:clamp(13px,.85vw,32px);padding:0;cursor:pointer;touch-action:none;}
+.category-portal-actions button+button{color:var(--gallery-muted);}
+.category-portal-actions svg,.category-portal-back svg{width:1.3em;height:1.3em;}
+.category-portal-paging{display:flex;gap:12px;margin-top:3vh;pointer-events:auto;}
+.category-portal-paging button{border:1px solid var(--gallery-line);border-radius:50%;width:max(48px,3vw);height:max(48px,3vw);display:grid;place-items:center;background:var(--gallery-button);color:var(--gallery-ink);cursor:pointer;touch-action:none;}
+.category-portal-paging svg{width:22px;height:22px;}
+.category-portal-back{position:absolute;bottom:19%;padding:8px 18px;min-height:max(52px,4.5vh);border:1px solid var(--gallery-line);background:var(--gallery-button);color:var(--gallery-ink);display:flex;align-items:center;gap:12px;font-size:clamp(12px,.8vw,31px);pointer-events:auto;cursor:pointer;touch-action:none;}
+.category-portal-back.left{left:4%;}.category-portal-back.right{right:4%;}
+.is-category-portals .impact-vignette,.is-category-portals .impact-header:before{display:none;}
+.is-category-portals .impact-logo{filter:none;}
+.is-category-portals[data-category-theme=dark] .impact-logo{filter:brightness(0) invert(.92);}
+.is-category-portals .impact-edition{display:none;}
+.is-category-portals .impact-footer nav button{font-size:clamp(13px,.85vw,33px);}
+.is-category-portals .impact-footer nav button,.is-category-portals .impact-tools button{color:var(--gallery-muted);}
+.is-category-portals .impact-footer nav button[aria-current]{color:var(--gallery-ink);}
+.is-category-portals .impact-footer nav small{color:var(--gallery-muted);}
+.is-category-portals .impact-footer nav button i{background:var(--gallery-line);}
+.is-category-portals .impact-footer nav button[aria-current] i:after{background:var(--gallery-accent);}
+.is-category-portals button:focus-visible{outline-color:var(--gallery-accent);}
+@media(max-aspect-ratio:3/2){.category-portals-title{top:10%;left:24%;right:24%}.category-portals-title h1{font-size:3.6vw}.category-portals-footer{top:74%}.category-portal-detail{left:7%;width:31%;top:28%}.category-portal-detail h1{font-size:4.2vw}.category-portal-description{font-size:14px}.category-portal-back{bottom:19%}.category-theme-switch{top:4.5%;}.category-theme-switch button{min-width:65px;padding:0 11px;}}
+@media(min-width:2500px){.category-theme-switch{padding:6px;border-radius:60px;}.category-theme-switch button{min-height:80px;min-width:160px;border-radius:55px;gap:16px;}.category-theme-switch svg{width:38px;height:38px;}}
+@media(prefers-reduced-motion:reduce){.category-portal-detail{animation:none}.category-portals-title{transition:none}}
+.category-portal-focus-touch{position:absolute;left:51%;right:9%;top:16%;height:68%;pointer-events:auto;touch-action:none;cursor:grab;}
+.category-portal-focus-touch:active{cursor:grabbing;}
+
+/* Keep the common navigation readable without changing its position. */
+.is-category-portals .impact-footer nav button{font-weight:500;}
+.is-category-portals[data-category-theme=dark] .impact-footer nav button,.is-category-portals[data-category-theme=dark] .impact-tools button{color:var(--gallery-muted);}
+.is-category-portals[data-category-theme=dark] .impact-footer nav small{color:var(--gallery-muted);}
+.is-category-portals .category-portals-footer{top:80.2%;}

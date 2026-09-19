@@ -4,6 +4,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, CornersOut, SquaresFour, Play, Pause } from '@phosphor-icons/react';
 const WorldScene = lazy(() => import('./components/WorldScene').then(m => ({ default:m.WorldScene })));
 const ConnectedScene = lazy(() => import('./components/ConnectedScene').then(m => ({ default:m.ConnectedScene })));
+const ImpactTheatre = lazy(() => import('./impact/ImpactTheatre').then(m => ({default:m.ImpactTheatre})));
 import { BrandCarousel, SampleWall } from './components/Galleries';
 import { Modal, SampleViewer, Switcher } from './components/Dialogs';
 import { fallbackContent, variants } from './content';
@@ -15,6 +16,7 @@ import { FactoryDetail } from './components/FactoryDetail';
 import { getLocationProfile } from './components/locationProfiles';
 import { ProductExplorer } from './components/ProductExplorer';
 import { SystemBar } from './components/SystemBar';
+import { ExhibitCaption } from './components/ExhibitCaption';
 import { sceneNavigation } from './config/navigation.js';
 import { isExplorerView, sectionForView } from '../../共享组件/explorerViews.js';
 import { DataStory, analysisSteps } from './components/DataStory';
@@ -23,10 +25,12 @@ import {MediaTheatre} from './components/MediaTheatre';
 import {playableFilms} from './media/library';
 import {DocumentReader} from './components/DocumentReader';
 import {companyDocument,companyStoryDocument,locationDocument,analysisDocument,productDocument} from './documents/content';
+import {impactDocument} from './impact/documents.js';
 import {isLocationDetailActive,isReaderActive,routeKey} from './documents/reading';
 
 export function App() {
   const [route, rawGo] = useRoute();
+  const [impactOpen,setImpactOpen]=useState(()=>route.variant==='atlas'&&route.page==='home');
   const [mediaPanel,setMediaPanel]=useState(null),[mediaLibrary,setMediaLibrary]=useState({films:[],publications:[]});
   const [mediaPhase,setMediaPhase]=useState('closed');
   const manualMedia=!!mediaPanel&&!mediaPanel.automatic;
@@ -92,10 +96,11 @@ export function App() {
   useEffect(()=>{setReader(previous=>isReaderActive(route,previous)?previous:null);},[route.variant,route.page]);
   useEffect(() => { localStorage.setItem('showroom-language', lang); document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en'; }, [lang]);
   useEffect(() => { if(restoring.current){restoring.current=false;wasExplorer.current=explorerOpen;return;}if(explorerOpen)return;if(wasExplorer.current){wasExplorer.current=false;return;}setSample(null); setLocationOpen(false); setEnteredBrand(null); setVideoPlaying(false); setArchive(null); }, [route.variant, route.page]);
+  const closeLocation=()=>{setVideoPlaying(false);setLocationOpen(false);};
   useEffect(() => { if (!notice) return; const timer = setTimeout(() => setNotice(''), 3500); return () => clearTimeout(timer); }, [notice]);
   const savedExploration=useRef(null),restoring=useRef(false);
   const {presenting,quiet,cinematic,shot,wake,leavePresentation,toggle,activityFromChild}=useExhibition({seconds:content.settings.idleSeconds,
-    blocked:navigationOpen||manualMedia||videoPlaying||switcher||readingActive||!!sample||!!archive||(explorerOpen&&explorerAttention),
+    blocked:(route.variant==='atlas'&&((impactOpen&&home)||route.page==='locations'))||navigationOpen||manualMedia||videoPlaying||switcher||readingActive||!!sample||!!archive||(explorerOpen&&explorerAttention),
     onStart:()=>{savedExploration.current={route,explorerNavigation,chapter,overviewFocus,storySelection,selectedLocation,locationRevealed,globeMode,locationOpen,capability,capabilityFocus,analysisStage,analysisDetail,analysisPhase,analysisSelection,sample,archive};},
     onShot:shot=>{
       setMediaPanel(null);setMediaPhase('closed');setSample(null);setArchive(null);setVideoPlaying(false);setLocationOpen(false);setOverviewFocus(shot.focus??null);setAnalysisDetail(null);
@@ -114,6 +119,7 @@ export function App() {
   // Global home is a destination, not a restore/back operation. Product browsing
   // memory remains owned by the embedded explorer; transient scene layers close.
   function returnHome(){
+    setImpactOpen(true);
     leavePresentation();savedExploration.current=null;restoring.current=false;
     clearTimeout(closeTimer.current);closeTimer.current=null;setClosingLayer(false);
     setReader(null);setSample(null);setArchive(null);setSwitcher(false);
@@ -142,6 +148,11 @@ export function App() {
   async function fullscreen() { try { if (document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); } catch { setNotice(t('当前浏览器未开放全屏，可使用系统全屏。', 'Fullscreen is unavailable here. Use your browser fullscreen control.')); } }
   const openBrand = b => { setEnteredBrand(b.id); wallPosition.current = { x: 0, y: 0 }; };
   const activeHomeAction = () => go(variant.id, variant.page);
+  if(variant.id==='atlas'&&((home&&impactOpen)||route.page==='locations'))return <>
+    <div style={{display:'contents'}} inert={readingActive?true:undefined}><Suspense fallback={<SceneLoading lang={lang}/>}><ImpactTheatre key={route.page} initialState={route.page==='locations'?{index:1}:null} lang={lang} onLanguage={setLang} brands={content.brands} catalog={catalog} companyFacts={official} onFullscreen={fullscreen} suspended={readingActive} onRead={(moment,payload)=>openDocument(impactDocument(moment,payload,{official,productReading,catalog}),payload?.locationId)}/></Suspense></div>
+    {readingActive&&<DocumentReader key={reader.document.id} document={reader.document} initialSection={reader.initialSection} lang={lang} onLanguage={setLang} onClose={closeDocument} wallControls memory={readingMemory.current[reader.document.id]} onRemember={value=>{readingMemory.current[reader.document.id]=value;}}/>}
+    {notice&&<div className="notice" role="status">{notice}</div>}
+  </>;
   return <main className={`showroom ${variant.id==='atlas'?'atrium':''} theme-${variant.theme} variant-${variant.id} ${home ? 'is-home' : 'is-capability'} ${locationActive?'has-location-detail':''} ${home&&chapter>0?'has-story':''} ${home&&chapter===0?'is-overview':''} ${overviewFocus!==null?'has-overview-focus':''} ${route.page==='analytics'?'is-analytics':''} ${closingLayer?'closing-layer':''} ${mediaPanel?'has-news-media':''} ${presenting?'is-presenting':''} ${cinematic?'is-cinematic':''}`} data-presentation={presenting?'playing':quiet?'quiet':'interactive'} data-presentation-shot={shot?.id||''}>
     <div style={{display:'contents'}} inert={readingActive||manualMedia?true:undefined}>
     <div style={{display:'contents'}} inert={explorerOpen?true:undefined}>
@@ -163,7 +174,7 @@ export function App() {
 
 
     {sample && <SampleViewer samples={viewerItems} selected={sample} onChange={setSample} onClose={() => closeOverlay(setSample,null)} lang={lang} onVideoPlaying={setVideoPlaying} />}
-    {locationActive && <FactoryDetail key={loc.id} onDocument={()=>openDocument(locationDocument(loc,capability,capabilityFocus))} location={loc} samples={content.samples} lang={lang} tab={capability} onTab={changeCapability} focus={capabilityFocus} onFocus={setCapabilityFocus} onClose={()=>{setVideoPlaying(false);setLocationOpen(false);}} onVideoPlaying={setVideoPlaying} onSample={id=>setSample(id)}/>}
+    {locationActive && <FactoryDetail key={loc.id} onDocument={()=>openDocument(locationDocument(loc,capability,capabilityFocus))} location={loc} samples={content.samples} lang={lang} tab={capability} onTab={changeCapability} focus={capabilityFocus} onFocus={setCapabilityFocus} onClose={closeLocation} onVideoPlaying={setVideoPlaying} onSample={id=>setSample(id)}/>}
     {archive&&catalog&&<CatalogBrowser key={archive} type={archive} catalog={catalog} featured={content.brands} lang={lang} remembered={archiveMemory.current[archive]} onRemember={value=>archiveMemory.current[archive]=value} onClose={()=>closeOverlay(setArchive,null)} onBrand={b=>{setArchive(null);openBrand(b);}}/>}
     </div>
     <ProductExplorer onView={setExplorerView} cinematic={cinematic} onAttention={setExplorerAttention} onDocument={openProductDocument} suspended={readingActive} open={explorerOpen} lang={lang} navigation={explorerNavigation} directedPresentation={presenting} onActivity={activityFromChild} onPlayback={setVideoPlaying} onSection={section=>{if(!presenting&&explorerOpen&&isExplorerPage(section)){setExplorerNavigation(previous=>previous.section===section?previous:{...previous,section});rawGo('atlas',section);};}} onLanguage={setLang} onClose={()=>{if(analysisReturn){backToAnalysis();return;}wake();const target=explorerReturn.current;go(target.variant,target.page);}}/>
@@ -180,6 +191,7 @@ export function App() {
     </div>
     {cinematic&&<button ref={el=>el?.focus({preventScroll:true})} className="presentation-cover" aria-label={t('恢复触摸探索','Resume touch exploration')} onClick={wake}><span className="presentation-boundary">{route.page==='products'?t('原创产品概念','Original product studies'):route.page==='analytics'?t('分析流程概念','Analysis workflow concept'):route.page==='locations'?t('空间与流向概念','Spatial and flow concepts'):''}</span></button>}
     {mediaPanel&&<div style={{display:'contents'}} inert={readingActive?true:undefined}><MediaTheatre onHome={returnHome} phase={mediaPhase} onMode={mode=>setMediaPanel(previous=>({...previous,mode}))} mode={mediaPanel.mode} automatic={mediaPanel.automatic} films={playableFilms(mediaLibrary.films)} publications={mediaLibrary.publications?.length?mediaLibrary.publications:[companyDocument(official),analysisDocument(2)].filter(Boolean)} lang={lang} onClose={closeMedia} onRead={openDocument}/></div>}
+    {variant.id==='atlas'&&cinematic&&!mediaPanel&&!readingActive&&<ExhibitCaption page={route.page} chapter={chapter} focus={overviewFocus} location={loc} profile={locationProfile} locationActive={locationActive} locationRevealed={locationRevealed} capability={capability} lang={lang}/>}
     {readingActive&&<DocumentReader key={reader.document.id} document={reader.document} initialSection={reader.initialSection} lang={lang} onLanguage={setLang} onHome={returnHome} onClose={closeDocument} memory={readingMemory.current[reader.document.id]} onRemember={value=>{readingMemory.current[reader.document.id]=value;}}/>}
   </main>;
 }

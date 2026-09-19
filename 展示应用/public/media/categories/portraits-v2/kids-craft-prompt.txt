@@ -1,0 +1,26 @@
+Built-in image_gen workflow
+Reference: 展示应用/public/media/categories/kids-craft.png
+Final source: generated-image:exec-103538be-a98b-472d-a09c-48cfa34c732d.png
+Requested size: 1024 x 1792
+Actual native output: 948 x 1659 (4:7)
+No resizing, cropping or other external image editing applied.
+
+INITIAL PROMPT
+Use case: precise-object-edit
+Asset type: single portrait category display-window image for a conceptual product showroom.
+Input image: edit target / reference, the supplied children's craft materials photograph. Preserve its subject family, cheerful saturated craft colors and convincing tactile materials, but recompose it completely for a tall portrait frame.
+Primary request: produce ONE independent, full-bleed product photograph at exactly 1024 x 1792 pixels, portrait aspect ratio 4:7. The entire image is the photographic scene itself.
+Scene/backdrop: deep navy blue photographic studio / display-cabinet interior with navy display risers and a clean deep blue floor. No visible outer display frame.
+Subject: preserve the recognizable handmade purple-and-yellow felt butterfly with pink fuzzy body, blue spots and curled pink pipe-cleaner antennae; a clear glass jar densely filled with colorful pom-poms; colorful chenille pipe cleaners in a dark navy cup; colorful thick crayons; a clear glass bowl of colorful beads; layered felt sheets and felt stars, hearts, flowers and circles. These are concept craft products, not actual branded SKUs.
+Composition/framing: compact elegant vertical arrangement, camera facing the display at a mild downward angle, stepped foreground/middle/background and staggered object heights. Make the felt butterfly a prominent central focal object. Arrange the pom-pom jar and tall pipe-cleaner cup above / behind, craft sheets to one side and crayons, bead bowl and a few felt pieces below, all as one coherent physical tableau. Products occupy the central 85 percent of the image with confident visual scale. Keep every principal object fully visible from top to bottom without cropping antennae, pipe cleaners, jar, bowl or felt pieces. Reserve the lowest 10 percent of the image as clean, uncluttered deep navy floor for a future editable title; do not render any title now. Minimal unnecessary empty space at top.
+Style/medium: premium, crisp, photorealistic conceptual product photography, full-scene clarity, detailed felt fibers, fuzzy chenille and pom-poms, transparent reflective glass and colorful smooth beads; strong depth and physical contact shadows, no excessive depth-of-field blur.
+Lighting/mood: warm soft key light plus cool restrained edge lighting; polished inviting showroom mood with rich saturated craft materials against navy.
+Constraints: retain the original children's craft theme and material identities. Single image, no collage, no split panels. No brands, no logos, no letters, no captions, no watermark, no people, no outdoor setting, no mockup frame, no screen/UI. No white haze, no fog, no smoke, no milky wash. Do not add unrelated product categories.
+
+REFINEMENT PROMPT
+Use case: precise-object-edit
+Asset type: portrait children's craft category product photograph.
+Edit target: supplied portrait craft photograph.
+Single targeted correction: zoom the camera out slightly and fit the complete craft arrangement within the portrait frame. Move the left felt-sheet stack, the foreground purple felt flower and the rightmost blue felt oval slightly inward so no craft object touches or is cut by any image edge. Maintain small clean navy lateral margins of approximately 5% on both sides. Preserve the strong compact vertical tableau, central purple/yellow butterfly, pom-pom glass jar, colorful pipe cleaners, crayons, beads and material realism. Preserve all existing colors, lighting, clean deep navy backdrop, tiered stands, and the lowest 10% as clean navy floor for a future editable title. Keep all main subjects fully visible top-to-bottom.
+Required output dimensions: exactly 1024 pixels wide by 1792 pixels high, 4:7 portrait. One full-bleed independent image.
+No text, brands, logos, watermarks, people, outside scenery, outer frame, UI, collage, white haze, fog or smoke. These craft products are conceptual, not real branded SKUs.

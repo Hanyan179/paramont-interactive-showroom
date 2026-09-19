@@ -7,6 +7,7 @@ import {asset,loadContent,availableViews,presentation,hasModel} from './content.
 import {Library,initialLibrary} from './Library.jsx';
 import {PhotoViewer} from './PhotoViewer.jsx';
 import {ProductDetail} from './ProductDetail.jsx';
+import {SceneCaption} from './SceneCaption.jsx';
 import {resolveSku} from './product-data.js';
 import {embedded,sharedShell,initialLanguage,sendHost,subscribeHost} from './bridge.js';
 import './style.css';
@@ -63,6 +64,7 @@ function App(){
    stopAuto();setNavigationId(message.navigationId);
    if(!message.preserve){
     if(message.productId){const target=resolveExplorerTarget(message,data?.items,data?.skus);if(target)navigate(target);else setError(t('关联样品不存在，已保留当前浏览位置。','The linked sample is unavailable. Your current view is preserved.'));}
+    else if(message.section==='brands'&&message.brandId){if(data?.brands.some(b=>b.id===message.brandId))openLibrary('brands',{scope:'official',brandId:message.brandId,query:'',record:null});else setError(t('关联品牌不存在，已保留当前浏览位置。','The linked brand is unavailable. Your current view is preserved.'));}
     else {const target=resolveExplorerView(message.section,message.view);if(target==='room')setOverlay(false);else openLibrary(target);}
    }
   }
@@ -93,6 +95,7 @@ function App(){
   </>}
  </div>
 
+ {ready&&data&&<SceneCaption view={view} domain={domain} product={product} lang={lang} visible={active&&!overlay&&(auto||cinematic)} sharedShell={sharedShell} media={media}/>}
  {error&&ready&&<button className="toast" onClick={()=>setError('')}>{error} ×</button>}
  {overlay&&data&&<Library sharedShell={sharedShell} data={data} lang={lang} state={library} memory={libraryScroll} onChange={setLibrary} onClose={()=>setOverlay(false)} onProduct={openProduct} onDomain={id=>navigate({mode:'domain',domain:id,product:null})}/>}
  {auto&&!sharedShell&&<button className="auto-cover" onPointerDown={e=>{e.preventDefault();stopAuto();}} onClick={stopAuto} aria-label={t('结束自动展示，返回原浏览位置','Stop guided display and return to your previous place')}><span><i/>{t('自动展示中 · 轻触回到探索','Guided display · Touch to resume exploring')}</span></button>}

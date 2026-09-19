@@ -1,0 +1,55 @@
+{
+  "createdAt": "2026-09-14",
+  "mode": "builtin imagegen; new image; no reference images",
+  "purpose": "Original category concept imagery, not actual product photographs. Brand identities are separately sourced and are not generated.",
+  "assets": [
+    {
+      "file": "kids-craft.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: product-mockup. Create a standalone high-resolution 1536x1024 landscape image for a premium PARAMONT large-screen category exhibition. Subject: children's creative craft assortment: vibrant felt shapes, pom-poms, safe chunky crayons, googly eyes, beads, a small hand-made butterfly, colourful pipe cleaners. Arrange an abundant but beautifully curated group with visible distinct product shapes on stepped matte surfaces, occupying the center 80 percent, generous breathing room near edges. Cinematic studio still-life photography, three-quarter front view, refined tactile textures, crisp beautiful detail. Deep midnight navy #082e54 background and dark navy stage; tasteful product colours, luminous soft key light, silver-blue rim and subtle warm highlights. No writing, no logos, no UI, no watermark, no people. These are original category concept forms, not replicas of specific brands or real SKUs. Produce this single image, not a collage of categories."
+    },
+    {
+      "file": "stationery.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: product-mockup. Create a standalone high-resolution 1536x1024 landscape image for a premium PARAMONT large-screen category exhibition. Subject: colourful stationery assortment: refined coloured pencils, fine-tip pens, markers, a spiral notebook, small erasers and a pencil case, several open colour palettes. Arrange an abundant but beautifully curated group with visible distinct product shapes on stepped matte surfaces, occupying the center 80 percent, generous breathing room near edges. Cinematic studio still-life photography, three-quarter front view, refined tactile textures, crisp beautiful detail. Deep midnight navy #082e54 background and dark navy stage; tasteful product colours, luminous soft key light, silver-blue rim and subtle warm highlights. No writing, no logos, no UI, no watermark, no people. These are original category concept forms, not replicas of specific brands or real SKUs. Produce this single image, not a collage of categories."
+    },
+    {
+      "file": "party.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: product-mockup. Create a standalone high-resolution 1536x1024 landscape image for a premium PARAMONT large-screen category exhibition. Subject: celebration assortment: pastel coral mint lilac balloons, folded honeycomb paper decorations, paper party hats, coordinated paper cups and plates, ribbons, small birthday candles. Arrange an abundant but beautifully curated group with visible distinct product shapes on stepped matte surfaces, occupying the center 80 percent, generous breathing room near edges. Cinematic studio still-life photography, three-quarter front view, refined tactile textures, crisp beautiful detail. Deep midnight navy #082e54 background and dark navy stage; tasteful product colours, luminous soft key light, silver-blue rim and subtle warm highlights. No writing, no logos, no UI, no watermark, no people. These are original category concept forms, not replicas of specific brands or real SKUs. Produce this single image, not a collage of categories."
+    },
+    {
+      "file": "toys.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: product-mockup. Create a standalone high-resolution 1536x1024 landscape image for a premium PARAMONT large-screen category exhibition. Subject: children's toys and games assortment: colourful modelling dough tubs with no writing, rainbow stacking rings, tactile play sand shapes, wooden puzzles and small construction blocks. Arrange an abundant but beautifully curated group with visible distinct product shapes on stepped matte surfaces, occupying the center 80 percent, generous breathing room near edges. Cinematic studio still-life photography, three-quarter front view, refined tactile textures, crisp beautiful detail. Deep midnight navy #082e54 background and dark navy stage; tasteful product colours, luminous soft key light, silver-blue rim and subtle warm highlights. No writing, no logos, no UI, no watermark, no people. These are original category concept forms, not replicas of specific brands or real SKUs. Produce this single image, not a collage of categories."
+    },
+    {
+      "file": "beauty.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: product-mockup. Create a standalone high-resolution 1536x1024 landscape image for a premium PARAMONT large-screen category exhibition. Subject: beauty and personal care assortment: premium blush-pink skincare bottles, glass serum droppers, a lipstick, powder compact, makeup brushes and sponges, mixed materials. Arrange an abundant but beautifully curated group with visible distinct product shapes on stepped matte surfaces, occupying the center 80 percent, generous breathing room near edges. Cinematic studio still-life photography, three-quarter front view, refined tactile textures, crisp beautiful detail. Deep midnight navy #082e54 background and dark navy stage; tasteful product colours, luminous soft key light, silver-blue rim and subtle warm highlights. No writing, no logos, no UI, no watermark, no people. These are original category concept forms, not replicas of specific brands or real SKUs. Produce this single image, not a collage of categories."
+    },
+    {
+      "file": "general-craft.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "prompt": "Use case: product-mockup. Create a standalone high-resolution 1536x1024 landscape image for a premium PARAMONT large-screen category exhibition. Subject: general craft assortment: artist brushes, small jars of paint, yarn spools, woven thread, ribbons, craft tools, wooden pieces, colour swatches and handmade textile detail. Arrange an abundant but beautifully curated group with visible distinct product shapes on stepped matte surfaces, occupying the center 80 percent, generous breathing room near edges. Cinematic studio still-life photography, three-quarter front view, refined tactile textures, crisp beautiful detail. Deep midnight navy #082e54 background and dark navy stage; tasteful product colours, luminous soft key light, silver-blue rim and subtle warm highlights. No writing, no logos, no UI, no watermark, no people. These are original category concept forms, not replicas of specific brands or real SKUs. Produce this single image, not a collage of categories."
+    }
+  ]
+}

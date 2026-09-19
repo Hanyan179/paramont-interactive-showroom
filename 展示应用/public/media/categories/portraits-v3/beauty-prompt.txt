@@ -1,0 +1,22 @@
+Built-in image_gen edit workflow
+Subject reference: 展示应用/public/media/categories/portraits-v2/beauty.png
+Lighting / environment reference: 展示应用/public/media/categories/portraits-v3/party.png
+Final source: generated-image:exec-ac11ee90-eb13-4010-9a5c-0e07ffe1be4e.png
+Requested size: 1024 x 1792.
+Verified actual size: 948 x 1659, exact 4:7 portrait.
+No external resizing, cropping or image editing applied.
+Old v2 retained; bright v3 saved separately.
+
+FULL PROMPT
+Use case: precise-object-edit
+Asset type: single portrait beauty-and-personal-care category image for a refined contemporary design showroom.
+Input images:
+Image 1 is the ONLY subject / product edit target: the dark beauty product photograph. Preserve its recognizable beauty products and their materials.
+Image 2 is a STYLE REFERENCE ONLY: the bright party display. Match its warm ivory wall, light cream limestone, bright daylight exposure and soft natural shadows. Do not copy any party items, balloons, tableware, cakes or decorations from image 2.
+Primary request: re-light and re-stage the beauty display as bright editorial still-life product photography in a refined, warm modern studio, with the same brightness and warm neutral environment as image 2. One independent full-bleed portrait image at 4:7, target 1024 x 1792 pixels.
+Style consistency: bright editorial still-life photography, warm ivory plaster #ece7de, limestone #d4c7b7, soft daylight from upper left, gentle shadows, realistic material detail, refined contemporary design showroom.
+Scene: warm ivory plaster wall, pale sand / cream limestone countertop and three understated natural stone display levels. Completely replace the dark navy backdrop, navy plinths, black display surfaces and blue reflected lighting. Light cream vessels are allowed if needed; keep blush-pink product containers and rose-gold details.
+Product invariants: preserve pink and rose-gold cosmetic bottles and cream jars, pink squeeze tube, pink pump bottle, clear serum bottle with visible dropper and white bulb, smaller pink serum dropper, nude-pink lipstick in a rose-gold case, open rose-gold powder compact, makeup brushes with rose-gold handles and realistic brown / cream bristles, a pink makeup sponge, loose-powder jar, and a few subtle pink petals already associated with the original beauty scene. Keep these as unbranded conceptual product objects, not actual retail SKUs. Do not add any labels or printing.
+Composition: compact, sophisticated three-layer vertical still life with foreground, middle and rear depth. Tall bottles and brushes in the upper rear, translucent serum and lipstick in middle, hero cream jar and open compact in front, with sponge and one complete horizontal brush below. All principal products fully visible including nozzle, brush tips and handle, dropper bulbs, tube edges and compact lid. No product cut by the frame. Keep product identity, rose-gold / blush-pink palette, and realistic proportions. Products occupy at least 70 percent of the full image, approximately the middle 78 percent vertically. The upper 10 percent is clean softly lit ivory wall; the lowest 12 percent is calm natural limestone countertop reserved for a later editable title. Modest clear side margins.
+Lighting: natural soft bright daylight from upper left, gentle shadows defining every product, realistic gentle window reflections on rose gold and glass, neutral warm exposure, no blown highlights. Fine frosted glass, transparent serum, brushed metal, sponge and brush-fiber detail remain crisp. The scene must feel airy and bright, with well-defined natural materials rather than any white veil.
+Avoid: dark navy or black background, dark podiums, blue lighting, moody dim illumination, color wash, image overlay, overexposed white haze, fog, bloom, smoke, unnatural glow, people, text, lettering, logos, brands, watermark, borders, frame, UI, collage, panels or additional product categories. No party objects from the style reference.

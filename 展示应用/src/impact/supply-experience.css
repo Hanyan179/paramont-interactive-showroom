@@ -1,0 +1,35 @@
+.supply-experience{position:absolute;inset:0;pointer-events:none;color:#ecf4f7;}
+.supply-heading{position:absolute;left:4%;top:18%;width:31%;animation:impact-copy-in .6s both;}
+.supply-heading>p{font-size:clamp(11px,.72vw,27px);letter-spacing:.15em;color:#d1b78a;margin:0 0 1.7vh;}
+.supply-heading h1{font-family:'Songti SC','STSong',Georgia,serif;font-weight:400;font-size:clamp(28px,2.65vw,102px);line-height:1.3;margin:0 0 1.8vh;text-wrap:balance;text-shadow:0 3px 25px #031321;}
+.supply-summary{font-size:clamp(14px,.88vw,34px);line-height:1.85;color:#c0d4e0;max-width:94%;text-shadow:0 2px 15px #041526;}
+.supply-evidence{display:flex;flex-direction:column;gap:1.4vh;margin-top:2.5vh;max-width:92%;}
+.supply-evidence strong{font-size:clamp(14px,.9vw,34px);font-weight:400;color:#d6e5ed;}
+.supply-evidence p{font-size:clamp(12px,.73vw,28px);line-height:1.7;color:#94b2c6;margin:.6vh 0 0;}
+.supply-console{position:absolute;left:17%;right:17%;bottom:6%;display:flex;align-items:center;flex-direction:column;gap:1.5vh;pointer-events:auto;}
+.supply-regions{display:flex;align-items:center;justify-content:center;gap:2.8vw;width:100%;padding:1.1vh 1vw;border-top:1px solid #9fb9cc40;background:linear-gradient(0deg,#051725c9,transparent);}
+.supply-regions button{display:flex;align-items:center;gap:12px;background:none;border:0;min-height:64px;color:#849fb5;cursor:pointer;padding:4px 0;font-size:clamp(14px,.9vw,34px);white-space:nowrap;}
+.supply-regions button[aria-pressed=true]{color:#f1dec0;}
+.supply-regions small{font-size:.62em;color:#64869f;}
+.supply-regions em{display:block;font-style:normal;font-size:.7em;margin-top:.65vh;color:#9bb5c8;}
+.supply-regions svg{width:clamp(16px,1.05vw,40px);}
+.supply-chapters{display:flex;justify-content:center;gap:1.7vw;}
+.supply-chapters button{min-height:52px;padding:0 12px;background:#0b263a80;border:0;border-bottom:1px solid #54778d5c;color:#98b8ce;font-size:clamp(13px,.85vw,32px);cursor:pointer;}
+.supply-chapters button[aria-pressed=true]{color:#eef3f6;border-bottom-color:#d2b789;}
+.supply-back{position:absolute;bottom:7.5%;min-height:max(68px,5.6vh);min-width:max(120px,10vw);display:flex;align-items:center;justify-content:center;gap:14px;padding:12px 18px;border:1px solid #8caabd6b;background:#092236d9;backdrop-filter:blur(12px);border-radius:4px;color:#e2ecf3;font-size:clamp(15px,.9vw,34px);cursor:pointer;pointer-events:auto;}
+.supply-back.left{left:3%;}.supply-back.right{right:3%;}
+.supply-back svg{width:clamp(22px,1.4vw,54px);height:clamp(22px,1.4vw,54px);}
+.supply-back:active{background:#234966;transform:scale(.97);}
+.supply-disclaimer{position:absolute;left:4%;bottom:2.5%;font-size:clamp(10px,.64vw,25px);color:#819caf;margin:0;}
+.supply-experience button:focus-visible{outline:2px solid #cde8f5;outline-offset:5px;}
+.is-supply-open .impact-footer,.is-supply-open>.impact-copy,.is-supply-open>.impact-note{display:none;}
+.is-supply-open .impact-region{background:linear-gradient(90deg,transparent,#061826dd 35%,#06182600);}
+.is-supply-open .impact-header{opacity:.85;}
+.is-supply-travelling .supply-heading,.is-supply-travelling .supply-console{opacity:.4;transition:opacity .25s;}
+@media(max-width:1450px){.supply-console{left:16%;right:16%;}.supply-regions{gap:1.8vw;}.supply-regions button{gap:7px;font-size:13px;}.supply-back{min-width:118px;padding:12px;font-size:13px;}.supply-regions svg{display:none;}.supply-heading{width:31%;top:18%;}.supply-chapters{gap:1vw;}.supply-chapters button{font-size:12px;padding:0 8px;}}
+@media(max-aspect-ratio:3/2){.supply-heading{width:38%;top:17%;}.supply-console{left:17%;right:17%;bottom:7%;}.supply-regions{gap:1.8vw;}.supply-regions button{font-size:12px;}.supply-regions small,.supply-regions svg{display:none;}.supply-regions em{font-size:10px;}.supply-back{min-width:108px;gap:8px;font-size:12px;}.supply-evidence{gap:1vh;}}
+@media(min-width:2500px){.supply-regions button{min-height:112px;gap:26px;}.supply-chapters button{min-height:96px;padding:0 25px;}}
+/* Keep language and full-screen controls within reach inside the network. */
+.is-supply-open .impact-footer{display:flex;left:auto;right:3%;bottom:16%;z-index:2;}
+.is-supply-open .impact-footer nav,.is-supply-open .impact-scrub,.is-supply-open .impact-tools>button:first-child{display:none;}
+.supply-heading{max-height:51vh;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto;scrollbar-width:thin;scrollbar-color:#6f93aa55 transparent;}

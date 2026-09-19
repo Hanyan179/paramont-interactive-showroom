@@ -1,0 +1,106 @@
+/* Shared action surface, taken from the approved intelligence example button.
+   Layout belongs to each page; navigation tabs and scene hit targets stay separate. */
+:where(.exhibit-action) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+:is(.impact-theatre, .document-reader) .exhibit-action {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 2vw, 77px);
+  min-height: max(48px, 4.5vh);
+  max-width: 100%;
+  padding: .6em 1.25em;
+  border: 1px solid #65b9e8aa;
+  border-radius: 999px;
+  background: linear-gradient(110deg, #0c355575, #08274328);
+  box-shadow: inset 0 0 18px #2578ab18;
+  color: #d6edfc;
+  font-family: inherit;
+  font-size: clamp(13px, .82vw, 32px);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: .035em;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .2s, background .2s, color .2s, box-shadow .2s;
+}
+/* A light passing across the glass and its rim, never across the text at full
+   brightness. The long resting interval keeps groups of actions quiet. */
+:is(.impact-theatre, .document-reader) .exhibit-action::before,
+:is(.impact-theatre, .document-reader) .exhibit-action::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, #83d3ff22 46%, #dcf5ff55 50%, #83d3ff22 54%, transparent 62%) 150% 0 / 300% 100% no-repeat;
+  animation: exhibit-action-glint 8s cubic-bezier(.4, 0, .2, 1) infinite;
+  animation-delay: var(--action-flow-delay, 0s);
+  animation-play-state: var(--action-flow-state, running);
+}
+:is(.impact-theatre, .document-reader) .exhibit-action::before {
+  opacity: .22;
+}
+:is(.impact-theatre, .document-reader) .exhibit-action::after {
+  padding: 1px;
+  background-image: linear-gradient(110deg, transparent 38%, #8bd5ff88 45%, #effaff 50%, #8bd5ff88 55%, transparent 62%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.impact-theatre[data-action-motion=paused],
+.impact-theatre[data-page-visible=false],
+body:has(.impact-theatre[data-page-visible=false]) .document-reader {
+  --action-flow-state: paused;
+}
+:is(.impact-theatre, .document-reader) .exhibit-action:disabled {
+  --action-flow-state: paused;
+}
+:is(.impact-theatre, .document-reader) .exhibit-action:disabled::before,
+:is(.impact-theatre, .document-reader) .exhibit-action:disabled::after {
+  opacity: 0;
+}
+@keyframes exhibit-action-glint {
+  0%, 12% { background-position: 150% 0; }
+  58%, 100% { background-position: -50% 0; }
+}
+:is(.impact-theatre, .document-reader) .exhibit-action > svg {
+  width: 1.2em;
+  height: 1.2em;
+  flex-shrink: 0;
+  color: currentColor;
+}
+@media (hover: hover) {
+  :is(.impact-theatre, .document-reader) .exhibit-action:hover:not(:disabled) {
+    color: #fff;
+    border-color: #c6ecff;
+    background: #124a6d66;
+  }
+}
+:is(.impact-theatre, .document-reader) .exhibit-action:active:not(:disabled) {
+  color: #fff;
+  border-color: #a9ddff;
+  background: #103d5c99;
+  box-shadow: inset 0 0 18px #4a9bdc25;
+}
+:is(.impact-theatre, .document-reader) .exhibit-action:focus-visible {
+  outline: 2px solid #a9ddff;
+  outline-offset: 5px;
+}
+:is(.impact-theatre, .document-reader) .exhibit-action:disabled {
+  opacity: .35;
+  cursor: default;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.impact-theatre, .document-reader) .exhibit-action { transition: none; }
+  :is(.impact-theatre, .document-reader) .exhibit-action::before,
+  :is(.impact-theatre, .document-reader) .exhibit-action::after { animation: none; opacity: 0; }
+}

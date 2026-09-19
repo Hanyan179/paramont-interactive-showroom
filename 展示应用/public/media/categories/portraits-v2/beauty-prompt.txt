@@ -1,0 +1,18 @@
+Built-in image_gen edit workflow
+Reference: 展示应用/public/media/categories/beauty.png
+Final source: generated-image:exec-38467c8e-c6aa-4ec8-aa19-01a0e8f566af.png
+Requested size: 1024 x 1792; native 948 x 1659 allowed.
+Verified actual size: 948 x 1659 (exact 4:7 portrait).
+No external resizing, cropping or image editing applied.
+
+FULL PROMPT
+Use case: precise-object-edit
+Asset type: one portrait beauty-and-personal-care category display-window photograph for a conceptual product showroom.
+Input image: supplied landscape beauty product photograph is the edit target and material / subject reference.
+Primary request: edit and recompose this scene into one cohesive vertical product tableau at 1024 x 1792 pixels, 4:7 portrait. A native 948 x 1659 output is acceptable if required. Full-bleed photograph only.
+Scene/backdrop: rich deep navy blue studio / display-cabinet interior, subtle navy backdrop and stepped navy display platforms with a clean deep-blue floor. No outer frame or visible cabinet border.
+Subject invariants: keep the blush-pink and rose-gold cosmetic bottles and jars, pink squeeze tube, pump bottle, translucent serum dropper bottle with white bulb and rose-gold collar, smaller pink serum dropper, cream jars, nude-pink lipstick, open rose-gold powder compact, soft makeup brushes with rose-gold handles and pink makeup sponges. Preserve the tactile frosted glass, clear glass, smooth pink packaging, brushed / polished rose-gold metal, fine brush fibers and sponge texture. Products remain unbranded conceptual objects, not real branded SKUs.
+Composition/framing: compact vertical tiers with the tallest bottles and brushes toward upper rear, serum bottle and lipstick in middle layer, prominent cream jar and open compact in front, and one pink sponge near the bottom layer. Keep all principal products fully within the frame, including brush tips, dropper bulbs, pump nozzle, compact lid, tube corners and sponge; no crop at any edge. Maintain narrow clean navy side margins of around 5%. Products fill roughly the central 85 percent of the image, with warm-pink products rendered large enough to read as individual objects. Reserve the bottom 10 percent as clean, uncluttered deep navy floor for a later editable category title. Only a small margin above the tallest product. Cohesive physically plausible arrangement with foreground / middle / back separation and staggered heights.
+Style/medium: crisp premium conceptual product photography, whole-scene clarity, realistic reflections, detailed materials and convincing contact shadows. Not a flat lay.
+Lighting/mood: warm soft main light with restrained cool edge lighting; luxurious calm beauty presentation with clear dimensionality and a consistent deep navy studio look.
+Constraints: one independent image, no collage or panels. No text, letters, branding, logos, watermark, people, outside scenery, outer frame, UI or screenshot. No white haze, fog, smoke or washed-out veil. Do not add unrelated categories or printed claims. Preserve the original pink and rose-gold theme and materials.

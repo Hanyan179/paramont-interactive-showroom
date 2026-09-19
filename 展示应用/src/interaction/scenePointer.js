@@ -1,6 +1,6 @@
 // Gesture classification is shared; each scene supplies its own movement and raycast actions.
 export function bindScenePointer(host, {
-  enabled = () => true, threshold = 7, includeControls = false, claimClick = false, now = () => performance.now(),
+  enabled = () => true, acceptStart = () => true, threshold = 7, includeControls = false, claimClick = false, cancelOnMultiple = false, now = () => performance.now(),
   onStart = () => {}, onMove = () => {}, onTap = () => {}, onEnd = () => {},
 }) {
   let gesture = null, moved = false, claimedPointer = null;
@@ -9,8 +9,8 @@ export function bindScenePointer(host, {
     if (Math.hypot(event.clientX - gesture.startX, event.clientY - gesture.startY) > threshold) moved = true;
   };
   function down(event) {
-    if (!enabled() || gesture || event.isPrimary === false || event.button > 0 || (!includeControls && event.target.closest?.('button,a,input,select,textarea'))) return;
-    gesture = { pointerId: event.pointerId, target: event.target, x: event.clientX, y: event.clientY, startX: event.clientX, startY: event.clientY, time: now() };
+    if (!enabled() || gesture || event.isPrimary === false || event.button > 0 || (!includeControls && event.target.closest?.('button,a,input,select,textarea')) || !acceptStart(event)) return;
+    gesture = { pointerId: event.pointerId, pointerType: event.pointerType, target: event.target, x: event.clientX, y: event.clientY, startX: event.clientX, startY: event.clientY, time: now() };
     claimedPointer = claimClick ? event.pointerId : null;
     moved = false;
     host.setPointerCapture(event.pointerId);
@@ -27,12 +27,13 @@ export function bindScenePointer(host, {
   }
   function finish(cancelled, event) {
     if (!gesture) return;
+    cancelled = cancelled || !enabled();
     const completed = gesture, pointerId = gesture.pointerId;
     if (event) markMoved(event);
     const tap = !cancelled && !moved && enabled();
     gesture = null;
     if (host.hasPointerCapture(pointerId)) host.releasePointerCapture(pointerId);
-    onEnd({ cancelled });
+    onEnd({ cancelled, event, gesture: completed, moved });
     if (tap) onTap(event, completed);
   }
   function up(event) {
@@ -40,6 +41,7 @@ export function bindScenePointer(host, {
     finish(event.type !== 'pointerup', event);
   }
   const cancelGesture = () => finish(true);
+  const additionalPointer = event => { if (gesture && event.pointerId !== gesture.pointerId) cancelGesture(); };
   const lost = event => { if (gesture?.pointerId === event.pointerId) cancelGesture(); };
   // Pointer taps are handled once by onTap. Keep keyboard/assistive clicks intact.
   // A browser click emitted after dragging must never activate a moving hotspot.
@@ -56,6 +58,7 @@ export function bindScenePointer(host, {
   host.addEventListener('pointercancel', up);
   host.addEventListener('lostpointercapture', lost);
   windowTarget.addEventListener('blur', cancelGesture);
+  if (cancelOnMultiple) windowTarget.addEventListener('pointerdown', additionalPointer, true);
   return {
     cancel: cancelGesture,
     dispose() {
@@ -68,6 +71,7 @@ export function bindScenePointer(host, {
       host.removeEventListener('pointercancel', up);
       host.removeEventListener('lostpointercapture', lost);
       windowTarget.removeEventListener('blur', cancelGesture);
+      if (cancelOnMultiple) windowTarget.removeEventListener('pointerdown', additionalPointer, true);
     },
   };
 }

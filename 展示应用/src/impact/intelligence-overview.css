@@ -1,0 +1,25 @@
+.moment-intelligence .impact-vignette { background:linear-gradient(0deg,#02060ee0,transparent 26%),linear-gradient(90deg,#02071090,transparent 34%); }
+.moment-intelligence .impact-note { display:none; }
+.moment-intelligence .impact-header .impact-edition { color:#7294b1; }
+.intelligence-overview { position:absolute;inset:0;z-index:3;pointer-events:none;color:#edf5ff;font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif; }
+.intelligence-overview-copy { position:absolute;left:5.5%;top:28%;width:31%; }
+.intelligence-overview-eyebrow { margin:0 0 2.5vh;color:#91aec6;font-size:clamp(11px,.7vw,27px);letter-spacing:.22em; }
+.intelligence-overview-copy h1 { margin:0;font-weight:300;font-family:'PingFang SC','Microsoft YaHei',Arial,sans-serif;font-size:clamp(30px,3.05vw,116px);line-height:1.45;letter-spacing:.025em;white-space:pre-line; }
+.intelligence-overview-description { margin:3vh 0 0;color:#a4bacb;font-size:clamp(12px,.90vw,35px);line-height:1.9;white-space:pre-line; }
+.intelligence-overview-signature { display:block;margin-top:2.4vh;color:#6186a3;font-size:clamp(8px,.53vw,20px);letter-spacing:.13em;line-height:1.7; }
+.intelligence-overview-explore{margin-top:4vh;}
+.intelligence-overview-caption { position:absolute;left:42%;right:10%;top:69%;display:flex;align-items:center;flex-direction:column;gap:1vh; }
+.intelligence-overview-caption>span { color:#a4bccf;font-size:clamp(11px,.79vw,30px);letter-spacing:.16em; }
+.intelligence-overview-caption>small { color:#54748d;font-size:clamp(8px,.52vw,20px);letter-spacing:.07em; }
+.moment-intelligence.is-depth-open .impact-vignette { background:linear-gradient(0deg,#020710f0,transparent 24%),linear-gradient(90deg,#020710b0 0%,#02071055 25%,transparent 49%); }
+@media(max-aspect-ratio:3/2){
+ .intelligence-overview-copy{top:25%;width:30%;left:4%;}
+ .intelligence-overview-copy h1{font-size:clamp(28px,3.25vw,80px);}
+ .intelligence-overview-description{font-size:clamp(11px,1.04vw,27px);margin-top:2vh;}
+ .intelligence-overview-signature{display:none;}
+ .intelligence-overview-explore{margin-top:2.5vh;}
+ .intelligence-overview-caption{left:35%;right:7%;top:66%;}
+}
+@media(max-height:800px) and (min-aspect-ratio:3/2){
+ .intelligence-overview-caption{top:67%;}
+}

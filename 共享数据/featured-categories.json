@@ -1,0 +1,99 @@
+{
+  "source": "https://pdm.paramontgroup.com/",
+  "observedAt": "2026-09-14",
+  "basis": "Six largest category product counts observed on the company product portal. Product counts are a dated snapshot, not sales volume. Catalog IDs identify category scope only.",
+  "imageUsage": "Original AI-generated category concept illustrations, restored at user request on 2026-09-14 after rejecting the low-resolution portal thumbnails. Not actual branded products or SKU photographs.",
+  "categories": [
+    {
+      "id": "kids-craft",
+      "catalogId": "01",
+      "name": [
+        "儿童手工",
+        "KIDS CRAFT"
+      ],
+      "products": 2940,
+      "image": "/media/categories/kids-craft.png",
+      "detail": [
+        "色彩、材料与动手创造",
+        "COLOUR · MATERIALS · MAKING"
+      ],
+      "sceneImage": "/media/categories/kids-craft-matte.png"
+    },
+    {
+      "id": "stationery",
+      "catalogId": "14",
+      "name": [
+        "文具",
+        "STATIONERY"
+      ],
+      "products": 1338,
+      "image": "/media/categories/stationery.png",
+      "detail": [
+        "书写、绘画与日常灵感",
+        "WRITE · DRAW · CREATE"
+      ],
+      "sceneImage": "/media/categories/stationery-matte.png"
+    },
+    {
+      "id": "party",
+      "catalogId": "06",
+      "name": [
+        "派对庆典",
+        "PARTY"
+      ],
+      "products": 733,
+      "image": "/media/categories/party.png",
+      "detail": [
+        "装饰、餐具与欢聚时刻",
+        "DECORATE · CELEBRATE · CONNECT"
+      ],
+      "sceneImage": "/media/categories/party-matte.png"
+    },
+    {
+      "id": "toys",
+      "catalogId": "13",
+      "name": [
+        "玩具与游戏",
+        "TOYS & GAMES"
+      ],
+      "products": 623,
+      "image": "/media/categories/toys.png",
+      "detail": [
+        "触感、拼搭与探索乐趣",
+        "TOUCH · BUILD · DISCOVER"
+      ],
+      "sceneImage": "/media/categories/toys-matte.png"
+    },
+    {
+      "id": "beauty",
+      "catalogId": "15",
+      "name": [
+        "美妆个护",
+        "BEAUTY"
+      ],
+      "products": 281,
+      "image": "/media/categories/beauty.png",
+      "detail": [
+        "色彩、护理与精致细节",
+        "COLOUR · CARE · DETAIL"
+      ],
+      "sceneImage": "/media/categories/beauty-matte.png"
+    },
+    {
+      "id": "general-craft",
+      "catalogId": "03",
+      "name": [
+        "综合手工",
+        "GENERAL CRAFT"
+      ],
+      "products": 242,
+      "image": "/media/categories/general-craft.png",
+      "detail": [
+        "材料、工艺与创意表达",
+        "MATERIALS · CRAFT · EXPRESSION"
+      ],
+      "sceneImage": "/media/categories/general-craft-matte.png"
+    }
+  ],
+  "confirmation": "User confirmed these six core categories. On 2026-09-14 the user explicitly chose to restore the previous six clear exhibition images; the portal thumbnail cutout experiment is not adopted. Product counts are a dated portal snapshot and are not displayed."
+}

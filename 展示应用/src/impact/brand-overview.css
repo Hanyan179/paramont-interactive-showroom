@@ -1,0 +1,15 @@
+.brand-overview{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
+.brand-overview header{position:absolute;left:4%;right:4%;top:17%;text-align:center;}
+.brand-overview header p{margin:0 0 1vh;color:#94b4c9;font-size:clamp(11px,.65vw,25px);letter-spacing:.3em;}
+.brand-overview h1{font-family:'Songti SC',Georgia,serif;font-weight:400;font-size:clamp(30px,2.55vw,98px);line-height:1.2;margin:0;}
+.brand-overview nav{position:absolute;inset:28% 0 18%;pointer-events:auto;touch-action:none;cursor:grab;}
+.brand-overview nav button{position:fixed;width:28%;height:22%;transform:translate(-50%,-50%);padding:0;border:0;background:none;color:#d9e7ef;cursor:pointer;pointer-events:auto;touch-action:none;border-radius:40%;}
+.brand-overview nav button:focus-visible{outline:1px solid #dfd1af;outline-offset:8px;}
+.brand-overview.is-dragging nav,.brand-overview.is-dragging nav button{cursor:grabbing;}
+.is-brand-overview .impact-copy,.is-brand-overview .impact-reading-entry,.is-brand-overview .impact-reel-control,.is-brand-overview .impact-note,.is-brand-overview .impact-scrub{display:none;}
+.brand-return{position:absolute;bottom:15%;}
+.brand-return.left{left:4%;}.brand-return.right{right:4%;flex-direction:row-reverse;}.brand-return.right svg{transform:rotate(180deg);}
+.moment-brands:not(.is-brand-overview) .impact-reading-entry{bottom:23%;}.moment-brands:not(.is-brand-overview) .impact-copy{bottom:33%;}
+
+/* Keep brand marks clear across both flowing rows. */
+.moment-brands .impact-vignette{background:linear-gradient(0deg,#03101cc0,transparent 19%,transparent 86%,#030e1b40);}

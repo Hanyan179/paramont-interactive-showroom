@@ -1,0 +1,48 @@
+.intelligence-proposal-controls{position:absolute;inset:0;z-index:5;pointer-events:none;font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;color:#c8d7df;}
+.intelligence-proposal-controls button{font:inherit;pointer-events:auto;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+.intelligence-proposal-controls button:focus-visible{outline:2px solid #a8d8eb;outline-offset:5px;}
+.moment-intelligence .impact-edition{display:none;}
+.intelligence-proposal-picker{position:absolute;right:5%;top:5.5%;display:flex;align-items:center;gap:1.6vw;}
+.intelligence-proposal-picker>span{font-size:clamp(10px,.65vw,24px);letter-spacing:.15em;color:#8097a9;}
+.intelligence-proposal-picker>div{display:flex;padding:5px;border:1px solid #96b9d230;border-radius:40px;background:#06111ecc;backdrop-filter:blur(18px);}
+.intelligence-proposal-picker button{min-height:44px;padding:.65em 1.35em;color:#8ca2b4;background:transparent;border:1px solid transparent;border-radius:30px;font-size:clamp(12px,.78vw,30px);transition:background .25s,color .25s;}
+.intelligence-proposal-picker button small{margin-right:.75em;color:#759bad;font-size:.72em;}
+.intelligence-proposal-picker button[aria-pressed=true]{color:#e4f2fa;border-color:#afd7ea55;background:linear-gradient(120deg,#213f51,#0d2333);}
+.intelligence-proposal-picker button[aria-pressed=true] small{color:#d4bb8a;}
+.intelligence-proposal-demo{position:absolute;left:44%;right:5%;top:69%;text-shadow:0 2px 20px #000;}
+.proposal-choices{display:flex;justify-content:space-between;align-items:center;gap:1em;margin-bottom:1.3vh;}
+.proposal-choices>div{display:flex;gap:.5em;}
+.proposal-choices button{min-height:40px;padding:.55em 1.05em;border-radius:30px;border:1px solid #699db631;background:#061723aa;color:#9ab4c6;font-size:clamp(11px,.7vw,27px);}
+.proposal-choices button[aria-pressed=true]{border-color:#b5c9c780;color:#e3e7d9;background:#293e4080;}
+.proposal-choices .proposal-autoplay{border:0;background:transparent;color:#a3bdca;display:flex;align-items:center;gap:.6em;}
+.proposal-autoplay svg{width:.9em;}
+.proposal-story-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2vw;}
+.proposal-story-steps button{text-align:left;border:0;border-top:1px solid #7498b037;color:#7594a8;background:transparent;min-height:44px;display:flex;align-items:center;gap:.65em;font-size:clamp(11px,.76vw,29px);padding:1.1vh 0;}
+.proposal-story-steps button small{font-size:.68em;color:#6c8b9d;}
+.proposal-story-steps button[aria-pressed=true]{border-color:#cdb890;color:#ede3d1;}
+.proposal-question{margin:.6vh 0 0;color:#bacbd5;font-size:clamp(11px,.78vw,30px);line-height:1.7;}
+.proposal-disclosure{margin:1vh 0 0;color:#667f91;font-size:clamp(9px,.58vw,22px);letter-spacing:.06em;}
+.moment-intelligence .intelligence-overview-signature{display:none;}
+.moment-intelligence .intelligence-overview-caption{display:none;}
+.moment-intelligence .intelligence-overview-copy{top:26%;width:31%;}
+.moment-intelligence .intelligence-overview-copy h1{font-size:clamp(29px,2.75vw,106px);}
+.moment-intelligence .intelligence-overview-description{max-width:24em;}
+.moment-intelligence.is-depth-open .intelligence-proposal-demo{top:66%;}
+.moment-intelligence.is-proposal-case .intelligence-case-visual{display:none;}
+@media(max-height:820px){
+ .intelligence-proposal-picker{top:4%;}
+ .intelligence-proposal-demo,.moment-intelligence.is-depth-open .intelligence-proposal-demo{top:61%;}
+ .proposal-choices{margin-bottom:.4vh;}
+ .proposal-question{font-size:11px;}
+ .proposal-disclosure{margin:.5vh 0 0;}
+ .proposal-choices button{min-height:36px;}
+}
+@media(max-aspect-ratio:3/2){
+ .intelligence-proposal-picker{right:4%;gap:1vw;}
+ .intelligence-proposal-picker>span{display:none;}
+ .intelligence-proposal-demo{left:42%;right:4%;top:67%;}
+ .proposal-story-steps{gap:.8vw;}
+ .proposal-story-steps button{font-size:10px;line-height:1.5;}
+ .proposal-choices button{padding:.5em .8em;font-size:10px;}
+}
+@media(prefers-reduced-motion:reduce){.intelligence-proposal-picker button{transition:none;}}

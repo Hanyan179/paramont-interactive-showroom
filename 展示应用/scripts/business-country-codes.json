@@ -1,0 +1,466 @@
+{
+  "sources": [
+    "https://unstats.un.org/unsd/methodology/m49/overview/",
+    "world-50m.json country 158; supplier workbook label for TW"
+  ],
+  "aliases": {
+    "UK": "GB"
+  },
+  "countries": {
+    "AE": {
+      "mapId": "784",
+      "name": [
+        "阿拉伯联合酋长国",
+        "United Arab Emirates"
+      ]
+    },
+    "AR": {
+      "mapId": "032",
+      "name": [
+        "阿根廷",
+        "Argentina"
+      ]
+    },
+    "AU": {
+      "mapId": "036",
+      "name": [
+        "澳大利亚",
+        "Australia"
+      ]
+    },
+    "BD": {
+      "mapId": "050",
+      "name": [
+        "孟加拉国",
+        "Bangladesh"
+      ]
+    },
+    "BE": {
+      "mapId": "056",
+      "name": [
+        "比利时",
+        "Belgium"
+      ]
+    },
+    "BG": {
+      "mapId": "100",
+      "name": [
+        "保加利亚",
+        "Bulgaria"
+      ]
+    },
+    "BR": {
+      "mapId": "076",
+      "name": [
+        "巴西",
+        "Brazil"
+      ]
+    },
+    "CA": {
+      "mapId": "124",
+      "name": [
+        "加拿大",
+        "Canada"
+      ]
+    },
+    "CH": {
+      "mapId": "756",
+      "name": [
+        "瑞士",
+        "Switzerland"
+      ]
+    },
+    "CL": {
+      "mapId": "152",
+      "name": [
+        "智利",
+        "Chile"
+      ]
+    },
+    "CN": {
+      "mapId": "156",
+      "name": [
+        "中国",
+        "China"
+      ]
+    },
+    "CZ": {
+      "mapId": "203",
+      "name": [
+        "捷克",
+        "Czechia"
+      ]
+    },
+    "DE": {
+      "mapId": "276",
+      "name": [
+        "德国",
+        "Germany"
+      ]
+    },
+    "DK": {
+      "mapId": "208",
+      "name": [
+        "丹麦",
+        "Denmark"
+      ]
+    },
+    "EE": {
+      "mapId": "233",
+      "name": [
+        "爱沙尼亚",
+        "Estonia"
+      ]
+    },
+    "EG": {
+      "mapId": "818",
+      "name": [
+        "埃及",
+        "Egypt"
+      ]
+    },
+    "ES": {
+      "mapId": "724",
+      "name": [
+        "西班牙",
+        "Spain"
+      ]
+    },
+    "FI": {
+      "mapId": "246",
+      "name": [
+        "芬兰",
+        "Finland"
+      ]
+    },
+    "FR": {
+      "mapId": "250",
+      "name": [
+        "法国",
+        "France"
+      ]
+    },
+    "GB": {
+      "mapId": "826",
+      "name": [
+        "英国",
+        "United Kingdom"
+      ]
+    },
+    "GE": {
+      "mapId": "268",
+      "name": [
+        "格鲁吉亚",
+        "Georgia"
+      ]
+    },
+    "GR": {
+      "mapId": "300",
+      "name": [
+        "希腊",
+        "Greece"
+      ]
+    },
+    "HK": {
+      "mapId": "344",
+      "name": [
+        "中国香港",
+        "Hong Kong"
+      ]
+    },
+    "HR": {
+      "mapId": "191",
+      "name": [
+        "克罗地亚",
+        "Croatia"
+      ]
+    },
+    "HU": {
+      "mapId": "348",
+      "name": [
+        "匈牙利",
+        "Hungary"
+      ]
+    },
+    "ID": {
+      "mapId": "360",
+      "name": [
+        "印度尼西亚",
+        "Indonesia"
+      ]
+    },
+    "IE": {
+      "mapId": "372",
+      "name": [
+        "爱尔兰",
+        "Ireland"
+      ]
+    },
+    "IL": {
+      "mapId": "376",
+      "name": [
+        "以色列",
+        "Israel"
+      ]
+    },
+    "IN": {
+      "mapId": "356",
+      "name": [
+        "印度",
+        "India"
+      ]
+    },
+    "IS": {
+      "mapId": "352",
+      "name": [
+        "冰岛",
+        "Iceland"
+      ]
+    },
+    "IT": {
+      "mapId": "380",
+      "name": [
+        "意大利",
+        "Italy"
+      ]
+    },
+    "JO": {
+      "mapId": "400",
+      "name": [
+        "约旦",
+        "Jordan"
+      ]
+    },
+    "JP": {
+      "mapId": "392",
+      "name": [
+        "日本",
+        "Japan"
+      ]
+    },
+    "KG": {
+      "mapId": "417",
+      "name": [
+        "吉尔吉斯斯坦",
+        "Kyrgyzstan"
+      ]
+    },
+    "KH": {
+      "mapId": "116",
+      "name": [
+        "柬埔寨",
+        "Cambodia"
+      ]
+    },
+    "KR": {
+      "mapId": "410",
+      "name": [
+        "韩国",
+        "Republic of Korea"
+      ]
+    },
+    "KW": {
+      "mapId": "414",
+      "name": [
+        "科威特",
+        "Kuwait"
+      ]
+    },
+    "LB": {
+      "mapId": "422",
+      "name": [
+        "黎巴嫩",
+        "Lebanon"
+      ]
+    },
+    "LT": {
+      "mapId": "440",
+      "name": [
+        "立陶宛",
+        "Lithuania"
+      ]
+    },
+    "LU": {
+      "mapId": "442",
+      "name": [
+        "卢森堡",
+        "Luxembourg"
+      ]
+    },
+    "LV": {
+      "mapId": "428",
+      "name": [
+        "拉脱维亚",
+        "Latvia"
+      ]
+    },
+    "MT": {
+      "mapId": "470",
+      "name": [
+        "马耳他",
+        "Malta"
+      ]
+    },
+    "MX": {
+      "mapId": "484",
+      "name": [
+        "墨西哥",
+        "Mexico"
+      ]
+    },
+    "MY": {
+      "mapId": "458",
+      "name": [
+        "马来西亚",
+        "Malaysia"
+      ]
+    },
+    "NL": {
+      "mapId": "528",
+      "name": [
+        "荷兰王国",
+        "Netherlands (Kingdom of the)"
+      ]
+    },
+    "NZ": {
+      "mapId": "554",
+      "name": [
+        "新西兰",
+        "New Zealand"
+      ]
+    },
+    "PA": {
+      "mapId": "591",
+      "name": [
+        "巴拿马",
+        "Panama"
+      ]
+    },
+    "PH": {
+      "mapId": "608",
+      "name": [
+        "菲律宾",
+        "Philippines"
+      ]
+    },
+    "PK": {
+      "mapId": "586",
+      "name": [
+        "巴基斯坦",
+        "Pakistan"
+      ]
+    },
+    "PL": {
+      "mapId": "616",
+      "name": [
+        "波兰",
+        "Poland"
+      ]
+    },
+    "PT": {
+      "mapId": "620",
+      "name": [
+        "葡萄牙",
+        "Portugal"
+      ]
+    },
+    "PY": {
+      "mapId": "600",
+      "name": [
+        "巴拉圭",
+        "Paraguay"
+      ]
+    },
+    "RO": {
+      "mapId": "642",
+      "name": [
+        "罗马尼亚",
+        "Romania"
+      ]
+    },
+    "RS": {
+      "mapId": "688",
+      "name": [
+        "塞尔维亚",
+        "Serbia"
+      ]
+    },
+    "RU": {
+      "mapId": "643",
+      "name": [
+        "俄罗斯",
+        "Russia"
+      ]
+    },
+    "SA": {
+      "mapId": "682",
+      "name": [
+        "沙特阿拉伯",
+        "Saudi Arabia"
+      ]
+    },
+    "SE": {
+      "mapId": "752",
+      "name": [
+        "瑞典",
+        "Sweden"
+      ]
+    },
+    "SG": {
+      "mapId": "702",
+      "name": [
+        "新加坡",
+        "Singapore"
+      ]
+    },
+    "TH": {
+      "mapId": "764",
+      "name": [
+        "泰国",
+        "Thailand"
+      ]
+    },
+    "TW": {
+      "mapId": "158",
+      "name": [
+        "中国台湾",
+        "Taiwan"
+      ]
+    },
+    "UA": {
+      "mapId": "804",
+      "name": [
+        "乌克兰",
+        "Ukraine"
+      ]
+    },
+    "US": {
+      "mapId": "840",
+      "name": [
+        "美国",
+        "United States"
+      ]
+    },
+    "UY": {
+      "mapId": "858",
+      "name": [
+        "乌拉圭",
+        "Uruguay"
+      ]
+    },
+    "VN": {
+      "mapId": "704",
+      "name": [
+        "越南",
+        "Viet Nam"
+      ]
+    },
+    "ZA": {
+      "mapId": "710",
+      "name": [
+        "南非",
+        "South Africa"
+      ]
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "createdAt": "2026-09-14",
+  "purpose": "Portrait adaptations for category scheme 2. Generated category concepts, not actual SKU photography.",
+  "method": "Built-in imagegen edits using the six visitor-selected showroom concepts as references. No upscaling or browser screenshot assets.",
+  "assets": [
+    {
+      "id": "kids-craft",
+      "file": "kids-craft.png",
+      "size": [
+        948,
+        1659
+      ],
+      "reference": "../kids-craft.png",
+      "promptFile": "kids-craft-prompt.txt"
+    },
+    {
+      "id": "stationery",
+      "file": "stationery.png",
+      "size": [
+        948,
+        1659
+      ],
+      "reference": "../stationery.png",
+      "promptFile": "stationery-prompt.txt"
+    },
+    {
+      "id": "party",
+      "file": "party.png",
+      "size": [
+        948,
+        1659
+      ],
+      "reference": "../party.png",
+      "promptFile": "party-prompt.txt"
+    },
+    {
+      "id": "toys",
+      "file": "toys.png",
+      "size": [
+        948,
+        1659
+      ],
+      "reference": "../toys.png",
+      "promptFile": "toys-prompt.txt"
+    },
+    {
+      "id": "beauty",
+      "file": "beauty.png",
+      "size": [
+        948,
+        1659
+      ],
+      "reference": "../beauty.png",
+      "promptFile": "beauty-prompt.txt"
+    },
+    {
+      "id": "general-craft",
+      "file": "general-craft.png",
+      "size": [
+        948,
+        1660
+      ],
+      "reference": "../general-craft.png",
+      "promptFile": "general-craft-prompt.txt"
+    }
+  ]
+}

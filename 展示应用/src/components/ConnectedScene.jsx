@@ -47,7 +47,7 @@ export function ConnectedScene({cameraRequest=0,newsMedia=null,mediaPhase='close
     renderer.toneMapping=THREE.ACESFilmicToneMapping;const applied=applyRendererQuality(renderer,THREE,quality);host.dataset.quality=JSON.stringify(applied);renderer.shadowMap.autoUpdate=false;renderer.shadowMap.needsUpdate=true;renderer.info.autoReset=false;
     renderer.domElement.setAttribute('aria-hidden','true');host.prepend(renderer.domElement);
     const scene=new THREE.Scene();scene.background=new THREE.Color('#e4e2dd');scene.fog=new THREE.FogExp2('#e4e2dd',.009);
-    const sky=createCinematicAtmosphere(scene);scene.background=null;
+    const sky=createCinematicAtmosphere(scene,q.exposure);scene.background=null;
     const analytics=createDataWorkstation({expanded:true});scene.add(analytics.root);analytics.root.visible=false;
     const camera=new THREE.PerspectiveCamera(40,1,.1,140);camera.position.set(0,6.5,17);
     const look=new THREE.Vector3(0,1,0);camera.lookAt(look);
@@ -243,7 +243,7 @@ export function ConnectedScene({cameraRequest=0,newsMedia=null,mediaPhase='close
         renderer.shadowMap.needsUpdate=true;
       }else s.cinemaView=null;
       host.dataset.cinematic=s.cinemaMix.toFixed(3);
-      floor.position.y=smooth(-2.5,-.12,story*(1-m));scene.background=null;sky.update(s.elapsed,camera.aspect,reduced,m,journey,story,s.yaw);scene.fog.color.set('#122b3f');scene.fog.density=smooth(.006,.004,journey);key.intensity=smooth(2.8,2.3,journey);rim.intensity=smooth(3.5,2.6,journey);bloom.strength=smooth(q.bloom,q.bloom*.59,journey);bloom.enabled=q.bloom>0;ambientOcclusion.enabled=q.ao&&journey>.8&&latest.current.capability!=='overview';ambientOcclusion.blendIntensity=.65*THREE.MathUtils.smoothstep(journey,.8,1);host.dataset.contactShadow=String(ambientOcclusion.enabled);
+      floor.position.y=smooth(-2.5,-.12,story*(1-m));scene.background=null;sky.update(s.elapsed,camera.aspect,reduced,m,journey,story,s.yaw,renderer.domElement.height);scene.fog.color.set('#122b3f');scene.fog.density=smooth(.006,.004,journey);key.intensity=smooth(2.8,2.3,journey);rim.intensity=smooth(3.5,2.6,journey);bloom.strength=smooth(q.bloom,q.bloom*.59,journey);bloom.enabled=q.bloom>0;ambientOcclusion.enabled=q.ao&&journey>.8&&latest.current.capability!=='overview';ambientOcclusion.blendIntensity=.65*THREE.MathUtils.smoothstep(journey,.8,1);host.dataset.contactShadow=String(ambientOcclusion.enabled);
       const calm=!s.drag&&!reduced&&(!inspection||latest.current.cinematic)&&now-s.interactedAt>4500;
       s.ambientMix=smooth(s.ambientMix,calm?1:0,1-Math.exp(-dt*2));
       camera.position.x+=Math.sin(s.elapsed*.16)*.14*s.ambientMix;

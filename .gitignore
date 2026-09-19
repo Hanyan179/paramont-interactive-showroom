@@ -29,3 +29,8 @@
 **/.openai/*
 !**/.openai/hosting.json
 /展示应用/public/modules/product-explorer/
+
+# Local visual studies and review captures; runtime images remain in public/.
+/展示应用/docs/category-lighting-study-*/
+/展示应用/docs/category-review-*/
+/展示应用/docs/map-stage-1920.png

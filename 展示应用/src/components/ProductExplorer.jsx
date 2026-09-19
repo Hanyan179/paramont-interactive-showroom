@@ -15,7 +15,7 @@ export function ProductExplorer({open,cinematic=false,onAttention,suspended=fals
  useEffect(()=>{if(open){setStarted(true);previousFocus.current=document.activeElement;frame.current?.focus();}else{previousFocus.current?.focus?.();latest.current.onPlayback?.(false);}send('visibility',{visible:open&&!suspended});},[open]);
  useEffect(()=>{if(ready)send('visibility',{visible:open&&!suspended});},[open,suspended,ready]);
  useEffect(()=>{if(ready)send('language',{language:lang});},[lang,ready]);
- useEffect(()=>{if(ready&&open)send('navigate',{section:navigation.section,view:navigation.view,navigationId:navigation.id,preserve:navigation.preserve===true,productId:navigation.productId,skuId:navigation.skuId});},[navigation.id,ready,open]);
+ useEffect(()=>{if(ready&&open)send('navigate',{section:navigation.section,view:navigation.view,navigationId:navigation.id,preserve:navigation.preserve===true,productId:navigation.productId,skuId:navigation.skuId,brandId:navigation.brandId});},[navigation.id,ready,open]);
  useEffect(()=>{if(ready&&open&&presentation?.id)send('presentation-toggle');},[presentation?.id]);
  useEffect(()=>{if(ready)send('cinematic-set',{enabled:open&&cinematic});},[ready,open,cinematic]);
  useEffect(()=>{if(ready)send('presentation-set',{enabled:open&&directedPresentation});},[ready,open,directedPresentation,navigation.id]);

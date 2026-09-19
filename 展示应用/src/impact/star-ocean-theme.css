@@ -1,0 +1,26 @@
+/* Shared silver-blue hierarchy over the star ocean. Keep content ahead of light. */
+.impact-theatre{--chapter-ink:#b9cddd;--chapter-active:#edf4f8;--chapter-line:#b1c9db36;}
+.impact-theatre :is(.impact-eyebrow,.brand-overview header p,.category-overview header>p,.depth-eyebrow){color:#bdd2e4;}
+.impact-theatre :is(.impact-enter){color:#dce9f2;}
+.impact-theatre :is(.impact-enter) svg{color:#d6dde3;}
+.impact-theatre .depth-navigation button[aria-pressed=true]{color:#eee4d2;}
+.impact-theatre .distribution-map{background:#020b1638;}
+.impact-theatre .distribution-coastline{stroke:#b0cde3a3;filter:drop-shadow(0 0 2px #8cb4d550);}
+.impact-theatre.is-map-depth .distribution-map{background:#020b1638;}
+.impact-theatre :is(.impact-copy,.brand-overview header,.category-overview header,.distribution-heading){text-shadow:0 2px 20px #02091466;}
+
+/* Final reading sizes: quiet secondary text stays legible on desktop and walls. */
+.impact-theatre{--impact-navigation-bottom:7.2%;--impact-navigation-height:clamp(84px,8.8vh,190px);}
+.impact-theatre :is(.impact-eyebrow,.brand-overview header p,.category-overview header>p){font-size:clamp(12px,.74vw,30px);letter-spacing:.17em;}
+.impact-theatre :is(.impact-note,.category-overview-note){font-size:clamp(11px,.66vw,27px);color:#91abba;}
+.impact-theatre .category-range{font-size:clamp(14px,.92vw,37px);line-height:1.7;color:#b7cbd8;}
+.impact-theatre .category-index strong{font-size:clamp(13px,.85vw,34px);line-height:1.35;}
+.impact-theatre .category-index button{min-height:clamp(46px,4.4vh,96px);}
+
+
+.impact-theatre .impact-language{font-size:clamp(13px,.84vw,34px);}
+
+/* One black-blue space behind every chapter; overlays only aid reading. */
+.impact-theatre{background:#02060d;}
+.impact-theatre .impact-vignette{background:linear-gradient(0deg,#02060ee0,transparent 25%),linear-gradient(90deg,#02071080,transparent 38%);}
+.impact-theatre.moment-company .impact-vignette{background:linear-gradient(0deg,#020914bd,transparent 23%),linear-gradient(90deg,#02071080,transparent 40%);}

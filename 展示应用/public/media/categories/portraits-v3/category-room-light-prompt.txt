@@ -1,0 +1,28 @@
+Built-in image_gen workflow
+Reference: /var/folders/rm/83swjql96xg01d0jdshqkwkr0000gn/T/codex-clipboard-35efe61e-99c9-42b0-b462-64b14d3c1968.png
+Initial source: generated-image:exec-deddf5ea-f749-4eee-bf68-89757ea93442.png
+Final source: generated-image:exec-ea74e922-f06c-4f06-a8cb-c4337f6cbfe0.png
+Requested size: 1792 x 1024 or close 16:9 landscape.
+Verified actual size: 1660 x 948, approximately 1.751:1 landscape.
+Visual check: empty architecture only, back-wall / floor junction approximately 66% of image height.
+No external resizing, cropping or image editing applied.
+
+FULL PROMPT
+Use case: precise-object-edit
+Asset type: full-screen empty architectural background for six separately rendered interactive three-dimensional category display windows.
+Reference image role: use the supplied showroom screenshot ONLY to understand the frontal centered exhibition-space composition, symmetrical perspective and open floor below the future display windows. Remove every display panel, product, picture, word, logo and UI element from the reference. Do not reproduce any branding or visible content.
+Primary request: create ONE high-quality landscape architectural photograph of a completely EMPTY modern premium art gallery interior. Wide 16:9 composition, target 1792 x 1024 pixels or a close 16:9 native resolution.
+Camera and framing: directly frontal, centered, symmetrical architectural perspective, level horizon and straight verticals, eye height approximately 1.6 meters. Tall ceiling and calm generous proportions. No people. This is a spatial backdrop only, not an interface or screenshot.
+Architecture: warm ivory lime-plaster walls, continuous pale sandy cream terrazzo floor, restrained monumental curved door openings or softly rounded columns confined toward far left and far right edges to create real architectural depth. Use subtly recessed side passages with the same warm bright plaster materials. Tiny refined pale-brass architectural details are permissible but no gold ornamentation. Contemporary high-end art museum, warm and luminous, not gray.
+Placement / usable zones: the center must be an uninterrupted calm wall-and-space field, free of features that compete with future product windows. Keep normalized x=5%-95%, y=22%-77% visually quiet. The wall-to-floor junction is at approximately y=65%, so the visible floor extends from y=65% to the bottom edge, with convincing perspective and a fine natural terrazzo microtexture. Keep the top center approximately y=5%-20% as soft blank plaster / ceiling space for a future title. Do not render any title now. Side curves and recesses stay peripheral and do not form a row of niches or display panels.
+Lighting: soft daylight entering from an upper-left skylight outside or near the extreme edge of the composition. Warm-white natural exposure, delicate shadows and soft pools of daylight on the floor, real material depth and texture. Bright, clear, airy and gently warm. No overexposure, no milky white haze, no bloom, no fog, no blue light.
+Material and photography style: bright editorial architectural photography, warm ivory plaster #ece7de, pale limestone and sand terrazzo #d4c7b7, realistic subtle material imperfections, gentle shadows, refined contemporary design showroom. Full-scene clarity and natural lens perspective, no fisheye.
+Absolute exclusions: no display panels, no podiums or plinths, no products, no exhibition pieces, no furniture, no pictures, no picture frames, no screens, no billboards, no labels, no text, no lettering, no logo, no brand, no watermark, no UI, no frame around the image, no light strips, no particles, no stars, no sky scene, no blue-black or dark navy surfaces, no people, no decorative plants, no sculptures, no gold decoration, no collage. The finished image contains only empty architecture, floor, natural light and gentle shadows.
+
+REFINEMENT PROMPT
+Use case: precise-object-edit
+Edit target: supplied empty ivory gallery architectural photograph.
+Make one precise composition adjustment only: move the main back-wall-to-floor junction DOWN from its present approximately 58% image height to approximately 65% of image height. The wall should occupy more vertical space and the visible floor the lower 35% of the image. Keep the camera level at an approximately 1.6m human eye level, centered frontal architectural perspective, straight verticals, symmetrical outer side arches and side passages. Preserve the overall width and height of the image.
+Preserve ALL existing bright warm ivory plaster, pale sand terrazzo, tall ceiling, soft daylight from upper left, restrained light brass skirting, gentle realistic shadows and fine materials. Preserve the quiet empty central wall, clear upper-center title zone, and empty floor. Keep the architecture luminous neutral-warm rather than gray or yellow-gold. No white haze or overexposure.
+This is only an empty architectural backdrop for separately rendered interactive display windows. Do not add anything: absolutely no products, furniture, exhibition panels, plinths, artworks, frames, plants, sculptures, lettering, logos, screens, UI, light strips, particles, people or decorations.
+One independent landscape image, target 1792 x 1024 or near 16:9.

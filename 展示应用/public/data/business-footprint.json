@@ -1,0 +1,783 @@
+{
+  "schemaVersion": 1,
+  "importedOn": "2026-09-14",
+  "reportingPeriod": null,
+  "unit": "master records",
+  "countryField": "Explicit country column; never inferred from entity name",
+  "notes": [
+    "Master archive coverage, not active customers, active suppliers, owned factories, sales or transaction routes.",
+    "Blank countries count toward totals but are not located on the map.",
+    "UK and GB are combined as GB. PA is retained as Panama despite missing source name cells."
+  ],
+  "geographySources": [
+    "https://unstats.un.org/unsd/methodology/m49/overview/",
+    "world-50m.json country 158; supplier workbook label for TW"
+  ],
+  "aliases": {
+    "UK": "GB"
+  },
+  "sources": {
+    "customers": {
+      "file": "客户国家.xlsx",
+      "sheet": "Customer Master List",
+      "recordRange": "A2:E984",
+      "countryColumn": "C",
+      "sha256": "3fb8077997809646c1a29c693185d98e6f30b40b1d44497f05baa267f4d0cbdb",
+      "totalRecords": 983,
+      "locatedRecords": 947,
+      "missingCountryRecords": 36,
+      "countryCount": 59,
+      "rawCountryCodes": {
+        "(blank)": 36,
+        "AE": 2,
+        "AR": 2,
+        "AU": 28,
+        "BE": 1,
+        "BG": 2,
+        "BR": 1,
+        "CA": 18,
+        "CH": 1,
+        "CL": 7,
+        "CN": 545,
+        "CZ": 1,
+        "DE": 12,
+        "DK": 1,
+        "EE": 2,
+        "EG": 4,
+        "ES": 1,
+        "FI": 4,
+        "FR": 9,
+        "GB": 6,
+        "GE": 1,
+        "GR": 1,
+        "HK": 6,
+        "HR": 1,
+        "HU": 3,
+        "ID": 2,
+        "IE": 3,
+        "IL": 4,
+        "IN": 2,
+        "IS": 1,
+        "JO": 1,
+        "JP": 1,
+        "KH": 1,
+        "KR": 2,
+        "KW": 2,
+        "LB": 1,
+        "LT": 1,
+        "LU": 1,
+        "LV": 1,
+        "MT": 2,
+        "MX": 4,
+        "NL": 9,
+        "NZ": 3,
+        "PA": 1,
+        "PH": 3,
+        "PL": 3,
+        "PT": 1,
+        "PY": 1,
+        "RO": 1,
+        "RS": 1,
+        "RU": 4,
+        "SA": 1,
+        "SE": 4,
+        "SG": 2,
+        "TH": 2,
+        "UA": 3,
+        "UK": 17,
+        "US": 198,
+        "UY": 1,
+        "VN": 2,
+        "ZA": 2
+      }
+    },
+    "suppliers": {
+      "file": "供应商国家.xlsx",
+      "sheet": "导出结果",
+      "recordRange": "A2:E6422",
+      "countryColumn": "C",
+      "sha256": "f3f13243c441e5e4f05d78cb7a3c2ae0e2a0ca0e2187417c79ce501481988c2b",
+      "totalRecords": 6421,
+      "locatedRecords": 6323,
+      "missingCountryRecords": 98,
+      "countryCount": 22,
+      "rawCountryCodes": {
+        "(blank)": 98,
+        "AU": 7,
+        "BD": 1,
+        "CN": 5803,
+        "DE": 2,
+        "FR": 1,
+        "GB": 5,
+        "HK": 26,
+        "ID": 2,
+        "IL": 1,
+        "IT": 2,
+        "KG": 1,
+        "KH": 35,
+        "MX": 1,
+        "MY": 3,
+        "NL": 3,
+        "NZ": 2,
+        "PK": 1,
+        "SG": 1,
+        "TH": 4,
+        "TW": 1,
+        "US": 356,
+        "VN": 65
+      }
+    }
+  },
+  "countries": [
+    {
+      "code": "AE",
+      "mapId": "784",
+      "name": [
+        "阿拉伯联合酋长国",
+        "United Arab Emirates"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "AR",
+      "mapId": "032",
+      "name": [
+        "阿根廷",
+        "Argentina"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "AU",
+      "mapId": "036",
+      "name": [
+        "澳大利亚",
+        "Australia"
+      ],
+      "customers": 28,
+      "suppliers": 7
+    },
+    {
+      "code": "BD",
+      "mapId": "050",
+      "name": [
+        "孟加拉国",
+        "Bangladesh"
+      ],
+      "customers": 0,
+      "suppliers": 1
+    },
+    {
+      "code": "BE",
+      "mapId": "056",
+      "name": [
+        "比利时",
+        "Belgium"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "BG",
+      "mapId": "100",
+      "name": [
+        "保加利亚",
+        "Bulgaria"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "BR",
+      "mapId": "076",
+      "name": [
+        "巴西",
+        "Brazil"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "CA",
+      "mapId": "124",
+      "name": [
+        "加拿大",
+        "Canada"
+      ],
+      "customers": 18,
+      "suppliers": 0
+    },
+    {
+      "code": "CH",
+      "mapId": "756",
+      "name": [
+        "瑞士",
+        "Switzerland"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "CL",
+      "mapId": "152",
+      "name": [
+        "智利",
+        "Chile"
+      ],
+      "customers": 7,
+      "suppliers": 0
+    },
+    {
+      "code": "CN",
+      "mapId": "156",
+      "name": [
+        "中国",
+        "China"
+      ],
+      "customers": 545,
+      "suppliers": 5803
+    },
+    {
+      "code": "CZ",
+      "mapId": "203",
+      "name": [
+        "捷克",
+        "Czechia"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "DE",
+      "mapId": "276",
+      "name": [
+        "德国",
+        "Germany"
+      ],
+      "customers": 12,
+      "suppliers": 2
+    },
+    {
+      "code": "DK",
+      "mapId": "208",
+      "name": [
+        "丹麦",
+        "Denmark"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "EE",
+      "mapId": "233",
+      "name": [
+        "爱沙尼亚",
+        "Estonia"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "EG",
+      "mapId": "818",
+      "name": [
+        "埃及",
+        "Egypt"
+      ],
+      "customers": 4,
+      "suppliers": 0
+    },
+    {
+      "code": "ES",
+      "mapId": "724",
+      "name": [
+        "西班牙",
+        "Spain"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "FI",
+      "mapId": "246",
+      "name": [
+        "芬兰",
+        "Finland"
+      ],
+      "customers": 4,
+      "suppliers": 0
+    },
+    {
+      "code": "FR",
+      "mapId": "250",
+      "name": [
+        "法国",
+        "France"
+      ],
+      "customers": 9,
+      "suppliers": 1
+    },
+    {
+      "code": "GB",
+      "mapId": "826",
+      "name": [
+        "英国",
+        "United Kingdom"
+      ],
+      "customers": 23,
+      "suppliers": 5
+    },
+    {
+      "code": "GE",
+      "mapId": "268",
+      "name": [
+        "格鲁吉亚",
+        "Georgia"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "GR",
+      "mapId": "300",
+      "name": [
+        "希腊",
+        "Greece"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "HK",
+      "mapId": "344",
+      "name": [
+        "中国香港",
+        "Hong Kong"
+      ],
+      "customers": 6,
+      "suppliers": 26
+    },
+    {
+      "code": "HR",
+      "mapId": "191",
+      "name": [
+        "克罗地亚",
+        "Croatia"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "HU",
+      "mapId": "348",
+      "name": [
+        "匈牙利",
+        "Hungary"
+      ],
+      "customers": 3,
+      "suppliers": 0
+    },
+    {
+      "code": "ID",
+      "mapId": "360",
+      "name": [
+        "印度尼西亚",
+        "Indonesia"
+      ],
+      "customers": 2,
+      "suppliers": 2
+    },
+    {
+      "code": "IE",
+      "mapId": "372",
+      "name": [
+        "爱尔兰",
+        "Ireland"
+      ],
+      "customers": 3,
+      "suppliers": 0
+    },
+    {
+      "code": "IL",
+      "mapId": "376",
+      "name": [
+        "以色列",
+        "Israel"
+      ],
+      "customers": 4,
+      "suppliers": 1
+    },
+    {
+      "code": "IN",
+      "mapId": "356",
+      "name": [
+        "印度",
+        "India"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "IS",
+      "mapId": "352",
+      "name": [
+        "冰岛",
+        "Iceland"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "IT",
+      "mapId": "380",
+      "name": [
+        "意大利",
+        "Italy"
+      ],
+      "customers": 0,
+      "suppliers": 2
+    },
+    {
+      "code": "JO",
+      "mapId": "400",
+      "name": [
+        "约旦",
+        "Jordan"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "JP",
+      "mapId": "392",
+      "name": [
+        "日本",
+        "Japan"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "KG",
+      "mapId": "417",
+      "name": [
+        "吉尔吉斯斯坦",
+        "Kyrgyzstan"
+      ],
+      "customers": 0,
+      "suppliers": 1
+    },
+    {
+      "code": "KH",
+      "mapId": "116",
+      "name": [
+        "柬埔寨",
+        "Cambodia"
+      ],
+      "customers": 1,
+      "suppliers": 35
+    },
+    {
+      "code": "KR",
+      "mapId": "410",
+      "name": [
+        "韩国",
+        "Republic of Korea"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "KW",
+      "mapId": "414",
+      "name": [
+        "科威特",
+        "Kuwait"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "LB",
+      "mapId": "422",
+      "name": [
+        "黎巴嫩",
+        "Lebanon"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "LT",
+      "mapId": "440",
+      "name": [
+        "立陶宛",
+        "Lithuania"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "LU",
+      "mapId": "442",
+      "name": [
+        "卢森堡",
+        "Luxembourg"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "LV",
+      "mapId": "428",
+      "name": [
+        "拉脱维亚",
+        "Latvia"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "MT",
+      "mapId": "470",
+      "name": [
+        "马耳他",
+        "Malta"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    },
+    {
+      "code": "MX",
+      "mapId": "484",
+      "name": [
+        "墨西哥",
+        "Mexico"
+      ],
+      "customers": 4,
+      "suppliers": 1
+    },
+    {
+      "code": "MY",
+      "mapId": "458",
+      "name": [
+        "马来西亚",
+        "Malaysia"
+      ],
+      "customers": 0,
+      "suppliers": 3
+    },
+    {
+      "code": "NL",
+      "mapId": "528",
+      "name": [
+        "荷兰王国",
+        "Netherlands (Kingdom of the)"
+      ],
+      "customers": 9,
+      "suppliers": 3
+    },
+    {
+      "code": "NZ",
+      "mapId": "554",
+      "name": [
+        "新西兰",
+        "New Zealand"
+      ],
+      "customers": 3,
+      "suppliers": 2
+    },
+    {
+      "code": "PA",
+      "mapId": "591",
+      "name": [
+        "巴拿马",
+        "Panama"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "PH",
+      "mapId": "608",
+      "name": [
+        "菲律宾",
+        "Philippines"
+      ],
+      "customers": 3,
+      "suppliers": 0
+    },
+    {
+      "code": "PK",
+      "mapId": "586",
+      "name": [
+        "巴基斯坦",
+        "Pakistan"
+      ],
+      "customers": 0,
+      "suppliers": 1
+    },
+    {
+      "code": "PL",
+      "mapId": "616",
+      "name": [
+        "波兰",
+        "Poland"
+      ],
+      "customers": 3,
+      "suppliers": 0
+    },
+    {
+      "code": "PT",
+      "mapId": "620",
+      "name": [
+        "葡萄牙",
+        "Portugal"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "PY",
+      "mapId": "600",
+      "name": [
+        "巴拉圭",
+        "Paraguay"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "RO",
+      "mapId": "642",
+      "name": [
+        "罗马尼亚",
+        "Romania"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "RS",
+      "mapId": "688",
+      "name": [
+        "塞尔维亚",
+        "Serbia"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "RU",
+      "mapId": "643",
+      "name": [
+        "俄罗斯",
+        "Russia"
+      ],
+      "customers": 4,
+      "suppliers": 0
+    },
+    {
+      "code": "SA",
+      "mapId": "682",
+      "name": [
+        "沙特阿拉伯",
+        "Saudi Arabia"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "SE",
+      "mapId": "752",
+      "name": [
+        "瑞典",
+        "Sweden"
+      ],
+      "customers": 4,
+      "suppliers": 0
+    },
+    {
+      "code": "SG",
+      "mapId": "702",
+      "name": [
+        "新加坡",
+        "Singapore"
+      ],
+      "customers": 2,
+      "suppliers": 1
+    },
+    {
+      "code": "TH",
+      "mapId": "764",
+      "name": [
+        "泰国",
+        "Thailand"
+      ],
+      "customers": 2,
+      "suppliers": 4
+    },
+    {
+      "code": "TW",
+      "mapId": "158",
+      "name": [
+        "中国台湾",
+        "Taiwan"
+      ],
+      "customers": 0,
+      "suppliers": 1
+    },
+    {
+      "code": "UA",
+      "mapId": "804",
+      "name": [
+        "乌克兰",
+        "Ukraine"
+      ],
+      "customers": 3,
+      "suppliers": 0
+    },
+    {
+      "code": "US",
+      "mapId": "840",
+      "name": [
+        "美国",
+        "United States"
+      ],
+      "customers": 198,
+      "suppliers": 356
+    },
+    {
+      "code": "UY",
+      "mapId": "858",
+      "name": [
+        "乌拉圭",
+        "Uruguay"
+      ],
+      "customers": 1,
+      "suppliers": 0
+    },
+    {
+      "code": "VN",
+      "mapId": "704",
+      "name": [
+        "越南",
+        "Viet Nam"
+      ],
+      "customers": 2,
+      "suppliers": 65
+    },
+    {
+      "code": "ZA",
+      "mapId": "710",
+      "name": [
+        "南非",
+        "South Africa"
+      ],
+      "customers": 2,
+      "suppliers": 0
+    }
+  ]
+}
