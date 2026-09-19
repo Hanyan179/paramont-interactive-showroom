@@ -61,7 +61,8 @@ export function reviewNoteTexture(index){return canvasTexture((c,w)=>{
  label(c,l===0?'随行彩妆 / 概念评审':'PORTABLE BEAUTY / CONCEPT REVIEW',w/2,45,25,MUTED);
  label(c,proposalDirections[index].review[l],w/2,126,49,INK);
 },1280,170);}
-export function reviewTexture(){return canvasTexture((c,w,h)=>{surface(c,w,h);label(c,'CUSTOMER FEEDBACK',42,52,21,BLUE);label(c,'5.0  /  5',w-170,52,22,INK);rule(c,42,79,w-84);label(c,'SOFT HAZE  ·  COLOUR COLLECTION',42,h-32,19,MUTED);},768,240);}
+export function reviewPaperTexture(){return canvasTexture(surface,768,240);}
+export function reviewDetailsTexture(){return canvasTexture((c,w,h)=>{label(c,'CUSTOMER FEEDBACK',42,52,21,BLUE);label(c,'5.0  /  5',w-170,52,22,INK);rule(c,42,79,w-84);label(c,'SOFT HAZE  ·  COLOUR COLLECTION',42,h-32,19,MUTED);},768,240);}
 export function commerceTexture(){return canvasTexture((c,w,h)=>{
  rounded(c,3,3,w-6,h-6,24);c.fillStyle='#eeeae3';c.fill();c.strokeStyle='#bcb7b0';c.lineWidth=3;c.stroke();
  label(c,'THE BEAUTY EDIT',220,86,42,'#272725',500);label(c,'COLLECTION     /     COLOUR     /     OUR STORY',745,81,22,'#77736b');rule(c,60,122,w-120,'#d1cbc1');
@@ -78,8 +79,10 @@ export function commerceDetails(){return canvasTexture((c)=>{
  label(c,'CONCEPT PRODUCT   /   NO LIVE CHECKOUT',30,674,19,'#8a8174');
 },720,720);}
 
-export function purchaseReviewTexture(index=0){return canvasTexture((c,w,h)=>{
+export function purchaseReviewPaperTexture(){return canvasTexture((c,w,h)=>{
  rounded(c,2,2,w-4,h-4,24);c.fillStyle='#fffdf9';c.fill();c.strokeStyle='#d5cfc5';c.lineWidth=2;c.stroke();
+},1024,390);}
+export function purchaseReviewDetailsTexture(index=0){return canvasTexture((c,w,h)=>{
  // Authored editorial avatars: illustration, not a real customer endorsement.
  const palette=['#acb7a8','#b8a79f','#b0b9c1','#c3b49b','#aab6b0','#bca5a9'],cx=76,cy=72;
  c.save();c.beginPath();c.arc(cx,cy,39,0,Math.PI*2);c.clip();c.fillStyle=palette[index];c.fillRect(cx-40,cy-40,80,80);

@@ -27,6 +27,7 @@ export function intelligenceWorld(quality,manager){
   update({camera,target,aspect=16/9,intelligence=null,time=null,lang="en"}){
    if(lang!==activeLanguage){o.setLanguage(lang);activeLanguage=lang;}
    const t=intelligence?.time??stageFrames[intelligence?.stage??0],f=journeyFrame(t),width=HEIGHT*aspect,scale=Math.min(width*.049,HEIGHT*.093);
+   const pageScroll=ramp(t,86,91);
    const presentation=intelligencePresentation(t),composition=presentation.composition;
    o.root.position.set(width*.20*composition,HEIGHT*.045*composition,0);o.root.scale.setScalar(scale*lerp(1.4,1,composition));
    const presence=ramp(t,5,16)*(1-ramp(t,99,105));alpha(o.ambience,presence*.26);
@@ -74,7 +75,7 @@ export function intelligenceWorld(quality,manager){
      mesh.rotation.set(0,Math.sin(localGather*Math.PI)*(i%2?-.12:.12),0);
     }else if(t>=89){
      const emerge=ramp(t,89+i*.65,90+i*.65),release=ramp(t,95,100),closing=ramp(t,100,106);
-     const pageX=(i%2?2.05:-2.05),pageY=1.1-Math.floor(i/2)*1.48;
+     const pageX=(i%2?2.05:-2.05),pageY=1.1-Math.floor(i/2)*1.48-(1-pageScroll)*5.86;
      const [spreadX,spreadY]=reviewSlots[i];
      x=lerp(pageX,spreadX,release);y=lerp(pageY,spreadY,release);z=lerp(.3,i===0?.35:(i%3-1)*.7,release);
      if(i===0){x=lerp(x,0,closing);y=lerp(y,0,closing);z=lerp(z,0,closing);s=lerp(.65,1,release);a=emerge;}
@@ -87,6 +88,10 @@ export function intelligenceWorld(quality,manager){
     mesh.children[0].scale.set(lerp(5.8/frameWidth,1,reframe),lerp(2.2/frameHeight,1,reframe),1);
     mesh.children[1].scale.set(lerp(1,frameWidth/5.8,reframe),lerp(1,frameHeight/2.2,reframe),1);
     mesh.position.set(x,y,z);mesh.scale.setScalar(s);if(t>=34)mesh.rotation.set(0,t>=85&&i>0?Math.sin(i)*.08*ramp(t,93,99):0,0);alpha(mesh,a*(count>0?1:0));alpha(mesh.children[0],a*framing);alpha(mesh.children[1],a*purchase);mesh.material.color.copy(purchaseInk).lerp(exhibitInk,1-ramp(purchase,.12,.6));
+    // Keep the review itself continuous while peripheral labels change skins.
+    // Retire the avatar and purchase metadata before the exhibit labels enter.
+    alpha(mesh.userData.reviewSkins.purchaseInk,a*purchase*(1-ramp(reframe,.12,.46)));
+    alpha(mesh.userData.reviewSkins.exhibitInk,a*framing*ramp(reframe,.54,.88));
    });
    o.reportFaces.forEach((face,i)=>{
     const seat=cardSeats[i],g=ramp(t,13+i*.09,16),shrink=ramp(t,25,29),start=reportStarts[i];
@@ -148,7 +153,10 @@ export function intelligenceWorld(quality,manager){
    o.projection.aim(o.robot.projector,scanTarget,o.root,0,.25,scanOffset,lerp(.80,.32,preciseScan));alpha(o.scanLine,scanVisibility*.30);
    const hero=ramp(t,73,77)*(1-ramp(t,80,84));alpha(o.heroLight,hero*.25);o.reflection.position.set(o.product.position.x,-2.85,1);o.reflection.scale.set(4.7,-.65,1);alpha(o.reflection,hero*.065);
    o.productCaption.position.set(0,-3.12,1);alpha(o.productCaption,ramp(t,76,77)*(1-ramp(t,79,82)));
-   const pageScroll=ramp(t,86,91);o.body.position.y+=pageScroll*5.86;o.page.material.map.offset.y=(1-1080/2100)*(1-pageScroll);for(const mesh of [o.product,o.details])mesh.userData.pageClip.value.set(t>=79?o.root.position.y-3.03*scale:-1e6,t>=79?o.root.position.y+3.1*scale:1e6);o.details.position.y=.15+pageScroll*5.86;o.product.position.y+=pageScroll*5.86;
+   o.body.position.y+=pageScroll*5.86;o.page.material.map.offset.y=(1-1080/2100)*(1-pageScroll);for(const mesh of [o.product,o.details])mesh.userData.pageClip.value.set(t>=79?o.root.position.y-3.03*scale:-1e6,t>=79?o.root.position.y+3.1*scale:1e6);o.details.position.y=.15+pageScroll*5.86;o.product.position.y+=pageScroll*5.86;
+   // Once docked, the same robot belongs to the scrolling page viewport.
+   // Keep the free flight unclipped, including its upper approach arc.
+   o.robotPageClip.value.set(t>=85?o.root.position.y-3.03*scale:-1e6,t>=85?o.root.position.y+3.1*scale:1e6);
    const commerceAlpha=ramp(t,80,85)*(1-ramp(t,95,98));o.commerce.visible=commerceAlpha>.001;o.commerce.children.forEach(child=>alpha(child,commerceAlpha));alpha(o.details,commerceAlpha*(1-ramp(t,87,90)));const metricIndex=Math.min(3,Math.max(0,Math.floor((t-90)/1.6)));o.commerceMetrics.forEach((mesh,i)=>alpha(mesh,commerceAlpha*ramp(t,91,93)*Number(i===metricIndex)));
    origin.set(0,0,0);camera.copy(position);target.copy(origin);root.userData.stage=f.stage;root.userData.mode=intelligence?.mode??'auto';root.userData.journeyTime=t;root.userData.morph=f.crystal;
   },isMoving:()=>false,focusPose:pose,prepare(){root.visible=true;},project:()=>[],pick:()=>null,

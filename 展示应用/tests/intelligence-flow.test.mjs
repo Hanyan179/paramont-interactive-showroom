@@ -206,6 +206,26 @@ test('manual stage dwell retains subtle motion while the paused shared clock fre
 test('language changes repaint text without replacing scene objects or resetting time',()=>{const {world,update}=rig();update(47,'zh');const record=world.root.getObjectByName('record-0'),map=record.material.map,cut=record.userData.typing.cut;assert.equal(record.userData.typing.text,'很棒的产品。');update(47,'en');assert.equal(record.userData.typing.text,'Great product.');assert.equal(record.material.map,map);assert.equal(record.userData.typing.cut,cut);near(world.root.userData.journeyTime,47);disposeTree(world.root);});
 test('product stays out of analysis and decision, then appears from the design synthesis',()=>{const {world,update}=rig(),product=world.root.getObjectByName('persistent-beauty-product');for(const t of [40,47,58,67,72]){update(t);assert.equal(product.visible,false);}update(77);assert.equal(product.visible,true);disposeTree(world.root);});
 test('commerce scrolls before purchase reviews arrive and those same reviews become exhibit cards',()=>{const {world,update}=rig(),record=world.root.getObjectByName('record-0'),page=world.root.getObjectByName('commerce-frame');update(85);assert.equal(record.visible,false);const initialOffset=page.material.map.offset.y;update(88);assert.equal(record.visible,false);assert.ok(page.material.map.offset.y<initialOffset);update(90);assert.equal(record.visible,true);assert.ok(record.children[1].material.opacity>.9);assert.equal(record.children[0].visible,false);update(98);assert.equal(record.children[1].visible,false);assert.ok(record.children[0].material.opacity>.9);update(107.99);assert.equal(record.children[0].visible,false);disposeTree(world.root);});
+test('new purchase reviews scroll with their section and never cover its heading',()=>{
+ const {world,update}=rig(),root=world.root.getObjectByName('continuous-value-journey'),page=world.root.getObjectByName('commerce-frame'),top=new THREE.Vector3();
+ for(let t=89.1;t<=91.1;t+=.1){update(t);
+  // The heading baseline is at pixel 1135 of the authored 2100-pixel page.
+  const map=page.material.map,headingY=((1-1135/2100-map.offset.y)/map.repeat.y-.5)*6.2;
+  for(let i=0;i<2;i++){const record=world.root.getObjectByName(`record-${i}`),purchase=record.children[1];if(purchase.material.opacity<.05)continue;
+   top.set(0,1.1,0).applyMatrix4(purchase.matrixWorld);root.worldToLocal(top);assert.ok(headingY-top.y>.4,`review ${i} covers its heading at ${t}`);
+  }
+ }
+ update(91);near(world.root.getObjectByName('record-0').position.y,1.1);disposeTree(world.root);
+});
+test('the docked robot shares the page clip while its earlier flight remains unrestricted',()=>{
+ for(const aspect of [1366/768,1920/1080,3840/2160,1200/900]){
+  const {world,update}=rig(aspect),robot=world.root.getObjectByName('mountain-robot'),product=world.root.getObjectByName('persistent-beauty-product'),parts=[];robot.traverse(o=>{if(o.isMesh)parts.push(o);});
+  update(83);assert.ok(parts.every(o=>o.userData.pageClip.value.y===1e6));
+  update(85);assert.ok(parts.every(o=>o.userData.pageClip===parts[0].userData.pageClip&&o.userData.pageClip.value.equals(product.userData.pageClip.value)));
+  update(87);const band=parts[0].userData.pageClip.value,partial=new THREE.Box3().setFromObject(robot);assert.ok(partial.min.y<band.y&&partial.max.y>band.y);
+  update(87.4);assert.ok(robot.visible);assert.ok(new THREE.Box3().setFromObject(robot).min.y>band.y);disposeTree(world.root);
+ }
+});
 test('purchase and exhibit review frames share the same changing outline during their handoff',()=>{
  const {world,update}=rig();for(const t of [94,95,96,97,98]){update(t);for(let i=0;i<6;i++){
   const record=world.root.getObjectByName(`record-${i}`),[exhibit,purchase]=record.children;
@@ -213,6 +233,14 @@ test('purchase and exhibit review frames share the same changing outline during 
   const a=exhibit.geometry.boundingBox.clone().applyMatrix4(exhibit.matrix),b=purchase.geometry.boundingBox.clone().applyMatrix4(purchase.matrix);
   for(const axis of ['x','y']){near(a.min[axis],b.min[axis]);near(a.max[axis],b.max[axis]);}
  }}disposeTree(world.root);
+});
+test('review metadata changes without overlapping labels or interrupting the main feedback',()=>{
+ const {world,update}=rig(),records=Array.from({length:6},(_,i)=>world.root.getObjectByName(`record-${i}`));
+ update(93.5);for(const record of records){assert.ok(record.userData.reviewSkins.purchaseInk.material.opacity>.99);assert.equal(record.userData.reviewSkins.exhibitInk.visible,false);}
+ for(let t=94;t<=98;t+=.04){update(t);for(const record of records){const {exhibitInk,purchaseInk}=record.userData.reviewSkins;assert.ok(!(exhibitInk.visible&&purchaseInk.visible),`double review metadata at ${t}`);assert.ok(record.visible&&record.material.opacity>.8);}}
+ update(96);for(const record of records){const {exhibitInk,purchaseInk}=record.userData.reviewSkins;assert.equal(exhibitInk.visible,false);assert.equal(purchaseInk.visible,false);assert.ok(record.children[0].visible&&record.children[1].visible);}
+ update(98);for(const record of records){near(record.userData.reviewSkins.exhibitInk.material.opacity,record.material.opacity);assert.equal(record.userData.reviewSkins.purchaseInk.visible,false);}
+ disposeTree(world.root);
 });
 test('automatic playback is 25 percent faster while inactivity remains real time',()=>{const d=createIntelligenceDirector();advance(d,8);near(d.snapshot().time,10);});
 

@@ -5,7 +5,7 @@ import {informationFragments} from './intelligenceResearch.js';
 import {createMountainRobot} from './intelligenceRobot.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
 import {lerp,ramp} from './intelligenceTimeline.js';
-import {canvasTexture,label,rounded,cardTexture,reviewNoteTexture,reviewTexture,commerceTexture,commerceDetails,purchaseReviewTexture,reportTexture,translate} from './intelligenceSurfaces.js';
+import {canvasTexture,label,rounded,cardTexture,reviewNoteTexture,reviewPaperTexture,reviewDetailsTexture,commerceTexture,commerceDetails,purchaseReviewPaperTexture,purchaseReviewDetailsTexture,reportTexture,translate} from './intelligenceSurfaces.js';
 export {canvasTexture,label,rounded};
 export function texturePlane(texture,w,h,name){const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide});const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),material);mesh.name=name;return mesh;}
 export function alpha(mesh,value){mesh.visible=value>.001;if(mesh.material){mesh.material.opacity=value;if(mesh.material.uniforms?.opacity)mesh.material.uniforms.opacity.value=value;}}
@@ -64,7 +64,7 @@ export function createCrystal(robotShell){
  }};
 }
 
-function clipToPage(mesh){const band={value:new THREE.Vector2(-1e6,1e6)};mesh.userData.pageClip=band;mesh.material.onBeforeCompile=shader=>{shader.uniforms.pageClip=band;shader.vertexShader='varying float pageWorldY;\n'+shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\npageWorldY=(modelMatrix*vec4(transformed,1.)).y;');shader.fragmentShader='varying float pageWorldY;uniform vec2 pageClip;\n'+shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif(pageWorldY<pageClip.x||pageWorldY>pageClip.y) discard;');};mesh.material.customProgramCacheKey=()=> 'journey-page-clip';}
+function clipToPage(mesh,band={value:new THREE.Vector2(-1e6,1e6)}){mesh.userData.pageClip=band;mesh.material.onBeforeCompile=shader=>{shader.uniforms.pageClip=band;shader.vertexShader='varying float pageWorldY;\n'+shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\npageWorldY=(modelMatrix*vec4(transformed,1.)).y;');shader.fragmentShader='varying float pageWorldY;uniform vec2 pageClip;\n'+shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif(pageWorldY<pageClip.x||pageWorldY>pageClip.y) discard;');};mesh.material.customProgramCacheKey=()=> 'journey-page-clip';}
 
 function createDataRelationships(){
  const anchors=[[-.78,.96,.42],[.77,.60,-.38],[-.52,.15,-.72],[.66,-.14,.64],[-.68,-.64,.48],[.47,-.95,-.34]];
@@ -83,6 +83,7 @@ function createDataRelationships(){
 export function createJourneyObjects(manager,quality){
  const root=new THREE.Group();root.name='continuous-value-journey';
  const robot=createMountainRobot(quality),crystal=createCrystal(robot.shell),body=new THREE.Group();body.name='data-to-assistant';body.add(crystal.shell,crystal.cells,robot.root);root.add(body);
+ const robotPageClip={value:new THREE.Vector2(-1e6,1e6)};robot.root.traverse(mesh=>{if(mesh.isMesh)clipToPage(mesh,robotPageClip);});
  const ambience=glow('exhibit-light-pool','#2d6094');ambience.position.set(.5,.1,-2);ambience.scale.set(12,9,1);root.add(ambience);
  const floor=glow('contact-light','#6191ae');floor.position.set(0,-2.4,-.5);floor.scale.set(6,.6,1);root.add(floor);
  const scan=new THREE.Mesh(new THREE.PlaneGeometry(3,3),new THREE.MeshBasicMaterial({color:'#b3e3ff',transparent:true,side:THREE.DoubleSide,depthWrite:false}));scan.rotation.x=Math.PI/2;scan.name='analysis-scan';body.add(scan);
@@ -91,8 +92,16 @@ export function createJourneyObjects(manager,quality){
  const analysis={height:{value:1.5},strength:{value:0},toBody:{value:new THREE.Matrix4()}};
  const reviews=['Great product.','Perfect gift.','Love it.','Good quality.','Beautiful colours.','Soft texture.'];
  const texts=reviews;
- const reviewMap=reviewTexture();
- const records=Array.from({length:texts.length},(_,i)=>{const text=texts[i%texts.length],mesh=textPlane(text,`record-${i}`,i===0?3.8:2.5);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),i===0?3.8:2.5);const card=texturePlane(reviewMap,i===0?4.2:3.2,i===0?1.31:1,'feedback-frame');card.position.z=-.03;mesh.add(card);const purchase=texturePlane(purchaseReviewTexture(i),5.8,2.2,'purchase-review-frame');purchase.position.z=-.035;purchase.material.color.setScalar(.78);purchase.renderOrder=5;card.renderOrder=5;mesh.renderOrder=6;mesh.add(purchase);mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;});
+ const reviewMap=reviewPaperTexture(),reviewInkMap=reviewDetailsTexture(),purchaseMap=purchaseReviewPaperTexture();
+ const records=Array.from({length:texts.length},(_,i)=>{
+  const text=texts[i],mesh=textPlane(text,`record-${i}`,i===0?3.8:2.5);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),i===0?3.8:2.5);
+  const w=i===0?4.2:3.2,h=i===0?1.31:1,card=texturePlane(reviewMap,w,h,'feedback-frame'),exhibitInk=texturePlane(reviewInkMap,w,h,`feedback-details-${i}`);
+  card.position.z=-.03;exhibitInk.position.z=.004;card.add(exhibitInk);mesh.add(card);
+  const purchase=texturePlane(purchaseMap,5.8,2.2,'purchase-review-frame'),purchaseInk=texturePlane(purchaseReviewDetailsTexture(i),5.8,2.2,`purchase-review-details-${i}`);
+  purchase.position.z=-.035;purchaseInk.position.z=.004;purchase.material.color.setScalar(.78);purchaseInk.material.color.setScalar(.78);purchase.add(purchaseInk);mesh.add(purchase);
+  card.renderOrder=purchase.renderOrder=5;exhibitInk.renderOrder=purchaseInk.renderOrder=6;mesh.renderOrder=7;
+  mesh.userData.reviewSkins={exhibitInk,purchaseInk};mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;
+ });
  const reportPaper=new THREE.Color('#102337');
  const reportFaces=Array.from({length:6},(_,i)=>{
   const face=texturePlane(reportTexture(i),2.65,2.65,`report-face-${i}`),reveal={value:0};face.material.side=THREE.FrontSide;face.userData.reportReveal=reveal;face.userData.analysis=analysis;
@@ -137,5 +146,5 @@ export function createJourneyObjects(manager,quality){
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);clipToPage(details);
  const commerceMetrics=[];for(let i=0;i<4;i++){const mesh=textPlane(`${[128,136,148,162][i]} orders   /   ${[24,27,31,36][i]} reviews`,`commerce-metrics-${i}`,3.0);mesh.material.color.set('#594c3f');mesh.position.set(1.8,2.32,.12);commerce.add(mesh);commerceMetrics.push(mesh);}
  function setLanguage(lang){const maps=new Set();root.traverse(mesh=>{if(mesh.material?.map)maps.add(mesh.material.map);});maps.forEach(map=>map.userData.redraw?.(lang));records.forEach((mesh,i)=>installTyping(mesh,translate(texts[i],lang),mesh.material.map.image.getContext('2d'),i===0?3.8:2.5));root.userData.language=lang;}
- return {craft,directionModels,reviewBadges,reviewNotes,setLanguage,reportFaces,dataFragments,analysis,relationships,root,body,robot,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,records,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
+ return {craft,directionModels,reviewBadges,reviewNotes,setLanguage,reportFaces,dataFragments,analysis,relationships,root,body,robot,robotPageClip,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,records,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
 }
