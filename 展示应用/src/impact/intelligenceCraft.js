@@ -13,9 +13,13 @@ export function createDirectionModel(index){
  const porcelain=material('#d1c4b8',.22,.3),metal=material('#b3a38b',.75,.22);
  const print=(parent,pair,w,h,x,y,z)=>{const map=canvasTexture((c,cw,ch)=>{c.textAlign='center';label(c,pair[c.journeyLang==='zh'?0:1],cw/2,ch*.54,65,'#303235',500);c.fillStyle='#303235';c.fillRect(cw*.32,ch*.71,cw*.36,3);},400,240);const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map,transparent:true,depthWrite:false,toneMapped:false}));m.position.set(x,y,z);m.renderOrder=5;parent.add(m);return m;};
  if(index===0){
-  const vial=box(root,'lip-oil-vial',.37,1.08,.32,.07,material('#927a79',.35,.18),0,-.14,0);box(root,'lip-oil-glass-base',.36,.105,.31,.026,porcelain,0,-.65,.003);
-  box(root,'lip-oil-cap',.39,.46,.34,.035,porcelain,.10,.78,0);box(root,'lip-oil-collar',.38,.045,.33,.010,metal,.10,.555,0);
-  cylinder(root,.019,.44,material('#343438',.12,.4),.10,.32,0);const brush=cylinder(root,.039,.13,material('#b18e87'),.10,.08,0);brush.rotation.z=-.15;
+  const vial=box(root,'lip-oil-vial',.37,1.08,.32,.07,material('#927a79',.35,.18),-.20,-.14,0);box(root,'lip-oil-glass-base',.36,.105,.31,.026,porcelain,-.20,-.65,.003);
+  // Present the complete applicator beside the vial; an upright wand partly
+  // inside an opaque bottle concealed the feature described by this proposal.
+  const applicator=new THREE.Group();applicator.name='lip-oil-applicator';applicator.position.set(.12,.03,.035);applicator.rotation.z=-.12;root.add(applicator);
+  box(applicator,'lip-oil-cap',.39,.42,.34,.035,porcelain,0,.76,0);box(applicator,'lip-oil-collar',.38,.045,.33,.010,metal,0,.54,0);
+  const stem=cylinder(applicator,.019,.49,material('#343438',.12,.4),0,.30,0);stem.name='lip-oil-stem';
+  const brush=cylinder(applicator,.042,.16,material('#b18e87'),0,-.02,0);brush.name='lip-oil-angled-tip';brush.rotation.z=-.20;
   print(vial,['润色','TINT'],.30,.27,0,-.02,.168);root.rotation.z=-.13;
  }else if(index===1){
   const tube=box(root,'blush-tube',.55,.97,.20,.08,material('#bb8e87'),0,.03,0);tube.rotation.z=-.12;
