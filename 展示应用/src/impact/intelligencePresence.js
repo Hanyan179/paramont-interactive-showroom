@@ -18,7 +18,7 @@ export function createProjection(){
  return {mesh,aim};
 }
 export function blinkAt(t){let blink=0;for(const at of [31.8,35.15,41.35,48.1])blink=Math.max(blink,ramp(t,at,at+.13)*(1-ramp(t,at+.16,at+.42)));return 1-.94*blink;}
-export function presenceAt(t){const awake=ramp(t,28,33),look=ramp(t,34,37),float=floatPose(t-28,.85*awake);return{awake,look,float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:-.16*look};}
+export function presenceAt(t){const awake=ramp(t,28,33),look=ramp(t,34,37),float=floatPose(t-28,.85*awake);return{awake,look,turn:ramp(t,34.6,37.4),float,blink:blinkAt(t),scanY:Math.sin((t-38)*.9)*1.55,eyeY:Math.sin((t-38)*.9)*.14*look,eyeX:-.16*look};}
 // Discrete letters over a smooth layout envelope; reverse at the end makes G → G seamless.
 export function typedCount(t,length,index=0){
  if(index===0){if(t>=104)return Math.max(1,length-Math.floor(ramp(t,104,107.5)*(length-1)));return Math.min(length,1+Math.floor(Math.max(0,t-.45)/.14));}
