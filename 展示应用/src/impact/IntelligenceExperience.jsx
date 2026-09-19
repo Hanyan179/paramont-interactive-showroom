@@ -75,7 +75,7 @@ export function IntelligenceExperience({
     onKeyDownCapture={activity}
     onFocusCapture={activity}
   >
-    {!isCase && <div className="intelligence-copy" key={`detail-${current.id}-${lang}`}>
+    {!isCase && <div className="intelligence-copy-reveal"><div className="intelligence-copy" key={`detail-${current.id}-${lang}`}>
       <header className="intelligence-stage-heading">
         <span className="intelligence-stage-number" aria-hidden="true">{number}</span>
         <div>
@@ -96,7 +96,7 @@ export function IntelligenceExperience({
           <Play weight="fill" aria-hidden="true" />{['继续演进', 'Resume journey'][l]}
         </button>}
       </div>
-    </div>}
+    </div></div>}
 
     {isCase && <>
       <article className="intelligence-case" key={`example-${current.id}-${lang}`} aria-labelledby="intelligence-case-title">

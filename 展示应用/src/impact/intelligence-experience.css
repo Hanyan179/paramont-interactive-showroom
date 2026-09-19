@@ -12,6 +12,7 @@
 }
 .intelligence-experience button { font: inherit; cursor: pointer; touch-action: manipulation; pointer-events: auto; -webkit-tap-highlight-color: transparent; }
 .intelligence-experience button:focus-visible { outline: 2px solid #a9ddff; outline-offset: 6px; }
+.intelligence-copy-reveal { position:absolute;inset:0;opacity:var(--intelligence-copy-alpha,0);visibility:var(--intelligence-copy-visibility,hidden);transform:translateX(calc((1 - var(--intelligence-copy-alpha,0)) * -16px)); }
 .intelligence-copy { position: absolute; left: 5%; top: 25%; width: 30%; text-shadow: 0 2px 24px #000b; animation: intelligence-copy-appear .65s ease both; }
 .intelligence-stage-heading { display: flex; align-items: center; gap: clamp(14px, 1.2vw, 46px); }
 .intelligence-stage-number {
@@ -32,6 +33,7 @@
 .intelligence-stage-name { margin: 0; font-size: clamp(19px, 1.42vw, 55px); font-weight: 400; line-height: 1.5; }
 .intelligence-name-en { margin: 2px 0 0; color: #9fb8cd; font-size: clamp(11px, .78vw, 30px); line-height: 1.6; letter-spacing: .025em; }
 .intelligence-copy h1 { margin: clamp(27px, 4.2vh, 91px) 0 0; font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; font-size: clamp(27px, 2.45vw, 94px); font-weight: 300; line-height: 1.65; letter-spacing: .01em; white-space: pre-line; text-wrap: balance; }
+.intelligence-experience:lang(en) .intelligence-copy h1 { font-size:clamp(25px,2.1vw,81px);line-height:1.48; }
 .intelligence-description { max-width: 24em; margin: clamp(14px, 2vh, 43px) 0 0; color: var(--intelligence-muted); font-size: clamp(13px, .9vw, 35px); line-height: 1.9; text-wrap: pretty; }
 .intelligence-example{margin-top:clamp(22px,3.2vh,69px);}
 
@@ -92,6 +94,13 @@
 .moment-intelligence .impact-scrub { display: none; }
 .moment-intelligence.is-depth-open .impact-tools { position: fixed; right: 2.65%; bottom: clamp(10px, 1.6vh, 36px); opacity: .72; }
 .moment-intelligence.is-depth-open .impact-vignette { background: linear-gradient(0deg, #020710f0, transparent 24%), linear-gradient(90deg, #020710c9 0%, #02071088 25%, transparent 49%); }
+/* These values are sampled by the shared animation clock, including pause and
+   reverse playback. Hidden controls also leave keyboard and touch navigation. */
+.moment-intelligence .impact-header,
+.moment-intelligence .impact-footer,
+.moment-intelligence .intelligence-note { opacity:var(--intelligence-frame-alpha,0);visibility:var(--intelligence-frame-visibility,hidden); }
+.moment-intelligence .intelligence-navigation,
+.moment-intelligence .intelligence-back { opacity:var(--intelligence-navigation-alpha,0);visibility:var(--intelligence-navigation-visibility,hidden); }
 @keyframes intelligence-copy-appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes intelligence-art-appear { from { opacity: 0; transform: translateY(12px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
 @media (max-width: 1450px) {

@@ -11,7 +11,7 @@ function opacity(root,value){root.visible=value>.001;root.traverse(mesh=>{if(mes
 export function createDirectionModel(index){
  const root=new THREE.Group();root.name=`proposal-model-${index}`;
  const porcelain=material('#d1c4b8',.22,.3),metal=material('#b3a38b',.75,.22);
- const print=(parent,pair,w,h,x,y,z)=>{const map=canvasTexture((c,cw,ch)=>{c.textAlign='center';label(c,pair[c.journeyLang==='zh'?0:1],cw/2,ch*.54,65,'#303235',500);c.fillStyle='#303235';c.fillRect(cw*.32,ch*.71,cw*.36,3);},400,240);const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map,transparent:true,depthWrite:false,toneMapped:false}));m.position.set(x,y,z);parent.add(m);return m;};
+ const print=(parent,pair,w,h,x,y,z)=>{const map=canvasTexture((c,cw,ch)=>{c.textAlign='center';label(c,pair[c.journeyLang==='zh'?0:1],cw/2,ch*.54,65,'#303235',500);c.fillStyle='#303235';c.fillRect(cw*.32,ch*.71,cw*.36,3);},400,240);const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map,transparent:true,depthWrite:false,toneMapped:false}));m.position.set(x,y,z);m.renderOrder=5;parent.add(m);return m;};
  if(index===0){
   const vial=box(root,'lip-oil-vial',.37,1.08,.32,.07,material('#927a79',.35,.18),0,-.14,0);box(root,'lip-oil-glass-base',.36,.105,.31,.026,porcelain,0,-.65,.003);
   box(root,'lip-oil-cap',.39,.46,.34,.035,porcelain,.10,.78,0);box(root,'lip-oil-collar',.38,.045,.33,.010,metal,.10,.555,0);
@@ -34,6 +34,9 @@ export function createDirectionModel(index){
   const cap=cylinder(root,.234,.56,porcelain,.46,-.28,-.01);cap.rotation.z=.22;cylinder(root,.222,.035,metal,.52,-.55,-.01);
   print(root,['柔光','LIGHT'],.28,.32,0,-.18,.222);root.rotation.z=-.22;
  }
+ // The page must render before its product, even while both fade. Otherwise a
+ // nearly opaque page paints over non-depth-writing parts and they pop at 98%.
+ root.traverse(mesh=>{if(mesh.isMesh&&!mesh.renderOrder)mesh.renderOrder=4;});
  return {root,update:value=>opacity(root,value)};
 }
 function stageLabel(pair,name,small=false){const map=canvasTexture((c,w,h)=>{c.textAlign='center';label(c,pair[c.journeyLang==='zh'?0:1],w/2,90,small?56:62,'#b9d3e4');},small?800:1280,140);const m=new THREE.Mesh(new THREE.PlaneGeometry(small?2.1:5.2,small?.37:.57),new THREE.MeshBasicMaterial({map,transparent:true,depthWrite:false,toneMapped:false}));m.name=name;return m;}
@@ -53,8 +56,16 @@ export function createPaletteCraft(productTexture){
   mat.customProgramCacheKey=()=>`palette-part-${region}`;
   const mesh=new THREE.Mesh(new THREE.PlaneGeometry(1,1),mat);mesh.name=name;mesh.renderOrder=9;root.add(mesh);return mesh;
  }
- const pans=rectangles.map((_,i)=>{const mesh=surface(`palette-pan-${i}`,i);mesh.userData.seated=1;return mesh;});
+ function pivotSurface(mesh,x,y){mesh.geometry.translate(-x,-y,0);mesh.userData.pivot=new THREE.Vector3(x,y,0);mesh.position.set(x,y,0);}
+ const panWalls=[];
+ const pans=rectangles.map((rect,i)=>{
+  const mesh=surface(`palette-pan-${i}`,i);mesh.userData.seated=1;
+  pivotSurface(mesh,(rect[0]+rect[2])/2-.5,(rect[1]+rect[3])/2-.5);
+  const wall=box(mesh,`palette-pan-wall-${i}`,(rect[2]-rect[0])*.97,(rect[3]-rect[1])*.94,.020,.005,material('#877b70',.68,.30),0,0,-.013);wall.renderOrder=8;panWalls.push(wall);
+  return mesh;
+ });
  const lid=surface('palette-mirror',4),shell=surface('palette-case',5);
+ pivotSurface(lid,0,.125);
  const labels=[['提取四色用途','Extract the colour roles'],['让色彩找到位置','Bring each shade into place'],['装配镜面与随行盒体','Assemble mirror and compact'],['从研究提案，到柔雾四色','From research to Soft Haze']].map((pair,i)=>stageLabel(pair,`craft-step-${i}`));
  const captionRoot=new THREE.Group();captionRoot.name='palette-craft-captions';captionRoot.add(...labels);
  const chips=['香槟 · 提亮','灰褐 · 加深','玫瑰 · 过渡','象牙 · 打底'].map((text,i)=>stageLabel([text,['Champagne / light','Taupe / define','Rose / blend','Ivory / base'][i]],`craft-role-${i}`,true));captionRoot.add(...chips);
@@ -62,8 +73,7 @@ export function createPaletteCraft(productTexture){
  return {root,captionRoot,pans,lid,
   focusAt(t,target){
    const index=Math.min(3,Math.max(0,Math.floor((t-58.7)/1.2))),previous=Math.max(0,index-1),blend=ramp(t,58.7+index*1.2,59.3+index*1.2);
-   const centroid=(i,axis)=>pans[i].position.getComponent(axis)+(axis===0?(rectangles[i][0]+rectangles[i][2])/2-.5:(rectangles[i][1]+rectangles[i][3])/2-.5);
-   target.set(lerp(centroid(previous,0),centroid(index,0),blend),lerp(centroid(previous,1),centroid(index,1),blend),.02).multiplyScalar(root.scale.x).add(root.position);
+   target.lerpVectors(pans[previous].position,pans[index].position,blend);target.z+=.012;target.multiplyScalar(root.scale.x).add(root.position);
    target.y=lerp(target.y,root.position.y+root.scale.x*.23,ramp(t,64,67));root.userData.processingIndex=index;return target;
   },
   update(t,selected,product){
@@ -75,15 +85,16 @@ export function createPaletteCraft(productTexture){
    const visible=ramp(t,37,40)*lerp(selected.material.opacity,1,take)*(1-ramp(t,75.5,76));root.visible=visible>.001;
    const extract=ramp(t,51,56),assemble=ramp(t,59,65);
    pans.forEach((pan,i)=>{
-    const spread=extract*(1-ramp(t,59+i*.55,63+i*.55));
-    pan.position.set((i%2?1:-1)*.235*spread,(i<2?.25:-.065)*spread,.075*Math.sin(spread*Math.PI));
-    pan.rotation.set(0,Math.sin(spread*Math.PI)*.23*(i%2?1:-1),Math.sin(spread*Math.PI)*.07*(i%2?1:-1));
+    const spread=extract*(1-ramp(t,59.6+i*1.05,62.45+i*1.05)),arc=Math.sin(spread*Math.PI),pivot=pan.userData.pivot;
+    pan.position.set(pivot.x+(i%2?1:-1)*.235*spread,pivot.y+(i<2?.25:-.065)*spread,.025*spread+.055*arc);
+    pan.rotation.set(-.11*spread,(.12*spread+.20*arc)*(i%2?1:-1),arc*.07*(i%2?1:-1));
     opacity(pan,visible);pan.userData.seated=1-spread;
+    opacity(panWalls[i],visible*ramp(t,51,54)*(1-ramp(t,65,68)));
    });
    const housing=1-extract*(1-assemble);opacity(shell,visible*housing);opacity(lid,visible*housing);
-   shell.position.z=-.08*extract*(1-assemble);lid.position.y=.20*extract*(1-ramp(t,62,68));lid.rotation.x=-.25*extract*(1-ramp(t,62,68));
+   shell.position.z=-.08*extract*(1-assemble);lid.position.y=lid.userData.pivot.y+.20*extract*(1-ramp(t,62,68));lid.rotation.x=-.25*extract*(1-ramp(t,62,68));
    labels.forEach((mesh,i)=>{const at=[52,56.5,61.5,66.5][i],end=[56.5,61.5,66.5,73][i],enter=ramp(t,at,at+.7),leave=ramp(t,end-.7,end),a=enter*(1-leave);mesh.position.set(-.65,-2.72+.32*leave-.32*(1-enter),.7);mesh.visible=a>.001;mesh.material.opacity=a;});
-   chips.forEach((mesh,i)=>{const a=ramp(t,54+i*.15,55+i*.15)*(1-ramp(t,60+i*.45,62+i*.45)),rect=rectangles[i],pan=pans[i];mesh.position.set(root.position.x+(pan.position.x+(rect[0]+rect[2])/2-.5)*root.scale.x,root.position.y+(pan.position.y+rect[1]-.5)*root.scale.x-.30,root.position.z+.05);mesh.renderOrder=15;mesh.visible=a>.001;mesh.material.opacity=a;});
+   chips.forEach((mesh,i)=>{const a=ramp(t,54+i*.15,55+i*.15)*(1-ramp(t,60.4+i*.85,62+i*.85)),rect=rectangles[i],pan=pans[i];temp.set(0,-(rect[3]-rect[1])/2,0).applyQuaternion(pan.quaternion).add(pan.position).multiplyScalar(root.scale.x).add(root.position);mesh.position.copy(temp);mesh.position.y-=.30;mesh.position.z+=.05;mesh.renderOrder=15;mesh.visible=a>.001;mesh.material.opacity=a;});
    root.userData.phase=t<51?'proposal':t<58?'extract':t<65?'compose':t<73?'finish':'photograph';
   }
  };

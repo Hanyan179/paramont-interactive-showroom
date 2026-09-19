@@ -64,7 +64,20 @@ export function createJourneyObjects(manager,quality){
  const texts=reviews;
  const reviewMap=reviewTexture();
  const records=Array.from({length:texts.length},(_,i)=>{const text=texts[i%texts.length],mesh=textPlane(text,`record-${i}`,i===0?3.8:2.5);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),i===0?3.8:2.5);const card=texturePlane(reviewMap,i===0?4.2:3.2,i===0?1.31:1,'feedback-frame');card.position.z=-.03;mesh.add(card);const purchase=texturePlane(purchaseReviewTexture(i),5.8,2.2,'purchase-review-frame');purchase.position.z=-.035;purchase.material.color.setScalar(.78);purchase.renderOrder=5;card.renderOrder=5;mesh.renderOrder=6;mesh.add(purchase);mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;});
- const reportFaces=Array.from({length:6},(_,i)=>{const face=texturePlane(reportTexture(i),2.65,2.65,`report-face-${i}`);face.material.side=THREE.FrontSide;root.add(face);return face;});
+ const reportPaper=new THREE.Color('#102337');
+ const reportFaces=Array.from({length:6},(_,i)=>{
+  const face=texturePlane(reportTexture(i),2.65,2.65,`report-face-${i}`),reveal={value:0};face.material.side=THREE.FrontSide;face.userData.reportReveal=reveal;
+  // The same page first receives the source stream, then reveals its writing
+  // from heading to conclusion. The contour remains present during both steps.
+  face.material.onBeforeCompile=shader=>{
+   shader.uniforms.reportReveal=reveal;shader.uniforms.reportPaper={value:reportPaper};
+   shader.fragmentShader='uniform float reportReveal;uniform vec3 reportPaper;\n'+shader.fragmentShader.replace('#include <map_fragment>',`#include <map_fragment>
+    float interior=step(.04,vMapUv.x)*step(vMapUv.x,.96)*step(.04,vMapUv.y)*step(vMapUv.y,.96);
+    float ink=max(1.-interior,smoothstep(1.-reportReveal,1.-reportReveal+.06,vMapUv.y));
+    diffuseColor.rgb=mix(reportPaper,diffuseColor.rgb,ink);
+   `);
+  };face.material.customProgramCacheKey=()=> 'report-ink-reveal';root.add(face);return face;
+ });
  const fragmentPairs=informationFragments;
  const dataFragments=fragmentPairs.map((pair,i)=>{const map=canvasTexture((c,w,h)=>{c.textAlign='center';c.textBaseline='middle';label(c,pair[c.journeyLang==='zh'?1:0],w/2,h/2,76);},1024,150);const mesh=texturePlane(map,2.4,.35,`data-fragment-${i}`);mesh.userData.category=Math.floor(i/6);root.add(mesh);return mesh;});
  const projection=createProjection(),beam=projection.mesh;root.add(beam);
@@ -74,7 +87,7 @@ export function createJourneyObjects(manager,quality){
  const cards=Array.from({length:5},(_,i)=>{
   const card=texturePlane(cardTexture(i),2.65,1.86,`analysis-card-${i}`);card.renderOrder=3;
   const depth=new THREE.Mesh(new RoundedBoxGeometry(2.68,1.89,.10,2,.045),new THREE.MeshPhysicalMaterial({color:'#122438',metalness:.38,roughness:.22,transparent:true,depthWrite:false}));
-  depth.position.z=-.075;depth.name='decision-card-depth';card.add(depth);cardDepths.push(depth);root.add(card);return card;
+  depth.position.z=-.075;depth.renderOrder=2;depth.name='decision-card-depth';card.add(depth);cardDepths.push(depth);root.add(card);return card;
  });
  const directionModels=cards.slice(0,4).map((card,i)=>{const model=createDirectionModel(i);const positions=[[-.72,-.26,.20],[.80,-.42,.20],[.82,-.20,.20],[-.49,-.08,.20]];model.root.position.fromArray(positions[i]);model.root.scale.setScalar(i===1?.58:i===3?.67:.70);card.add(model.root);return model;});
  const statusMaps=['Reviewing','Passed over','Selected'].map(textTexture);

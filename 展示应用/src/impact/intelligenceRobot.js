@@ -4,7 +4,7 @@ import {modelDetail} from '../../../共享组件/renderQuality.js';
 
 // The mountain is the body itself: one rounded shell, one inset face, two eyes.
 // No image maps, limb assembly or separate animation clock.
-function mountainShape(face = false) {
+function mountainShape() {
   const shape = new THREE.Shape();
   shape.moveTo(-1.53, -.72);
   shape.quadraticCurveTo(-1.76, -.72, -1.58, -.49);
@@ -12,17 +12,6 @@ function mountainShape(face = false) {
   shape.quadraticCurveTo(0, 1.15, .17, .98);
   shape.lineTo(1.58, -.49);
   shape.quadraticCurveTo(1.76, -.72, 1.53, -.72);
-  if (face) {
-    // The quiet silver ridge is a cut in the glass, not an added logo decal.
-    shape.lineTo(.70, -.56);
-    shape.lineTo(.42, -.30);
-    shape.lineTo(.30, -.48);
-    shape.lineTo(.08, -.20);
-    shape.quadraticCurveTo(.03, -.14, -.02, -.20);
-    shape.lineTo(-.29, -.45);
-    shape.lineTo(-.39, -.34);
-    shape.lineTo(-.70, -.56);
-  }
   shape.closePath();
   return shape;
 }
@@ -60,7 +49,9 @@ export function createMountainRobot(quality) {
     clearcoat: 1, clearcoatRoughness: .12, envMapIntensity: .8,
     transparent: true,
   });
-  const face = new THREE.Mesh(smoothSolid(mountainShape(true), .035, .025, detail), faceMaterial);
+  // The silhouette carries the mountain identity. Keep the face uninterrupted:
+  // the two eyes perform every expression without a mouth or a second ridge.
+  const face = new THREE.Mesh(smoothSolid(mountainShape(), .035, .025, detail), faceMaterial);
   face.name = 'robot-blue-face';
   face.scale.set(.87, .87, 1);
   face.position.set(0, .005, .262);

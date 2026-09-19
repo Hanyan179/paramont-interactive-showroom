@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {journeyFrame,ramp,lerp,stageFrames} from './intelligenceTimeline.js';
+import {journeyFrame,ramp,lerp,stageFrames,intelligencePresentation} from './intelligenceTimeline.js';
 import {presenceAt,typedCount,typeMesh} from './intelligencePresence.js';
 import {createJourneyObjects,alpha} from './intelligenceJourneyObjects.js';
 export const intelligenceLayout={heroX:.70,heroY:.44,detailX:.70,detailY:.44};
@@ -28,17 +28,18 @@ export function intelligenceWorld(quality,manager){
   update({camera,target,aspect=16/9,intelligence=null,time=null,lang="en"}){
    if(lang!==activeLanguage){o.setLanguage(lang);activeLanguage=lang;}
    const t=intelligence?.time??stageFrames[intelligence?.stage??0],f=journeyFrame(t),width=HEIGHT*aspect,scale=Math.min(width*.049,HEIGHT*.093);
-   o.root.position.set(width*.20,HEIGHT*.045,0);o.root.scale.setScalar(scale);
+   const presentation=intelligencePresentation(t),composition=presentation.composition;
+   o.root.position.set(width*.20*composition,HEIGHT*.045*composition,0);o.root.scale.setScalar(scale*lerp(1.4,1,composition));
    const presence=ramp(t,5,16)*(1-ramp(t,99,105));alpha(o.ambience,presence*.26);
    const dt=Number.isFinite(time)&&lastMotion!==null?Math.max(0,Math.min(.1,time-lastMotion)):0;lastMotion=time;
    idlePhase+=dt;const idleTarget=intelligence?.mode==='manual'&&!intelligence?.seeking?1:0;idleMix+=(idleTarget-idleMix)*(1-Math.exp(-dt*4));
    const idleSway=Math.sin(idlePhase*.55)*.13*idleMix*ramp(t,8,14)*(1-ramp(t,49,54));
    const presencePose=presenceAt(t);
-   const glassVisibility=ramp(t,11,17)*(1-ramp(t,25,30)),dock=ramp(t,33,37),collapse=ramp(t,24,32);
+   const glassVisibility=ramp(t,13,16)*(1-ramp(t,25,30)),dock=ramp(t,33,37);
    o.body.position.set(lerp(0,3.25,dock),lerp(.2,.18,dock)+presencePose.float.lift+Math.sin(t*.65)*.065*ramp(t,8,13)*(1-f.crystal),0);o.body.scale.setScalar(lerp(1.22,.78,dock));
    o.body.rotation.set(lerp(.17,.025,f.crystal)+presencePose.float.x*.4,lerp(.45+.24*(t-8)*ramp(t,7,12),.12,f.crystal)-presencePose.turn*.7+presencePose.float.y*.6+Math.sin((t-38)*1.15-.35)*.20*presencePose.look,lerp(-.04,-.02,f.crystal)+presencePose.float.z);o.body.rotation.y+=idleSway;o.body.position.y+=idleSway*.35;
    o.crystal.morph(f.crystal,t);alpha(o.crystal.shell,glassVisibility*.12*(1-ramp(t,27,32)));alpha(o.crystal.inner,glassVisibility*f.crystal*.4*(1-ramp(t,28,32)));alpha(o.crystal.edges,glassVisibility*.23*(1-ramp(t,27,32)));
-   alpha(o.crystal.cells,ramp(t,9,15)*(1-ramp(t,28,32))*.48);
+   alpha(o.crystal.cells,ramp(t,13,16)*(1-ramp(t,28,32))*.48);
    const robotAlpha=ramp(t,27,32)*(1-ramp(t,86,88));
    // The same robot stays beside the files and product, then docks as the page logo.
    const logoDock=ramp(t,79,85),reviewDock=ramp(t,34,38);
@@ -52,16 +53,17 @@ export function intelligenceWorld(quality,manager){
    o.records.forEach((mesh,i)=>{
     let a=0,x=0,y=0,z=0,s=1,framing=0,purchase=0,reframe=1;const count=(t<34||i===0)?typedCount(t,mesh.userData.typing.text.length,i):mesh.userData.typing.text.length;const letterOffset=typeMesh(mesh,count);
     if(t<34){
-     const onset=i===0?1:ramp(t,2.8+i*.36,3.2+i*.36),localGather=ramp(t,8+i*.55,12.1+i*.55);
-     const [scatterX,scatterY]=reviewSlots[i],seat=cardSeats[i];
-     temp.set(seat[0],seat[1],seat[2]).multiplyScalar((1-collapse*.84)*o.body.scale.x).applyEuler(o.body.rotation).add(o.body.position);
-     // One ordered arc per card, never a second, duplicated stream of images.
+     const onset=i===0?1:ramp(t,2.8+i*.36,3.2+i*.36),localGather=ramp(t,7.8+i*.10,10+i*.10);
+     const [scatterX,scatterY]=reviewSlots[i];
+     // Reviews become the source of the feedback report, never a floating
+     // second layer over its finished writing or a public-specification claim.
+     temp.set(reportStarts[0][0],reportStarts[0][1]+.22,.56);
      const bow=Math.sin(localGather*Math.PI);
      x=lerp(scatterX,temp.x,localGather)+(i%2?-.38:.38)*bow;
      y=lerp(scatterY,temp.y,localGather)+.48*bow;z=lerp(0,temp.z,localGather);
-     s=lerp(i===0?1:.55,i===0?.60:.78,localGather);a=onset*(1-ramp(t,11,15));
-     framing=ramp(t,4.6+i*.12,6.5+i*.12)*.72*(1-ramp(t,9,12));
-     seatRotation.setFromEuler(seatEuler.set(seat[3],seat[4],0));cardRotation.copy(o.body.quaternion).multiply(seatRotation);mesh.quaternion.slerpQuaternions(flatRotation,cardRotation,localGather);
+     s=lerp(i===0?1:.55,.08,localGather);a=onset*(1-ramp(localGather,.40,.92));
+     framing=ramp(t,4.6+i*.12,6.5+i*.12)*.72*(1-ramp(t,7.2,7.9));
+     mesh.rotation.set(0,Math.sin(localGather*Math.PI)*(i%2?-.12:.12),0);
     }else if(t>=89){
      const emerge=ramp(t,89+i*.65,90+i*.65),release=ramp(t,95,100),closing=ramp(t,100,106);
      const pageX=(i%2?2.05:-2.05),pageY=1.1-Math.floor(i/2)*1.48;
@@ -79,14 +81,17 @@ export function intelligenceWorld(quality,manager){
     mesh.position.set(x,y,z);mesh.scale.setScalar(s);if(t>=34)mesh.rotation.set(0,t>=85&&i>0?Math.sin(i)*.08*ramp(t,93,99):0,0);alpha(mesh,a*(count>0?1:0));alpha(mesh.children[0],a*framing);alpha(mesh.children[1],a*purchase);mesh.material.color.copy(purchaseInk).lerp(exhibitInk,1-ramp(purchase,.12,.6));
    });
    o.reportFaces.forEach((face,i)=>{
-    const seat=cardSeats[i],g=ramp(t,11+i*.25,16+i*.18),shrink=ramp(t,25,29),start=reportStarts[i];
+    const seat=cardSeats[i],g=ramp(t,13+i*.09,16),shrink=ramp(t,25,29),start=reportStarts[i];
     temp.set(seat[0],seat[1],seat[2]).multiplyScalar(o.body.scale.x*(1-shrink*.85)).applyEuler(o.body.rotation).add(o.body.position);
-    face.position.set(lerp(start[0],temp.x,g),lerp(start[1],temp.y,g),lerp(.5,temp.z,g));face.scale.setScalar(lerp(.60,o.body.scale.x,g)*(1-shrink*.82));
-    seatRotation.setFromEuler(seatEuler.set(seat[3],seat[4],0));cardRotation.copy(o.body.quaternion).multiply(seatRotation);face.quaternion.slerpQuaternions(flatRotation,cardRotation,g);alpha(face,ramp(t,9+i*.25,11.5+i*.25)*(1-ramp(t,26,28.8))*.94);
+    face.position.set(lerp(start[0],temp.x,g),lerp(start[1],temp.y,g),lerp(.5,temp.z,g));face.scale.setScalar(lerp(.74,o.body.scale.x,g)*(1-shrink*.82));
+    seatRotation.setFromEuler(seatEuler.set(seat[3],seat[4],0));cardRotation.copy(o.body.quaternion).multiply(seatRotation);face.quaternion.slerpQuaternions(flatRotation,cardRotation,g);
+    face.userData.reportReveal.value=ramp(t,9.6+i*.09,11.3+i*.07);alpha(face,ramp(t,8.6+i*.09,10.5+i*.09)*(1-ramp(t,26,28.8))*.94);
+    // Crossing pages must occlude one another while folding into cube faces.
+    face.material.depthWrite=face.material.opacity>.90;
    });
    o.dataFragments.forEach((mesh,i)=>{
-    const group=mesh.userData.category,g=ramp(t,7.8+(i%6)*.28,12.2+(i%6)*.30),[startX,startY]=informationSlots[(i*13)%informationSlots.length];
-    const [rx,ry]=reportStarts[group];mesh.position.set(lerp(startX,rx+(i%3-1)*.35,g)+Math.sin(g*Math.PI)*.3,lerp(startY,ry+(i%2?-.22:.22),g),lerp(0,.65,g));mesh.scale.setScalar(lerp(.63,.16,g));alpha(mesh,ramp(t,3.8+i*.055,4.8+i*.055)*(1-ramp(t,11+(i%6)*.2,14+(i%6)*.2))*.82);
+    const group=mesh.userData.category,g=ramp(t,7.8+(i%6)*.13,10.3+(i%6)*.13),[startX,startY]=informationSlots[(i*13)%informationSlots.length];
+    const [rx,ry]=reportStarts[group];mesh.position.set(lerp(startX,rx+(i%3-1)*.35,g)+Math.sin(g*Math.PI)*.3,lerp(startY,ry+(i%2?-.22:.22),g),lerp(0,.65,g));mesh.scale.setScalar(lerp(.63,.16,g));alpha(mesh,ramp(t,3.8+i*.055,4.8+i*.055)*(1-ramp(g,.48,.94))*.82);
    });
    const first=o.records[0],typing=first.userData.typing;
    const cursorVisible=(1-ramp(t,2.3,2.8))+ramp(t,104,107.5);

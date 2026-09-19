@@ -7,6 +7,17 @@ export const ease = x => { const t=clamp01(x); return t*t*t*(t*(t*6-15)+10); };
 export const ramp = (t,a,b) => ease((t-a)/(b-a));
 export const lerp = (a,b,t) => a+(b-a)*t;
 export const loopTime = t => ((Number.isFinite(t)?t:0)%108+108)%108;
+// The typography opens in the centre of an empty screen. The same envelope
+// moves it into the exhibit and brings it back, including the surrounding UI.
+export function intelligencePresentation(seconds) {
+  const t=loopTime(seconds);
+  return {
+    composition:ramp(t,2.2,6.8)*(1-ramp(t,101,106)),
+    copy:ramp(t,5.2,8)*(1-ramp(t,100,103)),
+    navigation:ramp(t,3.8,7)*(1-ramp(t,101,104)),
+    frame:ramp(t,4.4,7.2)*(1-ramp(t,101.5,104.5)),
+  };
+}
 export function journeyFrame(seconds) {
   const time=loopTime(seconds);
   const stage=stageStarts.findIndex((start,i)=>i<6&&time>=start&&time<stageStarts[i+1]);

@@ -18,6 +18,7 @@ import {DepthExperience} from './DepthExperience.jsx';
 import {IntelligenceExperience} from './IntelligenceExperience.jsx';
 import {intelligenceStages} from './intelligenceContent.js';
 import {createIntelligenceDirector} from './intelligenceDirector.js';
+import {intelligencePresentation} from './intelligenceTimeline.js';
 import {depthContent,depthHotspots,transitionProgress,depthSceneId} from './depthContent.js';
 import {supplyLocation,validSupplySelection} from './supplyRegionsContent.js';
 import {theatreMotion} from './theatreMotion.js';
@@ -291,6 +292,14 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
       if(transition&&!latest.current.suspended){transition.elapsed+=dt;const t=transitionProgress(transition.elapsed,transition.duration);state.depthMix=THREE.MathUtils.lerp(transition.fromMix,transition.toMix,t);}
       if(state.depth&&!latest.current.suspended&&(motion.animate||transition))state.detailTime+=dt;
       const intelligenceFrame=intelligenceDirector.tick(dt,{active:loaded&&state.index===4,playing:motion.animate,held:state.held,suspended:latest.current.suspended});
+      if(state.index===4){
+        const presentation=intelligencePresentation(intelligenceFrame.time),caseOpen=intelligenceFrame.mode==='case';
+        for(const channel of ['copy','navigation','frame']){
+          const value=caseOpen?1:presentation[channel];
+          mount.parentElement.style.setProperty(`--intelligence-${channel}-alpha`,String(value));
+          mount.parentElement.style.setProperty(`--intelligence-${channel}-visibility`,value>.025?'visible':'hidden');
+        }
+      }
       const {index,time}=state,moment=impactMoments[index],chapterDuration=duration(),progress=THREE.MathUtils.clamp(time/chapterDuration,0,1),sceneIndex=worldIndex(),mapDepth=state.depth?.originView==='flat';
       worlds.forEach((w,i)=>{w.root.visible=i===sceneIndex;});
       scene.environment=worlds[sceneIndex].environment||environment.texture;

@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import * as THREE from 'three';
 import {resolveQuality} from '../../共享组件/renderQuality.js';
 import {createIntelligenceDirector,intelligenceCycle,intelligenceTiming} from '../src/impact/intelligenceDirector.js';
-import {journeyFrame,stageStarts,stageFrames,crystalVertex} from '../src/impact/intelligenceTimeline.js';
+import {journeyFrame,stageStarts,stageFrames,crystalVertex,intelligencePresentation} from '../src/impact/intelligenceTimeline.js';
 import {intelligenceWorld} from '../src/impact/intelligenceWorld.js';
 import {intelligenceStages} from '../src/impact/intelligenceContent.js';
 import {blinkAt} from '../src/impact/intelligencePresence.js';
@@ -44,6 +44,20 @@ function visibleState(root){const a=[];root.traverseVisible(o=>{if(o.material)a.
 test('only the product asset is loaded; all textures stay reachable for shared disposal',()=>{const {world,loaded}=rig();assert.equal(loaded.length,1);const reachable=new Set();world.root.traverse(o=>{if(o.material?.map)reachable.add(o.material.map);});assert.ok(reachable.has(loaded[0]));for(let i=1;i<5;i++)for(let status=0;status<3;status++)assert.equal(world.root.getObjectByName(`file-status-${i}-${status}`).material.map,world.root.getObjectByName(`file-status-0-${status}`).material.map);const resources=new Map();world.root.traverse(o=>{for(const r of [o.geometry,o.material,o.material?.map])if(r)resources.set(r,0);});resources.forEach((_,r)=>r.addEventListener('dispose',()=>resources.set(r,resources.get(r)+1)));disposeTree(world.root);assert.ok([...resources.values()].every(n=>n===1));});
 test('three complete loops reuse every object, geometry, index buffer and product texture',()=>{const {world,update}=rig(),before=[];world.root.traverse(o=>before.push([o,o.geometry,o.material]));for(let t=0;t<324;t+=.5){update(t);let n=0;world.root.traverse(o=>{assert.equal(o,before[n][0]);assert.equal(o.geometry,before[n][1]);assert.equal(o.material,before[n][2]);assert.ok(o.matrixWorld.elements.every(Number.isFinite));n++;});assert.equal(n,before.length);}disposeTree(world.root);});
 test('the exact visual loop seam retains one identical review, with no foreign visible objects',()=>{const {world,update}=rig();update(0);const first=visibleState(world.root);update(107.9999);const last=visibleState(world.root);assert.equal(last.length,first.length);first.forEach((record,i)=>record.forEach((v,j)=>typeof v==='number'?near(v,last[i][j],.0001):assert.equal(v,last[i][j])));assert.ok(first.some(v=>v[0]==='record-0'));disposeTree(world.root);});
+test('the centre letter and surrounding interface share an exact opening and closing envelope',()=>{
+ const hidden={composition:0,copy:0,navigation:0,frame:0};assert.deepEqual(intelligencePresentation(0),hidden);assert.deepEqual(intelligencePresentation(107.9999),hidden);
+ for(const t of stageFrames)assert.deepEqual(intelligencePresentation(t),{composition:1,copy:1,navigation:1,frame:1});
+ for(const channel of Object.keys(hidden)){
+  let previous=0;for(let t=0;t<=8;t+=.1){const value=intelligencePresentation(t)[channel];assert.ok(value>=previous-1e-10);previous=value;}
+  previous=1;for(let t=100;t<108;t+=.1){const value=intelligencePresentation(t)[channel];assert.ok(value<=previous+1e-10);previous=value;}
+ }
+ const {world,camera,update}=rig();for(const lang of ['zh','en'])for(const t of [0,107.9999]){
+  update(t,lang);const record=world.root.getObjectByName('record-0'),q=record.userData.typing;
+  const point=new THREE.Vector3((q.widths[record.userData.typedCount]-q.total)/2048*q.width,0,0).applyMatrix4(record.matrixWorld).project(camera);
+  near(point.x,0);near(point.y,0);
+ }
+ disposeTree(world.root);
+});
 test('every temporal boundary has continuous visible object transforms and opacity',()=>{const {world,update}=rig();for(const time of [7,17,18,25,27,30,32,33,34,37,39,40.5,43,45.5,48,49,50,51,54,55,56,56.5,58.7,59,59.3,60.5,61.5,62.9,64,65,66.5,68,70,73,75.5,76,79,85,90,93,95,96,97,98,100,106]){update(time-.00001);const before=new Map();world.root.traverse(o=>before.set(o,{matrix:[...o.matrixWorld.elements],opacity:o.material?.opacity,color:o.material?.color?.toArray(),visible:o.visible}));update(time+.00001);world.root.traverse(o=>{const b=before.get(o);if(o.visible&&b.visible&&o.material?.opacity>.01){o.matrixWorld.elements.forEach((v,i)=>near(v,b.matrix[i],.003));near(o.material.opacity,b.opacity,.003);o.material.color?.toArray().forEach((v,i)=>near(v,b.color[i],.003));}});}disposeTree(world.root);});
 for(const [w,h] of [[1366,768],[1920,1080],[3840,2160],[1200,900]])test(`hero contents stay in the right-side safe area at ${w}x${h}`,()=>{const {world,camera,update}=rig(w/h);for(const t of [0,16,31,47,67,77,85,100,107]){update(t);for(const name of ['record-0','persistent-beauty-product','continuous-palette-craft']){const object=world.root.getObjectByName(name);if(!object.visible)continue;const center=new THREE.Vector3();object.getWorldPosition(center);const p=center.project(camera);assert.ok(p.x>=-.22&&p.x<=.94,`${name} at ${t}: ${p.x}`);assert.ok(p.y>-.57&&p.y<.7,`${name} at ${t}: ${p.y}`);}}disposeTree(world.root);});
 test('all six stages retain distinct bilingual beauty examples without invented business outcomes',()=>{assert.equal(intelligenceStages.length,6);assert.equal(new Set(intelligenceStages.map(s=>s.id)).size,6);for(const s of intelligenceStages){for(const value of [s.name,s.description,s.example.title,s.example.summary,s.example.outcome,...s.example.steps])assert.ok(value.length===2&&value.every(t=>typeof t==='string'&&t.length));assert.doesNotMatch(JSON.stringify(s.example),/儿童|香水|\d+%/);}});
@@ -64,6 +78,24 @@ test('the same palette leaves the proposal, separates its colours and assembles 
  update(67);assert.equal(craft.userData.phase,'finish');assert.ok(pan.userData.seated>.99);assert.ok(pan.position.distanceTo(spread)>.2);assert.ok(world.root.getObjectByName('palette-mirror').material.opacity>.99);
  update(74);assert.ok(craft.visible&&photo.visible);near(craft.position.x,photo.position.x);near(craft.position.y,photo.position.y);update(77);assert.equal(craft.visible,false);assert.ok(photo.visible);disposeTree(world.root);
 });
+test('independently pivoted colour pans and hinge register exactly with the finished photograph',()=>{
+ const {world,update}=rig(),photo=world.root.getObjectByName('persistent-beauty-product'),point=new THREE.Vector3(),reference=new THREE.Vector3();
+ update(57);for(let i=0;i<4;i++){
+  const pan=world.root.getObjectByName(`palette-pan-${i}`);assert.ok(Math.abs(pan.rotation.y)>.1);assert.ok(world.root.getObjectByName(`palette-pan-wall-${i}`).visible);
+ }
+ for(const t of [73,74,75.4]){
+  update(t);for(const name of ['palette-pan-0','palette-pan-1','palette-pan-2','palette-pan-3','palette-mirror','palette-case']){
+   const part=world.root.getObjectByName(name);
+   for(let v=0;v<4;v++){
+    point.fromBufferAttribute(part.geometry.attributes.position,v).applyMatrix4(part.matrixWorld);
+    reference.fromBufferAttribute(photo.geometry.attributes.position,v).applyMatrix4(photo.matrixWorld);
+    assert.ok(point.distanceTo(reference)<1e-6,`${name} loses image registration at ${t}`);
+   }
+  }
+  for(let i=0;i<4;i++)assert.equal(world.root.getObjectByName(`palette-pan-wall-${i}`).visible,false);
+ }
+ disposeTree(world.root);
+});
 
 test('opening types from G into the review and reverses to the identical letter at the seam',()=>{const {world,update}=rig(),text=world.root.getObjectByName('record-0');update(0);assert.equal(text.userData.typedCount,1);const cut=text.userData.typing.cut.value;update(1);assert.ok(text.userData.typedCount>1&&text.userData.typedCount<14);update(3);assert.equal(text.userData.typedCount,14);update(107.9999);assert.equal(text.userData.typedCount,1);near(text.userData.typing.cut.value,cut);disposeTree(world.root);});
 test('robot blinks, floats and turns toward the product proposals',()=>{const {world,update}=rig(),eye=world.root.getObjectByName('robot-eyes'),bot=world.root.getObjectByName('data-to-assistant');update(31.94);assert.ok(eye.scale.y<.2);update(33);assert.ok(eye.scale.y>.99);const first=bot.position.y;update(43);assert.notEqual(bot.position.y,first);assert.ok(bot.rotation.y<-.2);const gaze=eye.position.toArray();update(41);assert.notDeepEqual(eye.position.toArray(),gaze);assert.ok(eye.position.x<0);disposeTree(world.root);});
@@ -81,6 +113,14 @@ test('the mountain robot replaces the crystal and its solid shell stays stable w
  update(16);assert.equal(robot.visible,false);update(33);assert.ok(robot.visible);assert.equal(world.root.getObjectByName('persistent-data-crystal').visible,false);
  shell.geometry.computeBoundingBox();const size=shell.geometry.boundingBox.getSize(new THREE.Vector3());assert.ok(size.x>size.y*1.5&&size.z>.5);
  assert.equal(face.material.map,null);const scale=shell.scale.toArray();update(31.94);assert.deepEqual(shell.scale.toArray(),scale);assert.ok(world.root.getObjectByName('robot-eyes').scale.y<.2);
+ disposeTree(world.root);
+});
+test('the mountain face stays uninterrupted below the eyes during every expression',()=>{
+ const {world,update}=rig(),face=world.root.getObjectByName('robot-blue-face'),ray=new THREE.Raycaster();
+ for(const t of [31,41.8,44.6,49,76]){
+  update(t);ray.set(face.localToWorld(new THREE.Vector3(0,-.40,1)),new THREE.Vector3(0,0,-1).transformDirection(face.matrixWorld));
+  assert.ok(ray.intersectObject(face,false).length>0,`a mouth-like cut appears at ${t}`);
+ }
  disposeTree(world.root);
 });
 test('reports and relationships finish gathering before the newborn robot expresses joy',()=>{
@@ -119,6 +159,32 @@ test('the dense information field preserves readable gaps between text and revie
  }
  disposeTree(world.root);
 });
+test('source text retires before the six reports hold a clear reading beat',()=>{
+ const {world,update}=rig();
+ for(const time of [11.8,12.3,12.9]){
+  update(time);const bounds=[];
+  world.root.traverse(object=>{
+   if(/^record-\d+$|^data-fragment-/.test(object.name))assert.equal(object.visible,false,`${object.name} obscures the reports at ${time}`);
+   if(/^report-face-/.test(object.name)){
+    assert.ok(object.material.opacity>.9);object.geometry.computeBoundingBox();
+    bounds.push(object.geometry.boundingBox.clone().applyMatrix4(object.matrixWorld));
+   }
+  });
+  assert.equal(bounds.length,6);
+  for(let i=0;i<bounds.length;i++)for(let j=i+1;j<bounds.length;j++)assert.equal(bounds[i].intersectsBox(bounds[j]),false,`reports overlap at ${time}`);
+  assert.equal(world.root.getObjectByName('data-lattice').visible,false);
+ }
+ disposeTree(world.root);
+});
+test('the Data Assets stage stop holds six completed cube faces',()=>{
+ const {world,update}=rig();update(stageFrames[0]);const body=world.root.getObjectByName('data-to-assistant'),point=new THREE.Vector3();
+ for(let i=0;i<6;i++){
+  const face=world.root.getObjectByName(`report-face-${i}`);face.getWorldPosition(point);body.worldToLocal(point);
+  near(Math.max(Math.abs(point.x),Math.abs(point.y),Math.abs(point.z)),1.48);near(point.length(),1.48);
+  assert.ok(face.material.depthWrite);near(face.userData.reportReveal.value,1);
+ }
+ disposeTree(world.root);
+});
 test('mountain eye geometry continuously acts through inspection, doubt, delight and selection',()=>{
  const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),left=world.root.getObjectByName('robot-left-eye'),right=world.root.getObjectByName('robot-right-eye'),geometry=left.geometry;
  update(36);assert.equal(robot.userData.expression,'focused');const focused=Array.from(geometry.attributes.position.array);
@@ -134,5 +200,14 @@ test('the robot blinks between reactions without hiding their expressive peaks',
 test('one robot remains alongside the selected product and becomes the commerce header logo',()=>{const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),body=robot.parent,product=world.root.getObjectByName('persistent-beauty-product');update(77);assert.ok(robot.visible&&product.visible);assert.equal(robot.userData.expression,'happy');const size=body.scale.x;update(85);assert.equal(world.root.getObjectByName('mountain-robot'),robot);assert.ok(robot.visible&&product.visible);assert.ok(body.scale.x<size*.3);assert.ok(body.position.x<-3&&body.position.y>2.5);update(90);assert.equal(robot.visible,false);disposeTree(world.root);});
 
 test('five proposal pages retain five distinct physical product silhouettes',()=>{const {world,update}=rig();update(47);for(const name of ['lip-oil-vial','blush-tube','skin-tint-bottle','palette-mirror']){const object=world.root.getObjectByName(name);assert.ok(object);assert.ok(object.material.opacity>.1);}assert.equal(world.root.getObjectByName('forecast-relief'),undefined);disposeTree(world.root);});
+test('fading products render after their own page instead of disappearing behind it',()=>{
+ const {world,update}=rig();for(const time of [37.8,39.1,40.4,41.8,42.8,46.3]){
+  update(time);for(let i=0;i<4;i++){
+   const card=world.root.getObjectByName(`analysis-card-${i}`),model=world.root.getObjectByName(`proposal-model-${i}`);
+   assert.ok(card.children.find(o=>o.name==='decision-card-depth').renderOrder<card.renderOrder);
+   model.traverse(mesh=>{if(mesh.isMesh)assert.ok(mesh.renderOrder>card.renderOrder,`${mesh.name} draws behind proposal ${i} at ${time}`);});
+  }
+ }disposeTree(world.root);
+});
 
 test('product previews stay below page headings and within their editorial card',()=>{const {world,update}=rig();update(39.1);for(let i=0;i<4;i++){const model=world.root.getObjectByName(`proposal-model-${i}`),card=world.root.getObjectByName(`analysis-card-${i}`),inverse=card.matrixWorld.clone().invert(),bounds=new THREE.Box3();model.traverse(mesh=>{if(!mesh.geometry)return;mesh.geometry.computeBoundingBox();const b=mesh.geometry.boundingBox;for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z])bounds.expandByPoint(new THREE.Vector3(x,y,z).applyMatrix4(mesh.matrixWorld).applyMatrix4(inverse));});assert.ok(bounds.max.y<.50,`heading collision in ${i}: ${bounds.max.y}`);assert.ok(bounds.min.y>-.89,`footer collision in ${i}: ${bounds.min.y}`);assert.ok(bounds.min.x>-1.3&&bounds.max.x<1.3);const badge=world.root.getObjectByName(`file-status-${i}-0`);badge.geometry.computeBoundingBox();const status=badge.geometry.boundingBox.clone().applyMatrix4(badge.matrix);assert.ok(bounds.max.x<status.min.x||bounds.min.x>status.max.x||bounds.max.y<status.min.y||bounds.min.y>status.max.y,`status collision in ${i}`);}disposeTree(world.root);});
