@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
-import {createDecisionRobot} from './intelligenceRobot.js';
+import {createMountainRobot} from './intelligenceRobot.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
 import {crystalVertex,lerp,ramp} from './intelligenceTimeline.js';
 import {canvasTexture,label,rounded,cardTexture,screenTexture,reviewTexture,commerceTexture,commerceDetails,purchaseReviewTexture,designBoardTexture,translate} from './intelligenceSurfaces.js';
@@ -46,19 +46,10 @@ export function createCrystal(){
 
 function clipToPage(mesh){const band={value:new THREE.Vector2(-1e6,1e6)};mesh.userData.pageClip=band;mesh.material.onBeforeCompile=shader=>{shader.uniforms.pageClip=band;shader.vertexShader='varying float pageWorldY;\n'+shader.vertexShader.replace('#include <project_vertex>','#include <project_vertex>\npageWorldY=(modelMatrix*vec4(transformed,1.)).y;');shader.fragmentShader='varying float pageWorldY;uniform vec2 pageClip;\n'+shader.fragmentShader.replace('#include <clipping_planes_fragment>','#include <clipping_planes_fragment>\nif(pageWorldY<pageClip.x||pageWorldY>pageClip.y) discard;');};mesh.material.customProgramCacheKey=()=> 'journey-page-clip';}
 
-export function createJourneyObjects(manager){
+export function createJourneyObjects(manager,quality){
  const root=new THREE.Group();root.name='continuous-value-journey';
- const crystal=createCrystal(),body=new THREE.Group();body.name='data-to-diamond';body.add(crystal.shell,crystal.cells);root.add(body);const robot=createDecisionRobot();body.add(robot.group);
- const core=new THREE.Mesh(new THREE.SphereGeometry(.15,32,24),new THREE.MeshBasicMaterial({color:new THREE.Color('#c9f1ff').multiplyScalar(3),transparent:true,depthWrite:false}));core.name='diamond-core';core.position.z=1.03;core.renderOrder=12;core.material.depthTest=false;body.add(core);
- const coreRim=new THREE.Mesh(new THREE.TorusGeometry(.27,.018,12,80),new THREE.MeshBasicMaterial({color:'#9dcce8',transparent:true,depthWrite:false}));coreRim.position.z=1.01;coreRim.renderOrder=13;body.add(coreRim);
- const halo=glow('core-optical-halo');halo.position.z=1.04;halo.scale.setScalar(1.5);halo.renderOrder=11;body.add(halo);
- const eye=new THREE.Group();eye.name='robot-eye';eye.position.z=1.0;body.add(eye);
- const housing=new THREE.Mesh(new THREE.SphereGeometry(.36,40,24),new THREE.MeshPhysicalMaterial({color:'#061424',metalness:.55,roughness:.19,clearcoat:1,transparent:true,depthWrite:false}));housing.scale.z=.38;housing.name='eye-housing';housing.renderOrder=9;eye.add(housing);
- const iris=new THREE.Mesh(new THREE.TorusGeometry(.215,.012,16,64),new THREE.MeshBasicMaterial({color:'#82aec4',transparent:true,depthWrite:false}));iris.position.z=.15;iris.name='eye-iris';iris.renderOrder=10;eye.add(iris);
- const irisDetail=new THREE.Mesh(new THREE.RingGeometry(.09,.205,80),new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{opacity:{value:1}},vertexShader:'varying vec2 p;void main(){p=position.xy;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 p;uniform float opacity;void main(){float r=length(p),a=atan(p.y,p.x);float ribs=.5+.5*sin(a*96.);float rim=smoothstep(.11,.2,r);vec3 c=mix(vec3(.025,.06,.10),vec3(.17,.30,.40),rim);c+=ribs*.025;gl_FragColor=vec4(c,opacity);}'}));irisDetail.name='eye-optical-iris';irisDetail.position.z=.16;irisDetail.renderOrder=10;eye.add(irisDetail);
-
- const pupil=new THREE.Mesh(new THREE.SphereGeometry(.115,32,20),new THREE.MeshBasicMaterial({color:'#071322',transparent:true,depthWrite:false}));pupil.position.z=.18;pupil.scale.z=.35;pupil.name='eye-pupil';pupil.renderOrder=11;eye.add(pupil);
- const glint=new THREE.Mesh(new THREE.SphereGeometry(.019,12,12),new THREE.MeshBasicMaterial({color:'#f1fbff',transparent:true,depthWrite:false}));glint.position.set(-.065,.085,.23);glint.name='eye-glint';glint.renderOrder=12;eye.add(glint);
+ const crystal=createCrystal(),body=new THREE.Group();body.name='data-to-assistant';body.add(crystal.shell,crystal.cells);root.add(body);
+ const robot=createMountainRobot(quality);body.add(robot.root);
  const ambience=glow('exhibit-light-pool','#2d6094');ambience.position.set(.5,.1,-2);ambience.scale.set(12,9,1);root.add(ambience);
  const floor=glow('contact-light','#6191ae');floor.position.set(0,-2.4,-.5);floor.scale.set(6,.6,1);root.add(floor);
  const scan=new THREE.Mesh(new THREE.PlaneGeometry(3,3),new THREE.MeshBasicMaterial({color:'#b3e3ff',transparent:true,side:THREE.DoubleSide,depthWrite:false}));scan.rotation.x=Math.PI/2;scan.name='analysis-scan';body.add(scan);
@@ -88,5 +79,5 @@ export function createJourneyObjects(manager){
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);clipToPage(details);
  const commerceMetrics=[];for(let i=0;i<4;i++){const mesh=textPlane(`${[128,136,148,162][i]} orders   /   ${[24,27,31,36][i]} reviews`,`commerce-metrics-${i}`,3.0);mesh.material.color.set('#594c3f');mesh.position.set(1.8,2.32,.12);commerce.add(mesh);commerceMetrics.push(mesh);}
  function setLanguage(lang){const maps=new Set();root.traverse(mesh=>{if(mesh.material?.map)maps.add(mesh.material.map);});maps.forEach(map=>map.userData.redraw?.(lang));records.forEach((mesh,i)=>installTyping(mesh,translate(texts[i],lang),mesh.material.map.image.getContext('2d'),i===0?3.8:2.5));root.userData.language=lang;}
- return {setLanguage,root,body,robot,designBoard,page,crystal,core,coreRim,halo,eye,iris,pupil,glint,housing,cursor,projection,screenBody,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,screen,cards,product,reflection,heroLight,productCaption,orbit,commerce,details,commerceMetrics};
+ return {setLanguage,root,body,robot,designBoard,page,crystal,cursor,projection,screenBody,scanLine,ambience,floor,scan,scanEdge,links,nodes,records,beam,screen,cards,product,reflection,heroLight,productCaption,orbit,commerce,details,commerceMetrics};
 }

@@ -10,7 +10,7 @@ const cardSeats=[[0,0,1.48,0,0],[1.48,0,0,0,Math.PI/2],[0,0,-1.48,0,Math.PI],[-1
 export function intelligenceWorld(quality,manager){
  const root=new THREE.Group();root.name='intelligence-continuous-exhibit';
  const backdrop=new THREE.Mesh(new THREE.PlaneGeometry(240,160),new THREE.MeshBasicMaterial({color:'#030b16',fog:false}));backdrop.position.z=-12;root.add(backdrop);
- const o=createJourneyObjects(manager);root.add(o.root);
+ const o=createJourneyObjects(manager,quality);root.add(o.root);
  const temp=new THREE.Vector3(),position=new THREE.Vector3(0,0,32),origin=new THREE.Vector3(),panelPivot=new THREE.Vector3(-1.35,.05,0),panelRotation=new THREE.Quaternion(),panelEuler=new THREE.Euler(),cardRotation=new THREE.Quaternion(),seatRotation=new THREE.Quaternion(),flatRotation=new THREE.Quaternion(),seatEuler=new THREE.Euler();
  let activeLanguage=null;
  let idlePhase=0,idleMix=0,lastMotion=null;
@@ -25,18 +25,14 @@ export function intelligenceWorld(quality,manager){
    idlePhase+=dt;const idleTarget=intelligence?.mode==='manual'&&!intelligence?.seeking?1:0;idleMix+=(idleTarget-idleMix)*(1-Math.exp(-dt*4));
    const idleSway=Math.sin(idlePhase*.55)*.13*idleMix*ramp(t,8,14)*(1-ramp(t,49,54));
    const presencePose=presenceAt(t);
-   const glassVisibility=ramp(t,11,17)*(1-ramp(t,49,54)),dock=ramp(t,33,37),collapse=ramp(t,24,32);
+   const glassVisibility=ramp(t,11,17)*(1-ramp(t,25,30)),dock=ramp(t,33,37),collapse=ramp(t,24,32);
    o.body.position.set(lerp(0,3.25,dock),lerp(.2,.18,dock)+presencePose.float.lift+Math.sin(t*.65)*.065*ramp(t,8,13)*(1-f.crystal),0);o.body.scale.setScalar(lerp(1.22,.78,dock));
    o.body.rotation.set(lerp(.17,.025,f.crystal)+presencePose.float.x*.4,lerp(.45+.24*(t-8)*ramp(t,7,12),.12,f.crystal)-presencePose.turn*.7+presencePose.float.y*.6+Math.sin((t-38)*1.15-.35)*.20*presencePose.look,lerp(-.04,-.02,f.crystal)+presencePose.float.z);o.body.rotation.y+=idleSway;o.body.position.y+=idleSway*.35;
    o.crystal.morph(f.crystal,t);alpha(o.crystal.shell,glassVisibility*.12*(1-ramp(t,27,32)));alpha(o.crystal.inner,glassVisibility*f.crystal*.4*(1-ramp(t,28,32)));alpha(o.crystal.edges,glassVisibility*.23*(1-ramp(t,27,32)));
-   const robotReveal=ramp(t,26,33),robotAlpha=robotReveal*(1-ramp(t,49,54));o.robot.group.visible=robotAlpha>.001;o.robot.group.scale.setScalar(lerp(.74,1,robotReveal));for(const part of o.robot.group.children)alpha(part,robotAlpha);
    alpha(o.crystal.cells,ramp(t,9,15)*(1-ramp(t,28,32))*.48);
-   const coreAlpha=ramp(t,27,34)*(1-ramp(t,49,54));o.eye.visible=coreAlpha>.001;o.eye.children.forEach(part=>alpha(part,coreAlpha));o.cursor.visible=false;alpha(o.core,0);alpha(o.coreRim,0);alpha(o.halo,coreAlpha*.06*presencePose.blink);const pupilSize=.42+.08*Math.sin(t*.7);o.core.scale.set(pupilSize,pupilSize*presencePose.blink,pupilSize);
-   o.eye.position.set(presencePose.eyeX*.55,.12+presencePose.eyeY*.5,.87);o.eye.scale.set(1.55,1.55*presencePose.blink,1.1);o.eye.rotation.y=-presencePose.look*.22;
-   for(const part of [o.housing,o.iris,o.pupil,o.glint])alpha(part,coreAlpha);
-   o.iris.scale.setScalar(1+.025*Math.sin(t*1.4));o.pupil.position.x=presencePose.eyeX*.25;o.pupil.position.y=presencePose.eyeY*.2;
-   o.core.position.set(presencePose.eyeX*.55,.12+presencePose.eyeY*.5,1.14);o.coreRim.position.set(presencePose.eyeX,presencePose.eyeY,1.0);o.coreRim.scale.set(1,presencePose.blink,1);o.halo.position.set(presencePose.eyeX,presencePose.eyeY,1.1);
-   o.floor.position.set(o.body.position.x,lerp(-2.45,-1.67,dock),-.3);o.floor.scale.set(lerp(5.5,2.9,dock),.55,1);alpha(o.floor,glassVisibility*.32);
+   const robotAlpha=ramp(t,27,32)*(1-ramp(t,49,54));
+   o.robot.root.scale.setScalar(lerp(.7,1,ramp(t,27,32)));o.robot.update(presencePose,robotAlpha);o.cursor.visible=false;
+   o.floor.position.set(o.body.position.x,lerp(-2.45,-1.67,dock),-.3);o.floor.scale.set(lerp(5.5,2.9,dock),.55,1);alpha(o.floor,Math.max(glassVisibility,robotAlpha)*.22);
    const scanPhase=ramp(t,18.8,24);o.scan.position.y=lerp(1.5,-1.5,scanPhase);const scanAlpha=ramp(t,18,19)*(1-ramp(t,24,25));alpha(o.scan,scanAlpha*.12);alpha(o.scanEdge,scanAlpha*.8);
    const relation=ramp(t,21,24)*(1-ramp(t,29,33));alpha(o.links,relation*.6);o.nodes.forEach((node,i)=>alpha(node,relation*(.45+.4*Math.sin(t*.8+i)**2)));
    o.records.forEach((mesh,i)=>{
@@ -91,7 +87,7 @@ export function intelligenceWorld(quality,manager){
    const x1=lerp(-3.12,recommended.x,imageToCard),y1=lerp(.33,recommended.y-.08,imageToCard),z1=lerp(.3,recommended.z+.08,imageToCard),size1=lerp(2.15,1.2*recommended.scale,imageToCard);
    o.product.position.set(lerp(lerp(x1,0,imageToHero),-2.26,imageToPage),lerp(lerp(y1,.25,imageToHero),.18,imageToPage),lerp(lerp(z1,2,imageToHero),.3,imageToPage));o.product.scale.setScalar(lerp(lerp(size1,5.9,imageToHero),3.48,imageToPage));alpha(o.product,ramp(t,73,77)*(1-ramp(t,88,91)));
    if(t<55){const attachment=ramp(t,50,55);temp.set(-3.12,.33,.3).sub(panelPivot).applyQuaternion(panelRotation).add(panelPivot);o.product.position.lerpVectors(temp,origin.set(recommended.x,recommended.y-.08,recommended.z+.08),attachment);o.product.quaternion.copy(panelRotation);}else{o.product.rotation.set(0,0,0);}
-   o.projection.aim(o.core,o.screen,o.root,0,f.project,presencePose.scanX);
+   o.projection.aim(o.robot.projector,o.screen,o.root,0,f.project,presencePose.scanX);
    const hero=ramp(t,73,77)*(1-ramp(t,80,84));alpha(o.heroLight,hero*.25);o.reflection.position.set(o.product.position.x,-2.85,1);o.reflection.scale.set(4.7,-.65,1);alpha(o.reflection,hero*.065);
    o.productCaption.position.set(0,-3.12,1);alpha(o.productCaption,ramp(t,76,77)*(1-ramp(t,79,82)));
    const pageScroll=ramp(t,86,91);o.page.material.map.offset.y=(1-1080/2100)*(1-pageScroll);for(const mesh of [o.product,o.details])mesh.userData.pageClip.value.set(t>=79?o.root.position.y-3.03*scale:-1e6,t>=79?o.root.position.y+3.1*scale:1e6);o.details.position.y=.15+pageScroll*5.86;o.product.position.y+=pageScroll*5.86;

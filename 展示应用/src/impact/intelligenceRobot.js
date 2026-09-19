@@ -1,32 +1,99 @@
 import * as THREE from 'three';
-// A rounded diamond enclosure, with a conforming curved visor. All are real
-// surfaces: the face can yaw independently and the rear seam reads in profile.
-function enclosure(rx,ry,rz){
- const g=new THREE.SphereGeometry(1,64,48),p=g.attributes.position;
- for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i),z=p.getZ(i);p.setXYZ(i,rx*Math.sign(x)*Math.abs(x)**1.35,ry*Math.sign(y)*Math.abs(y)**1.35,rz*z);}
- g.computeVertexNormals();return g;
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
+import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
+import {modelDetail} from '../../../共享组件/renderQuality.js';
+
+// The mountain is the body itself: one rounded shell, one inset face, two eyes.
+// No image maps, limb assembly or separate animation clock.
+function mountainShape(face = false) {
+  const shape = new THREE.Shape();
+  shape.moveTo(-1.53, -.72);
+  shape.quadraticCurveTo(-1.76, -.72, -1.58, -.49);
+  shape.lineTo(-.17, .98);
+  shape.quadraticCurveTo(0, 1.15, .17, .98);
+  shape.lineTo(1.58, -.49);
+  shape.quadraticCurveTo(1.76, -.72, 1.53, -.72);
+  if (face) {
+    // The quiet silver ridge is a cut in the glass, not an added logo decal.
+    shape.lineTo(.70, -.56);
+    shape.lineTo(.42, -.30);
+    shape.lineTo(.30, -.48);
+    shape.lineTo(.08, -.20);
+    shape.quadraticCurveTo(.03, -.14, -.02, -.20);
+    shape.lineTo(-.29, -.45);
+    shape.lineTo(-.39, -.34);
+    shape.lineTo(-.70, -.56);
+  }
+  shape.closePath();
+  return shape;
 }
-function visorGeometry(){
- const vertices=[],uv=[],indices=[],segments=64,rings=18;
- for(let r=0;r<=rings;r++)for(let i=0;i<=segments;i++){
-  const a=i/segments*Math.PI*2,k=r/rings,c=Math.cos(a),s=Math.sin(a);
-  const x=1.20*Math.sign(c)*Math.sqrt(Math.abs(c))*k,y=.81*Math.sign(s)*Math.sqrt(Math.abs(s))*k+.12;
-  const z=.22+.56*Math.sqrt(Math.max(.03,1-Math.abs(x/1.53)**(2/1.35)-Math.abs(y/2.02)**(2/1.35)))+.018;
-  vertices.push(x,y,z);uv.push(i/segments,k);
-  if(r<rings&&i<segments){const n=r*(segments+1)+i;indices.push(n,n+1,n+segments+1,n+1,n+segments+2,n+segments+1);}
- }
- const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(indices);g.computeVertexNormals();return g;
+
+function smoothSolid(shape, depth, radius, detail) {
+  const raw = new THREE.ExtrudeGeometry(shape, {
+    depth, steps: 1, bevelEnabled: true, bevelThickness: radius,
+    bevelSize: radius, bevelSegments: detail.segment(6, 'bevel'),
+    curveSegments: detail.segment(24),
+  });
+  raw.deleteAttribute('normal');
+  raw.deleteAttribute('uv');
+  const geometry = mergeVertices(raw);
+  raw.dispose();
+  geometry.computeVertexNormals();
+  return geometry;
 }
-export function createDecisionRobot(){
- const group=new THREE.Group();group.name='decision-robot-enclosure';
- const silver=()=>new THREE.MeshPhysicalMaterial({color:'#d8dde2',metalness:.72,roughness:.31,clearcoat:.35,clearcoatRoughness:.22,envMapIntensity:1.0,transparent:true,depthWrite:false});
- const rear=new THREE.Mesh(enclosure(1.49,1.98,.48),silver());rear.position.z=-.32;rear.name='robot-rear-shell';group.add(rear);
- const seam=new THREE.Mesh(enclosure(1.51,2,.34),new THREE.MeshPhysicalMaterial({color:'#111c28',metalness:.5,roughness:.28,transparent:true,depthWrite:false}));seam.position.z=-.13;seam.name='robot-graphite-seam';group.add(seam);
- const front=new THREE.Mesh(enclosure(1.53,2.02,.56),silver());front.position.z=.22;front.name='robot-pearl-shell';group.add(front);
- const visor=new THREE.Mesh(visorGeometry(),new THREE.MeshPhysicalMaterial({color:'#030b14',metalness:.2,roughness:.12,clearcoat:1,clearcoatRoughness:.07,envMapIntensity:.65,transparent:true,depthWrite:false,side:THREE.DoubleSide}));visor.name='robot-curved-visor';visor.renderOrder=7;group.add(visor);
- const rimPoints=[];for(let i=0;i<=128;i++){const a=i/128*Math.PI*2,c=Math.cos(a),s=Math.sin(a),x=1.20*Math.sign(c)*Math.sqrt(Math.abs(c)),y=.81*Math.sign(s)*Math.sqrt(Math.abs(s))+.12,z=.22+.56*Math.sqrt(Math.max(.03,1-Math.abs(x/1.53)**(2/1.35)-Math.abs(y/2.02)**(2/1.35)))+.023;rimPoints.push(new THREE.Vector3(x,y,z));}
- const bezel=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(rimPoints),128,.014,8,false),new THREE.MeshPhysicalMaterial({color:'#8f9ba7',metalness:.75,roughness:.23,transparent:true,depthWrite:false}));bezel.name='robot-visor-bezel';bezel.renderOrder=8;group.add(bezel);
- const seamPoints=[];for(let i=0;i<=48;i++){const x=(i/48-.5)*1.6,y=1.18,z=.22+.56*Math.sqrt(Math.max(.02,1-Math.abs(x/1.53)**(2/1.35)-Math.abs(y/2.02)**(2/1.35)))+.006;seamPoints.push(new THREE.Vector3(x,y,z));}
- const capSeam=new THREE.Line(new THREE.BufferGeometry().setFromPoints(seamPoints),new THREE.LineBasicMaterial({color:'#687481',transparent:true,depthWrite:false}));capSeam.name='robot-cap-seam';capSeam.renderOrder=8;group.add(capSeam);
- return {group,front,rear,seam,visor};
+
+export function createMountainRobot(quality) {
+  const detail = modelDetail('analytics', quality);
+  const root = new THREE.Group();
+  root.name = 'mountain-robot';
+  const shellMaterial = new THREE.MeshPhysicalMaterial({
+    color: '#e4e9ed', metalness: .55, roughness: .28,
+    clearcoat: .45, clearcoatRoughness: .25, envMapIntensity: 1.05,
+    transparent: true,
+  });
+  const shell = new THREE.Mesh(smoothSolid(mountainShape(), .42, .12, detail), shellMaterial);
+  shell.name = 'robot-silver-shell';
+  shell.position.z = -.28;
+  root.add(shell);
+
+  const faceMaterial = new THREE.MeshPhysicalMaterial({
+    color: '#071a2c', metalness: .26, roughness: .18,
+    clearcoat: 1, clearcoatRoughness: .12, envMapIntensity: .8,
+    transparent: true,
+  });
+  const face = new THREE.Mesh(smoothSolid(mountainShape(true), .035, .025, detail), faceMaterial);
+  face.name = 'robot-blue-face';
+  face.scale.set(.87, .87, 1);
+  face.position.set(0, .005, .262);
+  root.add(face);
+
+  const eyes = new THREE.Group();
+  eyes.name = 'robot-eyes';
+  root.add(eyes);
+  const eyeMaterial = new THREE.MeshPhysicalMaterial({
+    color: '#b5e1f3', emissive: '#90cbec', emissiveIntensity: 1.15,
+    metalness: 0, roughness: .3, transparent: true,
+  });
+  const eyeGeometry = new RoundedBoxGeometry(.21, .095, .035, detail.segment(3, 'rounded'), .045);
+  for (const [i, x] of [-.37, .37].entries()) {
+    const eye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+    eye.name = i === 0 ? 'robot-left-eye' : 'robot-right-eye';
+    eye.position.x = x;
+    eyes.add(eye);
+  }
+  // A projection source attached to the near eye follows the gaze and body pose.
+  const projector = new THREE.Object3D();
+  projector.name = 'robot-projector';
+  projector.position.set(-.37, 0, .028);
+  eyes.add(projector);
+  const materials = [shellMaterial, faceMaterial, eyeMaterial];
+  return {
+    root, eyes, projector,
+    update(pose, opacity) {
+      root.visible = opacity > .001;
+      for (const material of materials) material.opacity = opacity;
+      eyes.position.set(pose.eyeX * .45, .105 + pose.eyeY * .28, .355);
+      eyes.scale.y = pose.blink;
+    },
+  };
 }
