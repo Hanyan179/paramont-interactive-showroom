@@ -274,7 +274,7 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
     const observer=new ResizeObserver(resize);observer.observe(mount);resize();
     let infoKey='',diagnosticAt=0;
     loop=createFrameLoop({render(_now,dt){
-      if(loaded&&state.index===4&&!state.depth){state.depth={id:'intelligence',selection:null,origin:'intelligence'};state.depthMix=1;state.transition=null;state.touring=false;intelligenceDirector.reset();latest.current.setDetail(state.depth);publishIntelligence();}
+      if(loaded&&state.index===4&&!state.depth){state.depth={id:'intelligence',selection:null,origin:'intelligence'};state.depthMix=1;state.transition=null;state.touring=false;intelligenceDirector.reset({playing:latest.current.playing});latest.current.setDetail(state.depth);publishIntelligence();}
       const motion=theatreMotion({loaded,playing:latest.current.playing,suspended:latest.current.suspended,held:state.held||(impactMoments[state.index].id==='supply'&&latest.current.network.directory),touring:state.touring,depth:!!state.depth,movingReel:!!state.reelMotion});
       const networkHeld=(impactMoments[state.index].id==='supply'&&latest.current.network.directory);
       if(motion.animate){state.motionTime+=dt;if(!state.held&&!networkHeld)state.idleSeconds+=dt;}

@@ -28,6 +28,13 @@ for(const gate of [{active:false},{held:true},{suspended:true}])test(`scene gate
 test('case reading protects the exact time and returns to the prior playback mode',()=>{const d=createIntelligenceDirector();advance(d,42.3);const t=d.snapshot().time;d.openExample();advance(d,200);near(d.snapshot().time,t);d.closeExample();assert.equal(d.snapshot().mode,'auto');near(d.snapshot().time,t);});
 test('manual inactivity resumes after 90 seconds and activity restarts the interval',()=>{const d=createIntelligenceDirector();d.select(3);advance(d,12);advance(d,60);d.activity();advance(d,89);assert.equal(d.snapshot().mode,'manual');advance(d,1.1);assert.equal(d.snapshot().mode,'auto');});
 test('reduced motion remains static and allows direct stage selection',()=>{const d=createIntelligenceDirector({reduced:true});advance(d,200);near(d.snapshot().time,16);d.select(5);near(d.snapshot().time,100);d.resume();advance(d,200);near(d.snapshot().time,100);});
+test('entering a paused journey exposes a complete stage and retains usable navigation',()=>{
+ const d=createIntelligenceDirector();advance(d,20);d.select(4);d.reset({playing:false});
+ const frame=d.snapshot();near(frame.time,stageFrames[0]);assert.equal(frame.mode,'auto');assert.equal(frame.seeking,false);
+ assert.deepEqual(intelligencePresentation(frame.time),{composition:1,copy:1,navigation:1,frame:1});
+ advance(d,120,{playing:false});near(d.snapshot().time,frame.time);advance(d,1,{playing:true});near(d.snapshot().time,frame.time+intelligenceTiming.playbackRate);
+ d.reset({playing:true});near(d.snapshot().time,0);assert.equal(d.snapshot().mode,'auto');
+});
 test('invalid selections and modified snapshots cannot corrupt the clock',()=>{const d=createIntelligenceDirector();for(const x of [-1,6,NaN,null,'2'])assert.equal(d.select(x),false);const s=d.snapshot();s.weights.fill(9);s.time=22;near(d.snapshot().time,0);assert.deepEqual(d.snapshot().weights,[1,0,0,0,0,0]);});
 function rig(aspect=16/9){
  const originalDocument=globalThis.document,load=THREE.TextureLoader.prototype.load;

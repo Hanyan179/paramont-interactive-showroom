@@ -19,7 +19,7 @@ export function createIntelligenceDirector({reduced=false,startTime=0}={}){
     openExample(){returnMode=mode;mode='case';idle=0;},
     closeExample(){if(mode==='case'){mode=returnMode;idle=0;}},
     resume(){mode=reduced?'manual':'auto';idle=0;},
-    reset(){time=reduced?stageFrames[0]:0;mode=reduced?'manual':'auto';seek=null;idle=0;},
+    reset({playing=true}={}){time=reduced||!playing?stageFrames[0]:0;mode=reduced?'manual':'auto';seek=null;idle=0;},
     isMoving:()=>!!seek&&mode!=='case',
     tick(delta,{active=true,playing=true,held=false,suspended=false}={}){
       if(!active||suspended||held||mode==='case')return snapshot();
