@@ -136,8 +136,8 @@ export const intelligenceStages = [
       "Decisioning"
     ],
     "action": [
-      "选择",
-      "Choose"
+      "组合",
+      "Compose"
     ],
     "description": [
       "从选中的提案里提取四色用途，让色彩、镜面与盒体逐步组合，把设计依据转化为可见的商品。",
@@ -145,8 +145,8 @@ export const intelligenceStages = [
     ],
     "example": {
       "title": [
-        "为什么推荐这一款四色眼影盘？",
-        "Why recommend this four-shade palette?"
+        "一份设计提案，怎样成为完整商品？",
+        "How does a design proposal become a complete product?"
       ],
       "summary": [
         "把“日常配色”和“少带几件”的使用要求转成一盘四色、内置镜面的提案，再由机器人逐步组合颜色与结构。",
@@ -179,17 +179,17 @@ export const intelligenceStages = [
       "Market Impact"
     ],
     "action": [
-      "成形",
-      "Shape"
+      "呈现",
+      "Present"
     ],
     "description": [
-      "让推荐成为可见的产品提案，再进入商品展示与评价情境，连接开发与市场验证。",
-      "Turn a recommendation into a visible product proposal and a commerce scenario, connecting development with market validation."
+      "把完成的商品带入展示与购买情境，让用户看清配色、用途和价格，并为后续反馈建立入口。",
+      "Bring the finished product into a shopping experience, making its colours, use and price clear and creating a place for feedback."
     ],
     "example": {
       "title": [
-        "从推荐，走向一次商品与体验验证。",
-        "From recommendation to a product experience worth testing."
+        "同一件商品，怎样进入一次购买体验？",
+        "How does the same product become a shopping experience?"
       ],
       "summary": [
         "完成的四色眼影盘与山形助手一起进入商品详情页：商品落入图片区域，助手收拢为页头标志。价格、评分和订单为演示数据。",
@@ -197,21 +197,21 @@ export const intelligenceStages = [
       ],
       "steps": [
         [
-          "检查商品细节与信息表达",
-          "Review product details and information clarity"
+          "保留选中提案的配色、用途与产品身份",
+          "Retain the chosen colours, roles and product identity"
         ],
         [
-          "验证色彩、取用与日常使用体验",
-          "Test colour selection, handling and everyday use"
+          "在商品页补齐名称、规格、价格与购买入口",
+          "Add the product name, format, price and purchase entry"
         ],
         [
-          "记录评审意见，不预设成功结果",
-          "Record review feedback without presuming success"
+          "将购买后的使用评价关联回商品与提案",
+          "Link post-purchase feedback to the product and proposal"
         ]
       ],
       "outcome": [
-        "把产品提案带入可验证的使用与市场情境。",
-        "Bring the proposal into a testable use and market context."
+        "从提案到购买反馈，保留同一件商品的对应关系。",
+        "Keep the same product connected from proposal to purchase feedback."
       ]
     }
   },
