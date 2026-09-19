@@ -16,8 +16,6 @@ import {createImpactWorlds,disposeTree} from './worlds.js';
 import {impactMoments,advanceMoment,momentDuration,reelEntries,wrapReel,automaticReelPosition,settleReel,isReelMoment,reelDwell} from './content.js';
 import {DepthExperience} from './DepthExperience.jsx';
 import {IntelligenceExperience} from './IntelligenceExperience.jsx';
-import {IntelligenceOverview} from './IntelligenceOverview.jsx';
-import {IntelligenceProposalControls} from './IntelligenceProposalControls.jsx';
 import {intelligenceStages} from './intelligenceContent.js';
 import {createIntelligenceDirector} from './intelligenceDirector.js';
 import {depthContent,depthHotspots,transitionProgress,depthSceneId} from './depthContent.js';
@@ -43,11 +41,9 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
   const host=useRef(),runtime=useRef(),latest=useRef(),scrub=useRef(),hotspots=useRef({}),mapJourney=useRef();
   const [detail,setDetail]=useState(null);
   const [intelligence,setIntelligence]=useState({stage:0,mode:'auto',progress:0});
-  const [intelligenceProposal,setIntelligenceProposal]=useState({scheme:'A',step:null,variant:0,region:1,decision:0});
-  const [proposalPhase,setProposalPhase]=useState(0);
   const [network,setNetwork]=useState({layer:'all',selected:null,directory:false});
   const [categoryOverview,setCategoryOverview]=useState(true),[brandOverview,setBrandOverview]=useState(true);
-  latest.current={setIntelligence,intelligenceProposal,setProposalPhase,lang,playing,brands,setIndex,setReel,setPlaying,onRead,suspended,setDetail,categoryOverview,brandOverview,brandFlow,featuredCategory,setFeaturedCategory,featuredOffset,network,setNetwork};
+  latest.current={setIntelligence,lang,playing,brands,setIndex,setReel,setPlaying,onRead,suspended,setDetail,categoryOverview,brandOverview,brandFlow,featuredCategory,setFeaturedCategory,featuredOffset,network,setNetwork};
   const l=lang==='zh'?0:1,moment=impactMoments[index];
   const select=i=>{runtime.current?.select((i+impactMoments.length)%impactMoments.length);};
   useEffect(()=>{
@@ -156,6 +152,7 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
       if(!state.depth||state.transition?.returning)return;
       if(state.depth.id==='supply'){const {region,area}=supplyLocation(state.depth.selection);if(area){const saved=state.regionViews.get(region);openDepth(region);if(saved){state.transition.to={position:saved.position.clone(),target:saved.target.clone()};state.yaw=state.liveYaw=saved.yaw;state.tilt=state.liveTilt=saved.tilt;}return;}}
       if(state.depth.id==='intelligence'&&intelligenceDirector.snapshot().mode==='case'){intelligenceDirector.closeExample();publishIntelligence();interact();return;}
+      if(state.depth.id==='intelligence'){state.depth=null;state.depthMix=0;state.snapshot=null;state.transition=null;state.index=0;state.time=1;state.touring=false;latest.current.setIndex(0);latest.current.setDetail(null);interact();return;}
       const saved=state.snapshot;
       state.transition={elapsed:0,duration:reduced?.01:1.5,fromMix:state.depthMix,toMix:0,fromPosition:camera.position.clone(),fromTarget:look.clone(),to:{position:saved.entryPosition||saved.position,target:saved.entryTarget||saved.target},returning:true};
       interact();
@@ -165,8 +162,9 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
       interact();
     };
     runtime.current={wake,read,openDepth,closeDepth,interact,intelligenceExample,
+      intelligenceInspect(seconds){intelligenceDirector.inspect(seconds);latest.current.setPlaying(false);publishIntelligence();wake();},
       intelligenceSelect(index){if(!state.depth||state.depth.id!=='intelligence')return;intelligenceDirector.select(index);publishIntelligence();state.yaw=state.tilt=0;interact();},
-      intelligenceResume(){intelligenceDirector.resume();publishIntelligence();interact();},
+      intelligenceResume(){intelligenceDirector.resume();latest.current.setPlaying(true);publishIntelligence();interact();},
       intelligenceActivity(){intelligenceDirector.activity();interact();},
       pulseHome(){if(state.index!==0||!loaded||latest.current.suspended)return;state.homeCursor=[.507,.65];state.homeImpulse++;interact();},
       enterSupply(id){if(impactMoments[state.index].id!=='supply'||state.depth)return false;return openDepth(id);},
@@ -275,6 +273,7 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
     const observer=new ResizeObserver(resize);observer.observe(mount);resize();
     let infoKey='',diagnosticAt=0;
     loop=createFrameLoop({render(_now,dt){
+      if(loaded&&state.index===4&&!state.depth){state.depth={id:'intelligence',selection:null,origin:'intelligence'};state.depthMix=1;state.transition=null;state.touring=false;intelligenceDirector.reset();latest.current.setDetail(state.depth);publishIntelligence();}
       const motion=theatreMotion({loaded,playing:latest.current.playing,suspended:latest.current.suspended,held:state.held||(impactMoments[state.index].id==='supply'&&latest.current.network.directory),touring:state.touring,depth:!!state.depth,movingReel:!!state.reelMotion});
       const networkHeld=(impactMoments[state.index].id==='supply'&&latest.current.network.directory);
       if(motion.animate){state.motionTime+=dt;if(!state.held&&!networkHeld)state.idleSeconds+=dt;}
@@ -295,7 +294,7 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
       const {index,time}=state,moment=impactMoments[index],chapterDuration=duration(),progress=THREE.MathUtils.clamp(time/chapterDuration,0,1),sceneIndex=worldIndex(),mapDepth=state.depth?.originView==='flat';
       worlds.forEach((w,i)=>{w.root.visible=i===sceneIndex;});
       scene.environment=worlds[sceneIndex].environment||environment.texture;
-      worlds[sceneIndex].update({intelligence:intelligenceFrame,intelligenceProposal:latest.current.intelligenceProposal,intelligencePointer:[state.liveYaw,state.liveTilt],time:state.motionTime,cameraTime:time,progress,camera:cameraPosition,target:look,aspect:camera.aspect,lang:latest.current.lang,brands:latest.current.brands,reelPosition:state.reelPosition,categoryOverview:latest.current.categoryOverview,brandOverview:latest.current.brandOverview,brandFlow:latest.current.brandFlow.current,featuredCategory:latest.current.featuredCategory,featuredOffset:latest.current.featuredOffset.current,homePointer:[state.liveYaw/.15,state.liveTilt/.06],homeCursor:state.homeCursor,homeTouch:state.homeTouch,homeHover:state.homeHover,homePixelHeight:renderer.domElement.height,homeImpulse:state.homeImpulse,homeSuspended:latest.current.suspended,homeImmediate:reduced,overviewImmediate:reduced||!latest.current.playing,depthMix:mapDepth?1:state.depthMix,detailTime:state.detailTime,depthSelection:state.depth?.selection??null,network:latest.current.network,animate:motion.animate,dt:reduced?0:dt});
+      worlds[sceneIndex].update({intelligence:intelligenceFrame,intelligencePointer:[state.liveYaw,state.liveTilt],time:state.motionTime,cameraTime:time,progress,camera:cameraPosition,target:look,aspect:camera.aspect,lang:latest.current.lang,brands:latest.current.brands,reelPosition:state.reelPosition,categoryOverview:latest.current.categoryOverview,brandOverview:latest.current.brandOverview,brandFlow:latest.current.brandFlow.current,featuredCategory:latest.current.featuredCategory,featuredOffset:latest.current.featuredOffset.current,homePointer:[state.liveYaw/.15,state.liveTilt/.06],homeCursor:state.homeCursor,homeTouch:state.homeTouch,homeHover:state.homeHover,homePixelHeight:renderer.domElement.height,homeImpulse:state.homeImpulse,homeSuspended:latest.current.suspended,homeImmediate:reduced,overviewImmediate:reduced||!latest.current.playing,depthMix:mapDepth?1:state.depthMix,detailTime:state.detailTime,depthSelection:state.depth?.selection??null,network:latest.current.network,animate:motion.animate,dt:reduced?0:dt});
       if(state.depth&&!transition){const pose=worlds[sceneIndex].focusPose(state.depth.selection,camera.aspect);cameraPosition.copy(pose.position);look.copy(pose.target);}
       const k=1-Math.exp(-dt*6);state.liveYaw=THREE.MathUtils.lerp(state.liveYaw,state.yaw,k);state.liveTilt=THREE.MathUtils.lerp(state.liveTilt,state.tilt,k);
       if(sceneIndex===0||sceneIndex===4){camera.position.copy(cameraPosition);}else {
@@ -323,7 +322,7 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
       mount.style.opacity=loaded?String(fade):'0';if(scrub.current&&!state.held)scrub.current.value=String(Math.round(progress*1000));
       mount.parentElement.style.setProperty('--moment-progress',`${progress*100}%`);
       if(isReelMoment(moment.id)&&count()){const entries=reelEntries(impactMoments[state.index].id,latest.current.brands),slot=wrapReel(Math.round(state.reelPosition),entries.length),item={...entries[slot],slot},key=`${item.type}-${item.index}`;if(key!==infoKey){infoKey=key;latest.current.setReel(item);}}else if(infoKey){infoKey='';latest.current.setReel(null);}
-      diagnosticAt+=dt;if(diagnosticAt>.25||!latest.current.playing){diagnosticAt=0;if(state.index===4){publishIntelligence();latest.current.setProposalPhase(worlds[4].root.userData.proposalPhase??0);mount.dataset.intelligenceStage=String(intelligenceFrame.stage);mount.dataset.intelligenceMode=intelligenceFrame.mode;mount.dataset.intelligenceWeights=intelligenceFrame.weights.map(v=>v.toFixed(4)).join(',');}mount.dataset.depth=state.depth?(state.depth.selection||'overview'):'outer';mount.dataset.transition=transition?(transition.returning?'returning':'entering'):'settled';mount.dataset.depthMix=state.depthMix.toFixed(3);mount.dataset.geometries=String(renderer.info.memory.geometries);mount.dataset.textures=String(renderer.info.memory.textures);mount.dataset.reelPosition=state.reelPosition.toFixed(3);mount.dataset.moment=moment.id;mount.dataset.time=time.toFixed(2);mount.dataset.camera=camera.position.toArray().map(v=>v.toFixed(2)).join(',');}
+      diagnosticAt+=dt;if(diagnosticAt>.25||!latest.current.playing){diagnosticAt=0;if(state.index===4){publishIntelligence();mount.dataset.intelligenceStage=String(intelligenceFrame.stage);mount.dataset.intelligenceMode=intelligenceFrame.mode;mount.dataset.intelligenceWeights=intelligenceFrame.weights.map(v=>v.toFixed(4)).join(',');mount.dataset.journeyTime=intelligenceFrame.time.toFixed(3);mount.dataset.journeySeeking=String(intelligenceFrame.seeking);}mount.dataset.depth=state.depth?(state.depth.selection||'overview'):'outer';mount.dataset.transition=transition?(transition.returning?'returning':'entering'):'settled';mount.dataset.depthMix=state.depthMix.toFixed(3);mount.dataset.geometries=String(renderer.info.memory.geometries);mount.dataset.textures=String(renderer.info.memory.textures);mount.dataset.reelPosition=state.reelPosition.toFixed(3);mount.dataset.moment=moment.id;mount.dataset.time=time.toFixed(2);mount.dataset.camera=camera.position.toArray().map(v=>v.toFixed(2)).join(',');}
       composer.render();
       if(transition&&transition.elapsed>=transition.duration){
         if(transition.returning){const saved=state.snapshot;state.time=saved.time;state.yaw=state.liveYaw=saved.yaw;state.tilt=state.liveTilt=saved.tilt;state.depth=null;state.snapshot=null;latest.current.setDetail(null);}
@@ -339,7 +338,7 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
     const visibility=()=>{mount.parentElement.dataset.pageVisible=String(!document.hidden);loop.setVisible(!document.hidden);if(document.hidden)cancelPointers();};document.addEventListener('visibilitychange',visibility);visibility();loop.setActive(true);
     return()=>{disposed=true;loop.dispose();observer.disconnect();gestures.dispose();chapterGestures.dispose();runtime.current=null;mount.parentElement.removeEventListener('pointermove',homePointer);mount.parentElement.removeEventListener('pointerleave',homeLeave);document.removeEventListener('visibilitychange',visibility);worlds.forEach(w=>w.dispose?.());sky.dispose();disposeTree(scene);composer.passes.forEach(p=>p.dispose?.());composer.dispose();environment.dispose();pmrem.dispose();renderer.dispose();renderer.domElement.remove();};
   },[]);
-  useEffect(()=>{runtime.current?.wake();},[ready,index,playing,lang,suspended,categoryOverview,brandOverview,featuredCategory,network,intelligenceProposal]);
+  useEffect(()=>{runtime.current?.wake();},[ready,index,playing,lang,suspended,categoryOverview,brandOverview,featuredCategory,network]);
   useEffect(()=>{runtime.current?.cancelPointers();},[index,suspended,detail,network.directory]);
   useEffect(()=>{if(detail?.id==='supply')host.current?.focus({preventScroll:true});},[detail?.id]);
   let title=moment.title[l],description=moment.description[l],eyebrow=['PARAMONT GLOBAL','PARAMONT GLOBAL'][l],note=moment.id==='company'?['PARAMONT GLOBAL · 创意连接世界','PARAMONT GLOBAL · CREATIVITY CONNECTS.'][l]:moment.note[l];
@@ -358,9 +357,8 @@ export function ImpactTheatre({lang,onLanguage,onRead,onFullscreen,catalog,compa
     <SupplyNetwork active={ready&&moment.id==='supply'} lang={lang} playing={playing} suspended={suspended} depthActive={detail?.id==='supply'} network={network} onChange={patch=>runtime.current?.networkChange(patch)} journeyRef={mapJourney} onEnter={id=>runtime.current?.enterSupply(id)} onInteract={()=>runtime.current?.interact()} onHold={value=>runtime.current?.hold(value)}/>
     {ready&&moment.id==='brands'&&(brandOverview?<BrandOverview brands={brands} lang={lang} flow={brandFlow} journeyRef={brandJourney} onHold={value=>runtime.current?.hold(value)} onInteract={()=>runtime.current?.interact()} onSelect={slot=>{brandFlow.current.heldRow=null;setBrandOverview(false);runtime.current?.focusReel(slot);}}/>:['left','right'].map(side=><button key={side} className={`brand-return exhibit-action ${side}`} onClick={()=>{setBrandOverview(true);runtime.current?.interact();}} aria-label={lang==='zh'?`${side==='left'?'左侧':'右侧'}返回品牌总览`:`Back to brands ${side}`}><ArrowLeft/>{['品牌总览','ALL BRANDS'][l]}</button>))}
     {ready&&moment.id==='categories'&&(categoryOverview?<CategoryOverview catalog={catalog} lang={lang} selected={featuredCategory} onSelect={value=>{setFeaturedCategory(value);runtime.current?.interact();}} onHold={value=>runtime.current?.hold(value)} onDrag={value=>{featuredOffset.current=value;runtime.current?.wake();}} onRead={item=>{runtime.current?.interact();onRead('categories',{type:'catalog-category',item});}} onScene={slot=>{setCategoryOverview(false);runtime.current?.focusReel(slot);}}/>:<button className="category-return exhibit-action" onClick={()=>{setCategoryOverview(true);runtime.current?.interact();}}><ArrowLeft/>{['全部品类','All categories'][l]}</button>)}
-    {ready&&moment.id==='intelligence'&&!detail&&<IntelligenceOverview lang={lang} playing={playing} scheme={intelligenceProposal.scheme} onSelect={id=>runtime.current?.openDepth(id)}/>}
-    {ready&&moment.id==='intelligence'&&(!detail||intelligence.stage===4)&&<IntelligenceProposalControls lang={lang} selection={intelligenceProposal} phase={intelligenceProposal.step??proposalPhase} showDemo={!detail||intelligence.stage===4} onChange={patch=>{setIntelligenceProposal(value=>({...value,...patch}));runtime.current?.intelligenceActivity();}}/>}
-    {detail?.id==='intelligence'&&<IntelligenceExperience decisionChoice={intelligenceProposal.decision??0} onDecision={choice=>{setIntelligenceProposal(value=>({...value,decision:choice}));runtime.current?.intelligenceActivity();}} onDecisionContinue={()=>{setIntelligenceProposal(value=>({...value,scheme:'C',step:1,variant:value.decision??0}));runtime.current?.intelligenceSelect(4);}} proposalScheme={intelligenceProposal.scheme} playing={playing} lang={lang} stage={intelligence.stage} mode={intelligence.mode} progress={intelligence.progress} onSelect={value=>runtime.current?.intelligenceSelect(value)} onResume={()=>runtime.current?.intelligenceResume()} onExample={()=>runtime.current?.intelligenceExample()} onBack={()=>runtime.current?.closeDepth()} onActivity={()=>runtime.current?.intelligenceActivity()} onHold={value=>runtime.current?.hold(value)}/>}
+    {import.meta.env.DEV&&new URLSearchParams(location.search).has('motionReview')&&detail?.id==='intelligence'&&<label style={{position:'absolute',top:24,left:'40%',zIndex:100,color:'#b8d0e3',fontSize:12,background:'#132336',padding:'8px 12px',borderRadius:6}}>动画审阅 · 秒 <input aria-label="动画审阅时间" type="number" min="0" max="107.99" step="0.1" value={Number((intelligence.time??0).toFixed(2))} onChange={e=>runtime.current?.intelligenceInspect(Number(e.target.value))} style={{width:85,marginLeft:10,color:'#fff',background:'#0a1420',border:'1px solid #486077'}}/></label>}
+    {detail?.id==='intelligence'&&<IntelligenceExperience playing={playing} lang={lang} stage={intelligence.stage} mode={intelligence.mode} progress={intelligence.progress} onSelect={value=>runtime.current?.intelligenceSelect(value)} onResume={()=>runtime.current?.intelligenceResume()} onExample={()=>runtime.current?.intelligenceExample()} onBack={()=>runtime.current?.closeDepth()} onActivity={()=>runtime.current?.intelligenceActivity()} onHold={value=>runtime.current?.hold(value)}/>}
     {detail?.id==='supply'&&<DepthExperience view={detail} lang={lang} companyFacts={companyFacts} onSelect={id=>runtime.current?.openDepth(id)} onBack={()=>runtime.current?.closeDepth()}/>}
     <div className="impact-note">{note}</div>
   </main>;

@@ -145,3 +145,8 @@
 .intelligence-experience[data-stage=decisioning] .intelligence-case-visual{display:none;}
 @media(max-height:820px){.intelligence-decision-controls{top:64%;gap:.65vh;}.intelligence-decision-controls .decision-continue{padding:.35em 1.2em;}.intelligence-decision-controls>div button{padding:.45em 1.2em;}}
 @media(max-aspect-ratio:3/2){.intelligence-decision-controls{left:43%;right:3%;top:66%;}.intelligence-decision-controls>div{gap:.5vw;}.intelligence-decision-controls>div button{padding:.5em .9em;}}
+
+/* A paused stage jump must display its new copy immediately, rather than
+   depending on an entrance animation completing in a suspended compositor. */
+.impact-theatre[data-action-motion=paused] .intelligence-copy,
+.impact-theatre[data-action-motion=paused] .intelligence-case { animation: none; }

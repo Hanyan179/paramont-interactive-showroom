@@ -1,6 +1,7 @@
 # Only the active showroom and its required shared sources belong to this repository.
 /*
 !/README.md
+!/design-qa.md
 !/AGENTS.md
 !/.gitignore
 !/package.json
