@@ -95,13 +95,80 @@ export function purchaseReviewDetailsTexture(index=0){return canvasTexture((c,w,
  const details=c.journeyLang==='zh'?['上脸很自然，日常出门也很好搭配。','包装很用心，收到礼物的人很喜欢。','比想象中更细腻，会继续使用。','质感扎实，细节做得很到位。','几种颜色搭在一起，轻松完成日常妆。','触感轻柔，使用体验很舒服。']:['Natural colour, easy to wear every day.','Thoughtful packaging. A lovely gift.','Finer texture than I expected. Love it.','Beautifully made, with considered details.','The shades work beautifully together.','Soft to the touch and lovely to use.'];
  label(c,details[index],38,289,34,'#6b6f72');label(c,'Shade / Soft Haze',38,350,29,'#84878a');label(c,c.journeyLang==='zh'?'有帮助 · '+(12-index):'Helpful · '+(12-index),w-235,350,29,'#677b64');
 },1024,390);}
+// These are qualitative studies, so their visual language is comparison,
+// quotation, construction and open questions—not invented quantitative charts.
+function reportParagraph(c,text,x,y,width,size,color=INK){
+ const tokens=c.journeyLang==='zh'?Array.from(text):text.split(/(?<=\s)/),lines=[];let line='';
+ c.font=`400 ${size}px Arial, sans-serif`;
+ for(const token of tokens){if(line&&c.measureText(line+token).width>width){lines.push(line.trim());line='';}line+=token;}
+ if(line)lines.push(line.trim());
+ lines.forEach((value,i)=>label(c,value,x,y+i*size*1.25,size,color));
+}
+function drawFeedbackReport(c,report,l){
+ report.lines.slice(0,2).forEach((line,i)=>{
+  const y=210+i*146;rounded(c,39,y,690,129,10);c.fillStyle='#152c40';c.fill();
+  rule(c,39,y+13,4,BLUE);reportParagraph(c,line[l],67,y+49,630,l===0?34:32);
+ });
+ label(c,l===0?'用途标识 + 便携收纳':'SHADE ROLES + PORTABILITY',39,553,l===0?34:28,BLUE);
+}
+function drawFormatReport(c,l){
+ c.strokeStyle='#bed0df';c.lineWidth=3;
+ // Abstract format silhouettes, never a copied package or a brand identity.
+ rounded(c,133,264,56,116,10);c.stroke();rounded(c,139,230,44,32,5);c.stroke();rule(c,147,300,27,'#d3a6a9');
+ c.beginPath();c.moveTo(354,229);c.lineTo(414,229);c.lineTo(409,352);c.lineTo(359,352);c.closePath();c.stroke();rounded(c,363,354,41,26,3);c.stroke();rule(c,359,242,49,'#d9a395');
+ rounded(c,574,275,68,105,14);c.stroke();rounded(c,584,244,48,31,5);c.stroke();rounded(c,592,217,32,28,12);c.stroke();rule(c,589,319,38,'#c8b396');
+ const names=l===0?['唇油','腮红','底妆']:['Lip oil','Blush','Skin tint'];
+ const details=l===0?['刷头取用\n逐层叠涂','凝胶乳霜\n指腹晕染','轻薄覆盖\n色调匹配']:['Applicator\nLayer colour','Gel-cream\nFinger blend','Sheer cover\nShade match'];
+ names.forEach((name,i)=>{const x=59+i*223;label(c,name,x,433,l===0?42:34);details[i].split('\n').forEach((value,j)=>label(c,value,x,480+j*37,27,MUTED));});
+}
+function drawFinishReport(c,l){
+ label(c,l===0?'凝胶 → 油':'GEL → OIL',39,248,l===0?36:30,BLUE);
+ label(c,l===0?'膏 → 粉':'CREAM → POWDER',406,248,l===0?36:27,BLUE);
+ rounded(c,40,282,315,90,42);c.fillStyle=gradient(c,40,285,355,367,[[0,'#b0878c'],[.44,'#654f62'],[1,'#24324b']]);c.fill();
+ c.strokeStyle='rgba(237,215,211,.6)';c.lineWidth=3;c.beginPath();c.moveTo(75,302);c.bezierCurveTo(138,284,193,318,293,308);c.stroke();
+ rounded(c,407,282,316,90,42);c.fillStyle=gradient(c,408,282,725,372,[[0,'#bca88f'],[1,'#665849']]);c.fill();
+ c.strokeStyle='rgba(239,223,201,.18)';c.lineWidth=1;for(let i=0;i<13;i++){c.beginPath();c.moveTo(431+i*21,304);c.lineTo(424+i*21,351);c.stroke();}
+ label(c,l===0?'光泽 · 留色':'Gloss · tint',40,419,32);label(c,l===0?'涂抹 · 柔化边缘':'Glide · diffuse',406,419,l===0?30:29);
+ rule(c,39,455,690);label(c,l===0?'雾面打底，缎光提亮':'Matte base. Satin highlight.',39,514,l===0?38:36);
+ label(c,l===0?'妆效设计映射 · 需验证':'DESIGN DIRECTION / TO VALIDATE',39,555,23,MUTED);
+}
+function drawColourReport(c,l){
+ const shades=l===0?['香槟','灰褐','玫瑰','象牙白']:['Champagne','Taupe','Rose','Ivory'];
+ const roles=l===0?['提亮','加深','过渡','打底']:['Illuminate','Define','Blend','Base'];
+ ['#c3a287','#92735d','#b8847e','#e4d0b9'].forEach((colour,i)=>{
+  const x=39+i%2*354,y=207+Math.floor(i/2)*177,ink=i===1?'#f5eee5':'#172634';
+  rounded(c,x,y,336,156,9);c.fillStyle=colour;c.fill();label(c,shades[i],x+23,y+45,28,ink);
+  label(c,roles[i],x+23,y+118,l===0?50:43,ink,500);
+ });
+}
+function drawConstructionReport(c,l){
+ c.strokeStyle='#b6c9d8';c.lineWidth=3;rounded(c,225,206,318,136,12);c.stroke();
+ rounded(c,240,221,288,105,7);c.fillStyle=gradient(c,240,221,528,326,[[0,'#8294a1'],[.55,'#263e52'],[1,'#637888']]);c.fill();
+ rule(c,242,351,284,'#b6c9d8');rounded(c,225,362,318,171,12);c.strokeStyle='#b6c9d8';c.stroke();
+ ['#c3a287','#92735d','#b8847e','#e4d0b9'].forEach((colour,i)=>{rounded(c,242+i%2*147,379+Math.floor(i/2)*70,137,60,4);c.fillStyle=colour;c.fill();});
+ rounded(c,365,531,38,9,3);c.fillStyle='#b6c9d8';c.fill();
+ rule(c,541,270,27,'#829caf');label(c,l===0?'镜面':'Mirror',580,280,29);
+ rule(c,148,351,76,'#829caf');label(c,l===0?'铰链':'Hinge',39,359,29);
+ rule(c,542,444,26,'#829caf');label(c,l===0?'色盘':'Pans',580,453,29);
+ rule(c,140,539,224,'#829caf');label(c,l===0?'扣合':'Clasp',39,548,29);
+}
+function drawValidationReport(c,report,l){
+ report.lines.forEach((line,i)=>{
+  const y=217+i*118,parts=line[l].split(l===0?'：':': ');
+  rounded(c,43,y+8,34,34,4);c.strokeStyle='#7896ad';c.lineWidth=2;c.stroke();
+  label(c,parts[0],106,y+38,l===0?42:35,BLUE);reportParagraph(c,parts[1],106,y+83,610,l===0?31:28);
+  if(i<2)rule(c,106,y+106,618);
+ });
+}
 export function reportTexture(index){return canvasTexture((c,w,h)=>{
- const report=researchReports[index],l=c.journeyLang==='zh'?0:1;
- rounded(c,3,3,w-6,h-6,26);c.fillStyle='#102337';c.fill();c.strokeStyle='#6d8fa8';c.lineWidth=2;c.stroke();
- label(c,`0${index+1} / `+report.kind[l],38,64,l===0?23:18,BLUE);label(c,report.title[l],38,136,l===0?47:36,INK,500);rule(c,38,175,w-76);
- if(index===3){['#c3a287','#92735d','#b8847e','#e4d0b9'].forEach((v,i)=>{c.fillStyle=v;rounded(c,39+i*166,206,147,72,5);c.fill();});}
- if(index===4){c.strokeStyle='#829caf';c.lineWidth=2;rounded(c,235,204,250,77,8);c.stroke();rule(c,248,248,224);}
- const start=(index===3||index===4)?335:247;
- report.lines.forEach((line,i)=>{label(c,`0${i+1}`,39,start+i*93,20,BLUE);label(c,line[l],88,start+i*93,l===0?27:23,INK);rule(c,88,start+26+i*93,w-129);});
- label(c,l===0?'研究边界 / 下一步':'RESEARCH BOUNDARY / NEXT STEP',39,605,19,BLUE);label(c,report.question[l],39,651,l===0?23:20,MUTED);
+ const report=researchReports[index],l=c.journeyLang==='zh'?0:1;c.textAlign='left';
+ rounded(c,3,3,w-6,h-6,26);c.fillStyle=gradient(c,0,0,w,h,[[0,'#132b40'],[1,'#0c1d30']]);c.fill();c.strokeStyle='#6d8fa8';c.lineWidth=2;c.stroke();
+ label(c,`0${index+1} / `+report.kind[l],39,66,l===0?24:19,BLUE);label(c,report.title[l],39,143,l===0?53:46,INK,500);rule(c,39,179,w-78);
+ if(index===0)drawFeedbackReport(c,report,l);
+ else if(index===1)drawFormatReport(c,l);
+ else if(index===2)drawFinishReport(c,l);
+ else if(index===3)drawColourReport(c,l);
+ else if(index===4)drawConstructionReport(c,l);
+ else drawValidationReport(c,report,l);
+ rule(c,39,588,w-78);label(c,l===0?'研究边界 / 下一步':'RESEARCH BOUNDARY / NEXT STEP',39,625,20,BLUE);label(c,report.question[l],39,672,l===0?25:23,MUTED);
 },768,720);}
