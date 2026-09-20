@@ -118,8 +118,8 @@ export function IntelligenceExperience({
       </article>
     </>}
 
-    <button className="intelligence-back exhibit-action" onClick={onBack} aria-label={isCase ? ['返回阶段详情', 'Back to stage detail'][l] : ['返回展厅', 'Back to the showroom'][l]}>
-      <ArrowLeft aria-hidden="true" />
+    <button className="intelligence-back" onClick={onBack} aria-label={isCase ? ['返回阶段详情', 'Back to stage detail'][l] : ['返回展厅', 'Back to the showroom'][l]}>
+      <ArrowLeft weight="light" aria-hidden="true" />
       <span className="intelligence-back-label" aria-hidden="true">{isCase ? ['返回阶段详情', 'Back to stage detail'][l] : ['返回展厅', 'Back to the showroom'][l]}</span>
       <span className="intelligence-back-short" aria-hidden="true">{['返回', 'Back'][l]}</span>
     </button>
