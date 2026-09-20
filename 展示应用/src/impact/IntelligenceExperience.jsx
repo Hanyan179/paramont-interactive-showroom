@@ -130,13 +130,13 @@ export function IntelligenceExperience({
           key={entry.id}
           className="intelligence-stage-button"
           aria-pressed={selected}
+          aria-current={selected ? 'step' : undefined}
           data-intelligence-stage={i}
           onClick={event => { if (event.detail === 0) onSelect?.(i); }}
           style={selected ? {'--intelligence-stage-progress': `${isAuto ? stageProgress * 100 : 100}%`} : undefined}
         >
-          <span className="intelligence-stage-icon"><Icon weight="light" aria-hidden="true" /></span>
-          <span className="intelligence-stage-label"><small>0{i + 1}</small><span>{entry.name[l]}</span></span>
-          <span className="intelligence-stage-line" aria-hidden="true"><span /></span>
+          <Icon weight="light" aria-hidden="true" />
+          <span className="intelligence-stage-label">{entry.name[l]}</span>
         </button>;
       })}
     </nav>
