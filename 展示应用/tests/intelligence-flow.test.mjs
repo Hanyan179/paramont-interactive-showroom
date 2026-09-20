@@ -107,7 +107,7 @@ test('the centre letter and surrounding interface share an exact opening and clo
  }
  disposeTree(world.root);
 });
-test('every temporal boundary has continuous visible object transforms and opacity',()=>{const {world,update}=rig();for(const time of [7,17,18,25,27,28.6,29,29.2,29.5,30,30.5,31.2,32,33,34,37,39,40.5,43,45.5,48,49,50,51,54,55,56,56.5,58.7,59,59.3,60.5,61.5,62.9,64,65,66.5,68,70,73,75.5,76,79,85,90,93,95,96,97,98,100,106]){update(time-.00001);const before=new Map();world.root.traverse(o=>before.set(o,{matrix:[...o.matrixWorld.elements],opacity:o.material?.opacity,color:o.material?.color?.toArray(),visible:o.visible}));update(time+.00001);world.root.traverse(o=>{const b=before.get(o);if(o.visible&&b.visible&&o.material?.opacity>.01){o.matrixWorld.elements.forEach((v,i)=>near(v,b.matrix[i],.003));near(o.material.opacity,b.opacity,.003);o.material.color?.toArray().forEach((v,i)=>near(v,b.color[i],.003));}});}disposeTree(world.root);});
+test('every temporal boundary has continuous visible object transforms and opacity',()=>{const {world,update}=rig();for(const time of [2.6,4.2,4.6,6.5,7,7.2,7.9,17,18,25,27,28.6,29,29.2,29.5,30,30.5,31.2,32,33,34,37,39,40.5,43,45.5,48,49,50,51,54,55,56,56.5,58.7,59,59.3,60.5,61.5,62.9,64,65,66.5,68,70,73,75.5,76,79,85,90,93,95,96,97,98,100,106]){update(time-.00001);const before=new Map();world.root.traverse(o=>before.set(o,{matrix:[...o.matrixWorld.elements],opacity:o.material?.opacity,color:o.material?.color?.toArray(),visible:o.visible}));update(time+.00001);world.root.traverse(o=>{const b=before.get(o);if(o.visible&&b.visible&&o.material?.opacity>.01){o.matrixWorld.elements.forEach((v,i)=>near(v,b.matrix[i],.003));near(o.material.opacity,b.opacity,.003);o.material.color?.toArray().forEach((v,i)=>near(v,b.color[i],.003));}});}disposeTree(world.root);});
 for(const [w,h] of [[1366,768],[1920,1080],[3840,2160],[1200,900]])test(`hero contents stay in the right-side safe area at ${w}x${h}`,()=>{const {world,camera,update}=rig(w/h);for(const t of [0,16,31,47,67,77,85,100,107]){update(t);for(const name of ['record-0','persistent-drawing-product','continuous-drawing-kit-craft']){const object=world.root.getObjectByName(name);if(!object.visible)continue;const center=new THREE.Vector3();object.getWorldPosition(center);const p=center.project(camera);assert.ok(p.x>=-.22&&p.x<=.94,`${name} at ${t}: ${p.x}`);assert.ok(p.y>-.57&&p.y<.7,`${name} at ${t}: ${p.y}`);}}disposeTree(world.root);});
 test('all six stages retain distinct bilingual business examples without invented business outcomes',()=>{assert.equal(intelligenceStages.length,6);assert.equal(new Set(intelligenceStages.map(s=>s.id)).size,6);for(const s of intelligenceStages){for(const value of [s.name,s.description,s.example.title,s.example.summary,s.example.outcome,...s.example.steps])assert.ok(value.length===2&&value.every(t=>typeof t==='string'&&t.length));assert.doesNotMatch(JSON.stringify(s.example),/儿童|香水|\d+%/);}});
 
@@ -298,7 +298,7 @@ test('business records become text and rejoin their matching sources on the next
  update(105);assert.ok(records[0].visible);assert.ok(records.slice(1).every(o=>!o.visible));
  update(6,'zh');assert.deepEqual(records.map(o=>o.userData.reportIndex),[0,3,3,5,5,5]);assert.equal(records[1].userData.typing.text,'销量，要和预测一起看。');assert.equal(records[2].userData.typing.text,'卖得少，也可能是缺货。');
  assert.ok(records.every(o=>o.visible));for(let i=0;i<6;i++)assert.equal(world.root.getObjectByName(`record-${i}`),records[i]);
- for(const record of records.slice(1)){near(record.children[0].scale.x,1);near(record.children[0].scale.y,1);near(record.children[0].position.y,0);assert.equal(record.userData.reviewSkins.businessInk.visible,false);}
+ for(const record of records.slice(1)){near(record.children[0].scale.x,1);near(record.children[0].scale.y,record.userData.reviewSkins.sourceHeight);near(record.children[0].position.y,0);assert.equal(record.userData.reviewSkins.businessInk.visible,false);}
  disposeTree(world.root);
 });
 test('source cards and focused comparisons remain separated in screen space',()=>{
@@ -314,6 +314,17 @@ test('source cards and focused comparisons remain separated in screen space',()=
 });
 test('automatic playback is 25 percent faster while inactivity remains real time',()=>{const d=createIntelligenceDirector();advance(d,8);near(d.snapshot().time,10);});
 
+test('source-specific UI grows around the same sentence and retires before reports and commerce',()=>{
+ const {world,update}=rig(),records=Array.from({length:6},(_,i)=>world.root.getObjectByName(`record-${i}`));
+ const maps=records.map(r=>r.userData.reviewSkins.sourceInk.material.map);assert.equal(new Set(maps).size,6);
+ update(2.3);assert.ok(records[0].visible);assert.ok(records.every(r=>!r.userData.reviewSkins.sourceInk.visible));
+ update(4.2);assert.ok(records[0].userData.reviewSkins.sourceInk.material.opacity>.7);assert.ok(records.slice(1).every(r=>!r.userData.reviewSkins.sourceInk.visible));
+ for(const lang of ['zh','en']){
+  update(7,lang);for(const record of records){const {sourceInk,exhibitInk}=record.userData.reviewSkins;assert.ok(sourceInk.visible);assert.ok(!exhibitInk?.visible);near(sourceInk.material.opacity,record.children[0].material.opacity);}
+  for(const t of [8,16,49,85,92,95.2,99,107.9999]){update(t,lang);assert.ok(records.every(r=>!r.userData.reviewSkins.sourceInk.visible));}
+ }
+ assert.deepEqual(records.map(r=>r.userData.reviewSkins.sourceInk.material.map),maps);disposeTree(world.root);
+});
 test('dense information becomes six report panels before the cube is reconstructed',()=>{const {world,update}=rig();update(6);const fragments=[];world.root.traverseVisible(o=>{if(o.name.startsWith('data-fragment-'))fragments.push(o);});assert.equal(fragments.length,36);update(17);for(let i=0;i<6;i++){const face=world.root.getObjectByName(`report-face-${i}`);assert.ok(face.visible);assert.equal(face.material.side,THREE.FrontSide);}assert.ok(fragments.every(o=>!o.visible));update(33);for(let i=0;i<6;i++)assert.equal(world.root.getObjectByName(`report-face-${i}`).visible,false);disposeTree(world.root);});
 test('the dense information field preserves readable gaps between text and reviews',()=>{
  const {world,update}=rig();update(6);const bounds=[];

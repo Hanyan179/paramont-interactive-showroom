@@ -73,7 +73,7 @@ export function intelligenceWorld(quality,manager){
      x=lerp(scatterX,temp.x,localGather)+(i%2?-.38:.38)*bow;
      y=lerp(scatterY,temp.y,localGather)+.48*bow;z=lerp(0,temp.z,localGather);
      s=lerp(i===0?1:.55,.08,localGather);a=onset*(1-ramp(localGather,.40,.92));
-     framing=ramp(t,4.6+i*.12,6.5+i*.12)*.72*(1-ramp(t,7.2,7.9));
+     framing=ramp(t,i===0?2.6:4.6+i*.12,i===0?4.2:6.5+i*.12)*.72*(1-ramp(t,7.2,7.9));
      mesh.rotation.set(0,Math.sin(localGather*Math.PI)*(i%2?-.12:.12),0);
     }else if(t>=89&&i===0){
      const emerge=ramp(t,89,90),outward=ramp(t,93.2,95.4),closing=ramp(t,101.2,103.8);
@@ -94,17 +94,18 @@ export function intelligenceWorld(quality,manager){
      a=enter*(1-closing)*lerp(.72,1,focus);framing=1-ramp(t,101.2,102.4);
     }
     if(i===0)x+=letterOffset*s;
-    const {exhibitInk,purchaseInk,purchase:purchaseFrame,businessInk,actionInk}=mesh.userData.reviewSkins,card=mesh.children[0];
+    const {exhibitInk,purchaseInk,purchase:purchaseFrame,businessInk,actionInk,sourceInk,sourceHeight}=mesh.userData.reviewSkins,card=mesh.children[0];
+    const opening=t<34;
+    alpha(sourceInk,opening?a*framing:0);
     if(i===0){
      // The first avatar review and its glass frame share one changing outline.
-     card.scale.set(lerp(5.8/4.2,1,reframe),lerp(2.2/1.31,1,reframe),1);
+     card.scale.set(lerp(5.8/4.2,1,reframe),opening?sourceHeight/1.31:lerp(2.2/1.31,1,reframe),1);
      purchaseFrame.scale.set(lerp(1,4.2/5.8,reframe),lerp(1,1.31/2.2,reframe),1);
      alpha(purchaseFrame,a*purchase);alpha(purchaseInk,a*purchase*(1-ramp(reframe,.12,.46)));
-     alpha(exhibitInk,a*framing*ramp(reframe,.54,.88));
+     alpha(exhibitInk,opening?0:a*framing*ramp(reframe,.54,.88));
     }else{
      const expanded=t>=89;
-     card.scale.set(expanded?4.4/3.2:1,expanded?2.8:1,1);card.position.y=expanded?-.6:0;
-     alpha(exhibitInk,expanded?0:a*framing);
+     card.scale.set(expanded?4.4/3.2:1,expanded?2.8:sourceHeight,1);card.position.y=expanded?-.6:0;
      alpha(businessInk,expanded?a*framing:0);
      const action=i===1?ramp(t,96.7,97.3):i===2?ramp(t,99.3,99.9):ramp(t,96.7,97.3);
      alpha(actionInk,expanded?a*framing*action:0);

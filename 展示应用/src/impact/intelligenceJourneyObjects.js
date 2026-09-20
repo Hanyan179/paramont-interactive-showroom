@@ -4,6 +4,7 @@ import {createDirectionModel,createDrawingKitCraft} from './intelligenceCraft.js
 import {createProductGeometry,brandProductSurface} from './intelligenceProduct.js';
 import confirmedBrands from '../../../共享数据/featured-brands.json' with {type:'json'};
 import {feedbackSources} from './intelligenceFeedback.js';
+import {sourceDetailsTexture} from './intelligenceSourceSurfaces.js';
 import {informationFragments} from './intelligenceResearch.js';
 import {createMountainRobot} from './intelligenceRobot.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
@@ -104,9 +105,10 @@ export function createJourneyObjects(manager,quality){
  const reviewMap=reviewPaperTexture(),purchaseMap=purchaseReviewPaperTexture();
  const records=feedbackSources.map((source,i)=>{
   const text=texts[i],width=i===0?3.8:3.65,mesh=textPlane(text,`record-${i}`,width);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),width);
-  const w=i===0?4.2:3.2,h=i===0?1.31:1,card=texturePlane(reviewMap,w,h,'feedback-frame'),exhibitInk=texturePlane(reviewDetailsTexture(i),w,h,`feedback-details-${i}`);
-  card.position.z=-.03;exhibitInk.position.z=.004;card.add(exhibitInk);mesh.add(card);
-  card.renderOrder=5;exhibitInk.renderOrder=6;mesh.renderOrder=7;
+  const w=i===0?4.2:3.2,h=i===0?1.31:1,card=texturePlane(reviewMap,w,h,'feedback-frame');
+  const exhibitInk=i===0?texturePlane(reviewDetailsTexture(i),w,h,`feedback-details-${i}`):null;
+  card.position.z=-.03;if(exhibitInk){exhibitInk.position.z=.004;exhibitInk.renderOrder=6;card.add(exhibitInk);}mesh.add(card);
+  card.renderOrder=5;mesh.renderOrder=7;
   let purchase=null,purchaseInk=null,businessInk=null,actionInk=null;
   if(i===0){
    purchase=texturePlane(purchaseMap,5.8,2.2,'purchase-review-frame');purchaseInk=texturePlane(purchaseReviewDetailsTexture(0),5.8,2.2,'purchase-review-details-0');
@@ -117,8 +119,10 @@ export function createJourneyObjects(manager,quality){
    actionInk=texturePlane(businessActionTexture(i),4.4,2.8,`business-adjustment-${i}`);
    for(const ink of [businessInk,actionInk]){ink.position.set(0,-.6,.006);ink.renderOrder=6;mesh.add(ink);}
   }
+  const sourceHeight=i===0?1.65:1.44,sourceInk=texturePlane(sourceDetailsTexture(i),w,sourceHeight,`source-ui-${source.id}`);
+  sourceInk.position.z=-.026;sourceInk.renderOrder=6;mesh.add(sourceInk);
   mesh.userData.source=source.id;mesh.userData.reportIndex=source.report;
-  mesh.userData.reviewSkins={exhibitInk,purchaseInk,purchase,businessInk,actionInk};
+  mesh.userData.reviewSkins={exhibitInk,purchaseInk,purchase,businessInk,actionInk,sourceInk,sourceHeight};
   mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;
  });
  // Companion reviews belong to the scrolling consumer page. The first review

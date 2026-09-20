@@ -116,13 +116,16 @@ export function commerceDetails(){return canvasTexture((c)=>{
 export function purchaseReviewPaperTexture(){return canvasTexture((c,w,h)=>{
  rounded(c,2,2,w-4,h-4,24);c.fillStyle='#fffdf9';c.fill();c.strokeStyle='#d5cfc5';c.lineWidth=2;c.stroke();
 },1024,390);}
-export function purchaseReviewDetailsTexture(index=0){return canvasTexture((c,w,h)=>{
+export function drawReviewAvatar(c,index,cx=76,cy=72){
  // Authored editorial avatars: illustration, not a real customer endorsement.
- const palette=['#acb7a8','#b8a79f','#b0b9c1','#c3b49b','#aab6b0','#bca5a9'],cx=76,cy=72;
+ const palette=['#acb7a8','#b8a79f','#b0b9c1','#c3b49b','#aab6b0','#bca5a9'];
  c.save();c.beginPath();c.arc(cx,cy,39,0,Math.PI*2);c.clip();c.fillStyle=palette[index];c.fillRect(cx-40,cy-40,80,80);
  c.fillStyle=['#514940','#373e46','#655349'][index%3];c.beginPath();c.ellipse(cx,cy+46,37,34,0,0,Math.PI*2);c.fill();
  c.fillStyle=['#dfbca0','#cda285','#e8c9ac'][index%3];c.beginPath();c.ellipse(cx,cy-2,18,25,0,0,Math.PI*2);c.fill();
  c.fillStyle=['#3c3532','#604a3c','#292e33'][index%3];c.beginPath();c.ellipse(cx-4,cy-20,21,14,-.2,0,Math.PI*2);c.fill();c.restore();
+}
+export function purchaseReviewDetailsTexture(index=0){return canvasTexture((c,w,h)=>{
+ drawReviewAvatar(c,index);
  label(c,c.journeyLang==='zh'?['林女士','陈女士','周女士','吴女士','许女士','苏女士'][index]:['Emma L.','Sophie C.','Mia Z.','Olivia W.','Lily X.','Ava S.'][index],137,62,42,'#292d32',600);
  label(c,'PURCHASE REVIEW / DEMO',137,108,29,'#677b64');label(c,'★★★★★',w-228,64,29,'#a8894e');label(c,c.journeyLang==='zh'?'9月18日':'18 Sep',w-139,107,28,'#85898c');
  rule(c,36,135,w-72,'#e5e1da');
