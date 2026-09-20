@@ -85,11 +85,11 @@ test('the centre letter and surrounding interface share an exact opening and clo
  disposeTree(world.root);
 });
 test('every temporal boundary has continuous visible object transforms and opacity',()=>{const {world,update}=rig();for(const time of [7,17,18,25,27,28.6,29,29.2,29.5,30,30.5,31.2,32,33,34,37,39,40.5,43,45.5,48,49,50,51,54,55,56,56.5,58.7,59,59.3,60.5,61.5,62.9,64,65,66.5,68,70,73,75.5,76,79,85,90,93,95,96,97,98,100,106]){update(time-.00001);const before=new Map();world.root.traverse(o=>before.set(o,{matrix:[...o.matrixWorld.elements],opacity:o.material?.opacity,color:o.material?.color?.toArray(),visible:o.visible}));update(time+.00001);world.root.traverse(o=>{const b=before.get(o);if(o.visible&&b.visible&&o.material?.opacity>.01){o.matrixWorld.elements.forEach((v,i)=>near(v,b.matrix[i],.003));near(o.material.opacity,b.opacity,.003);o.material.color?.toArray().forEach((v,i)=>near(v,b.color[i],.003));}});}disposeTree(world.root);});
-for(const [w,h] of [[1366,768],[1920,1080],[3840,2160],[1200,900]])test(`hero contents stay in the right-side safe area at ${w}x${h}`,()=>{const {world,camera,update}=rig(w/h);for(const t of [0,16,31,47,67,77,85,100,107]){update(t);for(const name of ['record-0','persistent-beauty-product','continuous-palette-craft']){const object=world.root.getObjectByName(name);if(!object.visible)continue;const center=new THREE.Vector3();object.getWorldPosition(center);const p=center.project(camera);assert.ok(p.x>=-.22&&p.x<=.94,`${name} at ${t}: ${p.x}`);assert.ok(p.y>-.57&&p.y<.7,`${name} at ${t}: ${p.y}`);}}disposeTree(world.root);});
+for(const [w,h] of [[1366,768],[1920,1080],[3840,2160],[1200,900]])test(`hero contents stay in the right-side safe area at ${w}x${h}`,()=>{const {world,camera,update}=rig(w/h);for(const t of [0,16,31,47,67,77,85,100,107]){update(t);for(const name of ['record-0','persistent-drawing-product','continuous-drawing-kit-craft']){const object=world.root.getObjectByName(name);if(!object.visible)continue;const center=new THREE.Vector3();object.getWorldPosition(center);const p=center.project(camera);assert.ok(p.x>=-.22&&p.x<=.94,`${name} at ${t}: ${p.x}`);assert.ok(p.y>-.57&&p.y<.7,`${name} at ${t}: ${p.y}`);}}disposeTree(world.root);});
 test('all six stages retain distinct bilingual business examples without invented business outcomes',()=>{assert.equal(intelligenceStages.length,6);assert.equal(new Set(intelligenceStages.map(s=>s.id)).size,6);for(const s of intelligenceStages){for(const value of [s.name,s.description,s.example.title,s.example.summary,s.example.outcome,...s.example.steps])assert.ok(value.length===2&&value.every(t=>typeof t==='string'&&t.length));assert.doesNotMatch(JSON.stringify(s.example),/儿童|香水|\d+%/);}});
 
 test('data lattice converges, reconstructs and retires without replacing its instances',()=>{const {world,update}=rig();const lattice=world.root.getObjectByName('data-lattice');assert.equal(lattice.count,8);update(9);const spread=[...lattice.instanceMatrix.array];update(16);const cube=[...lattice.instanceMatrix.array];assert.notDeepEqual(spread,cube);update(28);assert.notDeepEqual([...lattice.instanceMatrix.array],cube);update(33);assert.equal(lattice.visible,false);assert.ok([...lattice.instanceMatrix.array].every(Number.isFinite));disposeTree(world.root);});
-test('insights foreground the same files that carry the selected design into decisioning',()=>{const {world,update}=rig(),card=world.root.getObjectByName('analysis-card-4');update(40);assert.ok(world.root.getObjectByName('analysis-card-0').visible);update(42);assert.equal(world.root.getObjectByName('file-status-1-0').visible,false);assert.ok(world.root.getObjectByName('file-status-1-1').visible);update(49);assert.equal(card.userData.reviewState,'selected');assert.equal(world.root.getObjectByName('analysis-card-1').userData.reviewState,'rejected');update(67);assert.equal(world.root.getObjectByName('analysis-card-4'),card);assert.equal(card.visible,false);assert.ok(world.root.getObjectByName('continuous-palette-craft').visible);disposeTree(world.root);});
+test('insights foreground the same files that carry the selected design into decisioning',()=>{const {world,update}=rig(),card=world.root.getObjectByName('analysis-card-4');update(40);assert.ok(world.root.getObjectByName('analysis-card-0').visible);update(42);assert.equal(world.root.getObjectByName('file-status-1-0').visible,false);assert.ok(world.root.getObjectByName('file-status-1-1').visible);update(49);assert.equal(card.userData.reviewState,'selected');assert.equal(world.root.getObjectByName('analysis-card-1').userData.reviewState,'rejected');update(67);assert.equal(world.root.getObjectByName('analysis-card-4'),card);assert.equal(card.visible,false);assert.ok(world.root.getObjectByName('continuous-drawing-kit-craft').visible);disposeTree(world.root);});
 test('one review explanation follows the active proposal and retires before processing captions',()=>{
  const {world,update}=rig(),notes=Array.from({length:5},(_,i)=>world.root.getObjectByName(`proposal-review-note-${i}`));
  [39,41.8,44.3,46.6,49.3].forEach((t,i)=>{update(t);assert.ok(notes[i].material.opacity>.9);assert.equal(notes.filter(o=>o.visible).length,1);});
@@ -110,39 +110,39 @@ test('emerging proposals stay clear of the mountain face as it moves into the re
  }}disposeTree(world.root);
 });
 test('development inspection parks the common clock without affecting normal playback contracts',()=>{const d=createIntelligenceDirector();d.select(4);d.inspect(28.4);near(d.snapshot().time,28.4);assert.equal(d.snapshot().seeking,false);advance(d,8,{playing:false});near(d.snapshot().time,28.4);d.resume();advance(d,1);near(d.snapshot().time,29.65);d.inspect(NaN);near(d.snapshot().time,29.65);});
-test('the same palette leaves the proposal, separates its colours and assembles before photography',()=>{
- const {world,update}=rig(),craft=world.root.getObjectByName('continuous-palette-craft'),pan=world.root.getObjectByName('palette-pan-0'),photo=world.root.getObjectByName('persistent-beauty-product');
+test('the same drawing kit leaves the proposal, separates its tools and assembles before photography',()=>{
+ const {world,update}=rig(),craft=world.root.getObjectByName('continuous-drawing-kit-craft'),pan=world.root.getObjectByName('kit-tray-0'),photo=world.root.getObjectByName('persistent-drawing-product');
  update(47);assert.ok(craft.visible);assert.equal(craft.userData.phase,'proposal');assert.ok(pan.material.opacity<=world.root.getObjectByName('analysis-card-4').material.opacity+.001);const initial=craft.scale.x;
  update(57);assert.ok(craft.scale.x>initial*2);assert.ok(pan.userData.seated<.1);assert.equal(photo.visible,false);const spread=pan.position.clone();
- update(67);assert.equal(craft.userData.phase,'finish');assert.ok(pan.userData.seated>.99);assert.ok(pan.position.distanceTo(spread)>.2);assert.ok(world.root.getObjectByName('palette-mirror').material.opacity>.99);
+ update(67);assert.equal(craft.userData.phase,'finish');assert.ok(pan.userData.seated>.99);assert.ok(pan.position.distanceTo(spread)>.2);assert.ok(world.root.getObjectByName('kit-paper-lid').material.opacity>.99);
  update(74);assert.ok(craft.visible&&photo.visible);near(craft.position.x,photo.position.x);near(craft.position.y,photo.position.y);update(77);assert.equal(craft.visible,false);assert.ok(photo.visible);disposeTree(world.root);
 });
-test('independently pivoted colour pans and hinge register exactly with the finished photograph',()=>{
- const {world,update}=rig(),photo=world.root.getObjectByName('persistent-beauty-product'),point=new THREE.Vector3(),reference=new THREE.Vector3();
+test('independently pivoted tool trays and hinge register exactly with the finished photograph',()=>{
+ const {world,update}=rig(),photo=world.root.getObjectByName('persistent-drawing-product'),point=new THREE.Vector3(),reference=new THREE.Vector3();
  update(57);for(let i=0;i<4;i++){
-  const pan=world.root.getObjectByName(`palette-pan-${i}`);assert.ok(Math.abs(pan.rotation.y)>.1);assert.ok(world.root.getObjectByName(`palette-pan-wall-${i}`).visible);
+  const pan=world.root.getObjectByName(`kit-tray-${i}`);assert.ok(Math.abs(pan.rotation.y)>.1);assert.ok(world.root.getObjectByName(`kit-tray-wall-${i}`).visible);
  }
  for(const t of [73,74,75.4]){
-  update(t);for(const name of ['palette-pan-0','palette-pan-1','palette-pan-2','palette-pan-3','palette-mirror','palette-case']){
+  update(t);for(const name of ['kit-tray-0','kit-tray-1','kit-tray-2','kit-tray-3','kit-paper-lid','kit-case']){
    const part=world.root.getObjectByName(name);
-   for(let v=0;v<4;v++){
+   for(let v=0;v<part.geometry.attributes.position.count;v++){
     point.fromBufferAttribute(part.geometry.attributes.position,v).applyMatrix4(part.matrixWorld);
     reference.fromBufferAttribute(photo.geometry.attributes.position,v).applyMatrix4(photo.matrixWorld);
     assert.ok(point.distanceTo(reference)<1e-6,`${name} loses image registration at ${t}`);
    }
   }
-  for(let i=0;i<4;i++)assert.equal(world.root.getObjectByName(`palette-pan-wall-${i}`).visible,false);
+  for(let i=0;i<4;i++)assert.equal(world.root.getObjectByName(`kit-tray-wall-${i}`).visible,false);
  }
  disposeTree(world.root);
 });
 test('the palette belongs to its proposal plane before turning toward the processing view',()=>{
- const {world,update}=rig(),craft=world.root.getObjectByName('continuous-palette-craft'),card=world.root.getObjectByName('analysis-card-4'),front=new THREE.Quaternion();
+ const {world,update}=rig(),craft=world.root.getObjectByName('continuous-drawing-kit-craft'),card=world.root.getObjectByName('analysis-card-4'),front=new THREE.Quaternion();
  for(const t of [40,47,50,51]){update(t);near(craft.quaternion.angleTo(card.quaternion),0);}
  update(53);assert.ok(craft.quaternion.angleTo(front)<card.quaternion.angleTo(front));
  update(57);near(craft.quaternion.angleTo(front),0);disposeTree(world.root);
 });
 test('proposal writing retires before the expanding palette reaches its heading',()=>{
- const {world,update}=rig(),palette=world.root.getObjectByName('palette-pan-0');
+ const {world,update}=rig(),palette=world.root.getObjectByName('kit-tray-0');
  for(const t of [51.2,52,52.8,53.5]){update(t);assert.ok(palette.material.opacity>.99,`product faded with the printed proposal at ${t}`);}
  update(52.8);for(let i=0;i<5;i++)assert.ok(world.root.getObjectByName(`analysis-card-${i}`).material.opacity<.02);
  update(53.5);for(let i=0;i<5;i++)assert.equal(world.root.getObjectByName(`analysis-card-${i}`).visible,false);
@@ -207,7 +207,7 @@ test('manual stage dwell retains subtle motion while the paused shared clock fre
 
 
 test('language changes repaint text without replacing scene objects or resetting time',()=>{const {world,update}=rig();update(47,'zh');const record=world.root.getObjectByName('record-0'),map=record.material.map,cut=record.userData.typing.cut;assert.equal(record.userData.typing.text,'很棒的产品。');update(47,'en');assert.equal(record.userData.typing.text,'Great product.');assert.equal(record.material.map,map);assert.equal(record.userData.typing.cut,cut);near(world.root.userData.journeyTime,47);disposeTree(world.root);});
-test('product stays out of analysis and decision, then appears from the design synthesis',()=>{const {world,update}=rig(),product=world.root.getObjectByName('persistent-beauty-product');for(const t of [40,47,58,67,72]){update(t);assert.equal(product.visible,false);}update(77);assert.equal(product.visible,true);disposeTree(world.root);});
+test('product stays out of analysis and decision, then appears from the design synthesis',()=>{const {world,update}=rig(),product=world.root.getObjectByName('persistent-drawing-product');for(const t of [40,47,58,67,72]){update(t);assert.equal(product.visible,false);}update(77);assert.equal(product.visible,true);disposeTree(world.root);});
 test('commerce scrolls before purchase reviews arrive and those same reviews become exhibit cards',()=>{const {world,update}=rig(),record=world.root.getObjectByName('record-0'),page=world.root.getObjectByName('commerce-frame');update(85);assert.equal(record.visible,false);const initialOffset=page.material.map.offset.y;update(88);assert.equal(record.visible,false);assert.ok(page.material.map.offset.y<initialOffset);update(90);assert.equal(record.visible,true);assert.ok(record.children[1].material.opacity>.9);assert.equal(record.children[0].visible,false);update(98);assert.equal(record.children[1].visible,false);assert.ok(record.children[0].material.opacity>.9);update(107.99);assert.equal(record.children[0].visible,false);disposeTree(world.root);});
 test('new purchase reviews scroll with their section and never cover its heading',()=>{
  const {world,update}=rig(),root=world.root.getObjectByName('continuous-value-journey'),page=world.root.getObjectByName('commerce-frame'),top=new THREE.Vector3();
@@ -222,7 +222,7 @@ test('new purchase reviews scroll with their section and never cover its heading
 });
 test('the docked robot shares the page clip while its earlier flight remains unrestricted',()=>{
  for(const aspect of [1366/768,1920/1080,3840/2160,1200/900]){
-  const {world,update}=rig(aspect),robot=world.root.getObjectByName('mountain-robot'),product=world.root.getObjectByName('persistent-beauty-product'),parts=[];robot.traverse(o=>{if(o.isMesh)parts.push(o);});
+  const {world,update}=rig(aspect),robot=world.root.getObjectByName('mountain-robot'),product=world.root.getObjectByName('persistent-drawing-product'),parts=[];robot.traverse(o=>{if(o.isMesh)parts.push(o);});
   update(83);assert.ok(parts.every(o=>o.userData.pageClip.value.y===1e6));
   update(85);assert.ok(parts.every(o=>o.userData.pageClip===parts[0].userData.pageClip&&o.userData.pageClip.value.equals(product.userData.pageClip.value)));
   update(87);const band=parts[0].userData.pageClip.value,partial=new THREE.Box3().setFromObject(robot);assert.ok(partial.min.y<band.y&&partial.max.y>band.y);
@@ -335,13 +335,12 @@ test('recognition follows the palette focus and one confirming nod settles befor
  disposeTree(world.root);
 });
 
-test('one robot remains alongside the selected product and becomes the commerce header logo',()=>{const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),body=robot.parent,product=world.root.getObjectByName('persistent-beauty-product');update(77);assert.ok(robot.visible&&product.visible);assert.equal(robot.userData.expression,'happy');const size=body.scale.x;update(85);assert.equal(world.root.getObjectByName('mountain-robot'),robot);assert.ok(robot.visible&&product.visible);assert.ok(body.scale.x<size*.3);assert.ok(body.position.x<-3&&body.position.y>2.5);update(90);assert.equal(robot.visible,false);disposeTree(world.root);});
+test('one robot remains alongside the selected product and becomes the commerce header logo',()=>{const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),body=robot.parent,product=world.root.getObjectByName('persistent-drawing-product');update(77);assert.ok(robot.visible&&product.visible);assert.equal(robot.userData.expression,'happy');const size=body.scale.x;update(85);assert.equal(world.root.getObjectByName('mountain-robot'),robot);assert.ok(robot.visible&&product.visible);assert.ok(body.scale.x<size*.3);assert.ok(body.position.x<-3&&body.position.y>2.5);update(90);assert.equal(robot.visible,false);disposeTree(world.root);});
 test('the complete robot clears the product silhouette throughout its flight into the header',()=>{
- // Alpha bounds of the authored 1254 px product image, excluding transparent
- // margins. Project both objects because the hero sits in front of the robot.
- const productBounds=new THREE.Box3(new THREE.Vector3(160/1254-.5,.5-1161/1254,0),new THREE.Vector3(1094/1254-.5,.5-78/1254,0));
+ // Project the actual model outline; the hero sits in front of the robot.
  for(const aspect of [1366/768,1920/1080,3840/2160,1200/900]){
-  const {world,camera,update}=rig(aspect),robot=world.root.getObjectByName('robot-silver-shell'),product=world.root.getObjectByName('persistent-beauty-product');
+  const {world,camera,update}=rig(aspect),robot=world.root.getObjectByName('robot-silver-shell'),product=world.root.getObjectByName('persistent-drawing-product');
+  product.geometry.computeBoundingBox();const productBounds=product.geometry.boundingBox;
   robot.geometry.computeBoundingBox();
   const projected=(mesh,box)=>{
    const result=new THREE.Box2();for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z]){
@@ -357,7 +356,7 @@ test('the complete robot clears the product silhouette throughout its flight int
  }
 });
 
-test('five proposal pages retain five distinct physical product silhouettes',()=>{const {world,update}=rig();update(47);for(const name of ['lip-oil-vial','blush-tube','skin-tint-bottle','palette-mirror']){const object=world.root.getObjectByName(name);assert.ok(object);assert.ok(object.material.opacity>.1);}assert.equal(world.root.getObjectByName('forecast-relief'),undefined);disposeTree(world.root);});
+test('five proposal pages retain five distinct physical product silhouettes',()=>{const {world,update}=rig();update(47);for(const name of ['pencil-travel-sleeve','drawing-gift-box','drawing-size-case-0','desk-organiser-base','kit-paper-lid']){const object=world.root.getObjectByName(name);assert.ok(object);assert.ok(object.material.opacity>.1);}assert.equal(world.root.getObjectByName('forecast-relief'),undefined);disposeTree(world.root);});
 test('fading products render after their own page instead of disappearing behind it',()=>{
  const {world,update}=rig();for(const time of [37.8,39.1,40.4,41.8,42.8,46.3]){
   update(time);for(let i=0;i<4;i++){
@@ -369,3 +368,13 @@ test('fading products render after their own page instead of disappearing behind
 });
 
 test('product previews stay below page headings and within their editorial card',()=>{const {world,update}=rig();update(39.1);for(let i=0;i<4;i++){const model=world.root.getObjectByName(`proposal-model-${i}`),card=world.root.getObjectByName(`analysis-card-${i}`),inverse=card.matrixWorld.clone().invert(),bounds=new THREE.Box3();model.traverse(mesh=>{if(!mesh.geometry)return;mesh.geometry.computeBoundingBox();const b=mesh.geometry.boundingBox;for(const x of [b.min.x,b.max.x])for(const y of [b.min.y,b.max.y])for(const z of [b.min.z,b.max.z])bounds.expandByPoint(new THREE.Vector3(x,y,z).applyMatrix4(mesh.matrixWorld).applyMatrix4(inverse));});assert.ok(bounds.max.y<.50,`heading collision in ${i}: ${bounds.max.y}`);assert.ok(bounds.min.y>-.89,`footer collision in ${i}: ${bounds.min.y}`);assert.ok(bounds.min.x>-1.3&&bounds.max.x<1.3);const badge=world.root.getObjectByName(`file-status-${i}-0`);badge.geometry.computeBoundingBox();const status=badge.geometry.boundingBox.clone().applyMatrix4(badge.matrix);assert.ok(bounds.max.x<status.min.x||bounds.min.x>status.max.x||bounds.max.y<status.min.y||bounds.min.y>status.max.y,`status collision in ${i}`);}disposeTree(world.root);});
+
+// An opaque source photograph must never expose its rectangular background.
+test('the drawing kit silhouette excludes background margins and keeps all four tool modules',()=>{
+ const {world,update}=rig();update(77);const product=world.root.getObjectByName('persistent-drawing-product');
+ const ray=new THREE.Raycaster(),target=new THREE.Vector3(),normal=new THREE.Vector3(0,0,-1).transformDirection(product.matrixWorld);
+ const hit=(u,v)=>{target.set(u-.5,v-.5,1).applyMatrix4(product.matrixWorld);ray.set(target,normal);return ray.intersectObject(product,false).length>0;};
+ for(const [u,v]of [[.08,.5],[.92,.5],[.5,.97],[.5,.02],[.15,.10]])assert.equal(hit(u,v),false);
+ for(const [u,v]of [[.35,.5],[.65,.5],[.35,.27],[.65,.27],[.5,.76]])assert.equal(hit(u,v),true);
+ disposeTree(world.root);
+});

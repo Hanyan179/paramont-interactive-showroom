@@ -1,70 +1,76 @@
-// Authored business scenarios for the animation, not observed market or sales results.
-// The existing product geometry is retained as a concept sample. See docs/智能展厅内容依据.md.
+// Catalog facts are traceable; all product proposals, reviews and analyses are authored concepts.
+// Pair order is [Chinese, English], except informationFragments, which preserves its [English, Chinese] contract.
 export const proposalDirections = [
  {
-  id:'lip',title:['便携单品','Portable single'],subtitle:['减少携带，聚焦一种用途','Carry less. Focus on one use.'],tag:['便携需求','PORTABILITY'],
-  facts:[['需求：轻便、随手取用','Need: light and easy to reach'],['成本：核对容器与包装','Cost: container and packaging'],['下一步：验证密封与耐用','Next: test closure and durability']],
-  review:['保留 · 便携需求清楚，核对包装成本','KEEP · Clear need; review packaging cost'],accent:'#d3a6a9',
+  id:'pencils',title:['随行绘画笔组','Pocket pencil set'],subtitle:['把常用颜色带在身边','Everyday colours, ready to travel'],tag:['使用场景 / 随身绘画','USE / DRAW ON THE GO'],
+  facts:[['保留常用颜色，减少出门时的携带负担。','Keep everyday colours; carry fewer tools.'],['笔尖需要独立保护，避免在包内折损。','Protect each tip from damage in a bag.'],['先验证握持手感，再确认笔套与包装成本。','Test the grip, then quote the sleeve and pack.']],
+  review:['保留 · 便携需求清楚，笔尖保护需要验证','KEEP · Clear use; test tip protection'],accent:'#a5c2ce',
  },
  {
-  id:'cheek',title:['礼赠包装款','Gift-ready format'],subtitle:['让包装服务于送礼场景','Design packaging for gifting'],tag:['礼赠场景','GIFTING'],
-  facts:[['需求：开箱体验与保护','Need: presentation and protection'],['成本：增加内托与外包装','Cost: insert and outer packaging'],['下一步：核对成本与利润','Next: review cost and margin']],
-  review:['暂缓 · 包装投入与利润空间待核对','DEFER · Packaging cost and margin need review'],accent:'#d9a395',
+  id:'gift',title:['绘画礼赠套装','Drawing gift box'],subtitle:['先拆包装成本，再判断礼赠价值','Review the packaging before the gift premium'],tag:['成本分析 / 礼赠包装','COST / GIFT PACKAGING'],
+  facts:[['外盒、内托和装饰分别报价，避免漏算。','Quote the box, insert and decoration separately.'],['先确认目标售价能否覆盖新增包装成本。','Check whether the price supports extra packaging.'],['报价未齐，暂缓进入样品开发。','Defer sampling until the full quote is available.']],
+  review:['暂缓 · 包装报价未齐，利润空间仍待核算','DEFER · Complete the quote before margin review'],accent:'#b9bbb5',
  },
  {
-  id:'tint',title:['多规格系列','Multi-size range'],subtitle:['用不同规格覆盖使用差异','Match sizes to different needs'],tag:['规格组合','SIZE RANGE'],
-  facts:[['需求：不同用量与购买频次','Need: usage and purchase frequency'],['库存：多规格分别备货','Stock: plan each size separately'],['下一步：核对销量与库存','Next: review sales and stock']],
-  review:['暂缓 · 各规格销量与备货量待验证','DEFER · Validate demand and stock by size'],accent:'#c8b396',
+  id:'range',title:['多规格绘画系列','Drawing size range'],subtitle:['规格越多，越需要看清各自需求','More sizes need clearer demand evidence'],tag:['销售预测 / 分规格备货','FORECAST / STOCK BY SIZE'],
+  facts:[['基础笔组','Core pencil set'],['扩展颜色组','Extended colours'],['整套工具组','Complete tool set']],
+  review:['暂缓 · 各规格销量与库存记录尚待对照','DEFER · Compare sales and stock for each size'],accent:'#a6b7c5',
  },
  {
-  id:'light',title:['精简功能款','Focused essential'],subtitle:['留下核心用途，减少冗余','Keep the core use. Remove excess.'],tag:['功能取舍','FUNCTION / COST'],
-  facts:[['需求：解决一个明确问题','Need: solve one clear problem'],['结构：保留必要功能','Form: retain essential features'],['下一步：验证简化后的体验','Next: test the simpler design']],
-  review:['保留 · 聚焦核心用途，验证使用体验','KEEP · Focused use; test the experience'],accent:'#d7cdb4',
+  id:'organizer',title:['桌面分区收纳','Desktop organiser'],subtitle:['让常用工具取用顺手，归位清楚','Keep everyday tools visible and easy to reach'],tag:['功能取舍 / 收纳结构','FUNCTION / ORGANISED STORAGE'],
+  facts:[['笔具竖放，常用颜色一眼可见。','Store pencils upright, with colours in view.'],['小件分区，避免橡皮与削笔器混放。','Give erasers and sharpeners their own space.'],['保留收纳结构，便携能力交由组合款验证。','Keep the dividers; test portability in the kit.']],
+  review:['保留 · 分区收纳可复用，继续验证便携结构','KEEP · Reuse the dividers; test portability'],accent:'#a8c1b9',
  },
  {
-  id:'palette',title:['一体组合款','Integrated set'],subtitle:['把互补用途放进一个产品','Bring complementary uses together'],tag:['组合开发','PRODUCT COMBINATION'],
-  facts:[['需求：多用与便携','Need: versatility and portability'],['结构：分区与一体收纳','Form: divided, integrated storage'],['下一步：打样、报价、备货评审','Next: sample, quote and stock review']],
-  review:['选中打样 · 互补组合，继续验证成本与交付','SAMPLE · Complementary uses; validate cost and delivery'],accent:'#cdb7a4',
+  id:'drawing-kit',title:['随行绘画收纳盒','Portable drawing kit'],subtitle:['把绘画工具和收纳结构放进同一个盒子','Drawing tools and organised storage in one case'],tag:['组合提案 / 选中打样','COMBINED CONCEPT / SAMPLE'],
+  facts:[['笔组负责勾画，颜料补充上色。','Pencils for sketching; paints for colour.'],['小件独立归位，纸卡平整收纳。','Separate small tools and keep paper flat.'],['带着完整结构，核对报价与交付条件。','Quote the complete design and confirm delivery.']],
+  review:['选中打样 · 合并绘画与收纳，验证成本和交付','SAMPLE · Combine drawing and storage; validate cost'],accent:'#a8c4d1',
  },
 ];
 export const researchReports = [
  {
-  title:['客户反馈摘要','Customer feedback'],kind:['评价与使用场景 · 演示摘录','REVIEWS / ILLUSTRATIVE EXCERPTS'],
-  lines:[['“出门希望少带几件。”','“I want fewer things to carry.”'],['“包装完好，收纳也方便。”','“Arrived intact. Easy to store.”'],['提炼需求：便携、保护与收纳','Needs: portability, protection, storage']],
-  question:['反馈需结合销量与实际使用验证','Validate against sales and actual use'],
+  title:['客户使用反馈','Customer feedback'],kind:['评价资料 / 演示摘录','REVIEWS / AUTHORED EXCERPTS'],
+  lines:[['“出门画画不用再找几个袋子，常用的东西放在一起就好。”','“I would rather carry one case than several bags of drawing tools.”'],['“笔和纸容易整理，小件最好也能有各自的位置。”','“Pencils and paper are easy to pack. Small tools need their own spaces.”'],['关注携带、取用与收纳，也记录不方便的地方。','Record difficulties with carrying, access and storage.']],
+  question:['反馈是需求线索，需要结合实际使用验证。','Use feedback as a lead; validate it in use.'],
+  source:['创作的评价示例，并非实际客户记录','Authored examples, not actual customer records'],
  },
  {
-  title:['商品主数据','Product records'],kind:['商品档案 · 字段示意','PRODUCT MASTER / EXAMPLE FIELDS'],
-  lines:[['规格：品类、尺寸与重量','Specs: category, size and weight'],['结构：材料、部件与包装','Build: materials, parts and packaging'],['素材：图片、图纸与版本','Assets: images, drawings and versions']],
-  question:['用商品编码关联资料与后续订单','Link records and orders by product ID'],
+  title:['商品分类档案','Product category records'],kind:['主数据 / 现有目录摘录','MASTER DATA / CATALOG EXCERPT'],
+  lines:[['006：马克笔','006: Markers'],['004：蜡笔','004: Crayons'],['228：橡皮','228: Erasers']],
+  question:['这些是细类编码；商品规格需另行关联。','These are subcategory codes, not product IDs.'],
+  source:['来源：2026.9.10 存档 · 文具品类 14','Source: catalog archive, 10 Sep 2026 / category 14'],
  },
  {
-  title:['市场趋势研判','Market trend review'],kind:['市场资料与行业知识 · 分析框架','RESEARCH / ANALYSIS FRAMEWORK'],
-  lines:[['观察：需求、场景与产品变化','Observe: needs, use and product shifts'],['对照：历史畅销要素与新趋势','Compare: past strengths and new trends'],['验证：适用人群与渠道差异','Test: audience and channel differences']],
-  question:['保留来源与日期，区分趋势和假设','Keep sources and dates; test hypotheses'],
+  title:['市场资料与线索','Market research notes'],kind:['市场数据 / 调研问题','MARKET DATA / RESEARCH QUESTIONS'],
+  lines:[['场景：用户在家里、课堂还是出门时绘画？','Context: Do people draw at home, in class or on the go?'],['需求：轻便和工具齐全，哪一个更影响选择？','Need: What matters more: portability or a full set?'],['验证：按渠道核对需求，保留原始来源与日期。','Check: Compare channels; keep original sources and dates.']],
+  question:['先收集证据，再判断哪些变化值得跟进。','Gather evidence before calling a change a trend.'],
+  source:['依据业务讨论整理；尚未形成市场结论','Discussion-based questions; no market finding yet'],
  },
  {
-  title:['销售与需求预测','Sales / demand plan'],kind:['历史销售与备货 · 分析框架','SALES HISTORY / PLANNING FRAMEWORK'],
-  lines:[['历史：按产品、时期与渠道对照','History: product, period and channel'],['预测：标明需求判断与假设','Forecast: state demand assumptions'],['备货：结合库存与交付周期','Stock: account for inventory and lead time']],
-  question:['对比预测与实销，再调整补货计划','Compare forecast to sales; adjust stock'],
+  title:['销售与库存记录','Sales and stock records'],kind:['历史业务数据 / 字段结构','BUSINESS HISTORY / RECORD STRUCTURE'],
+  lines:[['销售：按商品、月份和渠道，查看实销数量与金额。','Sales: Review units and revenue by product, month and channel.'],['库存：一起核对可用库存、在途数量和缺货记录。','Stock: Check available stock, incoming units and stockouts.'],['预测：结合历史销量与交期，判断下一轮备货量。','Plan: Use sales history and lead time to inform replenishment.']],
+  question:['分清销售下滑与无货可卖，再调整补货。','Separate low demand from unavailable stock.'],
+  source:['字段结构示意；未接入真实业务系统','Record structure only; no live business connection'],
  },
  {
-  title:['成本与利润测算','Cost / margin review'],kind:['报价与产品结构 · 待核算','QUOTES / COST REVIEW PENDING'],
-  lines:[['成本：材料、加工、包装与运输','Cost: materials, labor, pack and freight'],['报价：核对规格、数量与交期','Quote: check specs, quantity and timing'],['利润：比较售价与完整成本','Margin: compare price with full cost']],
-  question:['报价未确认前，不输出利润结论','No margin claim before quotes are checked'],
+  title:['产品图片与素材','Product image materials'],kind:['多模态资料 / 概念素材','MULTIMODAL DATA / CONCEPT ASSET'],
+  lines:[['整体外观：看清比例、开合方式与收纳位置。','Overall view: proportions, opening and storage.'],['部件细节：笔组、颜料、小件和纸卡分别对照。','Details: pencils, paints, small tools and paper.'],['版本关联：让图片与同一份提案、规格一起更新。','Versions: keep images, proposal and specs together.']],
+  question:['图片提供形态线索，不代替样品与规格验证。','Images guide form; samples verify the design.'],
+  source:['原创概念图；不代表已量产商品','Original concept imagery, not a production product'],
  },
  {
-  title:['履约与库存复盘','Fulfillment / stock'],kind:['订单与经营反馈 · 复盘框架','ORDERS / REVIEW FRAMEWORK'],
-  lines:[['交付：核对规格、数量与交期','Delivery: specs, quantity and timing'],['库存：识别缺货、积压与补货','Stock: shortages, excess and reorder'],['复盘：利润、评价与预测偏差','Review: margin, feedback and forecast error']],
-  question:['经营结果回到下一轮开发与补货','Feed results into development and stock'],
+  title:['行业与业务知识','Business knowledge notes'],kind:['领域知识 / 会议观点整理','DOMAIN KNOWLEDGE / MEETING NOTES'],
+  lines:[['产品：保留历史表现好的要素，再结合新的需求。','Product: retain proven elements and test new needs.'],['成本：拆开材料、加工、包装和运输，再核对利润。','Cost: review materials, labour, packaging and freight.'],['复盘：一起看销量、利润、缺货和积压，修正判断。','Review: examine sales, margin, stockouts and excess.']],
+  question:['把讨论沉淀成判断方法，供下一次分析使用。','Turn working knowledge into repeatable review methods.'],
+  source:['依据本次业务讨论整理，非外部研究结论','Based on this business discussion, not external research'],
  },
 ];
-// Six sources each contribute six fragments to the corresponding cube report.
+// Six source groups, six fragments each. Sentences retain context when read close up.
 export const informationFragments = [
- ['Review · easy to carry','评价 · 方便携带'],['Review · fewer pieces','评价 · 少带几件'],['Review · arrived intact','评价 · 包装完好'],['Review · easy to store','评价 · 收纳方便'],['Review · clear instructions','评价 · 说明清楚'],['Review · daily use','评价 · 日常使用'],
- ['Product · category code','商品 · 品类编码'],['Product · dimensions','商品 · 尺寸重量'],['Product · materials','商品 · 材料结构'],['Asset · product image','素材 · 商品图片'],['Asset · specification','素材 · 规格图纸'],['Record · version date','档案 · 版本日期'],
- ['Market · usage occasions','市场 · 使用场景'],['Market · channel needs','市场 · 渠道需求'],['Research · industry report','研究 · 行业报告'],['Trend · product changes','趋势 · 产品变化'],['Knowledge · proven elements','知识 · 历史畅销要素'],['Source · publication date','来源 · 发布日期'],
- ['Sales · product history','销售 · 商品历史'],['Sales · channel mix','销售 · 渠道结构'],['Sales · seasonality','销售 · 季节变化'],['Forecast · demand assumptions','预测 · 需求假设'],['Stock · reorder plan','备货 · 补货计划'],['Forecast · actual comparison','预测 · 实销对照'],
- ['Cost · materials','成本 · 材料'],['Cost · processing','成本 · 加工'],['Cost · packaging','成本 · 包装'],['Cost · freight','成本 · 运输'],['Quote · order quantity','报价 · 订单数量'],['Margin · price and cost','利润 · 售价与成本'],
- ['Order · confirmed specs','订单 · 确认规格'],['Delivery · lead time','交付 · 履约周期'],['Quality · inspection','质量 · 检查记录'],['Stock · shortage','库存 · 缺货'],['Stock · excess','库存 · 积压'],['Review · customer feedback','复盘 · 客户反馈'],
+ ['One case is easier than several bags of tools.','出门画画，最好不用再分几个袋子装。'],['Small tools need their own compartments.','橡皮和削笔器最好有各自的位置。'],['Keep drawing paper flat while travelling.','纸卡装进包里以后，也希望保持平整。'],['Check whether the closure is easy to use.','开合顺不顺手，需要实际试用才知道。'],['Record what was inconvenient as well.','除了好评，也要留下使用不方便的地方。'],['Link each review to its product version.','这条评价对应哪一款、哪一个版本？'],
+ ['Stationery is catalog category 14.','现有目录中，文具的品类编码是 14。'],['Markers are listed under subcategory 006.','马克笔已归入文具细类，编号 006。'],['Crayons are listed under subcategory 004.','蜡笔已归入文具细类，编号 004。'],['Erasers are listed under subcategory 228.','橡皮已归入文具细类，编号 228。'],['Category codes are not individual product IDs.','品类编码不能直接当作单个商品编码。'],['Keep dimensions and materials with the record.','尺寸、材料和包装需要关联到商品档案。'],
+ ['Where will people use these drawing tools?','用户是在家里画，还是带出门使用？'],['Compare portability with a complete tool set.','轻便与工具齐全，哪一个更影响选择？'],['Keep the source and date of every market note.','每条市场资料都保留原始来源和日期。'],['Compare needs across different sales channels.','不同销售渠道的使用需求需要分开核对。'],['A new colour alone does not prove a trend.','新配色只是线索，还不能直接认定为趋势。'],['Test the idea before committing to development.','把待验证的问题带入下一轮产品评审。'],
+ ['Review units and revenue by product and month.','按商品和月份查看实销数量与销售金额。'],['Read sales alongside available inventory.','查看销量时，也要核对当时是否有库存。'],['Compare forecast demand with actual sales.','将预测需求与实销对照，记录偏差原因。'],['Include incoming stock in replenishment plans.','补货之前，先核对可用库存和在途数量。'],['Stockouts can conceal unmet demand.','销量低也可能是缺货，不能直接判为滞销。'],['Lead time affects how much to prepare.','生产与运输周期会影响下一轮备货量。'],
+ ['An overall view shows how the case opens.','整体外观图可以看清盒子怎样开合。'],['Detail images show the tool compartments.','部件图片记录笔组和小件的收纳位置。'],['Check paper storage against the proposed size.','纸卡放置方式需要与产品尺寸一起核对。'],['Keep the image version with the proposal.','图片版本要和提案版本保持一致。'],['Concept imagery still needs sample validation.','概念图表达设计方向，最终还要验证样品。'],['Pair visual materials with written specifications.','图片素材与文字规格一起进入分析。'],
+ ['Retain what performed well, then test new needs.','先保留历史表现好的要素，再结合新需求。'],['Quote materials, processing and packaging separately.','提案阶段就把材料、加工和包装分开报价。'],['Check margin against the complete cost.','判断利润之前，要把完整成本核算清楚。'],['A good idea still has to meet the cost target.','概念再好，成本下不来也不能直接开发。'],['Review both missed sales and excess inventory.','复盘既要看缺货损失，也要看库存积压。'],['Feed delivery and usage lessons into the next cycle.','把交付和使用中的问题带回下一轮开发。'],
 ];

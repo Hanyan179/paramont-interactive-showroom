@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
-import {createDirectionModel,createPaletteCraft} from './intelligenceCraft.js';
+import {createDirectionModel,createDrawingKitCraft} from './intelligenceCraft.js';
+import {createProductGeometry} from './intelligenceProduct.js';
 import {informationFragments} from './intelligenceResearch.js';
 import {createMountainRobot} from './intelligenceRobot.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
@@ -102,9 +103,16 @@ export function createJourneyObjects(manager,quality){
   card.renderOrder=purchase.renderOrder=5;exhibitInk.renderOrder=purchaseInk.renderOrder=6;mesh.renderOrder=7;
   mesh.userData.reviewSkins={exhibitInk,purchaseInk};mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;
  });
+ const loader=new THREE.TextureLoader(manager);
+ let disposed=false;const reportMaps=[];
+ const productTexture=loader.load('/media/intelligence-v3/drawing-kit.png',()=>{
+  if(!disposed)reportMaps.forEach(map=>map.userData.redraw?.(root.userData.language||'en'));
+ });productTexture.colorSpace=THREE.SRGBColorSpace;
+ productTexture.addEventListener('dispose',()=>{disposed=true;});
  const reportPaper=new THREE.Color('#102337');
  const reportFaces=Array.from({length:6},(_,i)=>{
-  const face=texturePlane(reportTexture(i),2.65,2.65,`report-face-${i}`),reveal={value:0};face.material.side=THREE.FrontSide;face.userData.reportReveal=reveal;face.userData.analysis=analysis;
+  const reportMap=reportTexture(i,productTexture);reportMaps.push(reportMap);
+  const face=texturePlane(reportMap,2.65,2.65,`report-face-${i}`),reveal={value:0};face.material.side=THREE.FrontSide;face.userData.reportReveal=reveal;face.userData.analysis=analysis;
   // The same page first receives the source stream, then reveals its writing
   // from heading to conclusion. The contour remains present during both steps.
   face.material.onBeforeCompile=shader=>{
@@ -121,7 +129,7 @@ export function createJourneyObjects(manager,quality){
   };face.material.customProgramCacheKey=()=> 'report-ink-and-analysis-reveal';root.add(face);return face;
  });
  const fragmentPairs=informationFragments;
- const dataFragments=fragmentPairs.map((pair,i)=>{const map=canvasTexture((c,w,h)=>{c.textAlign='center';c.textBaseline='middle';label(c,pair[c.journeyLang==='zh'?1:0],w/2,h/2,76);},1024,150);const mesh=texturePlane(map,2.4,.35,`data-fragment-${i}`);mesh.userData.category=Math.floor(i/6);root.add(mesh);return mesh;});
+ const dataFragments=fragmentPairs.map((pair,i)=>{const map=canvasTexture((c,w,h)=>{c.textAlign='center';c.textBaseline='middle';const text=pair[c.journeyLang==='zh'?1:0],tokens=c.journeyLang==='zh'?Array.from(text):text.split(/(?<=\s)/);c.font='400 48px Arial, sans-serif';let first='',second='';for(const token of tokens){if(!second&&c.measureText(first+token).width<920)first+=token;else second+=token;}label(c,first.trim(),w/2,second?49:h/2,48);if(second)label(c,second.trim(),w/2,108,48);},1024,150);const mesh=texturePlane(map,2.4,.35,`data-fragment-${i}`);mesh.userData.category=Math.floor(i/6);root.add(mesh);return mesh;});
  const projection=createProjection(),beam=projection.mesh;root.add(beam);
  const cursor=new THREE.Mesh(new THREE.PlaneGeometry(.025,.35),new THREE.MeshBasicMaterial({color:'#bdeaff',transparent:true,depthWrite:false}));cursor.name='typing-cursor';root.add(cursor);
  const scanLine=new THREE.Mesh(new THREE.PlaneGeometry(6.42,.025),new THREE.MeshBasicMaterial({color:'#b7eaff',transparent:true,depthWrite:false}));scanLine.name='screen-scan-contact';scanLine.renderOrder=11;scanLine.position.z=.15;root.add(scanLine);
@@ -135,12 +143,11 @@ export function createJourneyObjects(manager,quality){
  const statusMaps=['Reviewing','Passed over','Selected'].map(textTexture);
  const reviewBadges=cards.map((card,i)=>statusMaps.map((map,j)=>{const badge=texturePlane(map,1.15,1.15*160/1024,`file-status-${i}-${j}`);badge.position.set(i===1?-.55:.65,-.75,.15);badge.material.color.set(j===1?'#a39b97':j===2?'#b9e9df':'#aecce2');badge.renderOrder=12;card.add(badge);return badge;}));
  const reviewNotes=cards.map((_,i)=>{const note=texturePlane(reviewNoteTexture(i),6.3,6.3*170/1280,`proposal-review-note-${i}`);note.renderOrder=15;root.add(note);return note;});
- const loader=new THREE.TextureLoader(manager),productTexture=loader.load('/media/intelligence-v3/beauty-palette.png');productTexture.colorSpace=THREE.SRGBColorSpace;
- const product=texturePlane(productTexture,1,1,'persistent-beauty-product');product.renderOrder=10;clipToPage(product);root.add(product);
- const craft=createPaletteCraft(productTexture);root.add(craft.root,craft.captionRoot);
- const reflection=texturePlane(productTexture,1,1,'product-reflection');reflection.renderOrder=2;root.add(reflection);
+ const product=new THREE.Mesh(createProductGeometry(),new THREE.MeshBasicMaterial({map:productTexture,transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide}));product.name='persistent-drawing-product';product.renderOrder=10;clipToPage(product);root.add(product);
+ const craft=createDrawingKitCraft(productTexture);root.add(craft.root,craft.captionRoot);
+ const reflection=new THREE.Mesh(createProductGeometry(),new THREE.MeshBasicMaterial({map:productTexture,transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide}));reflection.name='product-reflection';reflection.renderOrder=2;root.add(reflection);
  const heroLight=glow('product-studio-light','#bd9a7e');heroLight.position.set(0,0,.5);heroLight.scale.set(8,7,1);root.add(heroLight);
- const productCaption=textPlane('INTEGRATED SET  /  CONCEPT SAMPLE','product-caption',5.3);root.add(productCaption);
+ const productCaption=textPlane('PORTABLE DRAWING KIT  /  CONCEPT SAMPLE','product-caption',5.3);root.add(productCaption);
  const commerce=new THREE.Group();commerce.name='product-detail-page';root.add(commerce);
  const page=texturePlane(commerceTexture(),8.8,6.2,'commerce-frame');page.material.color.setScalar(.76);page.material.onBeforeCompile=shader=>{shader.vertexShader='varying vec2 pageUv;\n'+shader.vertexShader.replace('#include <uv_vertex>','#include <uv_vertex>\npageUv=uv;');shader.fragmentShader='varying vec2 pageUv;\n'+shader.fragmentShader.replace('#include <map_fragment>','#include <map_fragment>\nvec2 q=abs(pageUv-.5)-vec2(.483,.477);if(length(max(q,0.))>.017)discard;');};page.material.customProgramCacheKey=()=> 'rounded-page-viewport';page.material.map.repeat.y=1080/2100;page.material.map.offset.y=1-1080/2100;commerce.add(page);
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);clipToPage(details);
