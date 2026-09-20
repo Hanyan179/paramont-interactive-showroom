@@ -3,13 +3,14 @@ import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js'
 import {ramp,lerp} from './intelligenceTimeline.js';
 import {createProductGeometry} from './intelligenceProduct.js';
 import {canvasTexture,label} from './intelligenceSurfaces.js';
+import {brandSurfaceRatio} from './intelligenceBrands.js';
 
 function material(color,metalness=.1,roughness=.35){return new THREE.MeshPhysicalMaterial({color,metalness,roughness,clearcoat:.35,transparent:true,depthWrite:true});}
 function box(parent,name,w,h,d,r,mat,x=0,y=0,z=0){const mesh=new THREE.Mesh(new RoundedBoxGeometry(w,h,d,3,r),mat);mesh.name=name;mesh.position.set(x,y,z);parent.add(mesh);return mesh;}
 function cylinder(parent,r,h,mat,x,y,z){const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,32),mat);m.position.set(x,y,z);parent.add(m);return m;}
 function opacity(root,value){root.visible=value>.001;root.traverse(mesh=>{if(mesh.material){mesh.material.opacity=value;mesh.material.depthWrite=value>.98;}});}
 // Four concept forms share the existing editorial positions and opacity clock.
-export function createDirectionModel(index){
+export function createDirectionModel(index,brandTexture){
  const root=new THREE.Group();root.name=`proposal-model-${index}`;
  const shell=material('#547586',.12,.45),paper=material('#dbd5c6',.01,.7),wood=material('#ba9470',.02,.64),metal=material('#9da8ac',.5,.4);
  const colours=['#577e99','#879c7f','#bd8066','#c2a363'];
@@ -49,6 +50,14 @@ export function createDirectionModel(index){
   box(root,'organiser-sharpener',.18,.14,.15,.017,metal,.26,-.23,-.13);
   root.rotation.set(.06,-.12,-.05);
  }
+ // Each concept carries the same original identity as its proposal, printed
+ // directly on the front surface and driven by the existing model opacity.
+ const print=new THREE.Mesh(new THREE.PlaneGeometry(1,1/brandSurfaceRatio),new THREE.MeshBasicMaterial({map:brandTexture,transparent:true,depthWrite:false,toneMapped:false,side:THREE.FrontSide}));
+ print.name=`proposal-model-${index}-brand`;print.userData.brandId=brandTexture.userData.brandId;print.renderOrder=5;
+ const mounts=[['sleeve-front',.43,0,.008,.028],['gift-box-lid',.50,0,0,.166],['drawing-size-case-2',.61,0,-.082,.111],['organiser-wall',.78,0,0,.023]];
+ const [name,width,x,y,z]=mounts[index];
+ const parent=index===3?root.children.find(mesh=>mesh.name===name&&mesh.position.z>0):root.getObjectByName(name);
+ print.position.set(x,y,z);print.scale.setScalar(width);parent.add(print);
  // The page must render before its product, even while both fade. Otherwise a
  // nearly opaque page paints over non-depth-writing parts and they pop at 98%.
  root.traverse(mesh=>{if(mesh.isMesh&&!mesh.renderOrder)mesh.renderOrder=4;});

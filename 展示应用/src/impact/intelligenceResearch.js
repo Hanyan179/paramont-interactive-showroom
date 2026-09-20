@@ -2,27 +2,27 @@
 // Pair order is [Chinese, English], except informationFragments, which preserves its [English, Chinese] contract.
 export const proposalDirections = [
  {
-  id:'pencils',title:['随行绘画笔组','Pocket pencil set'],subtitle:['把常用颜色带在身边','Everyday colours, ready to travel'],tag:['使用场景 / 随身绘画','USE / DRAW ON THE GO'],
+  id:'pencils',brandId:'kind-mind',title:['随行绘画笔组','Pocket pencil set'],subtitle:['把常用颜色带在身边','Everyday colours, ready to travel'],tag:['使用场景 / 随身绘画','USE / DRAW ON THE GO'],
   facts:[['保留常用颜色，减少出门时的携带负担。','Keep everyday colours; carry fewer tools.'],['笔尖需要独立保护，避免在包内折损。','Protect each tip from damage in a bag.'],['先验证握持手感，再确认笔套与包装成本。','Test the grip, then quote the sleeve and pack.']],
   review:['保留 · 便携需求清楚，笔尖保护需要验证','KEEP · Clear use; test tip protection'],accent:'#a5c2ce',
  },
  {
-  id:'gift',title:['绘画礼赠套装','Drawing gift box'],subtitle:['先拆包装成本，再判断礼赠价值','Review the packaging before the gift premium'],tag:['成本分析 / 礼赠包装','COST / GIFT PACKAGING'],
+  id:'gift',brandId:'sugar-rush',title:['绘画礼赠套装','Drawing gift box'],subtitle:['先拆包装成本，再判断礼赠价值','Review the packaging before the gift premium'],tag:['成本分析 / 礼赠包装','COST / GIFT PACKAGING'],
   facts:[['外盒、内托和装饰分别报价，避免漏算。','Quote the box, insert and decoration separately.'],['先确认目标售价能否覆盖新增包装成本。','Check whether the price supports extra packaging.'],['报价未齐，暂缓进入样品开发。','Defer sampling until the full quote is available.']],
   review:['暂缓 · 包装报价未齐，利润空间仍待核算','DEFER · Complete the quote before margin review'],accent:'#b9bbb5',
  },
  {
-  id:'range',title:['多规格绘画系列','Drawing size range'],subtitle:['规格越多，越需要看清各自需求','More sizes need clearer demand evidence'],tag:['销售预测 / 分规格备货','FORECAST / STOCK BY SIZE'],
+  id:'range',brandId:'crafty-creations',title:['多规格绘画系列','Drawing size range'],subtitle:['规格越多，越需要看清各自需求','More sizes need clearer demand evidence'],tag:['销售预测 / 分规格备货','FORECAST / STOCK BY SIZE'],
   facts:[['基础笔组','Core pencil set'],['扩展颜色组','Extended colours'],['整套工具组','Complete tool set']],
   review:['暂缓 · 各规格销量与库存记录尚待对照','DEFER · Compare sales and stock for each size'],accent:'#a6b7c5',
  },
  {
-  id:'organizer',title:['桌面分区收纳','Desktop organiser'],subtitle:['让常用工具取用顺手，归位清楚','Keep everyday tools visible and easy to reach'],tag:['功能取舍 / 收纳结构','FUNCTION / ORGANISED STORAGE'],
+  id:'organizer',brandId:'cozy-craftworks',title:['桌面分区收纳','Desktop organiser'],subtitle:['让常用工具取用顺手，归位清楚','Keep everyday tools visible and easy to reach'],tag:['功能取舍 / 收纳结构','FUNCTION / ORGANISED STORAGE'],
   facts:[['笔具竖放，常用颜色一眼可见。','Store pencils upright, with colours in view.'],['小件分区，避免橡皮与削笔器混放。','Give erasers and sharpeners their own space.'],['保留收纳结构，便携能力交由组合款验证。','Keep the dividers; test portability in the kit.']],
   review:['保留 · 分区收纳可复用，继续验证便携结构','KEEP · Reuse the dividers; test portability'],accent:'#a8c1b9',
  },
  {
-  id:'drawing-kit',title:['随行绘画收纳盒','Portable drawing kit'],subtitle:['把绘画工具和收纳结构放进同一个盒子','Drawing tools and organised storage in one case'],tag:['组合提案 / 选中打样','COMBINED CONCEPT / SAMPLE'],
+  id:'drawing-kit',brandId:'scentos',title:['随行绘画收纳盒','Portable drawing kit'],subtitle:['把绘画工具和收纳结构放进同一个盒子','Drawing tools and organised storage in one case'],tag:['组合提案 / 选中打样','COMBINED CONCEPT / SAMPLE'],
   facts:[['笔组负责勾画，颜料补充上色。','Pencils for sketching; paints for colour.'],['小件独立归位，纸卡平整收纳。','Separate small tools and keep paper flat.'],['带着完整结构，核对报价与交付条件。','Quote the complete design and confirm delivery.']],
   review:['选中打样 · 合并绘画与收纳，验证成本和交付','SAMPLE · Combine drawing and storage; validate cost'],accent:'#a8c4d1',
  },

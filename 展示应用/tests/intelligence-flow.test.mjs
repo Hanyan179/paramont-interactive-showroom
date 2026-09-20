@@ -7,6 +7,7 @@ import {createIntelligenceDirector,intelligenceCycle,intelligenceTiming} from '.
 import {journeyFrame,stageStarts,stageFrames,intelligencePresentation} from '../src/impact/intelligenceTimeline.js';
 import {intelligenceWorld} from '../src/impact/intelligenceWorld.js';
 import {intelligenceStages} from '../src/impact/intelligenceContent.js';
+import {proposalBrands} from '../src/impact/intelligenceBrands.js';
 import {blinkAt} from '../src/impact/intelligencePresence.js';
 const worldSource=readFileSync(new URL('../src/impact/worlds.js',import.meta.url),'utf8');
 const {disposeTree}=await import(`data:text/javascript,${encodeURIComponent(worldSource.split('\n').find(line=>line.startsWith('export function disposeTree')))}`);
@@ -38,7 +39,7 @@ test('entering a paused journey exposes a complete stage and retains usable navi
 test('invalid selections and modified snapshots cannot corrupt the clock',()=>{const d=createIntelligenceDirector();for(const x of [-1,6,NaN,null,'2'])assert.equal(d.select(x),false);const s=d.snapshot();s.weights.fill(9);s.time=22;near(d.snapshot().time,0);assert.deepEqual(d.snapshot().weights,[1,0,0,0,0,0]);});
 function rig(aspect=16/9,{deferAssets=false}={}){
  const originalDocument=globalThis.document,load=THREE.TextureLoader.prototype.load;
- const context=new Proxy({createLinearGradient:()=>({addColorStop(){}}),measureText:text=>({width:text.length*55})},{get:(o,key)=>o[key]??(()=>{}),set:(o,key,v)=>(o[key]=v,true)});
+ const context=new Proxy({getImageData:()=>({data:new Uint8ClampedArray(0)}),createLinearGradient:()=>({addColorStop(){}}),measureText:text=>({width:text.length*55})},{get:(o,key)=>o[key]??(()=>{}),set:(o,key,v)=>(o[key]=v,true)});
  globalThis.document={createElement:()=>({width:0,height:0,getContext:()=>context})};
  const loaded=[],pending=[];THREE.TextureLoader.prototype.load=function(path,onLoad){const data=readFileSync(new URL(`../public${path}`,import.meta.url));assert.equal(data.toString('ascii',12,16),'IHDR');const texture=new THREE.Texture({width:data.readUInt32BE(16),height:data.readUInt32BE(20)});const image=texture.image;if(deferAssets)texture.image=undefined;pending.push(()=>{texture.image=image;onLoad?.(texture);});loaded.push(texture);return texture;};
  let world;try{world=intelligenceWorld(resolveQuality(),new THREE.LoadingManager());}finally{THREE.TextureLoader.prototype.load=load;if(originalDocument===undefined)delete globalThis.document;else globalThis.document=originalDocument;}
@@ -68,25 +69,37 @@ test('reconstruction continues the cube rotation and settles without a backwards
  }
  assert.ok(total>1&&total<3);disposeTree(world.root);
 });
-test('product and original brand assets remain reachable for shared disposal',()=>{const {world,loaded}=rig();assert.equal(loaded.length,2);const reachable=new Set();world.root.traverse(o=>{if(o.material?.map)reachable.add(o.material.map);});assert.ok(loaded.every(map=>reachable.has(map)));for(let i=1;i<5;i++)for(let status=0;status<3;status++)assert.equal(world.root.getObjectByName(`file-status-${i}-${status}`).material.map,world.root.getObjectByName(`file-status-0-${status}`).material.map);const resources=new Map();world.root.traverse(o=>{for(const r of [o.geometry,o.material,o.material?.map])if(r)resources.set(r,0);});resources.forEach((_,r)=>r.addEventListener('dispose',()=>resources.set(r,resources.get(r)+1)));disposeTree(world.root);assert.ok([...resources.values()].every(n=>n===1));});
+test('product and original brand assets remain reachable for shared disposal',()=>{const {world,loaded}=rig();assert.equal(loaded.length,6);const reachable=new Set();world.root.traverse(o=>{if(o.material?.map)reachable.add(o.material.map);});assert.ok(loaded.every(map=>reachable.has(map)));for(let i=1;i<5;i++)for(let status=0;status<3;status++)assert.equal(world.root.getObjectByName(`file-status-${i}-${status}`).material.map,world.root.getObjectByName(`file-status-0-${status}`).material.map);const resources=new Map();world.root.traverse(o=>{for(const r of [o.geometry,o.material,o.material?.map])if(r)resources.set(r,0);});resources.forEach((_,r)=>r.addEventListener('dispose',()=>resources.set(r,resources.get(r)+1)));disposeTree(world.root);assert.ok([...resources.values()].every(n=>n===1));});
 test('brand print waits for both assets in either load order and never rebuilds a disposed product',()=>{
- for(const order of [[0,1],[1,0]]){
+ for(const order of [[0,5],[5,0]]){
   const {world,loaded,finishAsset}=rig(16/9,{deferAssets:true});
+  for(let i=1;i<5;i++)finishAsset(i);
+  assert.equal(loaded[0].image?.getContext,undefined,'an unselected brand must not be printed on the product');
   finishAsset(order[0]);assert.equal(loaded[0].image?.getContext,undefined);
   finishAsset(order[1]);const print=loaded[0].image;assert.equal(typeof print.getContext,'function');
   const product=world.root.getObjectByName('persistent-drawing-product');
   for(const name of ['kit-paper-lid','kit-case','product-reflection'])assert.equal(world.root.getObjectByName(name).material.map,product.material.map);
   assert.equal(product.material.map.image,print);disposeTree(world.root);
  }
- const {world,loaded,finishAsset}=rig(16/9,{deferAssets:true});disposeTree(world.root);finishAsset(0);finishAsset(1);
+ const {world,loaded,finishAsset}=rig(16/9,{deferAssets:true});disposeTree(world.root);loaded.forEach((_,i)=>finishAsset(i));
  assert.equal(loaded[0].image.getContext,undefined);
+ assert.ok(loaded.slice(1).every(texture=>texture.userData.printImage===undefined));
 });
 test('brand signatures follow their file fades, language and scrolling page clip',()=>{
  const {world,update}=rig();
  const parents=[...Array.from({length:5},(_,i)=>world.root.getObjectByName(`analysis-card-${i}`)),world.root.getObjectByName('commerce-details')];
+ assert.equal(new Set(parents.slice(0,5).map(parent=>parent.userData.brandMark.userData.brandId)).size,5);
+ const first=parents[0].userData.brandMark;
+ for(let i=0;i<5;i++){
+  const mark=parents[i].userData.brandMark;assert.deepEqual(mark.position.toArray(),first.position.toArray());assert.deepEqual(mark.geometry.parameters,first.geometry.parameters);
+  mark.geometry.computeBoundingBox();const bounds=mark.geometry.boundingBox.clone().translate(mark.position);
+  assert.ok(bounds.min.y>.69&&bounds.max.y<.93&&bounds.max.x<1.30,'the mark must remain in the header, clear of the title and frame');
+  if(i<4){const print=world.root.getObjectByName(`proposal-model-${i}-brand`);assert.equal(print.material.map,mark.material.map);assert.equal(print.userData.brandId,mark.userData.brandId);}
+ }
+ assert.equal(parents[5].userData.brandMark.material.map,parents[4].userData.brandMark.material.map);
  for(const lang of ['zh','en'])for(const t of [0,37,39.2,42,49,51,54,67,77,83,85,88,91,100,107.9999]){
   update(t,lang);
-  for(const parent of parents){const mark=parent.userData.brandMark;assert.equal(mark.parent,parent);near(mark.material.opacity,parent.material.opacity);assert.equal(mark.visible,parent.visible);assert.equal(mark.userData.brandId,'scentos');}
+  for(const parent of parents){const mark=parent.userData.brandMark;assert.equal(mark.parent,parent);near(mark.material.opacity,parent.material.opacity);assert.equal(mark.visible,parent.visible);assert.equal(mark.userData.brandId,proposalBrands[Math.min(parents.indexOf(parent),4)].id);}
  }
  const details=parents[5],mark=details.userData.brandMark;assert.equal(mark.userData.pageClip,details.userData.pageClip);
  update(88);assert.ok(mark.userData.pageClip.value.y<1e6);disposeTree(world.root);

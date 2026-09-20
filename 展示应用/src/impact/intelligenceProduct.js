@@ -3,7 +3,7 @@ import * as THREE from 'three';
 // assembled kit, reflection and commerce image cannot drift during their handoff.
 // Keep both source assets intact; the print sits in the clear upper-right paper area.
 export function brandProductSurface(productTexture,brandTexture){
- const photo=productTexture.image,mark=brandTexture.image;
+ const photo=productTexture.image,mark=brandTexture.userData.printImage;
  if(!photo?.width||!mark?.width)return false;
  const canvas=document.createElement('canvas');canvas.width=photo.width;canvas.height=photo.height;
  const context=canvas.getContext('2d');context.drawImage(photo,0,0);
