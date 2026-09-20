@@ -4,7 +4,7 @@ import {modelDetail} from '../../../共享组件/renderQuality.js';
 
 // The mountain is the body itself: one rounded shell, one inset face, two eyes.
 // No image maps, limb assembly or separate animation clock.
-function mountainShape() {
+function mountainShape(face = false) {
   const shape = new THREE.Shape();
   shape.moveTo(-1.53, -.72);
   shape.quadraticCurveTo(-1.76, -.72, -1.58, -.49);
@@ -12,6 +12,18 @@ function mountainShape() {
   shape.quadraticCurveTo(0, 1.15, .17, .98);
   shape.lineTo(1.58, -.49);
   shape.quadraticCurveTo(1.76, -.72, 1.53, -.72);
+  if (face) {
+    // The original three-peak ridge is a fixed cut in the face revealing the
+    // silver body underneath. It is part of the mountain, never a mouth pose.
+    shape.lineTo(.70, -.56);
+    shape.lineTo(.42, -.30);
+    shape.lineTo(.30, -.48);
+    shape.lineTo(.08, -.20);
+    shape.quadraticCurveTo(.03, -.14, -.02, -.20);
+    shape.lineTo(-.29, -.45);
+    shape.lineTo(-.39, -.34);
+    shape.lineTo(-.70, -.56);
+  }
   shape.closePath();
   return shape;
 }
@@ -49,9 +61,7 @@ export function createMountainRobot(quality) {
     clearcoat: 1, clearcoatRoughness: .12, envMapIntensity: .8,
     transparent: true,
   });
-  // The silhouette carries the mountain identity. Keep the face uninterrupted:
-  // the two eyes perform every expression without a mouth or a second ridge.
-  const face = new THREE.Mesh(smoothSolid(mountainShape(), .035, .025, detail), faceMaterial);
+  const face = new THREE.Mesh(smoothSolid(mountainShape(true), .035, .025, detail), faceMaterial);
   face.name = 'robot-blue-face';
   face.scale.set(.87, .87, 1);
   face.position.set(0, .005, .262);
@@ -60,8 +70,9 @@ export function createMountainRobot(quality) {
   const eyes = new THREE.Group();
   eyes.name = 'robot-eyes';
   root.add(eyes);
-  // Two continuous ribbons change curvature, aperture and asymmetry; no icon swapping.
-  const eyeMaterial=new THREE.MeshBasicMaterial({color:'#bce3f4',transparent:true,depthWrite:false,depthTest:false,toneMapped:false,side:THREE.DoubleSide});
+  // Two solid white strokes on the dark face. Expressions bend or shorten the
+  // same rounded lines, keeping the original display-like eyes without pupils.
+  const eyeMaterial=new THREE.MeshBasicMaterial({color:'#f4f7fa',transparent:true,depthWrite:false,depthTest:false,toneMapped:false,side:THREE.DoubleSide});
   const eyeMeshes=[-.37,.37].map((x,i)=>{
     const geometry=new THREE.BufferGeometry(),vertices=new Float32Array(42*3),indices=[];
     for(let n=0;n<20;n++){const k=n*2;indices.push(k,k+1,k+2,k+1,k+3,k+2);}
@@ -69,8 +80,6 @@ export function createMountainRobot(quality) {
     const mesh=new THREE.Mesh(geometry,eyeMaterial);mesh.name=i?'robot-right-eye':'robot-left-eye';mesh.position.x=x;mesh.renderOrder=20;mesh.frustumCulled=false;eyes.add(mesh);return mesh;
   });
   const projector = new THREE.Object3D();projector.name='robot-projector';projector.position.set(-.37,0,.028);eyes.add(projector);
-  const pupils=eyeMeshes.map((eye,i)=>{const pupil=new THREE.Mesh(new THREE.CircleGeometry(.025,24),new THREE.MeshBasicMaterial({color:'#183747',transparent:true,depthWrite:false,depthTest:false}));pupil.name=`robot-pupil-${i}`;pupil.position.z=.01;pupil.renderOrder=21;eye.add(pupil);return pupil;});
-  const glints=eyeMeshes.map((eye,i)=>{const glint=new THREE.Mesh(new THREE.CircleGeometry(.010,16),new THREE.MeshBasicMaterial({color:'#effcff',transparent:true,depthWrite:false,depthTest:false,toneMapped:false}));glint.name=`robot-eye-glint-${i}`;glint.renderOrder=22;glint.position.set(-.023,.033,.018);eye.add(glint);return glint;});
   const materials=[shellMaterial,faceMaterial];
   return {root,shell,eyes,projector,
     update(pose,opacity){
@@ -80,18 +89,15 @@ export function createMountainRobot(quality) {
       const joy=Math.max(happy,selected*.72),surprise=pose.surprise||0,confirm=pose.confirm||0;
       eyes.position.set(pose.eyeX*.38+impatient*.035,.13+pose.eyeY*.24+impatient*.028,.385);eyes.scale.y=pose.blink;
       eyeMeshes.forEach((mesh,i)=>{
-        const p=mesh.geometry.attributes.position,halfWidth=.160-surprise*.018;
-        const aperture=(.066+surprise*.050)*(1-rejected*(i===0?.73:.42))*(1-thinking*.16)*(1-impatient*.68);
+        const p=mesh.geometry.attributes.position,halfWidth=.160+surprise*.018-impatient*.014;
+        const halfStroke=lerpEye(.025*(1-rejected*(i===0?.35:.12))*(1-thinking*.1)*(1-impatient*.24),.019,joy);
         const tilt=rejected*(i===0?-.045:.024);
         for(let n=0;n<=20;n++){
-          const u=n/20,edge=Math.pow(Math.max(0,Math.sin(u*Math.PI)),.42),curve=Math.sin(u*Math.PI)*(joy*.116-impatient*.025)+tilt*(u-.5);
-          const thickness=lerpEye(aperture,.017,joy)*edge;
-          p.setXYZ(n*2,(u-.5)*halfWidth*2,curve+thickness,0);p.setXYZ(n*2+1,(u-.5)*halfWidth*2,curve-thickness,0);
+          const u=n/20,x=(u-.5)*halfWidth*2,cap=Math.max(0,Math.abs(x)-(halfWidth-halfStroke))/halfStroke;
+          const thickness=halfStroke*Math.sqrt(Math.max(0,1-cap*cap)),curve=Math.sin(u*Math.PI)*(joy*.100-impatient*.020)+tilt*(u-.5);
+          p.setXYZ(n*2,x,curve+thickness,0);p.setXYZ(n*2+1,x,curve-thickness,0);
         }
-        p.needsUpdate=true;mesh.userData.aperture=aperture;mesh.userData.curvature=joy;
-        pupils[i].position.x=pose.eyeX*.034+impatient*.023;pupils[i].position.y=pose.eyeY*.04;
-        pupils[i].scale.y=1-rejected*.45;pupils[i].material.opacity=eyeOpacity*(1-joy)*(1-rejected*.35)*(1-impatient*.6);pupils[i].visible=pupils[i].material.opacity>.001;
-        glints[i].material.opacity=eyeOpacity*surprise*(1-joy);glints[i].visible=glints[i].material.opacity>.001;
+        p.needsUpdate=true;mesh.userData.strokeWidth=halfStroke*2;mesh.userData.curvature=joy;
       });
       // Anticipation, reaction and settle have different timing; movements remain restrained.
       root.position.y=happy*.10+selected*.055+surprise*.025-confirm*.065-impatient*.045;

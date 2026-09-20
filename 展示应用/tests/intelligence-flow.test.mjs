@@ -167,11 +167,14 @@ test('the mountain robot replaces the crystal and its solid shell stays stable w
  assert.equal(face.material.map,null);const scale=shell.scale.toArray();update(31.94);assert.deepEqual(shell.scale.toArray(),scale);assert.ok(world.root.getObjectByName('robot-eyes').scale.y<.2);
  disposeTree(world.root);
 });
-test('the mountain face stays uninterrupted below the eyes during every expression',()=>{
- const {world,update}=rig(),face=world.root.getObjectByName('robot-blue-face'),ray=new THREE.Raycaster();
+test('the original silver mountain ridge remains fixed beneath the expressive eyes',()=>{
+ const {world,update}=rig(),face=world.root.getObjectByName('robot-blue-face'),shell=world.root.getObjectByName('robot-silver-shell'),ray=new THREE.Raycaster();
+ const geometry=face.geometry,vertices=Array.from(geometry.attributes.position.array);
  for(const t of [31,41.8,44.6,49,76]){
   update(t);ray.set(face.localToWorld(new THREE.Vector3(0,-.40,1)),new THREE.Vector3(0,0,-1).transformDirection(face.matrixWorld));
-  assert.ok(ray.intersectObject(face,false).length>0,`a mouth-like cut appears at ${t}`);
+  assert.equal(ray.intersectObject(face,false).length,0,`the original ridge is covered at ${t}`);
+  assert.ok(ray.intersectObject(shell,false).length>0);
+  assert.equal(face.geometry,geometry);assert.deepEqual(Array.from(geometry.attributes.position.array),vertices);
  }
  disposeTree(world.root);
 });
@@ -309,9 +312,12 @@ test('the Data Assets stage stop holds six completed cube faces',()=>{
 });
 test('mountain eye geometry continuously acts through inspection, doubt, delight and selection',()=>{
  const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),left=world.root.getObjectByName('robot-left-eye'),right=world.root.getObjectByName('robot-right-eye'),geometry=left.geometry;
+ assert.equal(world.root.getObjectByName('robot-eyes').children.filter(o=>o.isMesh).length,2);
+ assert.equal(left.children.length,0);assert.equal(right.children.length,0);
+ assert.equal(world.root.getObjectByName('robot-pupil-0'),undefined);assert.equal(world.root.getObjectByName('robot-eye-glint-0'),undefined);
  update(36);assert.equal(robot.userData.expression,'focused');const focused=Array.from(geometry.attributes.position.array);
- update(41.6);assert.equal(robot.userData.expression,'skeptical');assert.ok(left.userData.aperture<right.userData.aperture);assert.ok(Math.abs(robot.rotation.z)>.001);
- update(44.6);assert.equal(robot.userData.expression,'impatient');assert.ok(left.userData.aperture<.03);update(32.5);assert.equal(robot.userData.expression,'happy');assert.ok(left.userData.curvature>.99);assert.ok(robot.position.y>.09);assert.notDeepEqual(Array.from(geometry.attributes.position.array),focused);
+ update(41.6);assert.equal(robot.userData.expression,'skeptical');assert.ok(left.userData.strokeWidth<right.userData.strokeWidth);assert.ok(Math.abs(robot.rotation.z)>.001);
+ update(44.6);assert.equal(robot.userData.expression,'impatient');assert.ok(left.userData.strokeWidth<.04);update(32.5);assert.equal(robot.userData.expression,'happy');assert.ok(left.userData.curvature>.99);assert.ok(robot.position.y>.09);assert.notDeepEqual(Array.from(geometry.attributes.position.array),focused);
  update(49);assert.equal(robot.userData.expression,'selected');assert.equal(left.geometry,geometry);assert.ok(left.userData.curvature>.4);disposeTree(world.root);
 });
 test('the robot blinks between reactions without hiding their expressive peaks',()=>{
@@ -319,9 +325,10 @@ test('the robot blinks between reactions without hiding their expressive peaks',
  for(const t of [40.8,55.35,62.55,70.75,76.25])assert.ok(blinkAt(t)<.2,`missing natural blink at ${t}`);
 });
 test('recognition follows the palette focus and one confirming nod settles before craft',()=>{
- const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),eye=world.root.getObjectByName('robot-left-eye'),glint=world.root.getObjectByName('robot-eye-glint-0'),palette=world.root.getObjectByName('analysis-card-4'),previous=world.root.getObjectByName('analysis-card-3');
- for(const t of [46.6,47.4,47.8,47.99]){update(t);assert.equal(glint.visible,false,`recognition starts on the previous proposal at ${t}`);near(eye.userData.curvature,0);}
- update(48.35);assert.ok(palette.position.z>previous.position.z);assert.ok(glint.material.opacity>.3);assert.ok(eye.userData.aperture>.09);near(robot.rotation.x,0);
+ const {world,update}=rig(),robot=world.root.getObjectByName('mountain-robot'),eye=world.root.getObjectByName('robot-left-eye'),palette=world.root.getObjectByName('analysis-card-4'),previous=world.root.getObjectByName('analysis-card-3');
+ const bounds=()=>new THREE.Box3().setFromBufferAttribute(eye.geometry.attributes.position).getSize(new THREE.Vector3());
+ for(const t of [46.6,47.4,47.8,47.99]){update(t);near(bounds().x,.32);near(eye.userData.curvature,0);}
+ update(48.35);assert.ok(palette.position.z>previous.position.z);assert.ok(bounds().x>.35);assert.ok(bounds().y<.06);near(robot.rotation.x,0);
  update(49);assert.equal(robot.userData.expression,'selected');assert.ok(eye.userData.curvature>.65);assert.ok(robot.rotation.x>.09);
  for(let t=49.6;t<53;t+=.1){update(t);near(robot.rotation.x,0);}
  update(60.2);const gaze=world.root.getObjectByName('robot-eyes').position.toArray();update(61.5);assert.notDeepEqual(world.root.getObjectByName('robot-eyes').position.toArray(),gaze);near(robot.rotation.x,0);
