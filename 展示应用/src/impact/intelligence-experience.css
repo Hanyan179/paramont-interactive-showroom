@@ -57,7 +57,9 @@
 .intelligence-navigation, .intelligence-navigation button { touch-action: none; user-select: none; }
 .intelligence-stage-button { position: relative; display: flex; align-items: center; justify-content: center; min-width: 0; background: transparent; line-height: 1.2; text-align: center; }
 .intelligence-stage-label { max-width: 100%; height: 1.2em; padding: 0 4px; line-height: 1.2; text-wrap: balance; }
-.intelligence-back{position:absolute;left:5%;bottom:calc(var(--impact-navigation-bottom, 7.2%) + var(--impact-navigation-height, 84px) + 2vh);}
+.intelligence-experience .intelligence-back.exhibit-action { position: absolute; left: 3.5%; bottom: calc(var(--impact-navigation-bottom, 7.2%) + var(--impact-navigation-height, 84px) / 2); transform: translateY(50%); gap: .8em; max-width: calc(16.5vw - clamp(12px, 1.4vw, 54px)); }
+.intelligence-back-label { text-wrap: balance; }
+.intelligence-back-short { display: none; }
 
 
 .intelligence-note { position: absolute; left: 5%; bottom: 2.4%; margin: 0; color: #52748f; font-size: clamp(10px, .59vw, 23px); line-height: 1.5; letter-spacing: .025em; }
@@ -106,6 +108,9 @@
   .intelligence-copy { top: 24%; width: 34%; }
   .intelligence-copy h1 { font-size: clamp(24px, 2.45vw, 58px); }
   .intelligence-navigation { left: 12.5%; right: 12.5%; }
+  .intelligence-experience .intelligence-back.exhibit-action { max-width: calc(9vw - 10px); gap: .65em; padding-inline: .8em; }
+  .intelligence-back-label { display: none; }
+  .intelligence-back-short { display: inline; }
   .intelligence-case { top: 23%; width: 37%; }
   .intelligence-case-visual { left: 42%; right: 0; top: 22%; }
   .intelligence-case-category { gap: .7em; font-size: 9px; }
