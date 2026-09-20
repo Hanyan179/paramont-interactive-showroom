@@ -90,7 +90,7 @@ export function createJourneyObjects(manager,quality){
  const scanEdge=new THREE.LineSegments(new THREE.EdgesGeometry(scan.geometry),new THREE.LineBasicMaterial({color:'#d0eeff',transparent:true,depthWrite:false}));scan.add(scanEdge);
  const relationships=createDataRelationships();body.add(relationships.links,...relationships.nodes);
  const analysis={height:{value:1.5},strength:{value:0},toBody:{value:new THREE.Matrix4()}};
- const reviews=['Great product.','Perfect gift.','Love it.','Good quality.','Beautiful colours.','Soft texture.'];
+ const reviews=['Great product.','Perfect gift.','Love it.','Good quality.','Easy to carry.','Easy to store.'];
  const texts=reviews;
  const reviewMap=reviewPaperTexture(),reviewInkMap=reviewDetailsTexture(),purchaseMap=purchaseReviewPaperTexture();
  const records=Array.from({length:texts.length},(_,i)=>{
@@ -140,7 +140,7 @@ export function createJourneyObjects(manager,quality){
  const craft=createPaletteCraft(productTexture);root.add(craft.root,craft.captionRoot);
  const reflection=texturePlane(productTexture,1,1,'product-reflection');reflection.renderOrder=2;root.add(reflection);
  const heroLight=glow('product-studio-light','#bd9a7e');heroLight.position.set(0,0,.5);heroLight.scale.set(8,7,1);root.add(heroLight);
- const productCaption=textPlane('SOFT HAZE  /  FOUR-SHADE EYE PALETTE','product-caption',5.3);root.add(productCaption);
+ const productCaption=textPlane('INTEGRATED SET  /  CONCEPT SAMPLE','product-caption',5.3);root.add(productCaption);
  const commerce=new THREE.Group();commerce.name='product-detail-page';root.add(commerce);
  const page=texturePlane(commerceTexture(),8.8,6.2,'commerce-frame');page.material.color.setScalar(.76);page.material.onBeforeCompile=shader=>{shader.vertexShader='varying vec2 pageUv;\n'+shader.vertexShader.replace('#include <uv_vertex>','#include <uv_vertex>\npageUv=uv;');shader.fragmentShader='varying vec2 pageUv;\n'+shader.fragmentShader.replace('#include <map_fragment>','#include <map_fragment>\nvec2 q=abs(pageUv-.5)-vec2(.483,.477);if(length(max(q,0.))>.017)discard;');};page.material.customProgramCacheKey=()=> 'rounded-page-viewport';page.material.map.repeat.y=1080/2100;page.material.map.offset.y=1-1080/2100;commerce.add(page);
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);clipToPage(details);

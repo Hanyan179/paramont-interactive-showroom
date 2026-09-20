@@ -1,25 +1,70 @@
-// Public product observations are separated from authored concepts and illustrative reviews.
-// Source notes and retrieval date: docs/智能展厅内容依据.md. No market-size or sales claims.
+// Authored business scenarios for the animation, not observed market or sales results.
+// The existing product geometry is retained as a concept sample. See docs/智能展厅内容依据.md.
 export const proposalDirections = [
- {id:'lip',title:['润色唇油','Tinted lip oil'],subtitle:['一抹透色，随身补妆','A sheer wash, on the go'],tag:['涂抹体验','APPLICATION'],facts:[['凝胶转油质地','Gel-to-oil texture'],['斜面刷头控制用量','Angled applicator'],['需验证残留与黏感','Test residue and tack']],review:['唇油 · 保留随身补妆方向','Lip oil · keep the touch-up direction'],source:'Rare Beauty',accent:'#d3a6a9'},
- {id:'cheek',title:['轻雾腮红','Soft veil blush'],subtitle:['少量叠加，柔化边缘','Layer lightly. Diffuse the edge.'],tag:['上色方式','COLOUR BUILD'],facts:[['凝胶乳霜形态','Gel-cream format'],['指腹晕染与叠色','Finger blend and layer'],['需验证不同底妆兼容性','Test base compatibility']],review:['腮红 · 先验证底妆兼容','Blush · test base compatibility first'],source:'Glossier',accent:'#d9a395'},
- {id:'tint',title:['轻透底妆','Sheer skin tint'],subtitle:['保留肌肤自身的质感','Let skin texture show'],tag:['覆盖与肤感','COVERAGE / FEEL'],facts:[['轻薄覆盖方向','Sheer coverage direction'],['光泽与色调匹配','Finish and shade match'],['需验证分层与取用','Test settling and dispensing']],review:['底妆 · 先验证色调匹配','Skin tint · validate the shade range'],source:'ILIA',accent:'#c8b396'},
- {id:'light',title:['柔光高光棒','Soft light stick'],subtitle:['在需要的位置，添一束光','Place light with precision'],tag:['局部提亮','PLACEMENT'],facts:[['膏转粉质地参照','Cream-to-powder reference'],['颧骨与眉骨局部使用','Target cheek and brow bones'],['需验证推开后的边界','Test blend-out edges']],review:['高光 · 保留局部提亮方向','Highlighter · keep targeted placement'],source:'Fenty Beauty',accent:'#d7cdb4'},
- {id:'palette',title:['柔雾四色眼影','Soft Haze palette'],subtitle:['打底、过渡、加深、提亮','Base. Blend. Define. Illuminate.'],tag:['配色与结构','COLOUR / CONSTRUCTION'],facts:[['四种用途，一盘完成','Four roles in one compact'],['雾面与缎光搭配','Matte with satin accents'],['镜面盒盖与便携结构','Mirror lid, portable case']],review:['眼影 · 四种用途，一盘随行','Palette · four roles, one compact'],source:null,accent:'#cdb7a4'},
+ {
+  id:'lip',title:['便携单品','Portable single'],subtitle:['减少携带，聚焦一种用途','Carry less. Focus on one use.'],tag:['便携需求','PORTABILITY'],
+  facts:[['需求：轻便、随手取用','Need: light and easy to reach'],['成本：核对容器与包装','Cost: container and packaging'],['下一步：验证密封与耐用','Next: test closure and durability']],
+  review:['保留 · 便携需求清楚，核对包装成本','KEEP · Clear need; review packaging cost'],accent:'#d3a6a9',
+ },
+ {
+  id:'cheek',title:['礼赠包装款','Gift-ready format'],subtitle:['让包装服务于送礼场景','Design packaging for gifting'],tag:['礼赠场景','GIFTING'],
+  facts:[['需求：开箱体验与保护','Need: presentation and protection'],['成本：增加内托与外包装','Cost: insert and outer packaging'],['下一步：核对成本与利润','Next: review cost and margin']],
+  review:['暂缓 · 包装投入与利润空间待核对','DEFER · Packaging cost and margin need review'],accent:'#d9a395',
+ },
+ {
+  id:'tint',title:['多规格系列','Multi-size range'],subtitle:['用不同规格覆盖使用差异','Match sizes to different needs'],tag:['规格组合','SIZE RANGE'],
+  facts:[['需求：不同用量与购买频次','Need: usage and purchase frequency'],['库存：多规格分别备货','Stock: plan each size separately'],['下一步：核对销量与库存','Next: review sales and stock']],
+  review:['暂缓 · 各规格销量与备货量待验证','DEFER · Validate demand and stock by size'],accent:'#c8b396',
+ },
+ {
+  id:'light',title:['精简功能款','Focused essential'],subtitle:['留下核心用途，减少冗余','Keep the core use. Remove excess.'],tag:['功能取舍','FUNCTION / COST'],
+  facts:[['需求：解决一个明确问题','Need: solve one clear problem'],['结构：保留必要功能','Form: retain essential features'],['下一步：验证简化后的体验','Next: test the simpler design']],
+  review:['保留 · 聚焦核心用途，验证使用体验','KEEP · Focused use; test the experience'],accent:'#d7cdb4',
+ },
+ {
+  id:'palette',title:['一体组合款','Integrated set'],subtitle:['把互补用途放进一个产品','Bring complementary uses together'],tag:['组合开发','PRODUCT COMBINATION'],
+  facts:[['需求：多用与便携','Need: versatility and portability'],['结构：分区与一体收纳','Form: divided, integrated storage'],['下一步：打样、报价、备货评审','Next: sample, quote and stock review']],
+  review:['选中打样 · 互补组合，继续验证成本与交付','SAMPLE · Complementary uses; validate cost and delivery'],accent:'#cdb7a4',
+ },
 ];
 export const researchReports = [
- {title:['使用反馈笔记','Use-experience notes'],kind:['演示评价 · 定性整理','ILLUSTRATIVE REVIEWS'],lines:[['“配色很好看，但不知道先用哪格。”','“Lovely shades. Which one goes first?”'],['“出门只想带一盘和一面镜子。”','“One palette and a mirror for travel.”'],['归纳：用途标识与便携收纳','Brief: shade roles and portability']],question:['待验证：新手能否独立完成搭配？','Test: can a beginner build a look?']},
- {title:['品类形态对照','Format comparison'],kind:['公开商品规格 · 横向观察','PUBLIC PRODUCT FORMATS'],lines:[['唇油：刷头取用与叠涂','Lip oil: applicator and layering'],['腮红：凝胶乳霜与晕染','Blush: gel-cream and diffusion'],['底妆：轻薄覆盖与色调匹配','Tint: sheer coverage and shade match']],question:['规格参照，不代表市场份额或趋势','Product observations, not market share']},
- {title:['质地与妆效研究','Texture / finish study'],kind:['品牌产品说明 · 设计参照','PUBLISHED FINISH DESCRIPTIONS'],lines:[['凝胶转油：光泽与留色','Gel to oil: gloss and tint'],['膏转粉：涂抹与柔化边缘','Cream to powder: glide and blend'],['设计映射：雾面打底，缎光提亮','Design: matte base, satin highlight']],question:['待验证：飞粉、黏感与叠涂均匀度','Test: fallout, tack and even layering']},
- {title:['四色功能分工','Four-shade architecture'],kind:['原创配色提案 · 待打样','AUTHORED COLOUR PROPOSAL'],lines:[['象牙白打底 / 玫瑰色过渡','Ivory base / rose transition'],['灰褐色加深 / 香槟色提亮','Taupe definition / champagne light'],['按用途组合，避免相近色重复','Organize by role, avoid redundant shades']],question:['待验证：不同肤色下的显色关系','Test: colour payoff across skin tones']},
- {title:['随行结构要求','Portable construction'],kind:['原创产品要求 · 待打样','AUTHORED PRODUCT REQUIREMENTS'],lines:[['盒盖内置镜面，减少额外携带','Mirror in the lid, one less item to carry'],['四个独立色盘，留出取粉空间','Four separate pans with brush clearance'],['铰链、扣合与盒壁共同成形','Hinge, clasp and case built together']],question:['待验证：开合寿命与运输保护','Test: hinge cycles and transit protection']},
- {title:['样品评审清单','Sample review checklist'],kind:['验证计划 · 尚无实测结论','VALIDATION PLAN / NO TEST RESULTS'],lines:[['看：实际肤色下的显色与层次','See: payoff and contrast on skin'],['用：取粉、晕染与卸除体验','Use: pickup, blending and removal'],['带：盒盖、镜面与扣合稳定性','Carry: lid, mirror and clasp stability']],question:['形成样品后，再记录实测结果','Record results after samples exist']},
+ {
+  title:['客户反馈摘要','Customer feedback'],kind:['评价与使用场景 · 演示摘录','REVIEWS / ILLUSTRATIVE EXCERPTS'],
+  lines:[['“出门希望少带几件。”','“I want fewer things to carry.”'],['“包装完好，收纳也方便。”','“Arrived intact. Easy to store.”'],['提炼需求：便携、保护与收纳','Needs: portability, protection, storage']],
+  question:['反馈需结合销量与实际使用验证','Validate against sales and actual use'],
+ },
+ {
+  title:['商品主数据','Product records'],kind:['商品档案 · 字段示意','PRODUCT MASTER / EXAMPLE FIELDS'],
+  lines:[['规格：品类、尺寸与重量','Specs: category, size and weight'],['结构：材料、部件与包装','Build: materials, parts and packaging'],['素材：图片、图纸与版本','Assets: images, drawings and versions']],
+  question:['用商品编码关联资料与后续订单','Link records and orders by product ID'],
+ },
+ {
+  title:['市场趋势研判','Market trend review'],kind:['市场资料与行业知识 · 分析框架','RESEARCH / ANALYSIS FRAMEWORK'],
+  lines:[['观察：需求、场景与产品变化','Observe: needs, use and product shifts'],['对照：历史畅销要素与新趋势','Compare: past strengths and new trends'],['验证：适用人群与渠道差异','Test: audience and channel differences']],
+  question:['保留来源与日期，区分趋势和假设','Keep sources and dates; test hypotheses'],
+ },
+ {
+  title:['销售与需求预测','Sales / demand plan'],kind:['历史销售与备货 · 分析框架','SALES HISTORY / PLANNING FRAMEWORK'],
+  lines:[['历史：按产品、时期与渠道对照','History: product, period and channel'],['预测：标明需求判断与假设','Forecast: state demand assumptions'],['备货：结合库存与交付周期','Stock: account for inventory and lead time']],
+  question:['对比预测与实销，再调整补货计划','Compare forecast to sales; adjust stock'],
+ },
+ {
+  title:['成本与利润测算','Cost / margin review'],kind:['报价与产品结构 · 待核算','QUOTES / COST REVIEW PENDING'],
+  lines:[['成本：材料、加工、包装与运输','Cost: materials, labor, pack and freight'],['报价：核对规格、数量与交期','Quote: check specs, quantity and timing'],['利润：比较售价与完整成本','Margin: compare price with full cost']],
+  question:['报价未确认前，不输出利润结论','No margin claim before quotes are checked'],
+ },
+ {
+  title:['履约与库存复盘','Fulfillment / stock'],kind:['订单与经营反馈 · 复盘框架','ORDERS / REVIEW FRAMEWORK'],
+  lines:[['交付：核对规格、数量与交期','Delivery: specs, quantity and timing'],['库存：识别缺货、积压与补货','Stock: shortages, excess and reorder'],['复盘：利润、评价与预测偏差','Review: margin, feedback and forecast error']],
+  question:['经营结果回到下一轮开发与补货','Feed results into development and stock'],
+ },
 ];
+// Six sources each contribute six fragments to the corresponding cube report.
 export const informationFragments = [
- ['Review · easy to blend','评价 · 容易晕染'],['Review · shades work together','评价 · 配色好搭'],['Review · mirror for travel','评价 · 出门要镜子'],['Review · less to carry','评价 · 少带几件'],['Review · soft to the touch','评价 · 触感柔和'],['Review · where do I start?','评价 · 先用哪格？'],
- ['Format · lip oil','规格 · 润色唇油'],['Format · gel-cream blush','规格 · 凝胶腮红'],['Format · skin tint','规格 · 轻透底妆'],['Format · highlight stick','规格 · 高光棒'],['Format · compact palette','规格 · 便携眼影盘'],['Source · product descriptions','来源 · 商品说明'],
- ['Finish · gel to oil','质地 · 凝胶转油'],['Finish · cream to powder','质地 · 膏转粉'],['Application · buildable colour','涂抹 · 逐层叠色'],['Application · angled wand','涂抹 · 斜面刷头'],['Finish · satin accent','妆效 · 缎光提亮'],['Question · even blending?','问题 · 晕染均匀？'],
- ['Ivory · base','象牙白 · 打底'],['Rose · transition','玫瑰色 · 过渡'],['Taupe · definition','灰褐色 · 加深'],['Champagne · light','香槟色 · 提亮'],['Design · four colour roles','设计 · 四色分工'],['Test · skin-tone range','验证 · 不同肤色'],
- ['Structure · mirror lid','结构 · 镜面盒盖'],['Structure · four pans','结构 · 四格色盘'],['Structure · brush clearance','结构 · 取粉空间'],['Structure · hinge','结构 · 铰链'],['Structure · clasp','结构 · 扣合'],['Use · travel case','场景 · 随行收纳'],
- ['Test · powder fallout','验证 · 飞粉'],['Test · blend-out edge','验证 · 晕染边界'],['Test · colour payoff','验证 · 显色'],['Test · opening cycles','验证 · 开合寿命'],['Test · mirror protection','验证 · 镜面保护'],['Test · transit stability','验证 · 运输稳定性'],
+ ['Review · easy to carry','评价 · 方便携带'],['Review · fewer pieces','评价 · 少带几件'],['Review · arrived intact','评价 · 包装完好'],['Review · easy to store','评价 · 收纳方便'],['Review · clear instructions','评价 · 说明清楚'],['Review · daily use','评价 · 日常使用'],
+ ['Product · category code','商品 · 品类编码'],['Product · dimensions','商品 · 尺寸重量'],['Product · materials','商品 · 材料结构'],['Asset · product image','素材 · 商品图片'],['Asset · specification','素材 · 规格图纸'],['Record · version date','档案 · 版本日期'],
+ ['Market · usage occasions','市场 · 使用场景'],['Market · channel needs','市场 · 渠道需求'],['Research · industry report','研究 · 行业报告'],['Trend · product changes','趋势 · 产品变化'],['Knowledge · proven elements','知识 · 历史畅销要素'],['Source · publication date','来源 · 发布日期'],
+ ['Sales · product history','销售 · 商品历史'],['Sales · channel mix','销售 · 渠道结构'],['Sales · seasonality','销售 · 季节变化'],['Forecast · demand assumptions','预测 · 需求假设'],['Stock · reorder plan','备货 · 补货计划'],['Forecast · actual comparison','预测 · 实销对照'],
+ ['Cost · materials','成本 · 材料'],['Cost · processing','成本 · 加工'],['Cost · packaging','成本 · 包装'],['Cost · freight','成本 · 运输'],['Quote · order quantity','报价 · 订单数量'],['Margin · price and cost','利润 · 售价与成本'],
+ ['Order · confirmed specs','订单 · 确认规格'],['Delivery · lead time','交付 · 履约周期'],['Quality · inspection','质量 · 检查记录'],['Stock · shortage','库存 · 缺货'],['Stock · excess','库存 · 积压'],['Review · customer feedback','复盘 · 客户反馈'],
 ];

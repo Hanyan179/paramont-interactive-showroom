@@ -1,7 +1,21 @@
 // Authored, local demonstration UI textures. No business measurements are implied.
 import * as THREE from 'three';
 import {proposalDirections,researchReports} from './intelligenceResearch.js';
-const zh={"Reviewing":"审查中","Passed over":"暂不采用","Selected":"已选中","VOICE OF CUSTOMER":"用户声音","Customer voice":"用户声音","Product design":"商品设计","Market signals":"市场信号","Colour trends":"色彩趋势","Usage occasions":"使用场景","Quality feedback":"品质反馈","Sales Trend": "销售趋势", "Customer Sentiment": "用户感受", "Sales Forecast": "销售预测", "Market Opportunity": "市场机会", "Recommendation": "设计建议", "Market Trend": "市场趋势", "Customer Preference": "用户偏好", "Opportunity": "机会方向", "Recommended Product": "推荐设计", "Growing interest": "关注度上升", "Soft texture": "柔和质感", "Wearable": "日常百搭", "Gift appeal": "礼赠需求", "Directional outlook": "趋势展望", "Everyday neutrals": "日常中性色", "Coordinated colour": "协调的色彩", "Gift-ready format": "精致礼赠形式", "SOFT HAZE": "柔雾系列", "Soft Haze": "柔雾系列", "Four-shade eye palette": "四色眼影盘", "A considered colour story": "让色彩形成完整表达", "A consistent upward signal": "持续出现的上升信号", "DISCOVER": "发现", "CONSIDER": "比较", "CHOOSE": "选择", "VOICE": "倾听", "OF CUSTOMER": "用户声音", "Wearable shades": "百搭色调", "Themes drawn from feedback": "从反馈中提炼偏好", "OBSERVED": "已观察", "DIRECTIONAL OUTLOOK": "趋势展望", "A versatile starting point": "从适合日常的设计出发", "Four shades, one considered edit": "四种色彩，一体表达", "A clear product proposition": "清晰的商品主张", "FOUR-SHADE EYE PALETTE": "四色眼影盘", "CONCEPT STUDY  ·  ILLUSTRATIVE DATA": "概念研究 · 演示数据", "PRODUCT INTELLIGENCE": "产品洞察", "BEAUTY  /  COLOUR COSMETICS": "美妆 / 色彩设计", "INSIGHT STUDY    01": "洞察研究 01", "ILLUSTRATIVE RESEARCH  /  HUMAN REVIEW": "概念研究 / 人工复核", "CUSTOMER FEEDBACK": "用户反馈", "SOFT HAZE  ·  COLOUR COLLECTION": "柔雾系列 · 色彩作品", "THE BEAUTY EDIT": "美妆精选", "COLLECTION     /     COLOUR     /     OUR STORY": "系列 / 色彩 / 品牌故事", "BEAUTY  /  EYES  /  SOFT HAZE": "美妆 / 眼部 / 柔雾系列", "THE NEUTRAL EDIT": "自然色彩系列", "CUSTOMER REVIEWS": "购买者评价", "CONCEPT COLLECTION  ·  DEMONSTRATION": "概念系列 · 展示示例", "COLOUR COLLECTION": "色彩系列", "4.8 / 5    ·    Customer rating": "4.8 / 5 · 用户评分", "Warm neutrals, softly considered.": "温暖中性色，柔和而有分寸。", "Champagne · rose · taupe · ivory": "香槟 · 玫瑰 · 灰褐 · 象牙白", "ADD TO BAG": "加入购物袋", "CONCEPT PRODUCT   /   NO LIVE CHECKOUT": "概念商品 / 无实际交易", "Great product.": "很棒的产品。", "Perfect gift.": "很适合送礼。", "Love it.": "非常喜欢。", "Good quality.": "品质很好。", "Beautiful colours.": "配色很好看。", "Soft texture.": "质感很柔和。", "SOFT HAZE  /  FOUR-SHADE EYE PALETTE": "柔雾系列 / 四色眼影盘", "DESIGN DIRECTION": "设计方向", "COLOUR / FORM / FEEL": "色彩 / 形态 / 触感", "Warm neutrals": "温暖中性色", "Satin finish": "缎光质感", "Everyday ritual": "日常仪式感", "A quiet statement": "含蓄的风格表达", "VERIFIED PURCHASE": "已购买", "Shade / Soft Haze": "款式 / 柔雾系列", "First impressions": "初次体验", "DESIGN SYNTHESIS": "设计汇总", "Colour harmony": "色彩协调", "Considered form": "精致形态", "Soft-touch finish": "柔和触感", "A modern essential": "现代日常之选", "REVIEWS": "评价", "DISCOVER THE COLLECTION": "探索系列"};
+const zh={
+ 'Reviewing':'审查中','Passed over':'暂缓验证','Selected':'选中打样',
+ 'CUSTOMER FEEDBACK':'客户反馈','INTEGRATED SET  ·  USE & DELIVERY':'一体组合款 · 使用与交付',
+ 'THE PRODUCT EDIT':'产品精选','PRODUCTS     /     DELIVERY     /     OUR STORY':'产品 / 交付 / 品牌故事',
+ 'PRODUCTS  /  PORTABLE  /  INTEGRATED SET':'产品 / 便携设计 / 一体组合',
+ 'DETAILS & FINISHES':'细节与材质','PRODUCT DETAILS & DELIVERY':'产品详情与交付',
+ 'CUSTOMER REVIEWS':'购买者评价','CONCEPT COLLECTION  ·  DEMONSTRATION':'概念系列 · 展示示例',
+ 'SELECTED FOR DEVELOPMENT':'选中开发方向','Integrated set':'一体组合款','Divided storage. Ready to carry.':'分区组合 · 随行收纳',
+ '4.8 / 5    ·    Illustrative rating':'4.8 / 5 · 演示评分','Complementary uses in one compact.':'互补用途，集中收纳。',
+ 'Check specs, packaging and delivery.':'确认规格、包装与交付要求。','ADD TO BAG':'加入购物袋',
+ 'CONCEPT PRODUCT / ILLUSTRATIVE PRICE':'概念商品 / 演示价格',
+ 'Great product.':'很棒的产品。','Perfect gift.':'很适合送礼。','Love it.':'非常喜欢。','Good quality.':'品质很好。','Easy to carry.':'携带很方便。','Easy to store.':'收纳很方便。',
+ 'INTEGRATED SET  /  CONCEPT SAMPLE':'一体组合款 / 概念样品',
+ 'VERIFIED PURCHASE':'已购买','Style / Integrated set':'款式 / 一体组合款',
+};
 export function translate(text,lang){if(lang!=="zh")return text;if(zh[text])return zh[text];return text.replace(/INSIGHT/g,"洞察").replace(/DECISION/g,"决策").replace(/ orders/g," 笔订单").replace(/ reviews/g," 条评价");}
 export const INK='#e2edf5',MUTED='#91a7bc',BLUE='#9edaff';
 export function canvasTexture(draw,w=1536,h=1024){
@@ -32,51 +46,51 @@ export function cardTexture(index){
   label(c,direction.title[l],48,135,cn?58:52,INK,500);rule(c,48,167,w-96);
   const line=(text,x,y,size=30,color=MUTED)=>label(c,text,x,y,size,color);
   if(index===0){
-   line(cn?'色彩与光泽':'COLOUR + SHINE',445,245,29,direction.accent);
-   direction.facts.forEach((v,i)=>{line(v[l],445,321+i*91,cn?32:26);rule(c,445,347+i*91,520);});
-   [0,1,2].forEach(i=>{c.fillStyle=['#b86d78','#9f6777','#cc9790'][i];rounded(c,475+i*145,571,115,25,12);c.fill();});
+   line(cn?'需求与成本':'NEED + COST',445,245,29,direction.accent);
+   direction.facts.forEach((v,i)=>{line(v[l],445,321+i*91,cn?31:25);rule(c,445,347+i*91,520);});
+   line(cn?'轻量 · 取用 · 保护':'LIGHT · ACCESS · PROTECT',445,591,26,direction.accent);
   }else if(index===1){
-   [cn?'点涂':'DOT',cn?'晕开':'BLEND',cn?'叠色':'LAYER'].forEach((v,i)=>{c.fillStyle=['#be8c87','#926e70','#64565f'][i];c.beginPath();c.arc(150+i*350,255,42-i*5,0,Math.PI*2);c.fill();line(v,101+i*350,332,30);});
-   line(direction.facts[0][l],48,459,cn?33:28);line(direction.facts[1][l],48,518,cn?33:28);line(cn?'边界柔和，保留层次':'Diffuse edges. Keep dimension.',48,589,29,direction.accent);
+   [cn?'保护':'PROTECT',cn?'内托':'INSERT',cn?'外包装':'OUTER PACK'].forEach((v,i)=>{c.fillStyle=['#be8c87','#926e70','#64565f'][i];c.beginPath();c.arc(150+i*350,255,42-i*5,0,Math.PI*2);c.fill();line(v,85+i*350,332,29);});
+   direction.facts.forEach((v,i)=>line(v[l],48,459+i*61,cn?31:25));
   }else if(index===2){
-   line(cn?'覆盖程度':'COVERAGE',48,244,28,direction.accent);
-   [cn?'透':'SHEER',cn?'薄':'LIGHT',cn?'匀':'EVEN'].forEach((v,i)=>{c.fillStyle=['#d5c0aa','#b9997d','#7f6457'][i];rounded(c,48,276+i*94,420,52,5);c.fill();line(v,68,312+i*94,27,'#182330');});
-   line(direction.facts[1][l],48,601,28);line(cn?'需验证分层与取用':'Test settling and dispensing',48,650,25);
+   line(cn?'规格与备货':'SIZES + STOCK',48,244,28,direction.accent);
+   [cn?'基础规格':'CORE SIZE',cn?'扩展规格':'LARGER SIZE',cn?'组合规格':'BUNDLE'].forEach((v,i)=>{c.fillStyle=['#d5c0aa','#b9997d','#7f6457'][i];rounded(c,48,276+i*94,420,52,5);c.fill();line(v,68,312+i*94,27,'#182330');});
+   line(direction.facts[1][l],48,601,28);line(direction.facts[2][l],48,650,25);
   }else if(index===3){
-   c.strokeStyle='#77776f';c.lineWidth=2;for(let i=0;i<3;i++){c.beginPath();c.ellipse(318,406,105+i*46,133+i*29,-.32,0,Math.PI*2);c.stroke();}
-   line(cn?'颧骨':'CHEEK',573,300,31,direction.accent);rule(c,466,319,390);
-   line(cn?'眉骨':'BROW',573,406,31,direction.accent);rule(c,466,425,390);
-   line(cn?'局部点亮，轻推边缘':'Place light. Soften the edge.',48,609,30);line(direction.facts[0][l],48,657,25);
+   line(cn?'核心用途':'CORE USE',573,277,31,direction.accent);rule(c,566,303,390);
+   line(cn?'结构简化':'SIMPLER FORM',573,375,31,direction.accent);rule(c,566,401,390);
+   line(cn?'成本复核':'COST REVIEW',573,473,31,direction.accent);rule(c,566,499,390);
+   line(direction.facts[0][l],48,609,cn?31:27);line(direction.facts[2][l],48,657,25);
   }else{
-   line(cn?'日常配色提案':'EVERYDAY COLOUR STUDY',565,229,23,direction.accent);
-   const labels=cn?['香槟 · 提亮','灰褐 · 加深','玫瑰 · 过渡','象牙 · 打底']:['Champagne / light','Taupe / define','Rose / blend','Ivory / base'];
-   labels.forEach((v,i)=>line(v,565,309+i*71,cn?32:27));
-   rule(c,48,586,w-96);line(cn?'四种用途 · 镜面盒盖 · 随行收纳':'Four roles · mirror lid · portable case',48,638,cn?29:27,direction.accent);
+   line(cn?'选中后的验证重点':'SELECTED / NEXT CHECKS',565,229,23,direction.accent);
+   const labels=cn?['用途 · 互补组合','成本 · 完整核算','结构 · 分区收纳','交付 · 打样评审']:['Use / complementary','Cost / full estimate','Form / divided storage','Delivery / sample review'];
+   labels.forEach((v,i)=>line(v,565,309+i*71,cn?31:25));
+   rule(c,48,586,w-96);line(cn?'组合开发 · 样品验证 · 报价与备货':'Combine · sample · quote · plan stock',48,638,cn?29:27,direction.accent);
   }
   line(cn?'原创概念 / 需样品验证':'AUTHORED CONCEPT / SAMPLE TESTING REQUIRED',48,h-23,18,'#8099ad');
  },1024,720);
 }
 export function reviewNoteTexture(index){return canvasTexture((c,w)=>{
  const l=c.journeyLang==='zh'?0:1;c.textAlign='center';
- label(c,l===0?'随行彩妆 / 概念评审':'PORTABLE BEAUTY / CONCEPT REVIEW',w/2,45,25,MUTED);
+ label(c,l===0?'产品方向 / 需求 · 成本 · 交付':'PRODUCT REVIEW / NEED · COST · DELIVERY',w/2,45,25,MUTED);
  label(c,proposalDirections[index].review[l],w/2,126,49,INK);
 },1280,170);}
 export function reviewPaperTexture(){return canvasTexture(surface,768,240);}
-export function reviewDetailsTexture(){return canvasTexture((c,w,h)=>{label(c,'CUSTOMER FEEDBACK',42,52,21,BLUE);label(c,'5.0  /  5',w-170,52,22,INK);rule(c,42,79,w-84);label(c,'SOFT HAZE  ·  COLOUR COLLECTION',42,h-32,19,MUTED);},768,240);}
+export function reviewDetailsTexture(){return canvasTexture((c,w,h)=>{label(c,'CUSTOMER FEEDBACK',42,52,21,BLUE);label(c,'5.0  /  5',w-170,52,22,INK);rule(c,42,79,w-84);label(c,'INTEGRATED SET  ·  USE & DELIVERY',42,h-32,19,MUTED);},768,240);}
 export function commerceTexture(){return canvasTexture((c,w,h)=>{
  rounded(c,3,3,w-6,h-6,24);c.fillStyle='#eeeae3';c.fill();c.strokeStyle='#bcb7b0';c.lineWidth=3;c.stroke();
- label(c,'THE BEAUTY EDIT',220,86,42,'#272725',500);label(c,'COLLECTION     /     COLOUR     /     OUR STORY',745,81,22,'#77736b');rule(c,60,122,w-120,'#d1cbc1');
- label(c,'BEAUTY  /  EYES  /  SOFT HAZE',65,175,19,'#858077');
+ label(c,'THE PRODUCT EDIT',220,86,42,'#272725',500);label(c,'PRODUCTS     /     DELIVERY     /     OUR STORY',745,81,22,'#77736b');rule(c,60,122,w-120,'#d1cbc1');
+ label(c,'PRODUCTS  /  PORTABLE  /  INTEGRATED SET',65,175,19,'#858077');
  rounded(c,62,217,618,546,12);c.fillStyle=gradient(c,60,220,680,760,[[0,'#dfd7cc'],[1,'#f5f1eb']]);c.fill();
- ['#c0aa91','#967258','#ba8d80','#e6dbc7'].forEach((color,i)=>{rounded(c,80+i*77,790,57,57,5);c.fillStyle=color;c.fill();});label(c,'THE NEUTRAL EDIT',411,827,20,'#7c756c');
- label(c,'DISCOVER THE COLLECTION',65,930,24,'#77736b');rule(c,65,1060,w-130,'#d1cbc1');label(c,'CUSTOMER REVIEWS',65,1135,35,'#3c3832');label(c,'CONCEPT COLLECTION  ·  DEMONSTRATION',65,h-31,17,'#8b857c');
+ ['#c0aa91','#967258','#ba8d80','#e6dbc7'].forEach((color,i)=>{rounded(c,80+i*77,790,57,57,5);c.fillStyle=color;c.fill();});label(c,'DETAILS & FINISHES',411,827,20,'#7c756c');
+ label(c,'PRODUCT DETAILS & DELIVERY',65,930,24,'#77736b');rule(c,65,1060,w-130,'#d1cbc1');label(c,'CUSTOMER REVIEWS',65,1135,35,'#3c3832');label(c,'CONCEPT COLLECTION  ·  DEMONSTRATION',65,h-31,17,'#8b857c');
 },1536,2100);}
 export function commerceDetails(){return canvasTexture((c)=>{
- label(c,'COLOUR COLLECTION',30,65,21,'#8c7762');label(c,'Soft Haze',30,151,80,'#302b25');label(c,'Four-shade eye palette',30,206,32,'#6e665c');
- label(c,'4.8 / 5    ·    Customer rating',30,270,25,'#8d7257');rule(c,30,305,605,'#cec6ba');label(c,'$28.00',30,380,57,'#332d26');
- label(c,'Warm neutrals, softly considered.',30,447,26,'#6e665c');label(c,'Champagne · rose · taupe · ivory',30,491,24,'#82786c');
+ label(c,'SELECTED FOR DEVELOPMENT',30,65,21,'#8c7762');label(c,'Integrated set',30,151,80,'#302b25');label(c,'Divided storage. Ready to carry.',30,206,32,'#6e665c');
+ label(c,'4.8 / 5    ·    Illustrative rating',30,270,25,'#8d7257');rule(c,30,305,605,'#cec6ba');label(c,'$28.00',30,380,57,'#332d26');
+ label(c,'Complementary uses in one compact.',30,447,26,'#6e665c');label(c,'Check specs, packaging and delivery.',30,491,24,'#82786c');
  rounded(c,30,545,610,76,6);c.fillStyle='#38362f';c.fill();label(c,'ADD TO BAG',220,595,25,'#f7f3ec');
- label(c,'CONCEPT PRODUCT   /   NO LIVE CHECKOUT',30,674,19,'#8a8174');
+ label(c,'CONCEPT PRODUCT / ILLUSTRATIVE PRICE',30,674,19,'#8a8174');
 },720,720);}
 
 export function purchaseReviewPaperTexture(){return canvasTexture((c,w,h)=>{
@@ -92,8 +106,8 @@ export function purchaseReviewDetailsTexture(index=0){return canvasTexture((c,w,
  label(c,c.journeyLang==='zh'?['林女士','陈女士','周女士','吴女士','许女士','苏女士'][index]:['Emma L.','Sophie C.','Mia Z.','Olivia W.','Lily X.','Ava S.'][index],137,62,42,'#292d32',600);
  label(c,'VERIFIED PURCHASE',137,108,29,'#677b64');label(c,'★★★★★',w-228,64,29,'#a8894e');label(c,c.journeyLang==='zh'?'9月18日':'18 Sep',w-139,107,28,'#85898c');
  rule(c,36,135,w-72,'#e5e1da');
- const details=c.journeyLang==='zh'?['上脸很自然，日常出门也很好搭配。','包装很用心，收到礼物的人很喜欢。','比想象中更细腻，会继续使用。','质感扎实，细节做得很到位。','几种颜色搭在一起，轻松完成日常妆。','触感轻柔，使用体验很舒服。']:['Natural colour, easy to wear every day.','Thoughtful packaging. A lovely gift.','Finer texture than I expected. Love it.','Beautifully made, with considered details.','The shades work beautifully together.','Soft to the touch and lovely to use.'];
- label(c,details[index],38,289,34,'#6b6f72');label(c,'Shade / Soft Haze',38,350,29,'#84878a');label(c,c.journeyLang==='zh'?'有帮助 · '+(12-index):'Helpful · '+(12-index),w-235,350,29,'#677b64');
+ const details=c.journeyLang==='zh'?['用途很清楚，日常用起来很方便。','包装完好，收到礼物的人很喜欢。','几种用途放在一起，少带了几件。','做工扎实，开合和取用都很顺手。','出门方便携带，希望说明更清楚。','分区收纳很方便，尺寸比预想稍大。']:['Clear purpose and easy to use every day.','Arrived intact. A thoughtful gift.','Several uses together, fewer pieces to carry.','Solid build. Easy to open and use.','Easy to carry; clearer instructions would help.','Easy to store; a little larger than expected.'];
+ label(c,details[index],38,289,34,'#6b6f72');label(c,'Style / Integrated set',38,350,29,'#84878a');label(c,c.journeyLang==='zh'?'有帮助 · '+(12-index):'Helpful · '+(12-index),w-235,350,29,'#677b64');
 },1024,390);}
 // These are qualitative studies, so their visual language is comparison,
 // quotation, construction and open questions—not invented quantitative charts.
@@ -109,48 +123,43 @@ function drawFeedbackReport(c,report,l){
   const y=210+i*146;rounded(c,39,y,690,129,10);c.fillStyle='#152c40';c.fill();
   rule(c,39,y+13,4,BLUE);reportParagraph(c,line[l],67,y+49,630,l===0?34:32);
  });
- label(c,l===0?'用途标识 + 便携收纳':'SHADE ROLES + PORTABILITY',39,553,l===0?34:28,BLUE);
+ label(c,report.lines[2][l],39,553,l===0?32:27,BLUE);
 }
-function drawFormatReport(c,l){
- c.strokeStyle='#bed0df';c.lineWidth=3;
- // Abstract format silhouettes, never a copied package or a brand identity.
- rounded(c,133,264,56,116,10);c.stroke();rounded(c,139,230,44,32,5);c.stroke();rule(c,147,300,27,'#d3a6a9');
- c.beginPath();c.moveTo(354,229);c.lineTo(414,229);c.lineTo(409,352);c.lineTo(359,352);c.closePath();c.stroke();rounded(c,363,354,41,26,3);c.stroke();rule(c,359,242,49,'#d9a395');
- rounded(c,574,275,68,105,14);c.stroke();rounded(c,584,244,48,31,5);c.stroke();rounded(c,592,217,32,28,12);c.stroke();rule(c,589,319,38,'#c8b396');
- const names=l===0?['唇油','腮红','底妆']:['Lip oil','Blush','Skin tint'];
- const details=l===0?['刷头取用\n逐层叠涂','凝胶乳霜\n指腹晕染','轻薄覆盖\n色调匹配']:['Applicator\nLayer colour','Gel-cream\nFinger blend','Sheer cover\nShade match'];
- names.forEach((name,i)=>{const x=59+i*223;label(c,name,x,433,l===0?42:34);details[i].split('\n').forEach((value,j)=>label(c,value,x,480+j*37,27,MUTED));});
+function drawRecordReport(c,report,l){
+ label(c,l===0?'同一商品编码，关联完整资料':'ONE PRODUCT ID / CONNECTED RECORDS',39,232,l===0?30:25,BLUE);
+ report.lines.forEach((line,i)=>{
+  const y=276+i*91,parts=line[l].split(l===0?'：':': ');
+  rounded(c,39,y-27,112,54,7);c.fillStyle='#213d52';c.fill();label(c,parts[0],54,y+9,l===0?32:26,BLUE);
+  label(c,parts[1],178,y+9,l===0?32:26);rule(c,178,y+33,549);
+ });
+ label(c,l===0?'档案 → 设计 → 报价 → 订单':'RECORD → DESIGN → QUOTE → ORDER',39,555,l===0?29:25,MUTED);
 }
-function drawFinishReport(c,l){
- label(c,l===0?'凝胶 → 油':'GEL → OIL',39,248,l===0?36:30,BLUE);
- label(c,l===0?'膏 → 粉':'CREAM → POWDER',406,248,l===0?36:27,BLUE);
- rounded(c,40,282,315,90,42);c.fillStyle=gradient(c,40,285,355,367,[[0,'#b0878c'],[.44,'#654f62'],[1,'#24324b']]);c.fill();
- c.strokeStyle='rgba(237,215,211,.6)';c.lineWidth=3;c.beginPath();c.moveTo(75,302);c.bezierCurveTo(138,284,193,318,293,308);c.stroke();
- rounded(c,407,282,316,90,42);c.fillStyle=gradient(c,408,282,725,372,[[0,'#bca88f'],[1,'#665849']]);c.fill();
- c.strokeStyle='rgba(239,223,201,.18)';c.lineWidth=1;for(let i=0;i<13;i++){c.beginPath();c.moveTo(431+i*21,304);c.lineTo(424+i*21,351);c.stroke();}
- label(c,l===0?'光泽 · 留色':'Gloss · tint',40,419,32);label(c,l===0?'涂抹 · 柔化边缘':'Glide · diffuse',406,419,l===0?30:29);
- rule(c,39,455,690);label(c,l===0?'雾面打底，缎光提亮':'Matte base. Satin highlight.',39,514,l===0?38:36);
- label(c,l===0?'妆效设计映射 · 需验证':'DESIGN DIRECTION / TO VALIDATE',39,555,23,MUTED);
-}
-function drawColourReport(c,l){
- const shades=l===0?['香槟','灰褐','玫瑰','象牙白']:['Champagne','Taupe','Rose','Ivory'];
- const roles=l===0?['提亮','加深','过渡','打底']:['Illuminate','Define','Blend','Base'];
- ['#c3a287','#92735d','#b8847e','#e4d0b9'].forEach((colour,i)=>{
-  const x=39+i%2*354,y=207+Math.floor(i/2)*177,ink=i===1?'#f5eee5':'#172634';
-  rounded(c,x,y,336,156,9);c.fillStyle=colour;c.fill();label(c,shades[i],x+23,y+45,28,ink);
-  label(c,roles[i],x+23,y+118,l===0?50:43,ink,500);
+function drawTrendReport(c,report,l){
+ report.lines.forEach((line,i)=>{
+  const y=221+i*115,parts=line[l].split(l===0?'：':': ');
+  c.strokeStyle='#567992';c.lineWidth=2;c.beginPath();c.arc(62,y+22,18,0,Math.PI*2);c.stroke();
+  if(i<2){c.beginPath();c.moveTo(62,y+43);c.lineTo(62,y+111);c.stroke();}
+  label(c,parts[0],106,y+32,l===0?39:33,BLUE);label(c,parts[1],106,y+76,l===0?30:25);
  });
 }
-function drawConstructionReport(c,l){
- c.strokeStyle='#b6c9d8';c.lineWidth=3;rounded(c,225,206,318,136,12);c.stroke();
- rounded(c,240,221,288,105,7);c.fillStyle=gradient(c,240,221,528,326,[[0,'#8294a1'],[.55,'#263e52'],[1,'#637888']]);c.fill();
- rule(c,242,351,284,'#b6c9d8');rounded(c,225,362,318,171,12);c.strokeStyle='#b6c9d8';c.stroke();
- ['#c3a287','#92735d','#b8847e','#e4d0b9'].forEach((colour,i)=>{rounded(c,242+i%2*147,379+Math.floor(i/2)*70,137,60,4);c.fillStyle=colour;c.fill();});
- rounded(c,365,531,38,9,3);c.fillStyle='#b6c9d8';c.fill();
- rule(c,541,270,27,'#829caf');label(c,l===0?'镜面':'Mirror',580,280,29);
- rule(c,148,351,76,'#829caf');label(c,l===0?'铰链':'Hinge',39,359,29);
- rule(c,542,444,26,'#829caf');label(c,l===0?'色盘':'Pans',580,453,29);
- rule(c,140,539,224,'#829caf');label(c,l===0?'扣合':'Clasp',39,548,29);
+function drawDemandReport(c,report,l){
+ const headings=l===0?['历史销售','需求预测','备货计划']:['HISTORY','FORECAST','STOCK PLAN'];
+ headings.forEach((heading,i)=>{
+  const x=39+i*238;rounded(c,x,213,214,123,10);c.fillStyle=['#1d364b','#25445b','#1d364b'][i];c.fill();
+  label(c,`0${i+1}`,x+18,251,23,BLUE);label(c,heading,x+18,306,l===0?35:26);
+  if(i<2)label(c,'→',x+211,284,25,BLUE);
+ });
+ report.lines.forEach((line,i)=>label(c,line[l],39,398+i*66,l===0?31:26));
+}
+function drawCostReport(c,report,l){
+ const costs=l===0?['材料','加工','包装','运输']:['MATERIALS','PROCESSING','PACKAGING','FREIGHT'];
+ const details=l===0?['材料与用量','工序与装配','内托与外箱','体积与路径']:['Type and quantity','Process and assembly','Insert and outer pack','Volume and route'];
+ costs.forEach((name,i)=>{
+  const x=39+i%2*354,y=207+Math.floor(i/2)*139;
+  rounded(c,x,y,336,121,9);c.fillStyle=i===0?'#27475c':'#1a3349';c.fill();
+  label(c,name,x+23,y+47,l===0?37:27,BLUE);label(c,details[i],x+23,y+92,l===0?28:24);
+ });
+ label(c,report.lines[2][l],39,551,l===0?31:27,INK);
 }
 function drawValidationReport(c,report,l){
  report.lines.forEach((line,i)=>{
@@ -165,10 +174,10 @@ export function reportTexture(index){return canvasTexture((c,w,h)=>{
  rounded(c,3,3,w-6,h-6,26);c.fillStyle=gradient(c,0,0,w,h,[[0,'#132b40'],[1,'#0c1d30']]);c.fill();c.strokeStyle='#6d8fa8';c.lineWidth=2;c.stroke();
  label(c,`0${index+1} / `+report.kind[l],39,66,l===0?24:19,BLUE);label(c,report.title[l],39,143,l===0?53:46,INK,500);rule(c,39,179,w-78);
  if(index===0)drawFeedbackReport(c,report,l);
- else if(index===1)drawFormatReport(c,l);
- else if(index===2)drawFinishReport(c,l);
- else if(index===3)drawColourReport(c,l);
- else if(index===4)drawConstructionReport(c,l);
+ else if(index===1)drawRecordReport(c,report,l);
+ else if(index===2)drawTrendReport(c,report,l);
+ else if(index===3)drawDemandReport(c,report,l);
+ else if(index===4)drawCostReport(c,report,l);
  else drawValidationReport(c,report,l);
- rule(c,39,588,w-78);label(c,l===0?'研究边界 / 下一步':'RESEARCH BOUNDARY / NEXT STEP',39,625,20,BLUE);label(c,report.question[l],39,672,l===0?25:23,MUTED);
+ rule(c,39,588,w-78);label(c,l===0?'业务判断 / 下一步':'BUSINESS REVIEW / NEXT STEP',39,625,20,BLUE);label(c,report.question[l],39,672,l===0?25:23,MUTED);
 },768,720);}

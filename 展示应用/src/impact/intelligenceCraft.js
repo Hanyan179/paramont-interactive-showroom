@@ -20,23 +20,23 @@ export function createDirectionModel(index){
   box(applicator,'lip-oil-cap',.39,.42,.34,.035,porcelain,0,.76,0);box(applicator,'lip-oil-collar',.38,.045,.33,.010,metal,0,.54,0);
   const stem=cylinder(applicator,.019,.49,material('#343438',.12,.4),0,.30,0);stem.name='lip-oil-stem';
   const brush=cylinder(applicator,.042,.16,material('#b18e87'),0,-.02,0);brush.name='lip-oil-angled-tip';brush.rotation.z=-.20;
-  print(vial,['润色','TINT'],.30,.27,0,-.02,.168);root.rotation.z=-.13;
+  print(vial,['随行','CARRY'],.30,.27,0,-.02,.168);root.rotation.z=-.13;
  }else if(index===1){
   const tube=box(root,'blush-tube',.55,.97,.20,.08,material('#bb8e87'),0,.03,0);tube.rotation.z=-.12;
   box(tube,'blush-seam',.54,.055,.20,.01,porcelain,0,.49,0);for(let i=0;i<7;i++)box(tube,`tube-crimp-${i}`,.007,.034,.008,.003,metal,-.21+i*.07,.49,.103);
   box(root,'blush-cap',.31,.29,.25,.025,porcelain,-.065,-.59,0);box(root,'blush-neck',.24,.08,.19,.015,metal,-.065,-.415,0);
-  print(tube,['轻雾','VEIL'],.43,.38,0,.03,.108);root.rotation.z=-.18;
+  print(tube,['礼赠','GIFT'],.43,.38,0,.03,.108);root.rotation.z=-.18;
  }else if(index===2){
   box(root,'skin-tint-bottle',.60,.87,.37,.12,material('#c0a78a'),0,-.22,0);box(root,'skin-tint-base',.49,.045,.30,.016,material('#927a79',.35,.18),0,-.63,0);
   cylinder(root,.175,.18,metal,0,.30,0);cylinder(root,.16,.24,porcelain,0,.48,0);
   const bulb=new THREE.Mesh(new THREE.SphereGeometry(.15,24,16),porcelain);bulb.position.y=.65;bulb.scale.set(.88,1.25,.88);root.add(bulb);
-  box(root,'skin-tint-label',.40,.34,.014,.015,material('#e0d6c8'),0,-.14,.197);print(root,['轻透底妆','SKIN TINT'],.37,.30,0,-.14,.211);
+  box(root,'skin-tint-label',.40,.34,.014,.015,material('#e0d6c8'),0,-.14,.197);print(root,['多规格','RANGE'],.37,.30,0,-.14,.211);
  }else{
   const body=cylinder(root,.22,.86,porcelain,0,-.20,0);body.name='highlight-stick-case';
   cylinder(root,.224,.046,metal,0,.25,0);cylinder(root,.194,.18,material('#343438',.12,.4),0,.36,0);cylinder(root,.185,.33,material('#d9c4a2',.18,.28),0,.58,0);
   const top=new THREE.Mesh(new THREE.SphereGeometry(.185,24,16),material('#d9c4a2',.18,.28));top.position.y=.735;top.scale.y=.22;root.add(top);
   const cap=cylinder(root,.234,.56,porcelain,.46,-.28,-.01);cap.rotation.z=.22;cylinder(root,.222,.035,metal,.52,-.55,-.01);
-  print(root,['柔光','LIGHT'],.28,.32,0,-.18,.222);root.rotation.z=-.22;
+  print(root,['精简','CORE'],.28,.32,0,-.18,.222);root.rotation.z=-.22;
  }
  // The page must render before its product, even while both fade. Otherwise a
  // nearly opaque page paints over non-depth-writing parts and they pop at 98%.
@@ -70,9 +70,9 @@ export function createPaletteCraft(productTexture){
  });
  const lid=surface('palette-mirror',4),shell=surface('palette-case',5);
  pivotSurface(lid,0,.125);
- const labels=[['提取四色用途','Extract the colour roles'],['让色彩找到位置','Bring each shade into place'],['装配镜面与随行盒体','Assemble mirror and compact'],['从研究提案，到柔雾四色','From research to Soft Haze']].map((pair,i)=>stageLabel(pair,`craft-step-${i}`));
+ const labels=[['提取产品要求与成本约束','Extract needs and cost constraints'],['把互补用途组织成产品','Combine complementary uses'],['将结构与包装落实到样品','Resolve form and packaging'],['形成样品，进入报价与交付评审','Sample ready for quote and delivery review']].map((pair,i)=>stageLabel(pair,`craft-step-${i}`));
  const captionRoot=new THREE.Group();captionRoot.name='palette-craft-captions';captionRoot.add(...labels);
- const chips=['香槟 · 提亮','灰褐 · 加深','玫瑰 · 过渡','象牙 · 打底'].map((text,i)=>stageLabel([text,['Champagne / light','Taupe / define','Rose / blend','Ivory / base'][i]],`craft-role-${i}`,true));captionRoot.add(...chips);
+ const chips=['用途 · 互补','成本 · 核算','结构 · 收纳','交付 · 验证'].map((text,i)=>stageLabel([text,['Use / combine','Cost / estimate','Form / storage','Delivery / test'][i]],`craft-role-${i}`,true));captionRoot.add(...chips);
  const temp=new THREE.Vector3(),front=new THREE.Quaternion();
  return {root,captionRoot,pans,lid,
   focusAt(t,target){
