@@ -1,4 +1,16 @@
 import * as THREE from 'three';
+// Print the original identity into the shared product surface once, so the lid,
+// assembled kit, reflection and commerce image cannot drift during their handoff.
+// Keep both source assets intact; the print sits in the clear upper-right paper area.
+export function brandProductSurface(productTexture,brandTexture){
+ const photo=productTexture.image,mark=brandTexture.image;
+ if(!photo?.width||!mark?.width)return false;
+ const canvas=document.createElement('canvas');canvas.width=photo.width;canvas.height=photo.height;
+ const context=canvas.getContext('2d');context.drawImage(photo,0,0);
+ const width=210*photo.width/1254;
+ context.drawImage(mark,790*photo.width/1254,163*photo.height/1254,width,width*mark.height/mark.width);
+ productTexture.image=canvas;productTexture.needsUpdate=true;return true;
+}
 // The concept photograph is mapped onto its actual outline, not a rectangular
 // billboard. All moving modules and the final product share these UV coordinates.
 // Coordinates are measured on the 1254 px source; the original bitmap is preserved.

@@ -9,7 +9,7 @@ const zh={
  'PRODUCTS  /  DRAWING  /  PORTABLE KIT':'产品 / 绘画工具 / 随行收纳',
  'DETAILS & FINISHES':'细节与材质','PRODUCT DETAILS & DELIVERY':'产品详情与交付',
  'CUSTOMER REVIEWS':'购买者评价','CONCEPT COLLECTION  ·  DEMONSTRATION':'概念系列 · 展示示例',
- 'SELECTED FOR DEVELOPMENT':'选中开发方向','Portable drawing kit':'随行绘画收纳盒','Drawing tools, each in its own place.':'绘画工具各有其位，合上就能带走。',
+ 'BRAND CONCEPT / SAMPLE':'品牌概念 / 选中打样','Portable drawing kit':'随行绘画收纳盒','Drawing tools, each in its own place.':'绘画工具各有其位，合上就能带走。',
  '4.8 / 5    ·    Illustrative rating':'4.8 / 5 · 演示评分','Pencils, paints, tools and drawing cards.':'笔组、颜料、小工具与绘画纸卡。',
  'Divided trays keep tools ready to use.':'分区内托，让每次取用和归位都顺手。','ADD TO BAG':'加入购物袋',
  'CONCEPT PRODUCT / ILLUSTRATIVE PRICE':'概念商品 / 演示价格',
@@ -67,7 +67,7 @@ export function cardTexture(index){
    direction.facts.forEach((v,i)=>paragraph(v[l],565,297+i*92,391,cn?28:27));
    rule(c,48,566,w-96);line(cn?'留下需求预测、成本约束与交付要求':'KEEP THE FORECAST, COST LIMITS AND DELIVERY PLAN',48,602,cn?27:25,direction.accent);
   }
-  line(cn?'原创概念 / 需样品验证':'AUTHORED CONCEPT / SAMPLE TESTING REQUIRED',48,h-23,18,'#8099ad');
+  line(cn?'品牌概念 / 需样品验证':'BRAND CONCEPT / SAMPLE TESTING REQUIRED',48,h-23,18,'#8099ad');
  },1024,720);
 }
 export function reviewNoteTexture(index){return canvasTexture((c,w)=>{
@@ -106,7 +106,7 @@ export function commerceTexture(){return canvasTexture((c,w,h)=>{
  label(c,'PRODUCT DETAILS & DELIVERY',65,930,24,'#77736b');rule(c,65,1060,w-130,'#d1cbc1');label(c,'CUSTOMER REVIEWS',65,1135,35,'#3c3832');label(c,'CONCEPT COLLECTION  ·  DEMONSTRATION',65,h-31,17,'#8b857c');
 },1536,2100);}
 export function commerceDetails(){return canvasTexture((c)=>{
- label(c,'SELECTED FOR DEVELOPMENT',30,65,21,'#8c7762');label(c,'Portable drawing kit',30,151,80,'#302b25');label(c,'Drawing tools, each in its own place.',30,206,32,'#6e665c');
+ label(c,'BRAND CONCEPT / SAMPLE',30,65,21,'#8c7762');label(c,'Portable drawing kit',30,151,80,'#302b25');label(c,'Drawing tools, each in its own place.',30,206,32,'#6e665c');
  label(c,'4.8 / 5    ·    Illustrative rating',30,270,25,'#8d7257');rule(c,30,305,605,'#cec6ba');label(c,'$28.00',30,380,57,'#332d26');
  label(c,'Pencils, paints, tools and drawing cards.',30,447,26,'#6e665c');label(c,'Divided trays keep tools ready to use.',30,491,24,'#82786c');
  rounded(c,30,545,610,76,6);c.fillStyle='#38362f';c.fill();label(c,'ADD TO BAG',220,595,25,'#f7f3ec');
