@@ -7,12 +7,12 @@ import './intelligence-experience.css';
 const stageIcons = [Database, Graph, Sparkle, GitBranch, Package, Stack];
 const exampleIcons = [MagnifyingGlass, SquaresFour, CheckCircle];
 const stageHeadlines = [
-  ['让信息相遇，\n让创造有据。', 'Bring information together.\nGive creation a foundation.'],
-  ['让数据被理解，\n释放更深层的价值。', 'Understand the data.\nDiscover deeper value.'],
-  ['看见关联中的信号，\n找到下一种可能。', 'See the signal.\nDiscover the possibility.'],
-  ['让想法成形，\n让决策可见。', 'Give ideas their form.\nMake decisions tangible.'],
-  ['让洞察成形，\n让创造走向市场。', 'Give insight a form.\nBring creation to market.'],
-  ['每一次创造，\n都是下一次的起点。', 'Every creation becomes\na new beginning.'],
+  ['汇聚多源数据，\n建立分析基础。', 'Connect the data.\nGround the analysis.'],
+  ['看清市场变化，\n研判未来需求。', 'Read market shifts.\nAnticipate demand.'],
+  ['发现产品机会，\n看清取舍依据。', 'Find opportunities.\nWeigh the trade-offs.'],
+  ['明确产品方向，\n推动方案成形。', 'Choose a direction.\nShape the product.'],
+  ['让产品走向市场，\n让订单完成交付。', 'Bring products to market.\nDeliver on orders.'],
+  ['复盘经营结果，\n积累下一轮经验。', 'Review the results.\nInform the next cycle.'],
 ];
 
 /** The parent owns the clock, selected stage and the three-level journey. */
@@ -85,7 +85,7 @@ export function IntelligenceExperience({
       <h1>{stageHeadlines[index][l]}</h1>
       <p className="intelligence-description">{current.description[l]}</p>
       <button className="intelligence-example exhibit-action" onClick={onExample}>
-        <span>{['查看典型案例', 'Explore an example'][l]}</span><ArrowRight aria-hidden="true" />
+        <span>{['查看业务示例', 'Explore an example'][l]}</span><ArrowRight aria-hidden="true" />
       </button>
       <div className="intelligence-playback">
         <span className={`intelligence-status${isAuto && playing ? ' is-auto' : ''}`}>

@@ -1,4 +1,4 @@
-// A single beauty-product scenario. All metrics and reviews are illustrative.
+// Category-independent business narrative. Product visuals and data remain illustrative.
 export const intelligenceStages = [
   {
     "id": "assets",
@@ -11,35 +11,35 @@ export const intelligenceStages = [
       "Gather"
     ],
     "description": [
-      "从用户评价、商品信息与市场资料中，保留来源和上下文，让分散的信息形成可追溯的知识资产。",
-      "Bring reviews, product information and market research together, retaining their sources and context."
+      "汇集商品主数据、市场资料、历史销售、图片素材、行业知识与用户反馈，保留来源和上下文，形成可持续积累的数据资产。",
+      "Connect product records, market research, sales history, images, industry knowledge and customer feedback, preserving their sources and context."
     ],
     "example": {
       "title": [
-        "一条评价，怎样成为研究依据？",
-        "How does a review become research evidence?"
+        "多源资料，怎样成为数据资产？",
+        "How do diverse sources become useful data?"
       ],
       "summary": [
-        "以四色眼影盘概念商品为例，整理使用反馈与商品资料；演示评价不代表真实消费者研究。",
-        "Use a concept four-shade eye palette to organize feedback and product records. Demonstration reviews are not real consumer research."
+        "以一次新品开发为例，将商品档案、市场资料、历史销售、图片素材、行业知识与用户反馈关联起来。",
+        "For a new product, connect product records, market research, sales history, images, industry knowledge and customer feedback."
       ],
       "steps": [
         [
-          "保留评价原文、来源与日期",
-          "Preserve each review, its source and date"
+          "统一商品、品类与时间口径",
+          "Align product identifiers, categories and time periods"
         ],
         [
-          "关联色彩、粉质与使用情境",
-          "Connect colour, texture and use context"
+          "保留资料来源、采集日期与业务背景",
+          "Retain sources, collection dates and business context"
         ],
         [
-          "区分事实、主观感受与待验证判断",
-          "Separate facts, opinions and hypotheses"
+          "标记缺失信息，区分事实与待验证判断",
+          "Flag missing information and separate facts from hypotheses"
         ]
       ],
       "outcome": [
-        "信息有出处，后续分析才有依据。",
-        "Traceable information gives analysis a foundation."
+        "让每一项分析都能回到对应的数据来源。",
+        "Keep every analysis traceable to its sources."
       ]
     }
   },
@@ -50,39 +50,39 @@ export const intelligenceStages = [
       "AI-Powered Analytics"
     ],
     "action": [
-      "重组",
-      "Reorganize"
+      "研判",
+      "Analyze"
     ],
     "description": [
-      "由人工智能辅助整理主题、发现关联，并由业务人员复核，让数据形成可解释的结构。",
-      "Use AI to organize themes and uncover connections, with human review to keep the structure explainable."
+      "结合潮流趋势与历史销售，比较产品表现、研判未来需求，为新品开发和补货计划提供分析依据。",
+      "Use AI to compare market trends and sales history, assess product performance and forecast demand for product development and replenishment."
     ],
     "example": {
       "title": [
-        "评价之间，有哪些值得检查的关联？",
-        "Which connections deserve a closer look?"
+        "怎样从历史销售研判未来需求？",
+        "How can past sales inform future demand?"
       ],
       "summary": [
-        "将眼影盘的配色、使用方式与体验描述放在一起比较，观察信息怎样从分散记录形成关系。",
-        "Compare palette colours, application contexts and experience descriptions to reveal relationships between records."
+        "将历史销量与市场趋势结合，观察哪些产品持续受到欢迎、哪些表现转弱，再形成由业务人员复核的需求预测。",
+        "Combine sales history with market trends to identify sustained demand and weaker performance, then build a forecast for the team to review."
       ],
       "steps": [
         [
-          "整理相同主题与重复信息",
-          "Organize recurring themes and duplicate information"
+          "比较不同产品、时期与渠道的销售表现",
+          "Compare sales across products, periods and channels"
         ],
         [
-          "比较配色与使用情境的关系",
-          "Compare colour choices and use contexts"
+          "结合市场趋势，分析需求变化的可能原因",
+          "Use market trends to explore possible reasons for demand shifts"
         ],
         [
-          "由业务人员核对关联是否成立",
-          "Have the team validate proposed connections"
+          "形成销量预测，标明假设并由业务人员复核",
+          "State forecast assumptions and have the team review them"
         ]
       ],
       "outcome": [
-        "得到可检查的关联，而非自动成立的结论。",
-        "Produce inspectable connections, not automatic conclusions."
+        "为新品开发与补货计划提供可检验的依据。",
+        "Give product development and replenishment a basis to test."
       ]
     }
   },
@@ -93,39 +93,39 @@ export const intelligenceStages = [
       "Insights"
     ],
     "action": [
-      "显现",
-      "Reveal"
+      "洞察",
+      "Discover"
     ],
     "description": [
-      "围绕随行彩妆的使用需求，比较五个美妆方向，检查形态、取用与待验证问题，再选出下一步提案。",
-      "Review five directions for portable beauty, comparing format, application and questions still to test before choosing what to develop."
+      "将需求、趋势与销售表现放在一起比较，同时评估产品结构、成本和利润空间，筛选值得继续验证的方向。",
+      "Compare customer needs, trends and sales performance alongside product design, cost and margin potential to identify directions worth testing."
     ],
     "example": {
       "title": [
-        "五个美妆方向，怎样选出下一步？",
-        "Which of five beauty directions should move forward?"
+        "怎样选出值得开发的产品？",
+        "How do we choose a product to develop?"
       ],
       "summary": [
-        "以用途清楚、便于随行为本轮设计要求，比较唇油、腮红、轻透底妆、高光棒与眼影盘，演示如何选择下一份打样提案。",
-        "Use clear roles and portability as this design brief. Compare lip oil, blush, skin tint, highlighter and a palette to choose the next sampling proposal."
+        "围绕同一客户需求比较候选方向，综合趋势契合、历史表现和成本约束，保留选择与暂缓的具体理由。",
+        "Compare candidates for the same customer need against trends, past performance and cost constraints. Record why each moves forward or is deferred."
       ],
       "steps": [
         [
-          "按使用部位、产品形态和取用方式比较",
-          "Compare use area, product format and application"
+          "识别值得保留、调整与组合的产品要素",
+          "Identify product elements to retain, adapt or combine"
         ],
         [
-          "将底妆兼容、色调匹配列为待验证项",
-          "Flag base compatibility and shade matching for testing"
+          "拆分材料、结构与包装，核对报价和利润空间",
+          "Review material, construction and packaging costs against margin potential"
         ],
         [
-          "选中四色与镜面组合，继续制作样品",
-          "Choose four shade roles with a mirror for sampling"
+          "比较机会与约束，留下值得继续验证的提案",
+          "Weigh opportunities and constraints to shortlist proposals for testing"
         ]
       ],
       "outcome": [
-        "选择适合本轮设计任务的提案，保留验证边界。",
-        "Choose a proposal for this brief, keeping testing questions explicit."
+        "让每一次取舍都有依据，也保留待验证问题。",
+        "Make the reasoning and open questions behind each choice clear."
       ]
     }
   },
@@ -133,42 +133,42 @@ export const intelligenceStages = [
     "id": "decisioning",
     "name": [
       "决策赋能",
-      "Decisioning"
+      "Decision Support"
     ],
     "action": [
-      "组合",
-      "Compose"
+      "决策",
+      "Decide"
     ],
     "description": [
-      "从选中的提案里提取四色用途，让色彩、镜面与盒体逐步组合，把设计依据转化为可见的商品。",
-      "Extract four colour roles from the selected proposal. Bring the shades, mirror and compact together, turning design intent into a visible product."
+      "把选中的方向细化为产品方案，核对规格、报价与交付条件，再安排打样验证和备货计划。",
+      "Turn the selected direction into a product plan. Review specifications, supplier quotes and delivery requirements before planning samples and stock."
     ],
     "example": {
       "title": [
-        "一份设计提案，怎样成为完整商品？",
-        "How does a design proposal become a complete product?"
+        "如何让提案变成执行方案？",
+        "How does a proposal become an action plan?"
       ],
       "summary": [
-        "把“日常配色”和“少带几件”的使用要求转成一盘四色、内置镜面的提案，再由机器人逐步组合颜色与结构。",
-        "Turn everyday colour and less-to-carry needs into a four-shade compact with a mirror, then let the assistant bring its colours and construction together."
+        "把产品方向细化为规格、结构与交付要求，结合样品验证、成本评估和需求预测，确定下一步开发与备货安排。",
+        "Define specifications, construction and delivery needs. Use sample reviews, cost estimates and demand forecasts to plan development and stock."
       ],
       "steps": [
         [
-          "从提案里提取色彩、用途与结构要求",
-          "Extract colours, roles and construction requirements from the proposal"
+          "明确规格、结构与样品验收要求",
+          "Define specifications, construction and sample acceptance criteria"
         ],
         [
-          "让四色归位，再组合盒体与镜面",
-          "Seat the four shades, then combine the compact and mirror"
+          "核对供应报价、预计成本与交付周期",
+          "Review supplier quotes, estimated costs and lead times"
         ],
         [
-          "形成概念商品，保留样品验证事项",
-          "Form the concept product and retain the sample-testing questions"
+          "结合需求预测，安排打样、生产与补货",
+          "Use demand forecasts to plan sampling, production and replenishment"
         ]
       ],
       "outcome": [
-        "形成可讨论、可复核的产品方向。",
-        "Form a product direction that can be discussed and reviewed."
+        "形成可评审、可打样、可调整的执行方案。",
+        "Build a plan that can be reviewed, sampled and refined."
       ]
     }
   },
@@ -176,42 +176,42 @@ export const intelligenceStages = [
     "id": "impact",
     "name": [
       "价值实现",
-      "Market Impact"
+      "Value Realization"
     ],
     "action": [
-      "呈现",
-      "Present"
+      "交付",
+      "Deliver"
     ],
     "description": [
-      "把完成的商品带入展示与购买情境，让用户看清配色、用途和价格，并为后续反馈建立入口。",
-      "Bring the finished product into a shopping experience, making its colours, use and price clear and creating a place for feedback."
+      "连接产品展示、订单确认、生产备货与履约交付，让产品价值在客户使用中得到检验。",
+      "Connect product presentation, order confirmation, production and fulfillment. Let customer use put the product's value to the test."
     ],
     "example": {
       "title": [
-        "同一件商品，怎样进入一次购买体验？",
-        "How does the same product become a shopping experience?"
+        "如何从产品走到订单交付？",
+        "How does a product move from order to delivery?"
       ],
       "summary": [
-        "完成的四色眼影盘与山形助手一起进入商品详情页：商品落入图片区域，助手收拢为页头标志。价格、评分和订单为演示数据。",
-        "The assembled palette and mountain assistant enter one product page. The product becomes its hero image; the assistant becomes its logo. Price, ratings and orders are illustrative."
+        "从产品展示进入客户确认与订单履约，持续核对规格、数量、质量与交期，并将使用反馈关联回同一产品。",
+        "Move from product presentation to customer approval and order fulfillment. Check specifications, quantity, quality and timing, and link feedback to the product."
       ],
       "steps": [
         [
-          "保留选中提案的配色、用途与产品身份",
-          "Retain the chosen colours, roles and product identity"
+          "明确产品信息、客户要求与订单条件",
+          "Confirm product details, customer requirements and order terms"
         ],
         [
-          "在商品页补齐名称、规格、价格与购买入口",
-          "Add the product name, format, price and purchase entry"
+          "衔接生产备货、质量检查与履约交付",
+          "Coordinate production, stock, quality checks and delivery"
         ],
         [
-          "将购买后的使用评价关联回商品与提案",
-          "Link post-purchase feedback to the product and proposal"
+          "记录交付结果与客户使用反馈",
+          "Record delivery outcomes and customer feedback"
         ]
       ],
       "outcome": [
-        "从提案到购买反馈，保留同一件商品的对应关系。",
-        "Keep the same product connected from proposal to purchase feedback."
+        "让产品开发与客户交付保持同一条业务线索。",
+        "Keep a clear link from product development to customer delivery."
       ]
     }
   },
@@ -222,39 +222,39 @@ export const intelligenceStages = [
       "Intelligent Evolution"
     ],
     "action": [
-      "回流",
-      "Learn"
+      "复盘",
+      "Review"
     ],
     "description": [
-      "让新的用户反馈回到知识资产，保留这次选择的经验，开始下一轮理解与创造。",
-      "Return new feedback to the knowledge base, retaining what was learned for the next cycle of understanding and creation."
+      "把销售、利润、商品评价和库存表现带回分析，识别缺货、积压与需求变化，为下一轮开发和补货调整提供依据。",
+      "Review sales, margins, customer feedback and inventory. Identify stockouts, excess stock and demand shifts to guide the next development and replenishment cycle."
     ],
     "example": {
       "title": [
-        "这次反馈，怎样成为下一次的起点？",
-        "How does this feedback start the next cycle?"
+        "怎样用经营复盘改进决策？",
+        "How can a business review improve decisions?"
       ],
       "summary": [
-        "商品页中的评价回到最初的信息状态，保留与商品、推荐和研究依据的对应关系。",
-        "Reviews return from the product page to the original information state, keeping their relationship to the product and its rationale."
+        "对照原先的开发与补货判断，复盘销售、利润、商品评价以及缺货和库存积压，检查预期与实际的差异。",
+        "Compare sales, margins, customer feedback, stockouts and excess stock with the original development and replenishment plans to understand the gaps."
       ],
       "steps": [
         [
-          "记录使用反馈与待验证问题",
-          "Record feedback and unanswered questions"
+          "核对销售、利润与客户反馈的变化",
+          "Review changes in sales, margins and customer feedback"
         ],
         [
-          "关联本轮商品与推荐依据",
-          "Link feedback to the product and recommendation"
+          "识别缺货损失、库存积压与预测偏差",
+          "Identify lost sales from stockouts, excess stock and forecast errors"
         ],
         [
-          "让新资料进入下一轮研究",
-          "Bring new evidence into the next research cycle"
+          "更新分析依据，调整下一轮开发与补货",
+          "Update the evidence and adjust the next development and replenishment plans"
         ]
       ],
       "outcome": [
-        "反馈进入知识，循环继续。",
-        "Feedback becomes knowledge. The cycle continues."
+        "让经营结果回到数据资产，持续修正判断。",
+        "Feed business results back into the data to refine future decisions."
       ]
     }
   }
