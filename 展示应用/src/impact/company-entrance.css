@@ -1,7 +1,5 @@
 .moment-company{--impact-navigation-bottom:7.2%;--impact-navigation-height:clamp(72px,8.1vh,175px);}
-.moment-company .impact-header{top:3.6%;left:3.2%;right:3.2%;align-items:center;justify-content:flex-start;gap:2.1vw;}
-.impact-theatre.moment-company .impact-header:before{display:block;left:-3vw;top:-4vh;width:20vw;height:21vh;opacity:1;background:radial-gradient(ellipse at 43% 43%,#cce7fff2,#87b4d375 28%,transparent 70%);}
-.moment-company .impact-logo{width:clamp(126px,9.1vw,350px);filter:drop-shadow(0 1px 12px #d1e9ff35);}
+.moment-company .impact-header{--impact-logo-width:clamp(126px,9.1vw,350px);top:3.6%;left:3.2%;right:3.2%;align-items:center;justify-content:flex-start;gap:2.1vw;}
 .moment-company .impact-edition{display:block;max-width:10.4vw;padding-left:1.8vw;border-left:1px solid #aecad050;line-height:1.6;letter-spacing:0;font-size:clamp(10px,.8vw,31px);color:#b7c8d6;}
 .impact-theatre.moment-company .impact-vignette{background:linear-gradient(0deg,#031320cc 0%,#0313207a 11%,transparent 28%),linear-gradient(90deg,#03132038,transparent 48%);}
 .company-entrance-copy{position:absolute;top:21.25%;left:3.5%;width:29%;color:#edf4f8;pointer-events:none;}
