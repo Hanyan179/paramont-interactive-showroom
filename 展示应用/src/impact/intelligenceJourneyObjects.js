@@ -2,15 +2,23 @@ import * as THREE from 'three';
 import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {createDirectionModel,createDrawingKitCraft} from './intelligenceCraft.js';
 import {createProductGeometry} from './intelligenceProduct.js';
+import {feedbackSources} from './intelligenceFeedback.js';
 import {informationFragments} from './intelligenceResearch.js';
 import {createMountainRobot} from './intelligenceRobot.js';
 import {createProjection,installTyping} from './intelligencePresence.js';
 import {lerp,ramp} from './intelligenceTimeline.js';
-import {canvasTexture,label,rounded,cardTexture,reviewNoteTexture,reviewPaperTexture,reviewDetailsTexture,commerceTexture,commerceDetails,purchaseReviewPaperTexture,purchaseReviewDetailsTexture,reportTexture,translate} from './intelligenceSurfaces.js';
+import {canvasTexture,label,rounded,cardTexture,reviewNoteTexture,reviewPaperTexture,reviewDetailsTexture,commerceTexture,commerceDetails,purchaseReviewPaperTexture,purchaseReviewDetailsTexture,businessRecordTexture,businessActionTexture,reportTexture} from './intelligenceSurfaces.js';
 export {canvasTexture,label,rounded};
 export function texturePlane(texture,w,h,name){const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide});const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),material);mesh.name=name;return mesh;}
 export function alpha(mesh,value){mesh.visible=value>.001;if(mesh.material){mesh.material.opacity=value;if(mesh.material.uniforms?.opacity)mesh.material.uniforms.opacity.value=value;}}
-function textTexture(text){return canvasTexture((ctx,w,h)=>{ctx.textAlign='center';ctx.textBaseline='middle';label(ctx,text,w/2,h/2,Math.min(108,1500/Math.max(1,text.length)));},1024,160);}
+function textTexture(text){return canvasTexture((ctx,w,h)=>{
+ ctx.textAlign='center';ctx.textBaseline='middle';const source=feedbackSources.find(source=>source.text[1]===text),value=source?.text[ctx.journeyLang==='zh'?0:1]??text;
+ let size=Math.min(108,1500/Math.max(1,text.length));
+ // The sentence must also fit its narrower opening source card, before that
+ // same card expands into the business review on the return journey.
+ if(source&&source.id!=='customer'){ctx.font='400 100px Arial, sans-serif';size=100*Math.min(1,840/ctx.measureText(value).width);}
+ label(ctx,value,w/2,h/2,size);
+},1024,160);}
 export function textPlane(text,name,width=3.2){return texturePlane(textTexture(text),width,width*160/1024,name);}
 function glow(name,color='#76bce9'){
  const mesh=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{opacity:{value:0},tint:{value:new THREE.Color(color)}},vertexShader:'varying vec2 v;void main(){v=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 v;uniform float opacity;uniform vec3 tint;void main(){float d=length((v-.5)*2.);float a=exp(-d*d*5.)*smoothstep(1.,.7,d);gl_FragColor=vec4(tint,a*opacity);}'}));mesh.name=name;return mesh;
@@ -91,17 +99,35 @@ export function createJourneyObjects(manager,quality){
  const scanEdge=new THREE.LineSegments(new THREE.EdgesGeometry(scan.geometry),new THREE.LineBasicMaterial({color:'#d0eeff',transparent:true,depthWrite:false}));scan.add(scanEdge);
  const relationships=createDataRelationships();body.add(relationships.links,...relationships.nodes);
  const analysis={height:{value:1.5},strength:{value:0},toBody:{value:new THREE.Matrix4()}};
- const reviews=['Great product.','Perfect gift.','Love it.','Good quality.','Easy to carry.','Easy to store.'];
- const texts=reviews;
- const reviewMap=reviewPaperTexture(),reviewInkMap=reviewDetailsTexture(),purchaseMap=purchaseReviewPaperTexture();
- const records=Array.from({length:texts.length},(_,i)=>{
-  const text=texts[i],mesh=textPlane(text,`record-${i}`,i===0?3.8:2.5);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),i===0?3.8:2.5);
-  const w=i===0?4.2:3.2,h=i===0?1.31:1,card=texturePlane(reviewMap,w,h,'feedback-frame'),exhibitInk=texturePlane(reviewInkMap,w,h,`feedback-details-${i}`);
+ const texts=feedbackSources.map(source=>source.text[1]);
+ const reviewMap=reviewPaperTexture(),purchaseMap=purchaseReviewPaperTexture();
+ const records=feedbackSources.map((source,i)=>{
+  const text=texts[i],width=i===0?3.8:3.65,mesh=textPlane(text,`record-${i}`,width);installTyping(mesh,text,mesh.material.map.image.getContext('2d'),width);
+  const w=i===0?4.2:3.2,h=i===0?1.31:1,card=texturePlane(reviewMap,w,h,'feedback-frame'),exhibitInk=texturePlane(reviewDetailsTexture(i),w,h,`feedback-details-${i}`);
   card.position.z=-.03;exhibitInk.position.z=.004;card.add(exhibitInk);mesh.add(card);
-  const purchase=texturePlane(purchaseMap,5.8,2.2,'purchase-review-frame'),purchaseInk=texturePlane(purchaseReviewDetailsTexture(i),5.8,2.2,`purchase-review-details-${i}`);
-  purchase.position.z=-.035;purchaseInk.position.z=.004;purchase.material.color.setScalar(.78);purchaseInk.material.color.setScalar(.78);purchase.add(purchaseInk);mesh.add(purchase);
-  card.renderOrder=purchase.renderOrder=5;exhibitInk.renderOrder=purchaseInk.renderOrder=6;mesh.renderOrder=7;
-  mesh.userData.reviewSkins={exhibitInk,purchaseInk};mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;
+  card.renderOrder=5;exhibitInk.renderOrder=6;mesh.renderOrder=7;
+  let purchase=null,purchaseInk=null,businessInk=null,actionInk=null;
+  if(i===0){
+   purchase=texturePlane(purchaseMap,5.8,2.2,'purchase-review-frame');purchaseInk=texturePlane(purchaseReviewDetailsTexture(0),5.8,2.2,'purchase-review-details-0');
+   purchase.position.z=-.035;purchaseInk.position.z=.004;purchase.material.color.setScalar(.78);purchaseInk.material.color.setScalar(.78);purchase.add(purchaseInk);mesh.add(purchase);
+   purchase.renderOrder=5;purchaseInk.renderOrder=6;
+  }else{
+   businessInk=texturePlane(businessRecordTexture(i),4.4,2.8,`business-record-details-${i}`);
+   actionInk=texturePlane(businessActionTexture(i),4.4,2.8,`business-adjustment-${i}`);
+   for(const ink of [businessInk,actionInk]){ink.position.set(0,-.6,.006);ink.renderOrder=6;mesh.add(ink);}
+  }
+  mesh.userData.source=source.id;mesh.userData.reportIndex=source.report;
+  mesh.userData.reviewSkins={exhibitInk,purchaseInk,purchase,businessInk,actionInk};
+  mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;
+ });
+ // Companion reviews belong to the scrolling consumer page. The first review
+ // remains the persistent customer source when the wider business review opens.
+ const purchaseCompanions=[['Easy to carry.',4],['Easy to store.',5],['Good quality.',3]].map(([text,index],i)=>{
+  const mesh=textPlane(text,`purchase-companion-${i}`,3.8),paper=texturePlane(purchaseMap,5.8,2.2,`purchase-companion-frame-${i}`),ink=texturePlane(purchaseReviewDetailsTexture(index),5.8,2.2,`purchase-companion-details-${i}`);
+  mesh.material.color.set('#171c21');paper.material.color.setScalar(.78);ink.material.color.setScalar(.78);
+  paper.position.z=-.035;ink.position.z=.004;paper.add(ink);mesh.add(paper);
+  paper.renderOrder=5;ink.renderOrder=6;mesh.renderOrder=7;
+  mesh.traverse(part=>{if(part.material)part.material.side=THREE.FrontSide;});root.add(mesh);return mesh;
  });
  const loader=new THREE.TextureLoader(manager);
  let disposed=false;const reportMaps=[];
@@ -152,6 +178,6 @@ export function createJourneyObjects(manager,quality){
  const page=texturePlane(commerceTexture(),8.8,6.2,'commerce-frame');page.material.color.setScalar(.76);page.material.onBeforeCompile=shader=>{shader.vertexShader='varying vec2 pageUv;\n'+shader.vertexShader.replace('#include <uv_vertex>','#include <uv_vertex>\npageUv=uv;');shader.fragmentShader='varying vec2 pageUv;\n'+shader.fragmentShader.replace('#include <map_fragment>','#include <map_fragment>\nvec2 q=abs(pageUv-.5)-vec2(.483,.477);if(length(max(q,0.))>.017)discard;');};page.material.customProgramCacheKey=()=> 'rounded-page-viewport';page.material.map.repeat.y=1080/2100;page.material.map.offset.y=1-1080/2100;commerce.add(page);
  const details=texturePlane(commerceDetails(),3.6,3.6,'commerce-details');details.position.set(1.8,.15,.05);commerce.add(details);clipToPage(details);
  const commerceMetrics=[];for(let i=0;i<4;i++){const mesh=textPlane(`${[128,136,148,162][i]} orders   /   ${[24,27,31,36][i]} reviews`,`commerce-metrics-${i}`,3.0);mesh.material.color.set('#594c3f');mesh.position.set(1.8,2.32,.12);commerce.add(mesh);commerceMetrics.push(mesh);}
- function setLanguage(lang){const maps=new Set();root.traverse(mesh=>{if(mesh.material?.map)maps.add(mesh.material.map);});maps.forEach(map=>map.userData.redraw?.(lang));records.forEach((mesh,i)=>installTyping(mesh,translate(texts[i],lang),mesh.material.map.image.getContext('2d'),i===0?3.8:2.5));root.userData.language=lang;}
- return {craft,directionModels,reviewBadges,reviewNotes,setLanguage,reportFaces,dataFragments,analysis,relationships,root,body,robot,robotPageClip,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,records,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
+ function setLanguage(lang){const maps=new Set();root.traverse(mesh=>{if(mesh.material?.map)maps.add(mesh.material.map);});maps.forEach(map=>map.userData.redraw?.(lang));records.forEach((mesh,i)=>installTyping(mesh,feedbackSources[i].text[lang==='zh'?0:1],mesh.material.map.image.getContext('2d'),i===0?3.8:3.65));root.userData.language=lang;}
+ return {craft,directionModels,reviewBadges,reviewNotes,setLanguage,reportFaces,dataFragments,analysis,relationships,root,body,robot,robotPageClip,page,crystal,cursor,projection,scanLine,ambience,floor,scan,scanEdge,records,purchaseCompanions,beam,cards,cardDepths,product,reflection,heroLight,productCaption,commerce,details,commerceMetrics};
 }

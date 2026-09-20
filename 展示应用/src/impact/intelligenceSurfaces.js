@@ -1,5 +1,6 @@
 // Authored, local demonstration UI textures. No business measurements are implied.
 import * as THREE from 'three';
+import {feedbackSources} from './intelligenceFeedback.js';
 import {proposalDirections,researchReports} from './intelligenceResearch.js';
 const zh={
  'Reviewing':'审查中','Passed over':'暂缓验证','Selected':'选中打样',
@@ -64,7 +65,7 @@ export function cardTexture(index){
   }else{
    line(cn?'把保留的要素组合起来':'COMBINE THE RETAINED ELEMENTS',565,229,23,direction.accent);
    direction.facts.forEach((v,i)=>paragraph(v[l],565,297+i*92,391,cn?28:27));
-   rule(c,48,566,w-96);line(cn?'结构打样 → 完整报价 → 交付评审':'SAMPLE → COMPLETE QUOTE → DELIVERY REVIEW',48,602,cn?27:25,direction.accent);
+   rule(c,48,566,w-96);line(cn?'留下需求预测、成本约束与交付要求':'KEEP THE FORECAST, COST LIMITS AND DELIVERY PLAN',48,602,cn?27:25,direction.accent);
   }
   line(cn?'原创概念 / 需样品验证':'AUTHORED CONCEPT / SAMPLE TESTING REQUIRED',48,h-23,18,'#8099ad');
  },1024,720);
@@ -75,7 +76,27 @@ export function reviewNoteTexture(index){return canvasTexture((c,w)=>{
  label(c,proposalDirections[index].review[l],w/2,126,49,INK);
 },1280,170);}
 export function reviewPaperTexture(){return canvasTexture(surface,768,240);}
-export function reviewDetailsTexture(){return canvasTexture((c,w,h)=>{label(c,'CUSTOMER FEEDBACK',42,52,21,BLUE);label(c,'5.0  /  5',w-170,52,22,INK);rule(c,42,79,w-84);label(c,'DRAWING KIT  ·  USE & DELIVERY',42,h-32,19,MUTED);},768,240);}
+export function reviewDetailsTexture(index=0){return canvasTexture((c,w,h)=>{
+ const source=feedbackSources[index],l=c.journeyLang==='zh'?0:1;
+ label(c,source.title[l],42,52,21,BLUE);if(index===0)label(c,'5.0  /  5',w-170,52,22,INK);
+ rule(c,42,79,w-84);label(c,source.source[l],42,h-32,19,MUTED);
+},768,240);}
+// The persistent source sentence occupies the blank title band, then survives
+// after these record details and the glass surface fade back into raw text.
+export function businessRecordTexture(index){return canvasTexture((c,w)=>{
+ const source=feedbackSources[index],l=c.journeyLang==='zh'?0:1;
+ label(c,source.title[l],48,58,32,BLUE);label(c,l===0?'同一商品 / 经营复盘':'SAME PRODUCT / BUSINESS REVIEW',48,103,21,MUTED);
+ rule(c,48,240,w-96);
+ const headings=l===0?['原先计划','执行记录']:['ORIGINAL PLAN','EXECUTION RECORD'];
+ headings.forEach((heading,i)=>{const x=48+i*538;label(c,heading,x,299,34,BLUE);reportParagraph(c,(i?source.actual:source.plan)[l],x,355,470,l===0?42:36);});
+ rule(c,48,450,w-96);label(c,l===0?'比较之后，调整下一轮':'COMPARE / INFORM THE NEXT CYCLE',48,488,22,MUTED);
+ label(c,l===0?'随行绘画收纳盒 · 复盘方法示意':'DRAWING KIT / ILLUSTRATIVE REVIEW METHOD',48,668,20,MUTED);
+},1100,700);}
+export function businessActionTexture(index){return canvasTexture((c)=>{
+ const source=feedbackSources[index],l=c.journeyLang==='zh'?0:1;
+ reportParagraph(c,source.action[l],48,548,1004,l===0?44:36,INK);
+},1100,700);}
+
 export function commerceTexture(){return canvasTexture((c,w,h)=>{
  rounded(c,3,3,w-6,h-6,24);c.fillStyle='#eeeae3';c.fill();c.strokeStyle='#bcb7b0';c.lineWidth=3;c.stroke();
  label(c,'THE PRODUCT EDIT',220,86,42,'#272725',500);label(c,'PRODUCTS     /     DELIVERY     /     OUR STORY',745,81,22,'#77736b');rule(c,60,122,w-120,'#d1cbc1');

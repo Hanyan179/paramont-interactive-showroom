@@ -214,7 +214,7 @@ test('new purchase reviews scroll with their section and never cover its heading
  for(let t=89.1;t<=91.1;t+=.1){update(t);
   // The heading baseline is at pixel 1135 of the authored 2100-pixel page.
   const map=page.material.map,headingY=((1-1135/2100-map.offset.y)/map.repeat.y-.5)*6.2;
-  for(let i=0;i<2;i++){const record=world.root.getObjectByName(`record-${i}`),purchase=record.children[1];if(purchase.material.opacity<.05)continue;
+  for(let i=0;i<1;i++){const record=world.root.getObjectByName(`record-${i}`),purchase=record.userData.reviewSkins.purchase;if(purchase.material.opacity<.05)continue;
    top.set(0,1.1,0).applyMatrix4(purchase.matrixWorld);root.worldToLocal(top);assert.ok(headingY-top.y>.4,`review ${i} covers its heading at ${t}`);
   }
  }
@@ -230,28 +230,61 @@ test('the docked robot shares the page clip while its earlier flight remains unr
  }
 });
 test('purchase and exhibit review frames share the same changing outline during their handoff',()=>{
- const {world,update}=rig();for(const t of [94,95,96,97,98]){update(t);for(let i=0;i<6;i++){
+ const {world,update}=rig();for(const t of [93.2,93.8,94.2,94.8,95.2]){update(t);for(let i=0;i<1;i++){
   const record=world.root.getObjectByName(`record-${i}`),[exhibit,purchase]=record.children;
   for(const part of [exhibit,purchase])part.geometry.computeBoundingBox();
   const a=exhibit.geometry.boundingBox.clone().applyMatrix4(exhibit.matrix),b=purchase.geometry.boundingBox.clone().applyMatrix4(purchase.matrix);
   for(const axis of ['x','y']){near(a.min[axis],b.min[axis]);near(a.max[axis],b.max[axis]);}
  }}disposeTree(world.root);
 });
-test('review metadata changes without overlapping labels or interrupting the main feedback',()=>{
- const {world,update}=rig(),records=Array.from({length:6},(_,i)=>world.root.getObjectByName(`record-${i}`));
- update(93.5);for(const record of records){assert.ok(record.userData.reviewSkins.purchaseInk.material.opacity>.99);assert.equal(record.userData.reviewSkins.exhibitInk.visible,false);}
- for(let t=94;t<=98;t+=.04){update(t);for(const record of records){const {exhibitInk,purchaseInk}=record.userData.reviewSkins;assert.ok(!(exhibitInk.visible&&purchaseInk.visible),`double review metadata at ${t}`);assert.ok(record.visible&&record.material.opacity>.8);}}
- update(96);for(const record of records){const {exhibitInk,purchaseInk}=record.userData.reviewSkins;assert.equal(exhibitInk.visible,false);assert.equal(purchaseInk.visible,false);assert.ok(record.children[0].visible&&record.children[1].visible);}
- update(98);for(const record of records){near(record.userData.reviewSkins.exhibitInk.material.opacity,record.material.opacity);assert.equal(record.userData.reviewSkins.purchaseInk.visible,false);}
+test('the avatar review retains its sentence while metadata changes skins without overlap',()=>{
+ const {world,update}=rig(),record=world.root.getObjectByName('record-0');
+ update(92.5);assert.ok(record.userData.reviewSkins.purchaseInk.material.opacity>.99);assert.equal(record.userData.reviewSkins.exhibitInk.visible,false);
+ for(let t=93.2;t<=95.2;t+=.04){update(t);const {exhibitInk,purchaseInk}=record.userData.reviewSkins;assert.ok(!(exhibitInk.visible&&purchaseInk.visible),`double metadata at ${t}`);assert.ok(record.visible&&record.material.opacity>.99);}
+ update(94.2);assert.equal(record.userData.reviewSkins.exhibitInk.visible,false);assert.equal(record.userData.reviewSkins.purchaseInk.visible,false);
+ update(95.2);near(record.userData.reviewSkins.exhibitInk.material.opacity,record.material.opacity);assert.equal(record.userData.reviewSkins.purchaseInk.visible,false);disposeTree(world.root);
+});
+test('internal operating records enter only after the consumer page retires and never wear avatar skins',()=>{
+ const {world,update}=rig(),page=world.root.getObjectByName('commerce-frame'),records=Array.from({length:5},(_,i)=>world.root.getObjectByName(`record-${i+1}`));
+ assert.deepEqual(records.map(o=>o.userData.source),['sales','inventory','margin','delivery','quality']);
+ for(let t=85;t<95.3;t+=.1){update(t);for(const record of records){assert.equal(record.visible,false);assert.equal(record.userData.reviewSkins.purchase,null);assert.equal(record.userData.reviewSkins.purchaseInk,null);}}
+ for(let t=95.3;t<102;t+=.05){update(t);if(records.some(o=>o.visible))assert.equal(page.visible,false);}
+ update(97.4);assert.ok(records.every(o=>o.visible&&o.userData.reviewSkins.businessInk.visible));disposeTree(world.root);
+});
+test('companion avatar reviews follow the first purchase review and retire with the consumer page',()=>{
+ const {world,update}=rig(),first=world.root.getObjectByName('record-0'),page=world.root.getObjectByName('commerce-frame'),reviews=Array.from({length:3},(_,i)=>world.root.getObjectByName(`purchase-companion-${i}`));
+ update(90);assert.ok(first.visible);assert.ok(reviews.every(o=>!o.visible));
+ update(92);const cards=[first,...reviews];assert.ok(reviews.every(o=>o.visible));
+ const boxes=cards.map(o=>new THREE.Box3().setFromObject(o.userData.reviewSkins?.purchase??o.children[0]));
+ for(let i=0;i<boxes.length;i++)for(let j=i+1;j<boxes.length;j++)assert.equal(boxes[i].intersectsBox(boxes[j]),false);
+ for(const t of [93.2,94,94.8,95.2]){update(t);for(const review of reviews){near(review.material.opacity,page.material.opacity);near(review.scale.x,.65*page.parent.scale.x);}}
+ update(95.3);assert.ok(reviews.every(o=>!o.visible));assert.ok(world.root.getObjectByName('record-1').userData.reviewSkins.purchase===null);disposeTree(world.root);
+});
+test('sales and inventory get separate readable focus beats with adjustments following the comparison',()=>{
+ const {world,update}=rig(),sales=world.root.getObjectByName('record-1'),inventory=world.root.getObjectByName('record-2');
+ update(96.4);near(sales.userData.feedbackFocus,1);assert.equal(sales.userData.reviewSkins.actionInk.visible,false);assert.ok(sales.userData.reviewSkins.businessInk.visible);
+ update(97.4);near(sales.userData.reviewSkins.actionInk.material.opacity,1);
+ update(99.2);near(inventory.userData.feedbackFocus,1);near(sales.userData.feedbackFocus,0);assert.equal(inventory.userData.reviewSkins.actionInk.visible,false);
+ update(100);near(inventory.userData.reviewSkins.actionInk.material.opacity,1);
+ for(let t=95;t<102;t+=.025){update(t);assert.ok(sales.userData.feedbackFocus<.01||inventory.userData.feedbackFocus<.01);}
  disposeTree(world.root);
 });
-test('feedback cards leave the page without crossing one another in screen space',()=>{
+test('business records become text and rejoin their matching sources on the next cycle',()=>{
+ const {world,update}=rig(),records=Array.from({length:6},(_,i)=>world.root.getObjectByName(`record-${i}`));
+ update(103);for(const record of records.slice(1)){assert.ok(record.visible);assert.equal(record.children[0].visible,false);assert.equal(record.userData.reviewSkins.businessInk.visible,false);assert.equal(record.userData.reviewSkins.actionInk.visible,false);}
+ update(105);assert.ok(records[0].visible);assert.ok(records.slice(1).every(o=>!o.visible));
+ update(6,'zh');assert.deepEqual(records.map(o=>o.userData.reportIndex),[0,3,3,5,5,5]);assert.equal(records[1].userData.typing.text,'销量，要和预测一起看。');assert.equal(records[2].userData.typing.text,'卖得少，也可能是缺货。');
+ assert.ok(records.every(o=>o.visible));for(let i=0;i<6;i++)assert.equal(world.root.getObjectByName(`record-${i}`),records[i]);
+ for(const record of records.slice(1)){near(record.children[0].scale.x,1);near(record.children[0].scale.y,1);near(record.children[0].position.y,0);assert.equal(record.userData.reviewSkins.businessInk.visible,false);}
+ disposeTree(world.root);
+});
+test('source cards and focused comparisons remain separated in screen space',()=>{
  for(const aspect of [1366/768,1920/1080,3840/2160,1200/900]){
   const {world,camera,update}=rig(aspect),records=Array.from({length:6},(_,i)=>world.root.getObjectByName(`record-${i}`)),p=new THREE.Vector3(),collisions=[];
-  for(let t=94;t<=101;t+=.025){update(t);const bounds=records.map(record=>{
-   const card=record.children[0],box=new THREE.Box2();for(let v=0;v<4;v++){p.fromBufferAttribute(card.geometry.attributes.position,v).applyMatrix4(card.matrixWorld).project(camera);assert.ok(p.x>-.22&&p.x<.94&&p.y>-.65&&p.y<.7,`${record.name} leaves the exhibit safe area at ${t}`);box.expandByPoint(new THREE.Vector2(p.x,p.y));}return box;
+  for(let t=93;t<=104;t+=.025){update(t);const bounds=records.map(record=>{
+   const card=record.children[0];if(!record.visible||card.material.opacity<.05)return null;const box=new THREE.Box2();for(let v=0;v<4;v++){p.fromBufferAttribute(card.geometry.attributes.position,v).applyMatrix4(card.matrixWorld).project(camera);assert.ok(p.x>-.22&&p.x<.94&&p.y>-.65&&p.y<.7,`${record.name} leaves the exhibit safe area at ${t}`);box.expandByPoint(new THREE.Vector2(p.x,p.y));}return box;
   });
-   for(let i=0;i<6;i++)for(let j=i+1;j<6;j++){const a=bounds[i],b=bounds[j],gapX=Math.max(b.min.x-a.max.x,a.min.x-b.max.x),gapY=Math.max(b.min.y-a.max.y,a.min.y-b.max.y);if(Math.max(gapX,gapY)<.003)collisions.push({t:Number(t.toFixed(3)),i,j,gapX,gapY});}
+   for(let i=0;i<6;i++)for(let j=i+1;j<6;j++){const a=bounds[i],b=bounds[j];if(!a||!b)continue;const gapX=Math.max(b.min.x-a.max.x,a.min.x-b.max.x),gapY=Math.max(b.min.y-a.max.y,a.min.y-b.max.y);if(Math.max(gapX,gapY)<.003)collisions.push({t:Number(t.toFixed(3)),i,j,gapX,gapY});}
   }
   assert.equal(collisions.length,0,JSON.stringify(collisions.slice(0,6)));disposeTree(world.root);
  }

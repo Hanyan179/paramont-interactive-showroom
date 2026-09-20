@@ -6,6 +6,8 @@ export const intelligenceLayout={heroX:.70,heroY:.44,detailX:.70,detailY:.44};
 const HEIGHT=2*Math.tan(THREE.MathUtils.degToRad(23))*32,TAU=Math.PI*2;
 const reportStarts=[[-2.6,1.3],[0,1.8],[2.6,1.3],[-2.6,-1.3],[0,-1.8],[2.6,-1.3]];
 const reviewSlots=[[0,0],[3.1,1.6],[-3.1,1.6],[0,2.4],[-3.1,-1.7],[3.1,-1.7]];
+const feedbackSlots=[[-3.35,1.95],[0,2.55],[3.5,2],[-3.5,-2.1],[0,-2.55],[3.5,-2.1]];
+const feedbackFocus=(t,i)=>i===1?ramp(t,95.7,96.4)*(1-ramp(t,97.7,98.4)):i===2?ramp(t,98.5,99.2)*(1-ramp(t,100.4,101.1)):0;
 // Each report receives its own two-column stream. Matching source and target
 // order preserves reading gaps during convergence, as well as at rest.
 const streamColumns=[[-4.15,-2.49],[-.83,.83],[2.49,4.15]];
@@ -19,7 +21,7 @@ export function intelligenceWorld(quality,manager){
  const o=createJourneyObjects(manager,quality);root.add(o.root);
  const temp=new THREE.Vector3(),position=new THREE.Vector3(0,0,32),origin=new THREE.Vector3(),cardRotation=new THREE.Quaternion(),seatRotation=new THREE.Quaternion(),flatRotation=new THREE.Quaternion(),seatEuler=new THREE.Euler();
  const scanTarget=new THREE.Object3D();scanTarget.name='file-scan-target';o.root.add(scanTarget);
- const purchaseInk=new THREE.Color('#171c21'),exhibitInk=new THREE.Color('#ffffff');
+ const purchaseInkColor=new THREE.Color('#171c21'),exhibitInkColor=new THREE.Color('#ffffff');
  let activeLanguage=null;
  let idlePhase=0,idleMix=0,lastMotion=null;
  const pose=()=>({position:position.clone(),target:origin.clone()});
@@ -60,43 +62,62 @@ export function intelligenceWorld(quality,manager){
    o.analysis.height.value=o.scan.position.y;o.analysis.strength.value=ramp(t,18.6,19.4);o.body.updateWorldMatrix(true,false);o.analysis.toBody.value.copy(o.body.matrixWorld).invert();
    o.relationships.update(t,o.scan.position.y);
    o.records.forEach((mesh,i)=>{
-    let a=0,x=0,y=0,z=0,s=1,framing=0,purchase=0,reframe=1;const count=(t<34||i===0)?typedCount(t,mesh.userData.typing.text.length,i):mesh.userData.typing.text.length;const letterOffset=typeMesh(mesh,count);
+    let a=0,x=0,y=0,z=0,s=1,framing=0,purchase=0,reframe=1,focus=0;const count=(t<34||i===0)?typedCount(t,mesh.userData.typing.text.length,i):mesh.userData.typing.text.length;const letterOffset=typeMesh(mesh,count);
     if(t<34){
      const onset=i===0?1:ramp(t,2.8+i*.36,3.2+i*.36),localGather=ramp(t,7.8+i*.10,10+i*.10);
      const [scatterX,scatterY]=reviewSlots[i];
-     // Reviews become the source of the feedback report, never a floating
-     // second layer over its finished writing or a public-specification claim.
-     temp.set(reportStarts[0][0],reportStarts[0][1]+.22,.56);
+     // Each source returns to its own report: use feedback, sales / stock, or
+     // business knowledge. Internal records never become customer reviews.
+     const report=reportStarts[mesh.userData.reportIndex];temp.set(report[0],report[1]+.22,.56);
      const bow=Math.sin(localGather*Math.PI);
      x=lerp(scatterX,temp.x,localGather)+(i%2?-.38:.38)*bow;
      y=lerp(scatterY,temp.y,localGather)+.48*bow;z=lerp(0,temp.z,localGather);
      s=lerp(i===0?1:.55,.08,localGather);a=onset*(1-ramp(localGather,.40,.92));
      framing=ramp(t,4.6+i*.12,6.5+i*.12)*.72*(1-ramp(t,7.2,7.9));
      mesh.rotation.set(0,Math.sin(localGather*Math.PI)*(i%2?-.12:.12),0);
+    }else if(t>=89&&i===0){
+     const emerge=ramp(t,89,90),outward=ramp(t,93.2,95.4),closing=ramp(t,101.2,103.8);
+     const [slotX,slotY]=feedbackSlots[0];
+     x=lerp(lerp(-2.05,slotX,outward),0,closing);
+     y=lerp(lerp(1.1-(1-pageScroll)*5.86,slotY,outward),0,closing);z=lerp(.3,0,closing);
+     s=lerp(lerp(.65,.48,outward),1,closing);a=emerge;
+     reframe=ramp(t,93.2,95.2);framing=reframe*(1-ramp(t,101,104));purchase=1-reframe;
     }else if(t>=89){
-     const emerge=ramp(t,89+i*.65,90+i*.65),release=ramp(t,95,100),closing=ramp(t,100,106);
-     const pageX=(i%2?2.05:-2.05),pageY=1.1-Math.floor(i/2)*1.48-(1-pageScroll)*5.86;
-     const [spreadX,spreadY]=reviewSlots[i];
-     const outward=ramp(t,95,98);
-     x=lerp(pageX,spreadX,outward);y=lerp(pageY,spreadY,outward);z=lerp(.3,i===0?.35:(i%3-1)*.7,ramp(t,98.8,100));
-     // Open room before lifting the middle row. The left card travels around
-     // the main review; the right one rises through the gap between columns.
-     if(i===2){x=lerp(lerp(pageX,-4.4,ramp(t,95,96.8)),spreadX,ramp(t,98.5,100));y=lerp(pageY,spreadY,ramp(t,96.3,98.8));}
-     if(i===3){x=lerp(lerp(pageX,1.1,ramp(t,95.2,97.2)),spreadX,ramp(t,98.6,100));y=lerp(pageY,spreadY,ramp(t,96.6,98.9));}
-     if(i===0){const centre=ramp(t,96.8,100);x=lerp(lerp(pageX,0,centre),0,closing);y=lerp(lerp(pageY,0,centre),0,closing);z=lerp(z,0,closing);s=lerp(.65,1,ramp(t,97,100));a=emerge;}
-     else{s=lerp(.60,i>8?.38:.6,release);a=emerge*(1-ramp(t,99+i*.37,101+i*.4));if(i>3)a*=lerp(1,.78,release);}
-     reframe=ramp(t,94,98);framing=reframe*(1-ramp(t,101,104));purchase=1-reframe;
+     // The website has retired before any internal operating record enters.
+     // Sales and replenishment take turns in the same reading position.
+     const enter=ramp(t,95.3+(i-1)*.1,96+(i-1)*.1),closing=ramp(t,102.4,104.6);
+     const [slotX,slotY]=feedbackSlots[i];focus=feedbackFocus(t,i);
+     s=lerp(.42,1,focus)*lerp(.92,1,enter)*lerp(1,.12,closing);
+     x=lerp(slotX*(1-focus),slotX*.12,closing);
+     const centreY=lerp(slotY*(1-focus)**2,slotY*.12,closing);
+     y=centreY+.6*s;z=.25+focus*.35;
+     a=enter*(1-closing)*lerp(.72,1,focus);framing=1-ramp(t,101.2,102.4);
     }
     if(i===0)x+=letterOffset*s;
-    // The purchase UI and exhibit UI share one changing silhouette during the handoff.
-    const frameWidth=i===0?4.2:3.2,frameHeight=i===0?1.31:1;
-    mesh.children[0].scale.set(lerp(5.8/frameWidth,1,reframe),lerp(2.2/frameHeight,1,reframe),1);
-    mesh.children[1].scale.set(lerp(1,frameWidth/5.8,reframe),lerp(1,frameHeight/2.2,reframe),1);
-    mesh.position.set(x,y,z);mesh.scale.setScalar(s);if(t>=34)mesh.rotation.set(0,t>=85&&i>0?Math.sin(i)*.08*ramp(t,93,99):0,0);alpha(mesh,a*(count>0?1:0));alpha(mesh.children[0],a*framing);alpha(mesh.children[1],a*purchase);mesh.material.color.copy(purchaseInk).lerp(exhibitInk,1-ramp(purchase,.12,.6));
-    // Keep the review itself continuous while peripheral labels change skins.
-    // Retire the avatar and purchase metadata before the exhibit labels enter.
-    alpha(mesh.userData.reviewSkins.purchaseInk,a*purchase*(1-ramp(reframe,.12,.46)));
-    alpha(mesh.userData.reviewSkins.exhibitInk,a*framing*ramp(reframe,.54,.88));
+    const {exhibitInk,purchaseInk,purchase:purchaseFrame,businessInk,actionInk}=mesh.userData.reviewSkins,card=mesh.children[0];
+    if(i===0){
+     // The first avatar review and its glass frame share one changing outline.
+     card.scale.set(lerp(5.8/4.2,1,reframe),lerp(2.2/1.31,1,reframe),1);
+     purchaseFrame.scale.set(lerp(1,4.2/5.8,reframe),lerp(1,1.31/2.2,reframe),1);
+     alpha(purchaseFrame,a*purchase);alpha(purchaseInk,a*purchase*(1-ramp(reframe,.12,.46)));
+     alpha(exhibitInk,a*framing*ramp(reframe,.54,.88));
+    }else{
+     const expanded=t>=89;
+     card.scale.set(expanded?4.4/3.2:1,expanded?2.8:1,1);card.position.y=expanded?-.6:0;
+     alpha(exhibitInk,expanded?0:a*framing);
+     alpha(businessInk,expanded?a*framing:0);
+     const action=i===1?ramp(t,96.7,97.3):i===2?ramp(t,99.3,99.9):ramp(t,96.7,97.3);
+     alpha(actionInk,expanded?a*framing*action:0);
+    }
+    mesh.position.set(x,y,z);mesh.scale.setScalar(s);if(t>=34)mesh.rotation.set(0,0,0);
+    alpha(mesh,a*(count>0?1:0));alpha(card,a*framing);
+    mesh.material.color.copy(purchaseInk?purchaseInkColor:exhibitInkColor).lerp(exhibitInkColor,1-ramp(purchase,.12,.6));
+    mesh.userData.feedbackFocus=focus;
+   });
+   o.purchaseCompanions.forEach((mesh,i)=>{
+    const exit=ramp(t,93.2,95.2),pageScale=lerp(1,.90,exit),enter=ramp(t,90.1+i*.4,90.7+i*.4);
+    mesh.position.set((i===1?-2.05:2.05)*pageScale,((i===0?1.1:-.52)-(1-pageScroll)*5.86)*pageScale,.3);
+    mesh.scale.setScalar(.65*pageScale);mesh.traverse(part=>{if(part.material)alpha(part,enter*(1-exit));});
    });
    o.reportFaces.forEach((face,i)=>{
     const seat=cardSeats[i],g=ramp(t,13+i*.09,16),shrink=ramp(t,25,29),start=reportStarts[i];
@@ -162,7 +183,7 @@ export function intelligenceWorld(quality,manager){
    // Once docked, the same robot belongs to the scrolling page viewport.
    // Keep the free flight unclipped, including its upper approach arc.
    o.robotPageClip.value.set(t>=85?o.root.position.y-3.03*scale:-1e6,t>=85?o.root.position.y+3.1*scale:1e6);
-   const commerceAlpha=ramp(t,80,85)*(1-ramp(t,95,98));o.commerce.visible=commerceAlpha>.001;o.commerce.children.forEach(child=>alpha(child,commerceAlpha));alpha(o.details,commerceAlpha*(1-ramp(t,87,90)));const metricIndex=Math.min(3,Math.max(0,Math.floor((t-90)/1.6)));o.commerceMetrics.forEach((mesh,i)=>alpha(mesh,commerceAlpha*ramp(t,91,93)*Number(i===metricIndex)));
+   const commerceAlpha=ramp(t,80,85)*(1-ramp(t,93.2,95.2));o.commerce.scale.setScalar(lerp(1,.90,ramp(t,93.2,95.2)));o.commerce.visible=commerceAlpha>.001;o.commerce.children.forEach(child=>alpha(child,commerceAlpha));alpha(o.details,commerceAlpha*(1-ramp(t,87,90)));const metricIndex=Math.min(3,Math.max(0,Math.floor((t-90)/1.6)));o.commerceMetrics.forEach((mesh,i)=>alpha(mesh,commerceAlpha*ramp(t,91,93)*Number(i===metricIndex)));
    origin.set(0,0,0);camera.copy(position);target.copy(origin);root.userData.stage=f.stage;root.userData.mode=intelligence?.mode??'auto';root.userData.journeyTime=t;root.userData.morph=f.crystal;
   },isMoving:()=>false,focusPose:pose,prepare(){root.visible=true;},project:()=>[],pick:()=>null,
  };
