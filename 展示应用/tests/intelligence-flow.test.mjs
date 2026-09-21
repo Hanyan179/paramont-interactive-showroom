@@ -14,6 +14,7 @@ const worldSource=readFileSync(new URL('../src/impact/worlds.js',import.meta.url
 const {disposeTree}=await import(`data:text/javascript,${encodeURIComponent(worldSource.split('\n').find(line=>line.startsWith('export function disposeTree')))}`);
 const near=(a,b,tolerance=1e-6)=>assert.ok(Math.abs(a-b)<tolerance,`${a} != ${b}`);
 const advance=(d,seconds,options)=>{for(let i=0;i<Math.round(seconds/.05);i++)d.tick(.05,options);return d.snapshot();};
+const settle=d=>{for(let i=0;i<200&&d.snapshot().seeking;i++)d.tick(.05);assert.equal(d.snapshot().seeking,false);return d.snapshot();};
 test('six authored stages cover 108 seconds and repeat deterministically',()=>{
  assert.equal(intelligenceTiming.cycle,108);
  stageStarts.slice(0,6).forEach((t,i)=>assert.equal(journeyFrame(t).stage,i));
@@ -23,12 +24,36 @@ test('all animation channels are finite at boundaries and invalid external time 
  for(const t of [-108,0,18,34,50,70,90,108,Infinity,NaN])for(const v of Object.values(journeyFrame(t)))assert.ok(Number.isFinite(v));
 });
 test('the shared clock advances automatically and wraps without resetting accumulated state',()=>{const d=createIntelligenceDirector();advance(d,86.3);const before=d.snapshot();d.tick(.1);near(d.snapshot().time,0);assert.equal(before.stage,5);assert.equal(d.snapshot().stage,0);});
-test('manual selection keeps the current frame and approaches the target along the same timeline',()=>{const d=createIntelligenceDirector();advance(d,9);const before=d.snapshot().time;d.select(3);near(d.snapshot().time,before);advance(d,12);near(d.snapshot().time,stageFrames[3]);assert.equal(d.snapshot().mode,'manual');});
-test('rapid retargets never reset the visible timestamp',()=>{const d=createIntelligenceDirector();for(const stage of [4,2,5,0,3]){const t=d.snapshot().time;d.select(stage);near(d.snapshot().time,t);advance(d,.3);}advance(d,12);near(d.snapshot().time,stageFrames[3]);});
+test('manual selection keeps the current frame and approaches the target along the same timeline',()=>{const d=createIntelligenceDirector();advance(d,9);const before=d.snapshot().time;d.select(3);near(d.snapshot().time,before);settle(d);near(d.snapshot().time,stageFrames[3]);assert.equal(d.snapshot().mode,'manual');});
+test('rapid retargets never reset the visible timestamp',()=>{const d=createIntelligenceDirector();for(const stage of [4,2,5,0,3]){const t=d.snapshot().time;d.select(stage);near(d.snapshot().time,t);advance(d,.3);}settle(d);near(d.snapshot().time,stageFrames[3]);advance(d,2.6);assert.equal(d.snapshot().mode,'auto');});
 test('pause freezes playback, and explicitly selecting a stage while paused remains possible',()=>{const d=createIntelligenceDirector();advance(d,20);const t=d.snapshot().time;advance(d,120,{playing:false});near(d.snapshot().time,t);d.select(2);advance(d,12,{playing:false});near(d.snapshot().time,stageFrames[2]);});
 for(const gate of [{active:false},{held:true},{suspended:true}])test(`scene gate freezes playback and seeking: ${JSON.stringify(gate)}`,()=>{const d=createIntelligenceDirector();d.select(4);const before=d.snapshot();advance(d,120,gate);assert.deepEqual(d.snapshot(),before);});
 test('case reading protects the exact time and returns to the prior playback mode',()=>{const d=createIntelligenceDirector();advance(d,42.3);const t=d.snapshot().time;d.openExample();advance(d,200);near(d.snapshot().time,t);d.closeExample();assert.equal(d.snapshot().mode,'auto');near(d.snapshot().time,t);});
-test('manual inactivity resumes after 90 seconds and activity restarts the interval',()=>{const d=createIntelligenceDirector();d.select(3);advance(d,12);advance(d,60);d.activity();advance(d,89);assert.equal(d.snapshot().mode,'manual');advance(d,1.1);assert.equal(d.snapshot().mode,'auto');});
+test('each selected stage holds for 2.5 real seconds after arrival then resumes at normal speed',()=>{
+ for(let stage=0;stage<6;stage++){
+  const d=createIntelligenceDirector();d.select(stage);settle(d);
+  advance(d,2.4);near(d.snapshot().time,stageFrames[stage]);assert.equal(d.snapshot().mode,'manual');
+  advance(d,.2);assert.equal(d.snapshot().mode,'auto');const before=d.snapshot().time;
+  advance(d,1);near(d.snapshot().time,before+intelligenceTiming.playbackRate);
+ }
+});
+test('reselecting the settled stage restarts only the dwell, without an empty transition',()=>{
+ const d=createIntelligenceDirector();d.select(2);settle(d);advance(d,1.8);d.select(2);
+ assert.equal(d.snapshot().seeking,false);near(d.snapshot().time,stageFrames[2]);
+ advance(d,2.4);assert.equal(d.snapshot().mode,'manual');near(d.snapshot().time,stageFrames[2]);
+ advance(d,.2);assert.equal(d.snapshot().mode,'auto');
+});
+test('interaction and returning from a business example each restart the short dwell',()=>{
+ const d=createIntelligenceDirector();d.select(3);settle(d);advance(d,2);d.activity();
+ advance(d,2.4);assert.equal(d.snapshot().mode,'manual');d.openExample();advance(d,30);
+ assert.equal(d.snapshot().mode,'case');near(d.snapshot().time,stageFrames[3]);d.closeExample();
+ advance(d,2.4);assert.equal(d.snapshot().mode,'manual');advance(d,.2);assert.equal(d.snapshot().mode,'auto');
+});
+for(const gate of [{playing:false},{active:false},{held:true},{suspended:true}])test(`manual auto-resume respects the playback gate: ${JSON.stringify(gate)}`,()=>{
+ const d=createIntelligenceDirector();d.select(1);settle(d);advance(d,1);const before=d.snapshot();
+ advance(d,30,gate);assert.deepEqual(d.snapshot(),before);
+ advance(d,1.4);assert.equal(d.snapshot().mode,'manual');advance(d,.2);assert.equal(d.snapshot().mode,'auto');
+});
 test('reduced motion remains static and allows direct stage selection',()=>{const d=createIntelligenceDirector({reduced:true});advance(d,200);near(d.snapshot().time,16);d.select(5);near(d.snapshot().time,100);d.resume();advance(d,200);near(d.snapshot().time,100);});
 test('entering a paused journey exposes a complete stage and retains usable navigation',()=>{
  const d=createIntelligenceDirector();advance(d,20);d.select(4);d.reset({playing:false});

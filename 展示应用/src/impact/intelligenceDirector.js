@@ -1,5 +1,5 @@
 import {JOURNEY_DURATION,stageStarts,stageFrames,journeyFrame,loopTime,ease} from './intelligenceTimeline.js';
-export const intelligenceTiming=Object.freeze({stages:6,cycle:JOURNEY_DURATION,idle:90,playbackRate:1.25});
+export const intelligenceTiming=Object.freeze({stages:6,cycle:JOURNEY_DURATION,idle:2.5,playbackRate:1.25});
 export function intelligenceCycle(seconds){const f=journeyFrame(seconds);return {...f,weights:Array.from({length:6},(_,i)=>Number(i===f.stage))};}
 export function createIntelligenceDirector({reduced=false,startTime=0}={}){
   let time=reduced?stageFrames[0]:loopTime(startTime),mode=reduced?'manual':'auto',idle=0,seek=null,returnMode='manual';
@@ -12,7 +12,7 @@ export function createIntelligenceDirector({reduced=false,startTime=0}={}){
       const target=stageFrames[index];let distance=target-time;
       if(distance>54)distance-=108;if(distance< -54)distance+=108;
       mode='manual';idle=0;
-      if(reduced){time=target;seek=null;}else seek={from:time,distance,elapsed:0,duration:Math.max(1.4,Math.abs(distance)/7)};
+      if(reduced||Math.abs(distance)<1e-6){time=target;seek=null;}else seek={from:time,distance,elapsed:0,duration:Math.max(1.4,Math.abs(distance)/7)};
       return true;
     },
     activity(){idle=0;},
@@ -26,6 +26,7 @@ export function createIntelligenceDirector({reduced=false,startTime=0}={}){
       const dt=Number.isFinite(delta)?Math.max(0,Math.min(delta,.1)):0;
       if(seek){seek.elapsed+=dt;time=loopTime(seek.from+seek.distance*ease(seek.elapsed/seek.duration));if(seek.elapsed>=seek.duration)seek=null;}
       else if(playing&&!reduced&&mode==='auto')time=loopTime(time+dt*intelligenceTiming.playbackRate);
+      // Count real dwell time only after arrival and while playback is enabled.
       else if(playing&&!reduced&&mode==='manual'){idle+=dt;if(idle>=intelligenceTiming.idle){mode='auto';idle=0;}}
       return snapshot();
     },
