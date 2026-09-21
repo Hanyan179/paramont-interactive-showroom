@@ -8,11 +8,17 @@ const reportStarts=[[-2.6,1.3],[0,1.8],[2.6,1.3],[-2.6,-1.3],[0,-1.8],[2.6,-1.3]
 const reviewSlots=[[0,0],[3.1,1.6],[-3.1,1.6],[0,2.4],[-3.1,-1.7],[3.1,-1.7]];
 const feedbackSlots=[[-3.35,1.95],[0,2.55],[3.5,2],[-3.5,-2.1],[0,-2.55],[3.5,-2.1]];
 const feedbackFocus=(t,i)=>i===1?ramp(t,95.7,96.4)*(1-ramp(t,97.7,98.4)):i===2?ramp(t,98.5,99.2)*(1-ramp(t,100.4,101.1)):0;
-// Each report receives its own two-column stream. Matching source and target
-// order preserves reading gaps during convergence, as well as at rest.
-const streamColumns=[[-4.15,-2.49],[-.83,.83],[2.49,4.15]];
-const streamRows=[[3.15,2.45,1.05],[3.15,1.75,1.05],[3.15,2.45,1.05],[-1.05,-2.45,-3.15],[-1.05,-1.75,-2.45],[-1.05,-2.45,-3.15]];
-const informationSlots=streamRows.flatMap((rows,group)=>rows.flatMap(y=>streamColumns[group%3].map(x=>[x,y])));
+// Offset excerpts within their source lanes, leaving room for the larger cards.
+// Preserve lane order on arrival so the scattered field can fold into reports
+// without text crossing. Depth, size and drift remain deterministic when seeking.
+const informationSlots=[
+ [-4.30,3.20],[-2.65,3.43],[-4.24,2.52],[-2.65,2.29],[-4.22,.91],[-2.43,1.04],
+ [-.86,3.42],[.80,3.02],[-.90,1.79],[.87,1.64],[-.74,1.02],[1.0,1.06],
+ [2.53,3.18],[4.19,3.40],[2.50,2.31],[4.27,2.58],[2.54,1.05],[4.10,.87],
+ [-4.20,-.91],[-2.48,-1.06],[-4.10,-2.43],[-2.48,-2.28],[-4.25,-3.30],[-2.60,-3.07],
+ [-.93,-1.04],[.84,-1.08],[-.87,-1.76],[.80,-1.88],[-1.01,-2.63],[.96,-2.48],
+ [2.49,-1.05],[4.21,-.93],[2.57,-2.36],[4.16,-2.57],[2.44,-3.18],[4.33,-3.40],
+];
 // Each of the six source cards has one destination on a broad cube face.
 const cardSeats=[[0,0,1.48,0,0],[1.48,0,0,0,Math.PI/2],[0,0,-1.48,0,Math.PI],[-1.48,0,0,0,-Math.PI/2],[0,1.48,0,-Math.PI/2,0],[0,-1.48,0,Math.PI/2,0]];
 export function intelligenceWorld(quality,manager){
@@ -131,7 +137,11 @@ export function intelligenceWorld(quality,manager){
    });
    o.dataFragments.forEach((mesh,i)=>{
     const group=mesh.userData.category,g=ramp(t,7.8+group*.08,10.3+group*.08),[startX,startY]=informationSlots[i],order=(i*13)%36;
-    const [rx,ry]=reportStarts[group];mesh.position.set(lerp(startX,rx+(i%2?.18:-.18),g),lerp(startY,ry+.25-Math.floor(i%6/2)*.25,g),lerp(0,.65,g));mesh.scale.setScalar(lerp(.63,.14,g));alpha(mesh,ramp(t,3.8+order*.055,4.8+order*.055)*(1-ramp(g,.48,.94))*.82);
+    const [rx,ry]=reportStarts[group],phase=i*2.399,size=.50+(i*7%11)*.016,depth=-.38+(i*5%9)*.07;
+    const driftX=Math.sin(t*.43+phase)*.045,driftY=Math.sin(t*.36+phase)*.035;
+    mesh.position.set(lerp(startX+driftX,rx+(i%2?.24:-.24),g),lerp(startY+driftY,ry+.25-Math.floor(i%6/2)*.25,g),lerp(depth,.65,g));
+    mesh.rotation.set(0,Math.sin(phase)*.07*(1-g),Math.cos(phase)*.025*(1-g));
+    mesh.scale.setScalar(lerp(size,.14,g));alpha(mesh,ramp(t,3.8+order*.055,4.8+order*.055)*(1-ramp(g,.48,.94))*(.66+(i*3%7)*.04));
    });
    const first=o.records[0],typing=first.userData.typing;
    const cursorVisible=(1-ramp(t,2.3,2.8))+ramp(t,104,107.5);

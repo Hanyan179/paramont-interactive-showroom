@@ -50,22 +50,22 @@ export function cardTexture(index){
   if(index===0){
    line(cn?'使用与保护':'USE + PROTECTION',445,235,27,direction.accent);
    direction.facts.forEach((v,i)=>{paragraph(v[l],445,302+i*97,507,cn?29:27);rule(c,445,362+i*97,510);});
-   line(cn?'保留便携方向，继续验证':'RETAIN / TEST THE DETAILS',445,599,23,direction.accent);
+   line(cn?'便携方案 / 样品验证':'RETAIN / TEST THE DETAILS',445,599,23,direction.accent);
   }else if(index===1){
    [cn?'外盒':'BOX',cn?'内托':'INSERT',cn?'装饰':'FINISH'].forEach((v,i)=>{c.fillStyle=['#9bafa9','#70888f','#465e71'][i];c.beginPath();c.arc(150+i*350,247,35-i*4,0,Math.PI*2);c.fill();line(v,91+i*350,315,27);});
    direction.facts.forEach((v,i)=>paragraph(v[l],48,400+i*81,570,cn?28:26));
   }else if(index===2){
-   line(cn?'每种规格分别核对需求':'REVIEW DEMAND FOR EACH SIZE',48,233,25,direction.accent);
+   line(cn?'分规格需求与库存评估':'REVIEW DEMAND FOR EACH SIZE',48,233,25,direction.accent);
    direction.facts.forEach((v,i)=>{rounded(c,48,263+i*80,450,55,5);c.fillStyle=['#a9c0cd','#88a6b6','#607f93'][i];c.fill();line(v[l],68,301+i*80,28,'#182330');});
-   paragraph(cn?'对照各规格历史销量，再决定备多少货。':'Compare sales by size before deciding stock levels.',48,555,906,cn?30:28);
+   paragraph(cn?'依据分规格销售记录与供货状态，评估备货数量。':'Evaluate stock quantities using sales and supply status by size.',48,555,906,cn?30:28);
    line(cn?'尚待销售与库存记录支持':'PENDING SALES AND STOCK RECORDS',48,644,23,direction.accent);
   }else if(index===3){
    direction.facts.slice(0,2).forEach((v,i)=>{paragraph(v[l],573,269+i*130,380,cn?29:27);rule(c,573,352+i*130,380);});
    paragraph(direction.facts[2][l],48,565,918,cn?30:28);
   }else{
-   line(cn?'把保留的要素组合起来':'COMBINE THE RETAINED ELEMENTS',565,229,23,direction.accent);
+   line(cn?'绘画与收纳要素整合':'COMBINE THE RETAINED ELEMENTS',565,229,23,direction.accent);
    direction.facts.forEach((v,i)=>paragraph(v[l],565,297+i*92,391,cn?28:27));
-   rule(c,48,566,w-96);line(cn?'留下需求预测、成本约束与交付要求':'KEEP THE FORECAST, COST LIMITS AND DELIVERY PLAN',48,602,cn?27:25,direction.accent);
+   rule(c,48,566,w-96);line(cn?'评审依据：需求预测、成本约束与交付要求':'REVIEW BASIS / DEMAND, COST AND DELIVERY',48,602,cn?27:25,direction.accent);
   }
   line(cn?'品牌概念 / 需样品验证':'BRAND CONCEPT / SAMPLE TESTING REQUIRED',48,h-23,18,'#8099ad');
  },1024,720);
@@ -87,9 +87,9 @@ export function businessRecordTexture(index){return canvasTexture((c,w)=>{
  const source=feedbackSources[index],l=c.journeyLang==='zh'?0:1;
  label(c,source.title[l],48,58,32,BLUE);label(c,l===0?'同一商品 / 经营复盘':'SAME PRODUCT / BUSINESS REVIEW',48,103,21,MUTED);
  rule(c,48,240,w-96);
- const headings=l===0?['原先计划','执行记录']:['ORIGINAL PLAN','EXECUTION RECORD'];
+ const headings=l===0?['计划与基准','实际记录']:['PLAN / BASELINE','ACTUAL RECORD'];
  headings.forEach((heading,i)=>{const x=48+i*538;label(c,heading,x,299,34,BLUE);reportParagraph(c,(i?source.actual:source.plan)[l],x,355,470,l===0?42:36);});
- rule(c,48,450,w-96);label(c,l===0?'比较之后，调整下一轮':'COMPARE / INFORM THE NEXT CYCLE',48,488,22,MUTED);
+ rule(c,48,450,w-96);label(c,l===0?'偏差归因与计划修订':'VARIANCE ANALYSIS / PLAN REVISION',48,488,22,MUTED);
  label(c,l===0?'随行绘画收纳盒 · 复盘方法示意':'DRAWING KIT / ILLUSTRATIVE REVIEW METHOD',48,668,20,MUTED);
 },1100,700);}
 export function businessActionTexture(index){return canvasTexture((c)=>{
@@ -157,7 +157,7 @@ function drawRecordReport(c,report,l){
   rounded(c,39,y-26,118,53,7);c.fillStyle='#213d52';c.fill();label(c,parts[0],56,y+10,31,BLUE);
   label(c,parts[1],182,y+10,36);rule(c,182,y+34,540);
  });
- reportParagraph(c,l===0?'同一份档案继续关联尺寸、材料、图片和包装规格。':'Link dimensions, materials, images and packaging to each product record.',39,543,690,27,MUTED);
+ reportParagraph(c,l===0?'单品档案关联尺寸、材料、图片版本与包装规格。':'Link dimensions, materials, images and packaging to each product record.',39,543,690,27,MUTED);
 }
 function drawNoteReport(c,report,l){
  report.lines.forEach((line,i)=>{
@@ -175,11 +175,14 @@ function drawDemandReport(c,report,l){
 }
 function drawImageReport(c,report,l,productTexture){
  const image=productTexture?.image;
+ // The branded product surface is a canvas; image loading flags apply only
+ // before that print pass, while the source is still an HTML image.
+ const ready=image&&image.width>0&&image.height>0&&(image.complete===undefined||(image.complete&&image.naturalWidth>0));
  // Crop only interior product details. The image is a concept source, never a sales result.
  const crops=[[.22,.14,.58,.17],[.235,.421,.238,.185],[.527,.421,.227,.178]];
  crops.forEach(([sx,sy,sw,sh],i)=>{const x=39+i*235;
   rounded(c,x,207,218,150,8);c.fillStyle='#213d52';c.fill();
-  if(image?.complete&&image.naturalWidth)c.drawImage(image,sx*image.width,sy*image.height,sw*image.width,sh*image.height,x+7,214,204,136);
+  if(ready)c.drawImage(image,sx*image.width,sy*image.height,sw*image.width,sh*image.height,x+7,214,204,136);
   label(c,(l===0?['纸面与上盖','绘画笔组','上色部件']:['PAPER / LID','PENCIL SET','PAINT TRAY'])[i],x,391,l===0?26:22,BLUE);
  });
  report.lines.slice(1).forEach((line,i)=>reportParagraph(c,line[l],39,456+i*71,690,l===0?28:26));

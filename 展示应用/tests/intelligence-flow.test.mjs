@@ -8,6 +8,7 @@ import {journeyFrame,stageStarts,stageFrames,intelligencePresentation} from '../
 import {intelligenceWorld} from '../src/impact/intelligenceWorld.js';
 import {intelligenceStages} from '../src/impact/intelligenceContent.js';
 import {proposalBrands} from '../src/impact/intelligenceBrands.js';
+import {reportTexture} from '../src/impact/intelligenceSurfaces.js';
 import {blinkAt} from '../src/impact/intelligencePresence.js';
 const worldSource=readFileSync(new URL('../src/impact/worlds.js',import.meta.url),'utf8');
 const {disposeTree}=await import(`data:text/javascript,${encodeURIComponent(worldSource.split('\n').find(line=>line.startsWith('export function disposeTree')))}`);
@@ -49,6 +50,18 @@ function rig(aspect=16/9,{deferAssets=false}={}){
  return {world,camera,loaded,update,finishAsset};
 }
 function visibleState(root){const a=[];root.traverseVisible(o=>{if(o.material)a.push([o.name,...o.matrixWorld.elements,o.material.opacity]);});return a;}
+test('image reports retain all three crops after the product receives its canvas brand print',()=>{
+ const previous=globalThis.document,draws=[];
+ const context=new Proxy({drawImage:(...args)=>draws.push(args),createLinearGradient:()=>({addColorStop(){}}),measureText:text=>({width:text.length*20})},{get:(o,key)=>o[key]??(()=>{}),set:(o,key,value)=>(o[key]=value,true)});
+ globalThis.document={createElement:()=>({width:0,height:0,getContext:()=>context})};
+ try{
+  for(const [image,ready]of [[{width:1024,height:1024},true],[{width:1024,height:1024,complete:true,naturalWidth:1024},true],[{width:1024,height:1024,complete:false,naturalWidth:0},false],[{width:1024,height:1024,complete:true,naturalWidth:0},false]]){
+   const map=reportTexture(4,{image});
+   for(const language of ['zh','en']){draws.length=0;map.userData.redraw(language);assert.equal(draws.length,ready?3:0);for(const args of draws)assert.equal(args[0],image);}
+   map.dispose();
+  }
+ }finally{if(previous===undefined)delete globalThis.document;else globalThis.document=previous;}
+});
 test('the cube surface reconstructs into the approved mountain shell before its material handoff',()=>{
  const {world,update}=rig(),glass=world.root.getObjectByName('persistent-data-crystal'),robot=world.root.getObjectByName('robot-silver-shell');
  const source=glass.geometry.attributes.position,target=glass.geometry.morphAttributes.position[0],bounds=new THREE.Box3().setFromBufferAttribute(target);
@@ -309,7 +322,7 @@ test('business records become text and rejoin their matching sources on the next
  const {world,update}=rig(),records=Array.from({length:6},(_,i)=>world.root.getObjectByName(`record-${i}`));
  update(103);for(const record of records.slice(1)){assert.ok(record.visible);assert.equal(record.children[0].visible,false);assert.equal(record.userData.reviewSkins.businessInk.visible,false);assert.equal(record.userData.reviewSkins.actionInk.visible,false);}
  update(105);assert.ok(records[0].visible);assert.ok(records.slice(1).every(o=>!o.visible));
- update(6,'zh');assert.deepEqual(records.map(o=>o.userData.reportIndex),[0,3,3,5,5,5]);assert.equal(records[1].userData.typing.text,'销量，要和预测一起看。');assert.equal(records[2].userData.typing.text,'卖得少，也可能是缺货。');
+ update(6,'zh');assert.deepEqual(records.map(o=>o.userData.reportIndex),[0,3,3,5,5,5]);assert.equal(records[1].userData.typing.text,'预测销量与实际销售差异');assert.equal(records[2].userData.typing.text,'缺货影响与库存周转分析');
  assert.ok(records.every(o=>o.visible));for(let i=0;i<6;i++)assert.equal(world.root.getObjectByName(`record-${i}`),records[i]);
  for(const record of records.slice(1)){near(record.children[0].scale.x,1);near(record.children[0].scale.y,record.userData.reviewSkins.sourceHeight);near(record.children[0].position.y,0);assert.equal(record.userData.reviewSkins.businessInk.visible,false);}
  disposeTree(world.root);
@@ -368,18 +381,20 @@ test('source text retires before the six reports hold a clear reading beat',()=>
  disposeTree(world.root);
 });
 test('the six information streams preserve reading gaps throughout convergence',()=>{
- const {world,update}=rig();
- for(let t=7.5;t<=11;t+=.05){
+ const {world,camera,update}=rig(),point=new THREE.Vector3(),collisions=new Map();
+ for(let t=5.8;t<=11;t+=.05){
   update(t);const bounds=[];world.root.traverseVisible(object=>{
    if(!object.name.startsWith('data-fragment-')||object.material.opacity<.2)return;
-   object.geometry.computeBoundingBox();bounds.push({name:object.name,box:object.geometry.boundingBox.clone().applyMatrix4(object.matrixWorld)});
+   const box=new THREE.Box2(),vertices=object.geometry.attributes.position;
+   for(let v=0;v<vertices.count;v++){point.fromBufferAttribute(vertices,v).applyMatrix4(object.matrixWorld).project(camera);box.expandByPoint(new THREE.Vector2(point.x,point.y));}
+   bounds.push({name:object.name,box});
   });
   for(let i=0;i<bounds.length;i++)for(let j=i+1;j<bounds.length;j++){
    const a=bounds[i].box,b=bounds[j].box,overlapX=Math.min(a.max.x,b.max.x)-Math.max(a.min.x,b.min.x),overlapY=Math.min(a.max.y,b.max.y)-Math.max(a.min.y,b.min.y);
-   assert.ok(overlapX<0||overlapY<0,`${bounds[i].name} crosses ${bounds[j].name} at ${t}`);
+   if(overlapX>=0&&overlapY>=0){const pair=`${bounds[i].name} / ${bounds[j].name}`;if(!collisions.has(pair))collisions.set(pair,Number(t.toFixed(2)));}
   }
  }
- disposeTree(world.root);
+ assert.equal(collisions.size,0,JSON.stringify([...collisions]));disposeTree(world.root);
 });
 test('the Data Assets stage stop holds six completed cube faces',()=>{
  const {world,update}=rig();update(stageFrames[0]);const body=world.root.getObjectByName('data-to-assistant'),point=new THREE.Vector3();
