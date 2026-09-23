@@ -8,7 +8,8 @@
     "dev": "npm --prefix 展示应用 run dev:lan",
     "build": "npm --prefix 品牌融合世界 run build && npm --prefix 品牌融合世界 run export:module && npm --prefix 展示应用 run build",
     "test": "npm --prefix 品牌融合世界 run check && npm --prefix 展示应用 test && npm --prefix 展示应用 run check:content",
-    "preview": "npm --prefix 展示应用 run preview -- --host 127.0.0.1 --port 5183 --strictPort"
+    "preview": "npm --prefix 展示应用 run preview -- --host 127.0.0.1 --port 5183 --strictPort",
+    "package:windows": "npm run build && node 展示应用/scripts/build-windows-offline.mjs"
   },
   "engines": {
     "node": ">=22"
