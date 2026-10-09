@@ -27,7 +27,7 @@ export function useAdvertising() {
     async function load() {
       try {
         const response = await fetch('/api/sampleAdvertisingPublic:get', { credentials: 'omit', cache: 'no-store' });
-        // Existing standalone/offline deployments retain their explicitly dated archive until their first publication.
+        // Online mode never substitutes the offline archive when publication is unavailable.
         if (response.status === 404) throw Error('No published content');
         if (!response.ok) throw Error('published content unavailable');
         const body = await response.json(), data = body.data || body;
