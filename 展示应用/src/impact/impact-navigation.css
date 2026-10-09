@@ -1,166 +1,70 @@
-/* The wall's main controls stay in the reachable middle band. */
-.impact-theatre { touch-action: pan-y pinch-zoom; }
+/* One reachable control rail; content no longer reserves the former bottom bar. */
+.impact-theatre {
+  --showroom-edge: clamp(16px, 1.7vw, 64px);
+  --showroom-rail-width: clamp(62px, 4.3vw, 164px);
+  --showroom-content-right: calc(var(--showroom-edge) + var(--showroom-rail-width) + 2vw);
+  touch-action: pan-y pinch-zoom;
+}
 .impact-theatre .impact-footer,
 .impact-theatre.is-depth-open .impact-footer,
 .impact-theatre.is-supply-open .impact-footer {
-  position: absolute;
-  z-index: 8;
-  top: 50%;
-  right: clamp(18px, 2.5vw, 96px);
-  bottom: auto;
-  left: auto;
-  width: auto;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  transform: translateY(-50%);
-  pointer-events: none;
+  position: absolute; z-index: 8; top: 50%; right: var(--showroom-edge); bottom: auto; left: auto;
+  width: auto; min-height: 0; display: flex; align-items: center; transform: translateY(-50%);
+  opacity: 1; visibility: visible; pointer-events: none;
 }
 .impact-theatre .impact-footer.has-chapter-navigation nav {
-  position: absolute;
-  top: 50%;
-  right: calc(100% + 12px);
-  bottom: auto;
-  left: auto;
-  width: clamp(190px, 17vw, 360px);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: 0;
-  border: 0;
-  border-left: 1px solid #7db5d34d;
-  background: none;
-  box-shadow: none;
-  transform: translateY(-50%);
-  pointer-events: none;
+  position: absolute; top: 50%; right: calc(100% + 16px); bottom: auto; left: auto;
+  width: clamp(250px, 21vw, 740px); max-height: 80vh; overflow-y: auto; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 2px; padding: clamp(10px, 1vw, 36px);
+  border: 1px solid #7db5d34d; border-radius: clamp(14px, 1.2vw, 44px);
+  background: #071a2cf5; box-shadow: 0 12px 50px #0008; transform: translateY(-50%);
+  pointer-events: auto; overscroll-behavior: contain;
 }
 .impact-theatre .impact-footer.has-chapter-navigation nav[hidden] { display: none; }
-.moment-intelligence.is-depth-open .impact-footer .impact-tools { position: static; right: auto; bottom: auto; opacity: 1; }
-/* Quiet the moving exhibit while its transparent stage list is being read. */
-.moment-intelligence.is-depth-open.is-chapter-menu-open .impact-stage canvas { filter: brightness(.08); }
+.impact-menu-heading { padding: .7em .65em; color: #ecf4fa; font-size: clamp(18px, 1.18vw, 44px); font-weight: 500; }
 .impact-theatre .impact-footer.has-chapter-navigation nav button {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: clamp(10px, .8vw, 24px);
-  width: 100%;
-  min-height: clamp(60px, 5.8vh, 112px);
-  height: auto;
-  margin-left: -1px;
-  padding: 8px clamp(14px, 1vw, 28px);
-  border: 0;
-  border-left: 2px solid transparent;
-  border-radius: 0;
-  background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  box-shadow: none;
-  color: #a8c1d1;
-  font-size: clamp(17px, 1vw, 30px);
-  line-height: 1.3;
-  text-align: left;
-  white-space: normal;
-  touch-action: none;
-  user-select: none;
-  pointer-events: auto;
+  position: relative; display: flex; flex-direction: row; justify-content: flex-start; align-items: center;
+  gap: clamp(12px, 1vw, 36px); width: 100%; min-height: clamp(52px, 5.6vh, 120px); height: auto;
+  margin: 0; padding: .65em .8em; border: 1px solid transparent; border-radius: 8px;
+  background: transparent; backdrop-filter: none; box-shadow: none; color: #afc6d7;
+  font-size: clamp(16px, 1.05vw, 40px); line-height: 1.35; text-align: left; white-space: normal;
+  touch-action: pan-y; user-select: none; pointer-events: auto;
 }
-.impact-theatre .impact-footer nav button svg {
-  width: clamp(24px, 1.5vw, 56px);
-  height: clamp(24px, 1.5vw, 56px);
-  flex-shrink: 0;
-}
+.impact-theatre .impact-footer nav button svg,
+.impact-menu-number { width: 1.4em; height: 1.4em; flex-shrink: 0; }
+.impact-menu-number { color: #6c98b9; font-size: .9em; font-variant-numeric: tabular-nums; }
 .impact-theatre .impact-footer nav button[aria-current],
-.impact-theatre .impact-footer nav button:hover { color: #eff8ff; border-left-color: #8ed5ff; background: linear-gradient(90deg, #1c5d853b, transparent 82%); }
-.impact-theatre .impact-footer nav button:focus-visible { outline: 2px solid #8ed5ff; outline-offset: -2px; }
+.impact-theatre .impact-footer nav button:hover { color: #eff8ff; border-color: #78b9df44; background: #24537555; }
+.impact-theatre .impact-footer nav button:focus-visible { outline: 2px solid #a4ddff; outline-offset: -2px; }
 .impact-theatre .impact-footer nav button::after { display: none; }
-.impact-theatre .impact-footer nav .impact-menu-switch {
-  min-height: clamp(44px, 4.3vh, 76px);
-  margin-bottom: clamp(6px, .8vh, 16px);
-  color: #77afd1;
-  font-size: clamp(13px, .75vw, 23px);
-}
+.impact-theatre .impact-footer nav .impact-menu-switch { min-height: 44px; margin-bottom: .5em; color: #8ac0e3; font-size: clamp(14px, .9vw, 34px); border-bottom-color: #7396ac30; border-radius: 0; }
 .impact-theatre .impact-tools,
 .moment-intelligence.is-depth-open .impact-tools {
-  position: static;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 0;
-  border: 0;
-  background: none;
-  box-shadow: none;
-  opacity: 1;
-  pointer-events: none;
+  position: static; right: auto; bottom: auto; display: flex; flex-direction: column; gap: 4px;
+  padding: clamp(5px, .4vw, 15px); border: 1px solid #82a6bf38; border-radius: clamp(16px, 1.4vw, 54px);
+  background: #081a2bdc; box-shadow: 0 6px 30px #0004; opacity: 1; pointer-events: auto;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
 }
-.impact-theatre .impact-control-actions { display: flex; flex-direction: column; gap: 7px; }
-.impact-theatre .impact-control-actions[hidden] { display: none; }
-.impact-theatre .controls-resting .impact-control-toggle {
-  opacity: .45;
-  border-color: transparent;
-  background: transparent;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-.impact-theatre .controls-resting .impact-control-toggle:is(:hover,:focus-visible) { opacity: 1; }
 .impact-theatre .impact-tools button {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  min-width: clamp(58px, 4.4vw, 138px);
-  min-height: clamp(58px, 5.4vh, 124px);
-  height: auto;
-  padding: 6px;
-  border: 1px solid #65b9e899;
-  border-radius: 999px;
-  background: linear-gradient(110deg, #0c355575, #08274328);
-  backdrop-filter: blur(10px) saturate(120%);
-  -webkit-backdrop-filter: blur(10px) saturate(120%);
-  box-shadow: inset 0 0 18px #2578ab18;
-  color: #d6edfc;
-  font-size: clamp(14px, .8vw, 31px);
-  touch-action: manipulation;
-  pointer-events: auto;
-  transition: opacity .2s, background .2s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3em;
+  width: var(--showroom-rail-width); min-width: 0; min-height: clamp(62px, 6.8vh, 146px); height: auto;
+  padding: .55em .2em; border: 1px solid transparent; border-radius: clamp(10px, .8vw, 30px);
+  background: transparent; box-shadow: none; color: #c2d8e8; font-size: clamp(11px, .72vw, 27px);
+  touch-action: manipulation; pointer-events: auto; transition: background .2s, color .2s;
 }
 .impact-theatre .impact-tools button:hover,
-.impact-theatre .impact-tools button:active,
-.impact-theatre .impact-tools button[aria-expanded=true] { border-color: #b7e6ff; background: #124a6d66; }
-.impact-theatre .impact-tools button svg {
-  width: clamp(25px, 1.5vw, 54px);
-  height: clamp(25px, 1.5vw, 54px);
-}
-.impact-theatre .impact-tools .impact-language { font-size: clamp(16px, .9vw, 34px); }
-.impact-theatre .controls-resting .impact-control-toggle span { display: none; }
-.impact-theatre.is-supply-open .impact-tools>.impact-control-toggle { display: flex; }
-.impact-theatre .impact-scrub { width: clamp(58px, 4.4vw, 138px); height: 44px; }
-.moment-company .impact-tools .impact-language { display: flex; }
-.is-depth-open .impact-scrub,
-.is-supply-open .impact-scrub { display: none; }
+.impact-theatre .impact-tools button[aria-expanded=true] { border-color: #86c2e35c; color: #fff; background: #24537570; }
+.impact-theatre .impact-tools button:focus-visible { outline: 2px solid #b9e6ff; outline-offset: 2px; }
+.impact-theatre .impact-tools button svg,
+.impact-theatre .impact-tools .impact-language b { width: clamp(23px, 1.6vw, 60px); height: clamp(23px, 1.6vw, 60px); }
+.impact-theatre .impact-tools .impact-language { font-size: clamp(11px, .72vw, 27px); }
+.impact-theatre .impact-tools .impact-language b { display: grid; place-items: center; font-size: clamp(18px, 1.15vw, 44px); font-weight: 400; }
+.impact-theatre .impact-scrub { display: none; }
+.impact-theatre .impact-reading-entry { bottom: auto; top: 52%; right: 16%; }
+.impact-theatre .impact-reel-control { bottom: auto; top: 70%; }
+.impact-theatre .brand-return,.impact-theatre .category-return { top: 50%; bottom: auto; }
 @media (max-height: 700px) {
-  .impact-theatre .impact-tools button { min-height: 50px; }
-  .impact-theatre .impact-footer.has-chapter-navigation nav button { min-height: 48px; }
+  .impact-theatre .impact-tools button { min-height: 52px; }
+  .impact-theatre .impact-footer.has-chapter-navigation nav button { min-height: 44px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .impact-theatre .impact-footer button { transition: none; }
-}
-
-/* Keep controls reachable in every existing depth scene. */
-.impact-theatre .impact-footer{opacity:1;visibility:visible;}
-.impact-theatre .impact-tools{pointer-events:auto;}
-.impact-theatre .impact-footer nav{background:#071c30ee!important;border-radius:12px;padding:8px!important;max-height:78vh;overflow:auto;}
-.impact-theatre .impact-scrub{display:none;}
-.impact-theatre .impact-tools .impact-menu-toggle{font-size:26px;}
-.impact-theatre .impact-reading-entry{bottom:auto;top:52%;right:16%;}
-.impact-theatre .impact-reel-control{bottom:auto;top:70%;}
-.impact-theatre .intelligence-navigation{top:50%;bottom:auto;left:4%;right:auto;width:clamp(180px,15vw,330px);height:auto;display:flex;flex-direction:column;transform:translateY(-50%);}
-.impact-theatre .intelligence-navigation button{min-height:56px;height:auto;display:flex;flex-direction:row;gap:12px;text-align:left;}
-.impact-theatre .intelligence-back{top:45%;bottom:auto;left:3%;min-height:56px;}
-.impact-theatre .intelligence-navigation ~ .intelligence-back{top:80%;}
-.impact-theatre .intelligence-copy{left:25%;max-width:55%;}
-.impact-theatre .brand-return,.impact-theatre .category-return{top:50%;bottom:auto;}
-.impact-theatre .advertising-status{pointer-events:none;}
-
-/* Map tools retain their behavior and occupy a separate, reachable rail. */
-.impact-theatre .distribution-map-tools {left:2.5%;right:auto;top:50%;bottom:auto;transform:translateY(-50%);z-index:7;}
+@media (prefers-reduced-motion: reduce) { .impact-theatre .impact-footer button { transition: none; } }

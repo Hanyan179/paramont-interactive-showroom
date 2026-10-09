@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><title>展厅布局尺寸验收</title>
+<style>html,body{margin:0;background:#202630;color:#eef5ff;font:14px Arial;height:100%;overflow:hidden}header{height:44px;display:flex;align-items:center;gap:12px;padding:0 16px}button{background:#324454;color:inherit;border:1px solid #7792a5;border-radius:4px;padding:5px 12px;cursor:pointer}button[aria-pressed=true]{background:#507082}#stage{position:relative;margin:auto;overflow:hidden}iframe{position:absolute;top:0;left:0;border:0;transform-origin:top left}</style>
+<header>实际布局尺寸 <button data-size="1366,768">1366 × 768</button><button data-size="1920,1080">1920 × 1080</button><button data-size="3840,2160">3840 × 2160</button><output></output></header>
+<div id="stage"><iframe title="展厅尺寸验收" src="/enterprise-showroom/#/atlas/home"></iframe></div>
+<script>
+let width=1920,height=1080;
+const frame=document.querySelector('iframe'),stage=document.querySelector('#stage');
+function resize(){const scale=Math.min(innerWidth/width,(innerHeight-44)/height);frame.style.width=width+'px';frame.style.height=height+'px';frame.style.transform=`scale(${scale})`;stage.style.width=width*scale+'px';stage.style.height=height*scale+'px';document.querySelector('output').textContent=`${width} × ${height}，等比缩放显示`;document.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.size===`${width},${height}`));}
+document.querySelectorAll('button').forEach(b=>b.onclick=()=>{[width,height]=b.dataset.size.split(',').map(Number);resize();});addEventListener('resize',resize);resize();
+</script></html>

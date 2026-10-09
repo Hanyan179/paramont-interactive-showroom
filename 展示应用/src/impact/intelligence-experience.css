@@ -12,8 +12,8 @@
 }
 .intelligence-experience button { font: inherit; cursor: pointer; touch-action: manipulation; pointer-events: auto; -webkit-tap-highlight-color: transparent; }
 .intelligence-experience button:focus-visible { outline: 2px solid #a9ddff; outline-offset: 6px; }
-.intelligence-copy-reveal { position:absolute;inset:0;opacity:var(--intelligence-copy-alpha,0);visibility:var(--intelligence-copy-visibility,hidden);transform:translateX(calc((1 - var(--intelligence-copy-alpha,0)) * -16px)); }
-.intelligence-copy { position: absolute; left: 5%; top: 25%; width: 30%; text-shadow: 0 2px 24px #000b; animation: intelligence-copy-appear .65s ease both; }
+.intelligence-copy-reveal { position:absolute;inset:16% 0 8%;display:flex;align-items:center;opacity:var(--intelligence-copy-alpha,0);visibility:var(--intelligence-copy-visibility,hidden);transform:translateX(calc((1 - var(--intelligence-copy-alpha,0)) * -16px)); }
+.intelligence-copy { position: relative; left: 6%; width: 33%; text-shadow: 0 2px 24px #000b; animation: intelligence-copy-appear .65s ease both; }
 .intelligence-stage-heading { display: flex; align-items: center; gap: clamp(14px, 1.2vw, 46px); }
 .intelligence-stage-number {
   display: grid;
@@ -32,13 +32,13 @@
 }
 .intelligence-stage-name { margin: 0; font-size: clamp(19px, 1.42vw, 55px); font-weight: 400; line-height: 1.5; }
 .intelligence-name-en { margin: 2px 0 0; color: #9fb8cd; font-size: clamp(11px, .78vw, 30px); line-height: 1.6; letter-spacing: .025em; }
-.intelligence-copy h1 { margin: clamp(27px, 4.2vh, 91px) 0 0; font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; font-size: clamp(27px, 2.45vw, 94px); font-weight: 300; line-height: 1.65; letter-spacing: .01em; white-space: pre-line; text-wrap: balance; }
-.intelligence-experience:lang(en) .intelligence-copy h1 { font-size:clamp(25px,2.1vw,81px);line-height:1.48; }
-.intelligence-description { max-width: 24em; margin: clamp(14px, 2vh, 43px) 0 0; color: var(--intelligence-muted); font-size: clamp(13px, .9vw, 35px); line-height: 1.9; text-wrap: pretty; }
+.intelligence-copy h1 { margin: clamp(24px, 3.2vh, 69px) 0 0; font-family: 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif; font-size: clamp(32px, 2.65vw, 102px); font-weight: 300; line-height: 1.45; letter-spacing: .01em; white-space: pre-line; text-wrap: balance; }
+.intelligence-experience:lang(en) .intelligence-copy h1 { font-size:clamp(30px,2.3vw,88px);line-height:1.35; }
+.intelligence-description { max-width: 24em; margin: clamp(14px, 2vh, 43px) 0 0; color: var(--intelligence-muted); font-size: clamp(16px, 1.03vw, 40px); line-height: 1.8; text-wrap: pretty; }
 .intelligence-example{margin-top:clamp(22px,3.2vh,69px);}
 
 
-.intelligence-playback { display: flex; align-items: center; flex-wrap: wrap; gap: 0 clamp(15px, 1.2vw, 46px); min-height: 48px; margin-top: clamp(10px, 1.3vh, 28px); font-size: clamp(10px, .66vw, 25px); line-height: 1.4; }
+.intelligence-playback { display: flex; align-items: center; flex-wrap: wrap; gap: 0 clamp(15px, 1.2vw, 46px); min-height: 48px; margin-top: clamp(10px, 1.3vh, 28px); font-size: clamp(12px, .78vw, 30px); line-height: 1.4; }
 .intelligence-status { display: inline-flex; align-items: center; gap: .65em; color: #6d94b2; }
 .intelligence-status > span { width: .35em; height: .35em; border-radius: 50%; background: #64879e; }
 .intelligence-status.is-auto > span { background: #83cff8; box-shadow: 0 0 8px #69bdec77; }
@@ -53,26 +53,17 @@
 .intelligence-asset-caption { position:absolute; left:44%; right:5%; top:74%; display:flex; flex-direction:column; align-items:center; gap:.75em; text-align:center; text-shadow:0 2px 18px #020710; }
 .intelligence-asset-caption strong { font-size:clamp(14px,.94vw,36px); font-weight:400; color:#d8eafa; letter-spacing:.12em; }
 .intelligence-asset-caption > span { font-size:clamp(10px,.62vw,24px); color:#7196af; letter-spacing:.08em; }
-.intelligence-navigation { position: absolute; left: 20%; right: 20%; bottom: var(--impact-navigation-bottom, 7.2%); height: var(--impact-navigation-height, 84px); display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); pointer-events: auto; }
-.intelligence-navigation, .intelligence-navigation button { touch-action: none; user-select: none; }
-.intelligence-stage-button { position: relative; display: flex; align-items: center; justify-content: center; min-width: 0; background: transparent; line-height: 1.2; text-align: center; }
-.intelligence-stage-label { max-width: 100%; height: 1.2em; padding: 0 4px; line-height: 1.2; text-wrap: balance; }
-.intelligence-back { position: absolute; left: 3.5%; bottom: var(--impact-navigation-bottom, 7.2%); display: flex; align-items: center; justify-content: center; min-width: 64px; max-width: calc(16.5vw - clamp(12px, 1.4vw, 54px)); background: transparent; border-radius: 4px; line-height: 1.2; text-align: center; }
-.intelligence-back-label, .intelligence-back-short { height: 1.2em; line-height: 1.2; text-wrap: balance; }
-.intelligence-back-short { display: none; }
-
-
-.intelligence-note { position: absolute; left: 5%; bottom: 2.4%; margin: 0; color: #52748f; font-size: clamp(10px, .59vw, 23px); line-height: 1.5; letter-spacing: .025em; }
-.intelligence-case { position: absolute; left: 5%; top: 22%; width: 34%; max-height: calc(100% - 22% - var(--impact-navigation-bottom, 7.2%) - var(--impact-navigation-height, 84px) - 8vh); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #42799855 transparent; padding-right: .5vw; pointer-events: auto; animation: intelligence-copy-appear .65s ease both; }
+.intelligence-note { position: absolute; left: 6%; bottom: clamp(40px, 4.4vh, 94px); margin: 0; color: #88a6bc; font-size: clamp(11px, .72vw, 27px); line-height: 1.5; letter-spacing: .025em; }
+.intelligence-case { position: absolute; left: 6%; top: 23%; width: 33%; max-height: 64%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #42799855 transparent; padding-right: .5vw; pointer-events: auto; animation: intelligence-copy-appear .65s ease both; }
 .intelligence-case-kicker { display: flex; align-items: center; flex-wrap: wrap; gap: .85em; margin: 0 0 clamp(16px, 2vh, 43px); color: #729dbc; font-size: clamp(10px, .67vw, 26px); letter-spacing: .06em; line-height: 1.6; }
 .intelligence-case-kicker > i { display: block; width: 1px; height: .9em; background: #5f7d955c; }
 .intelligence-case h1 { max-width: 17em; margin: 0; color: #e9f2fa; font-size: clamp(25px, 2.1vw, 81px); font-weight: 300; line-height: 1.55; text-wrap: balance; }
-.intelligence-case-summary { max-width: 34em; margin: clamp(14px, 1.8vh, 39px) 0 0; color: #9bb4c9; font-size: clamp(12px, .83vw, 32px); line-height: 1.85; }
+.intelligence-case-summary { max-width: 34em; margin: clamp(14px, 1.8vh, 39px) 0 0; color: #9bb4c9; font-size: clamp(15px, 1vw, 38px); line-height: 1.85; }
 .intelligence-case-steps { list-style: none; padding: 0; margin: clamp(21px, 3vh, 65px) 0 0; }
-.intelligence-case-steps li { display: grid; grid-template-columns: auto 1fr; align-items: center; min-height: clamp(42px, 4.3vh, 93px); margin-top: 1px; background: linear-gradient(90deg, #09223b90, #06162a50 78%, transparent); border-bottom: 1px solid #3c6e9726; color: #b5cede; font-size: clamp(12px, .8vw, 31px); line-height: 1.65; }
+.intelligence-case-steps li { display: grid; grid-template-columns: auto 1fr; align-items: center; min-height: clamp(42px, 4.3vh, 93px); margin-top: 1px; background: linear-gradient(90deg, #09223b90, #06162a50 78%, transparent); border-bottom: 1px solid #3c6e9726; color: #b5cede; font-size: clamp(15px, .95vw, 36px); line-height: 1.65; }
 .intelligence-step-icon { display: grid; place-items: center; width: clamp(42px, 3.2vw, 123px); min-height: inherit; margin-right: .85em; border-right: 1px solid #36789d2b; color: #74a9cc; }
 .intelligence-step-icon svg { width: 1.55em; height: 1.55em; }
-.intelligence-case-outcome { display: flex; align-items: flex-start; gap: .75em; margin: clamp(17px, 2.5vh, 54px) 0 0; color: #afcbe0; font-size: clamp(11px, .76vw, 29px); line-height: 1.8; }
+.intelligence-case-outcome { display: flex; align-items: flex-start; gap: .75em; margin: clamp(17px, 2.5vh, 54px) 0 0; color: #afcbe0; font-size: clamp(14px, .9vw, 34px); line-height: 1.8; }
 .intelligence-case-outcome svg { flex-shrink: 0; width: 1.1em; height: 1.1em; margin-top: .35em; color: #bdb799; }
 .intelligence-case-visual { position: absolute; left: 41%; right: 1%; top: 17%; bottom: calc(var(--impact-navigation-bottom, 7.2%) + var(--impact-navigation-height, 84px) + 4vh); display: flex; flex-direction: column; align-items: center; margin: 0; pointer-events: none; animation: intelligence-art-appear .9s ease both; }
 .intelligence-case-category { display: flex; align-items: center; justify-content: flex-end; gap: 1.2em; width: 90%; margin: 0; color: #6e95b3; font-size: clamp(10px, .65vw, 25px); letter-spacing: .1em; line-height: 1.8; }
@@ -81,48 +72,24 @@
 .intelligence-case-visual figcaption { align-self: flex-end; margin: 0 7% 0 0; color: #6288a6; font-size: clamp(10px, .68vw, 26px); letter-spacing: .07em; line-height: 1.8; }
 .intelligence-case-visual figcaption:after { content: ''; display: inline-block; vertical-align: middle; width: 3em; height: 1px; margin-left: 1.5em; background: #7897af66; }
 
-/* The system controls retain one screen position through detail and case views. */
-.moment-intelligence.is-depth-open .impact-footer { bottom: 1.8%; min-height: 48px; z-index: 6; }
-.moment-intelligence .impact-scrub { display: none; }
-.moment-intelligence.is-depth-open .impact-tools { position: fixed; right: 2.65%; bottom: clamp(10px, 1.6vh, 36px); opacity: .72; }
 .moment-intelligence.is-depth-open .impact-vignette { background: linear-gradient(0deg, #020710f0, transparent 24%), linear-gradient(90deg, #020710c9 0%, #02071088 25%, transparent 49%); }
 /* These values are sampled by the shared animation clock, including pause and
    reverse playback. Hidden controls also leave keyboard and touch navigation. */
 .moment-intelligence .impact-header,
-.moment-intelligence .impact-footer,
 .moment-intelligence .intelligence-note { opacity:var(--intelligence-frame-alpha,0);visibility:var(--intelligence-frame-visibility,hidden); }
-.moment-intelligence .intelligence-navigation,
-.moment-intelligence .intelligence-back { opacity:var(--intelligence-navigation-alpha,0);visibility:var(--intelligence-navigation-visibility,hidden); }
 @keyframes intelligence-copy-appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes intelligence-art-appear { from { opacity: 0; transform: translateY(12px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
-@media (max-width: 1450px) {
-  .intelligence-copy { width: 32%; }
-  .intelligence-copy h1 { font-size: clamp(25px, 2.3vw, 34px); }
-  .intelligence-description { font-size: 13px; }
-  .intelligence-case { width: 35%; }
-  .intelligence-case h1 { font-size: clamp(22px, 2vw, 29px); }
-  .intelligence-case-summary { font-size: 12px; }
-  .intelligence-case-steps li { font-size: 12px; }
-}
 @media (max-aspect-ratio: 3/2) {
-  .intelligence-copy { top: 24%; width: 34%; }
-  .intelligence-copy h1 { font-size: clamp(24px, 2.45vw, 58px); }
-  .intelligence-navigation { left: 12.5%; right: 12.5%; }
-  .intelligence-back { max-width: calc(9vw - 10px); }
-  .intelligence-back-label { display: none; }
-  .intelligence-back-short { display: inline; }
-  .intelligence-case { top: 23%; width: 37%; }
-  .intelligence-case-visual { left: 42%; right: 0; top: 22%; }
-  .intelligence-case-category { gap: .7em; font-size: 9px; }
-  .intelligence-case-category span { padding-left: .7em; }
+  .intelligence-copy { width: 34%; }
+  .intelligence-copy-reveal { inset: 15% 0 9%; }
+  .intelligence-case { top: 25%; width: 34%; }
 }
 @media (max-height: 820px) {
-  .intelligence-copy { top: 22%; }
-  .intelligence-copy h1 { margin-top: 22px; line-height: 1.5; }
-  .intelligence-description { margin-top: 11px; }
-  .intelligence-example { margin-top: 17px; }
+  .intelligence-copy h1 { margin-top: 22px; }
+  .intelligence-description { margin-top: 14px; }
+  .intelligence-example { margin-top: 20px; }
   .intelligence-playback { margin-top: 4px; }
-  .intelligence-case { top: 20%; }
+  .intelligence-case { top: 20%; max-height: 68%; }
   .intelligence-case-kicker { margin-bottom: 11px; }
   .intelligence-case-steps { margin-top: 16px; }
   .intelligence-case-outcome { margin-top: 12px; }

@@ -1,10 +1,7 @@
-import {useEffect, useRef} from 'react';
-import {bindScenePointer} from '../interaction/scenePointer.js';
-import {ArrowLeft, ArrowRight, Database, Graph, Sparkle, GitBranch, Package, Stack, Play, MagnifyingGlass, SquaresFour, CheckCircle} from '@phosphor-icons/react';
+import {ArrowRight, Sparkle, Play, MagnifyingGlass, SquaresFour, CheckCircle} from '@phosphor-icons/react';
 import {intelligenceStages} from './intelligenceContent.js';
 import './intelligence-experience.css';
 
-const stageIcons = [Database, Graph, Sparkle, GitBranch, Package, Stack];
 const exampleIcons = [MagnifyingGlass, SquaresFour, CheckCircle];
 const stageHeadlines = [
   ['汇聚多源数据，\n建立分析基础。', 'Connect the data.\nGround the analysis.'],
@@ -22,45 +19,16 @@ export function IntelligenceExperience({
   stage = 0,
   mode = 'auto',
   view,
-  progress = 0,
-  onSelect,
   onResume,
   onExample,
-  onBack,
   onActivity,
-  onHold,
 }) {
-  const navigation = useRef();
-  const handlers = useRef();
-  handlers.current = {onSelect, onActivity, onHold};
-  useEffect(() => {
-    const gestures = bindScenePointer(navigation.current, {
-      claimClick: true,
-      includeControls: true,
-      cancelOnMultiple: true,
-      onStart() { handlers.current.onActivity?.(); handlers.current.onHold?.(true); },
-      onEnd() { handlers.current.onHold?.(false); },
-      onTap(_event, gesture) {
-        const button = gesture.target.closest('[data-intelligence-stage]');
-        if (button) handlers.current.onSelect?.(Number(button.dataset.intelligenceStage));
-      },
-    });
-    const hidden = () => { if (document.hidden) gestures.cancel(); };
-    document.addEventListener('visibilitychange', hidden);
-    return () => {
-      gestures.dispose();
-      handlers.current.onHold?.(false);
-      document.removeEventListener('visibilitychange', hidden);
-    };
-  }, []);
-
   const l = lang === 'zh' ? 0 : 1;
   const index = Number.isInteger(stage) ? Math.max(0, Math.min(5, stage)) : 0;
   const current = intelligenceStages[index];
   const example=current.example;
   const isCase = (view || (mode === 'case' ? 'case' : 'detail')) === 'case';
   const isAuto = mode === 'auto';
-  const stageProgress = Number.isFinite(progress) ? Math.max(0, Math.min(1, progress)) : 0;
   const number = String(index + 1).padStart(2, '0');
   const activity = () => onActivity?.();
 
@@ -118,30 +86,6 @@ export function IntelligenceExperience({
       </article>
     </>}
 
-    <button className="intelligence-back" onClick={onBack} aria-label={isCase ? ['返回阶段详情', 'Back to stage detail'][l] : ['返回展厅', 'Back to the showroom'][l]}>
-      <ArrowLeft weight="light" aria-hidden="true" />
-      <span className="intelligence-back-label" aria-hidden="true">{isCase ? ['返回阶段详情', 'Back to stage detail'][l] : ['返回展厅', 'Back to the showroom'][l]}</span>
-      <span className="intelligence-back-short" aria-hidden="true">{['返回', 'Back'][l]}</span>
-    </button>
-
-    <nav ref={navigation} className="intelligence-navigation" aria-label={['探索六个阶段', 'Explore the six stages'][l]}>
-      {intelligenceStages.map((entry, i) => {
-        const Icon = stageIcons[i];
-        const selected = i === index;
-        return <button
-          key={entry.id}
-          className="intelligence-stage-button"
-          aria-pressed={selected}
-          aria-current={selected ? 'step' : undefined}
-          data-intelligence-stage={i}
-          onClick={event => { if (event.detail === 0) onSelect?.(i); }}
-          style={selected ? {'--intelligence-stage-progress': `${isAuto ? stageProgress * 100 : 100}%`} : undefined}
-        >
-          <Icon weight="light" aria-hidden="true" />
-          <span className="intelligence-stage-label">{entry.name[l]}</span>
-        </button>;
-      })}
-    </nav>
     <p className="intelligence-note">{['概念商品 · 演示数据 · 未接入实时服务', 'CONCEPT PRODUCT · DEMONSTRATION DATA · NO LIVE SERVICES'][l]}</p>
   </section>;
 }

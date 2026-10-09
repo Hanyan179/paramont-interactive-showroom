@@ -145,44 +145,44 @@
 .moment-supply .impact-copy,.moment-supply .impact-reading-entry,.moment-supply .impact-note,.moment-supply .impact-scrub{display:none;}
 .distribution-map-tools[hidden]{display:none;}
 
-/* The data row and every chapter share the actual navigation footprint. */
-.distribution-map[data-network-view=flat]{--network-summary-bottom:calc(var(--impact-navigation-bottom) + var(--impact-navigation-height) + clamp(14px,1.6vh,36px));--network-summary-height:clamp(96px,9.5vh,206px);}
+/* The map and data row use the space released by the right-side navigation. */
+.distribution-map[data-network-view=flat]{--network-summary-bottom:clamp(40px,4.5vh,98px);--network-summary-height:clamp(108px,10vh,216px);}
 .distribution-map[data-network-view=flat] .distribution-heading{left:20%;top:4.5%;max-width:55%;}
-.distribution-map[data-network-view=flat] .distribution-heading>p{font-size:clamp(12px,.75vw,30px);line-height:1.4;letter-spacing:.16em;margin-bottom:.65vh;}
+.distribution-map[data-network-view=flat] .distribution-heading>p{font-size:clamp(14px,.88vw,34px);line-height:1.4;letter-spacing:.16em;margin-bottom:.65vh;}
 .distribution-map[data-network-view=flat] .distribution-heading h1{font-size:clamp(28px,2.2vw,90px);line-height:1.18;letter-spacing:.015em;}
 .distribution-map[data-network-view=flat] .distribution-layers{position:static;display:flex;gap:clamp(16px,1.7vw,68px);margin-top:clamp(8px,1vh,22px);}
 .distribution-layers button{min-height:clamp(44px,4.3vh,94px);padding:0 3px .7vh;font-size:clamp(13px,.84vw,34px);line-height:1.4;color:#a6bfce;}
 .distribution-network-signature{position:absolute;right:3.5%;top:5.5%;display:flex;flex-direction:column;align-items:flex-end;gap:.7vh;color:#93bacd;font-size:clamp(14px,.98vw,40px);letter-spacing:.065em;opacity:var(--map-copy-opacity,1);}
 .distribution-network-signature span{font-size:clamp(11px,.6vw,25px);letter-spacing:.14em;color:#8aa8ba;}
 .distribution-network-signature i{width:clamp(24px,2vw,82px);height:1px;background:#d6b57977;}
-.distribution-map[data-network-view=flat] .distribution-legend{left:auto;right:3.5%;top:13%;flex-direction:row;gap:clamp(12px,1.3vw,52px);font-size:clamp(11px,.7vw,28px);line-height:1.4;color:#a8c0cf;}
+.distribution-map[data-network-view=flat] .distribution-legend{left:auto;right:3.5%;top:13%;flex-direction:row;gap:clamp(12px,1.3vw,52px);font-size:clamp(12px,.78vw,30px);line-height:1.4;color:#a8c0cf;}
 .distribution-legend span{gap:clamp(6px,.45vw,18px);}
 .distribution-legend i{width:clamp(6px,.34vw,14px);height:clamp(6px,.34vw,14px);flex-shrink:0;}
-.distribution-map[data-network-view=flat] .distribution-cartography{left:1%;right:1%;top:16%;bottom:calc(var(--network-summary-bottom) + var(--network-summary-height) + 1vh);height:auto;}
+.distribution-map[data-network-view=flat] .distribution-cartography{left:3.5%;right:var(--showroom-content-right);top:19%;bottom:calc(var(--network-summary-bottom) + var(--network-summary-height) + 1vh);height:auto;}
 .distribution-map[data-network-view=flat] .distribution-heading,
 .distribution-map[data-network-view=flat] .distribution-layers,
 .distribution-map[data-network-view=flat] .distribution-legend{z-index:1;}
-.distribution-map[data-network-view=flat] .distribution-map-tools{top:40%;bottom:auto;right:2%;flex-direction:column;}
+.distribution-map[data-network-view=flat] .distribution-map-tools{top:50%;bottom:auto;left:1.5%;right:auto;transform:translateY(-50%);flex-direction:column;}
 .distribution-marker button{min-width:clamp(144px,10.5vw,420px);min-height:clamp(64px,6vh,132px);width:max-content;padding:clamp(9px,.65vw,26px) clamp(34px,2.4vw,96px) clamp(9px,.65vw,26px) clamp(11px,.8vw,32px);gap:clamp(4px,.45vh,10px);}
 .distribution-marker button small{font-size:clamp(10px,.62vw,25px);letter-spacing:.14em;line-height:1.3;}
 .distribution-marker button strong{font-size:clamp(18px,1.16vw,47px);font-weight:500;letter-spacing:.055em;line-height:1.2;}
-.distribution-marker button span{max-width:clamp(142px,14.8vw,590px);white-space:normal;text-wrap:pretty;font-size:clamp(12px,.75vw,30px);line-height:1.4;color:#c0d1dc;}
+.distribution-marker button span{max-width:clamp(142px,14.8vw,590px);white-space:normal;text-wrap:pretty;font-size:clamp(14px,.88vw,34px);line-height:1.4;color:#c0d1dc;}
 .distribution-enter-icon{right:clamp(10px,.7vw,28px);width:clamp(17px,1.05vw,42px);height:clamp(17px,1.05vw,42px);}
-.distribution-map[data-network-view=flat] .distribution-reading{top:auto;bottom:var(--network-summary-bottom);left:3.5%;width:55%;height:var(--network-summary-height);display:flex;align-items:center;gap:2.6vw;padding-top:1vh;border-top:1px solid #8ca9b62b;box-sizing:border-box;}
-.distribution-map[data-network-view=flat] .distribution-reading>p{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:.5vh;margin:0;min-width:11vw;font-size:clamp(12px,.75vw,30px);line-height:1.4;letter-spacing:.07em;}
+.distribution-map[data-network-view=flat] .distribution-reading{top:auto;bottom:var(--network-summary-bottom);left:3.5%;width:51%;height:var(--network-summary-height);display:flex;align-items:center;gap:2.6vw;padding-top:1vh;border-top:1px solid #8ca9b62b;box-sizing:border-box;}
+.distribution-map[data-network-view=flat] .distribution-reading>p{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:.5vh;margin:0;min-width:11vw;font-size:clamp(14px,.88vw,34px);line-height:1.4;letter-spacing:.07em;}
 .distribution-map[data-network-view=flat] .distribution-reading>p span{margin-left:0;font-size:clamp(11px,.69vw,28px);color:#a4bfce;letter-spacing:.025em;}
 .distribution-map[data-network-view=flat] .distribution-reading .distribution-back{min-height:36px;font-size:clamp(12px,.73vw,30px);}
 .distribution-map[data-network-view=flat] .distribution-metrics{gap:2.5vw;}
 .distribution-map[data-network-view=flat] .distribution-metrics>div{min-width:0;}
-.distribution-map[data-network-view=flat] .distribution-metrics p{margin:0 0 .5vh;font-size:clamp(12px,.76vw,31px);letter-spacing:.07em;line-height:1.35;}
+.distribution-map[data-network-view=flat] .distribution-metrics p{margin:0 0 .5vh;font-size:clamp(14px,.88vw,34px);letter-spacing:.07em;line-height:1.35;}
 .distribution-map[data-network-view=flat] .distribution-metrics p span{display:block;margin:.35vh 0 0;font-size:clamp(11px,.68vw,27px);color:#9cb8ca;}
 .distribution-map[data-network-view=flat] .distribution-metrics strong{font-size:clamp(32px,2.45vw,100px);line-height:1.08;font-weight:400;letter-spacing:-.02em;}
-.distribution-map[data-network-view=flat] .distribution-country-nav{top:auto;bottom:var(--network-summary-bottom);right:3.5%;width:34.5%;max-width:34.5%;height:var(--network-summary-height);display:flex;flex-direction:column;flex-wrap:nowrap;gap:0;justify-content:center;}
+.distribution-map[data-network-view=flat] .distribution-country-nav{top:auto;bottom:var(--network-summary-bottom);right:var(--showroom-content-right);width:34.5%;max-width:34.5%;height:var(--network-summary-height);display:flex;flex-direction:column;flex-wrap:nowrap;gap:0;justify-content:center;}
 .distribution-country-nav .distribution-directory-entry{font-size:clamp(13px,.82vw,33px);min-height:clamp(44px,4.4vh,96px);}
 .distribution-scene-nav{gap:clamp(4px,.65vw,26px);justify-content:space-between;}
 .distribution-scene-nav>span{font-size:clamp(10px,.61vw,25px);color:#8faebf;}
 .distribution-scene-nav button{padding:0 clamp(3px,.35vw,14px);min-width:0;min-height:clamp(44px,4.4vh,96px);gap:clamp(6px,.5vw,20px);font-size:clamp(12px,.8vw,32px);white-space:nowrap;}
-.distribution-directory{bottom:var(--network-summary-bottom);}
+.distribution-directory{bottom:var(--network-summary-bottom);right:var(--showroom-content-right);}
 .distribution-directory footer p{font-size:clamp(11px,.66vw,27px);}
 .distribution-map[data-network-view=flat] .distribution-caption{display:none;}
 .network-flat .impact-edition{display:none;}
@@ -222,7 +222,7 @@
 }
 .distribution-marker .distribution-region-copy>span {
   color:#a9c4d6;
-  font-size:clamp(11px,.7vw,28px);
+  font-size:clamp(12px,.78vw,30px);
   line-height:1.45;
 }
 .impact-theatre .distribution-region-action>.distribution-enter-icon {
@@ -238,7 +238,7 @@
   min-height:clamp(44px,4.4vh,96px);
   padding:.45em .8em;
   gap:.6em;
-  font-size:clamp(12px,.75vw,30px);
+  font-size:clamp(14px,.88vw,34px);
 }
 .distribution-scene-nav {margin-top:.6vh;}
 .distribution-scene-nav>span {display:none;}
@@ -254,12 +254,11 @@
 @media(max-aspect-ratio:3/2){
   .distribution-map[data-network-view=flat] .distribution-heading{left:22%;top:4.5%;max-width:73%;}
   .distribution-map[data-network-view=flat] .distribution-heading h1{font-size:clamp(27px,2.4vw,60px);}
-  .distribution-map[data-network-view=flat] .distribution-legend{top:21%;left:3.5%;right:auto;}
-  .distribution-map[data-network-view=flat] .distribution-cartography{top:25%;}
-  .distribution-map[data-network-view=flat] .distribution-map-tools{top:calc(25vh - max(48px,4.5vh) - 10px);right:3.5%;flex-direction:row;}
+  .distribution-map[data-network-view=flat] .distribution-legend{top:16%;left:22%;right:auto;}
+  .distribution-map[data-network-view=flat] .distribution-cartography{top:21%;}
   .distribution-marker button{min-width:144px;width:max-content;}
   .distribution-marker button span{max-width:clamp(145px,14.8vw,440px);}
-  .distribution-map[data-network-view=flat] .distribution-reading{width:56%;gap:1.7vw;}
+  .distribution-map[data-network-view=flat] .distribution-reading{width:51%;gap:1.7vw;}
   .distribution-map[data-network-view=flat] .distribution-metrics{gap:1.7vw;}
   .distribution-map[data-network-view=flat] .distribution-country-nav{width:34%;max-width:34%;}
   .distribution-scene-nav>span{display:none;}
