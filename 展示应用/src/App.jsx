@@ -1,3 +1,4 @@
+import {useAdvertising,advertisingDocuments,advertisingBrands} from './advertising.js';
 import { showroomAreas, isExplorerPage } from './config/areas.js';
 import { SceneLoading } from './components/SceneLoading.jsx';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
@@ -29,6 +30,8 @@ import {impactDocument} from './impact/documents.js';
 import {isLocationDetailActive,isReaderActive,routeKey} from './documents/reading';
 
 export function App() {
+  const advertising=useAdvertising();
+  const publishedDocuments=advertising.snapshot?advertisingDocuments(advertising.snapshot,advertising.assetUrls):{};
   const [route, rawGo] = useRoute();
   const [impactOpen,setImpactOpen]=useState(()=>route.variant==='atlas'&&route.page==='home');
   const [mediaPanel,setMediaPanel]=useState(null),[mediaLibrary,setMediaLibrary]=useState({films:[],publications:[]});
@@ -86,9 +89,9 @@ export function App() {
   const brand = content.brands.find(b => b.id === enteredBrand);
   const wallItems = brand ? content.samples.filter(s => s.brand === brand.id) : content.samples.filter(s => filter === 'all' || s.category === filter);
   const viewerItems = locationActive ? content.samples : (route.variant === 'studio' || route.page === 'brands') ? wallItems : content.samples.filter(s => filter === 'all' || s.category === filter);
-  useEffect(() => { Promise.all([['showroom',setContent],['official-content',setOfficial],['catalog',setCatalog],['reading-documents',setReadingOverrides],['exhibition-media',setMediaLibrary]].map(async ([file,save])=>{const r=await fetch(`/data/${file}.json`);if(!r.ok)throw Error(file);save(await r.json());})).catch(()=>setNotice(t('部分内容未能加载，请重新打开页面。','Some content could not load. Please reload the page.'))); }, []);
-  useEffect(()=>{let alive=true;Promise.all(['concepts','product-skus','explorer-media'].map(async file=>{const response=await fetch(`/modules/product-explorer/shared/${file}.json`);if(!response.ok)throw Error(file);return response.json();})).then(([concepts,skus,media])=>{if(alive)setProductReading({concepts,skus,media});}).catch(()=>{});return()=>{alive=false;};},[]);
-  const openDocument=(doc,initialSection)=>{if(!doc){setNotice(t('资料正在准备，请稍后重试。','This document is being prepared. Please try again.'));return;}readingReturn.current=document.activeElement;wake();setVideoPlaying(false);setReader({document:{...doc,...readingOverrides[doc.id]},initialSection,owner:routeKey(route)});};
+  useEffect(() => { if(!advertising.legacy)return; Promise.all([['showroom',setContent],['official-content',setOfficial],['catalog',setCatalog],['reading-documents',setReadingOverrides],['exhibition-media',setMediaLibrary]].map(async ([file,save])=>{const r=await fetch(`/data/${file}.json`);if(!r.ok)throw Error(file);save(await r.json());})).catch(()=>setNotice(t('部分内容未能加载，请重新打开页面。','Some content could not load. Please reload the page.'))); }, [advertising.legacy]);
+  useEffect(()=>{if(!advertising.legacy)return;let alive=true;Promise.all(['concepts','product-skus','explorer-media'].map(async file=>{const response=await fetch(`/modules/product-explorer/shared/${file}.json`);if(!response.ok)throw Error(file);return response.json();})).then(([concepts,skus,media])=>{if(alive)setProductReading({concepts,skus,media});}).catch(()=>{});return()=>{alive=false;};},[advertising.legacy]);
+  const openDocument=(doc,initialSection)=>{if(!doc){setNotice(t('资料正在准备，请稍后重试。','This document is being prepared. Please try again.'));return;}readingReturn.current=document.activeElement;wake();setVideoPlaying(false);setReader({document:{...doc,...readingOverrides[doc.id],...publishedDocuments[doc.id]},initialSection,owner:routeKey(route)});};
   const closeDocument=()=>{const trigger=readingReturn.current;setReader(null);requestAnimationFrame(()=>{if(trigger?.isConnected&&!trigger.closest('[inert]')&&trigger.getClientRects().length)trigger.focus({preventScroll:true});});};
   const enterAnalysisProduct=()=>{const target=linkedStudyProduct(selectedStudyPath(analysisSelection),productReading);if(!target)return;setAnalysisReturn(true);setExplorerNavigation(previous=>({section:'products',view:'room',id:previous.id+1,preserve:false,...target}));rawGo('atlas','products');};
   const backToAnalysis=()=>{wake();setAnalysisReturn(false);setAnalysisPhase('open');rawGo('atlas','analytics');};
@@ -148,8 +151,10 @@ export function App() {
   async function fullscreen() { try { if (document.fullscreenElement) await document.exitFullscreen(); else await document.documentElement.requestFullscreen(); } catch { setNotice(t('当前浏览器未开放全屏，可使用系统全屏。', 'Fullscreen is unavailable here. Use your browser fullscreen control.')); } }
   const openBrand = b => { setEnteredBrand(b.id); wallPosition.current = { x: 0, y: 0 }; };
   const activeHomeAction = () => go(variant.id, variant.page);
+  if(advertising.loading)return <div className="advertising-error" role="status">{t('正在读取展示资料…','Loading exhibition content…')}</div>;
+  if(advertising.error)return <div className="advertising-error" role="alert"><p>{t('已发布内容暂时无法读取，请重试。','Published content is unavailable. Please retry.')}</p><button onClick={()=>location.reload()}>{t('重新加载','Reload')}</button></div>;
   if(variant.id==='atlas'&&((home&&impactOpen)||route.page==='locations'))return <>
-    <div style={{display:'contents'}} inert={readingActive?true:undefined}><Suspense fallback={<SceneLoading lang={lang}/>}><ImpactTheatre key={route.page} initialState={route.page==='locations'?{index:1}:null} lang={lang} onLanguage={setLang} brands={content.brands} catalog={catalog} companyFacts={official} onFullscreen={fullscreen} suspended={readingActive} onRead={(moment,payload)=>openDocument(impactDocument(moment,payload,{official,productReading,catalog}),payload?.locationId)}/></Suspense></div>
+    <div style={{display:'contents'}} inert={readingActive?true:undefined}><Suspense fallback={<SceneLoading lang={lang}/>}><ImpactTheatre key={`${route.page}-${advertising.revision||'legacy'}`} advertising={advertising.snapshot} advertisingAssets={advertising.assetUrls} advertisingPreview={advertising.isPreview} onPublishedRead={openDocument} publishedDocuments={publishedDocuments} initialState={route.page==='locations'?{index:1}:null} lang={lang} onLanguage={setLang} brands={advertising.snapshot?advertisingBrands(advertising.snapshot,advertising.assetUrls):undefined} catalog={catalog} companyFacts={official} onFullscreen={fullscreen} suspended={readingActive} onRead={(moment,payload)=>openDocument(moment==='company'&&advertising.snapshot?(publishedDocuments['company-introduction']||null):impactDocument(moment,payload,{official,productReading,catalog}),payload?.locationId)}/></Suspense></div>
     {readingActive&&<DocumentReader key={reader.document.id} document={reader.document} initialSection={reader.initialSection} lang={lang} onLanguage={setLang} onClose={closeDocument} wallControls memory={readingMemory.current[reader.document.id]} onRemember={value=>{readingMemory.current[reader.document.id]=value;}}/>}
     {notice&&<div className="notice" role="status">{notice}</div>}
   </>;

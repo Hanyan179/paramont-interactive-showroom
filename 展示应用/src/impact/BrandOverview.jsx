@@ -3,7 +3,7 @@ import {bindScenePointer} from '../interaction/scenePointer.js';
 import {brandFlowPose} from './brandLayout.js';
 import './brand-overview.css';
 
-export function BrandOverview({brands,lang,onSelect,onHold,onInteract,flow,journeyRef}){
+export function BrandOverview({brands,lang,published=false,onSelect,onHold,onInteract,flow,journeyRef}){
   const l=lang==='zh'?0:1,host=useRef(),targets=useRef({}),latest=useRef();
   latest.current={onSelect,onHold,onInteract};
   journeyRef.current={frame(points){points.forEach(point=>{
@@ -23,7 +23,7 @@ export function BrandOverview({brands,lang,onSelect,onHold,onInteract,flow,journ
     });return()=>{pointer.dispose();journeyRef.current=null;};
   },[]);
   return <section ref={host} className="brand-overview" aria-label={['品牌总览','Brand overview'][l]}>
-    <header><p>{['旗下品牌','OUR BRANDS'][l]}</p><h1>{['品牌，各有光芒。','DISTINCTIVE BY NATURE.'][l]}</h1></header>
+    <header><p>{(published?['展示品牌','SELECTED BRANDS']:['旗下品牌','OUR BRANDS'])[l]}</p><h1>{['品牌，各有光芒。','DISTINCTIVE BY NATURE.'][l]}</h1></header>
     <nav aria-label={['选择品牌','Choose a brand'][l]}>{brands.map((brand,index)=>{
       const pose=brandFlowPose(index,brands.length,flow.current.offsets);
       return <button key={brand.id} ref={el=>{targets.current[index]=el;}} data-brand-slot={index} data-brand-row={pose.row} hidden={!pose.visible} style={{left:`${pose.x*100}%`,top:`${pose.y*100}%`}} onFocus={()=>{flow.current.heldRow=pose.row;onHold(true);}} onBlur={()=>{flow.current.heldRow=null;onHold(false);}} onClick={event=>{if(event.detail===0)onSelect(index);}} aria-label={`${brand.name} · ${['进入品牌','Explore brand'][l]}`}/>;

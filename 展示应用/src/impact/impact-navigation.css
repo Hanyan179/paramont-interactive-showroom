@@ -1,18 +1,166 @@
-/* The main worlds and six intelligence stages share the same navigation treatment. */
-.impact-theatre{touch-action:pan-y pinch-zoom;}
-.impact-footer [data-chapter-navigation],.impact-footer [data-chapter-navigation] button{touch-action:none;user-select:none;}
-.impact-theatre{--chapter-ink:#bbccd3;--chapter-active:#e3eceb;--chapter-line:#b9cbd52e;--impact-navigation-bottom:7.2%;--impact-navigation-height:clamp(84px,8.8vh,190px);}
-.impact-theatre:not(.is-depth-open):not(.is-supply-open) .impact-footer{left:3.5%;right:3.5%;bottom:var(--impact-navigation-bottom);grid-template-columns:minmax(0,1fr) 60vw minmax(0,1fr);}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation){gap:0;border-top:1px solid var(--chapter-line);}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button,.intelligence-experience .intelligence-back{flex-direction:column;gap:clamp(8px,1vh,22px);height:var(--impact-navigation-height);min-height:var(--impact-navigation-height);box-sizing:border-box;padding:1vh 0;border:0;color:var(--chapter-ink);font-size:clamp(14px,.82vw,33px);font-weight:400;letter-spacing:.035em;transition:color .25s;}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button>svg,.intelligence-back>svg{width:clamp(23px,1.6vw,62px);height:clamp(23px,1.6vw,62px);margin-bottom:.4vh;color:inherit;filter:none;transition:filter .25s,color .25s;}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button:after{content:'';position:absolute;top:-1px;left:36%;right:36%;height:2px;background:linear-gradient(90deg,var(--chapter-active) var(--intelligence-stage-progress,100%),var(--chapter-line) 0);opacity:0;transform:scaleX(.4);transition:opacity .25s,transform .25s;}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button[aria-current],:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button:hover,.intelligence-experience .intelligence-back:hover{color:var(--chapter-active);}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button[aria-current]:after{opacity:1;transform:scaleX(1);box-shadow:0 0 10px #d1e3e74a;}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button[aria-current]>svg{filter:drop-shadow(0 0 5px #c5dbe642);}
-.impact-theatre:not(.is-depth-open):not(.is-supply-open) .impact-tools{position:fixed;right:2.65%;bottom:clamp(10px,1.6vh,36px);color:var(--chapter-ink);opacity:.72;}
-.impact-theatre .impact-tools button{color:var(--chapter-ink);}
-.impact-theatre .impact-tools:hover,.impact-theatre .impact-tools:focus-within{opacity:1;}
-@media(max-aspect-ratio:3/2){.impact-theatre:not(.is-depth-open):not(.is-supply-open) .impact-footer{grid-template-columns:minmax(0,1fr) 75vw minmax(0,1fr);}}
-@media(prefers-reduced-motion:reduce){:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button,:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button:after,:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation) button>svg,.intelligence-experience .intelligence-back,.intelligence-back>svg{transition:none;}}
-:is(.impact-footer.has-chapter-navigation nav,.intelligence-navigation):lang(zh) button,.intelligence-experience:lang(zh) .intelligence-back{letter-spacing:.10em;}
+/* The wall's main controls stay in the reachable middle band. */
+.impact-theatre { touch-action: pan-y pinch-zoom; }
+.impact-theatre .impact-footer,
+.impact-theatre.is-depth-open .impact-footer,
+.impact-theatre.is-supply-open .impact-footer {
+  position: absolute;
+  z-index: 8;
+  top: 50%;
+  right: clamp(18px, 2.5vw, 96px);
+  bottom: auto;
+  left: auto;
+  width: auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.impact-theatre .impact-footer.has-chapter-navigation nav {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 12px);
+  bottom: auto;
+  left: auto;
+  width: clamp(190px, 17vw, 360px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid #7db5d34d;
+  background: none;
+  box-shadow: none;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.impact-theatre .impact-footer.has-chapter-navigation nav[hidden] { display: none; }
+.moment-intelligence.is-depth-open .impact-footer .impact-tools { position: static; right: auto; bottom: auto; opacity: 1; }
+/* Quiet the moving exhibit while its transparent stage list is being read. */
+.moment-intelligence.is-depth-open.is-chapter-menu-open .impact-stage canvas { filter: brightness(.08); }
+.impact-theatre .impact-footer.has-chapter-navigation nav button {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: clamp(10px, .8vw, 24px);
+  width: 100%;
+  min-height: clamp(60px, 5.8vh, 112px);
+  height: auto;
+  margin-left: -1px;
+  padding: 8px clamp(14px, 1vw, 28px);
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  color: #a8c1d1;
+  font-size: clamp(17px, 1vw, 30px);
+  line-height: 1.3;
+  text-align: left;
+  white-space: normal;
+  touch-action: none;
+  user-select: none;
+  pointer-events: auto;
+}
+.impact-theatre .impact-footer nav button svg {
+  width: clamp(24px, 1.5vw, 56px);
+  height: clamp(24px, 1.5vw, 56px);
+  flex-shrink: 0;
+}
+.impact-theatre .impact-footer nav button[aria-current],
+.impact-theatre .impact-footer nav button:hover { color: #eff8ff; border-left-color: #8ed5ff; background: linear-gradient(90deg, #1c5d853b, transparent 82%); }
+.impact-theatre .impact-footer nav button:focus-visible { outline: 2px solid #8ed5ff; outline-offset: -2px; }
+.impact-theatre .impact-footer nav button::after { display: none; }
+.impact-theatre .impact-footer nav .impact-menu-switch {
+  min-height: clamp(44px, 4.3vh, 76px);
+  margin-bottom: clamp(6px, .8vh, 16px);
+  color: #77afd1;
+  font-size: clamp(13px, .75vw, 23px);
+}
+.impact-theatre .impact-tools,
+.moment-intelligence.is-depth-open .impact-tools {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  opacity: 1;
+  pointer-events: none;
+}
+.impact-theatre .impact-control-actions { display: flex; flex-direction: column; gap: 7px; }
+.impact-theatre .impact-control-actions[hidden] { display: none; }
+.impact-theatre .controls-resting .impact-control-toggle {
+  opacity: .45;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.impact-theatre .controls-resting .impact-control-toggle:is(:hover,:focus-visible) { opacity: 1; }
+.impact-theatre .impact-tools button {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: clamp(58px, 4.4vw, 138px);
+  min-height: clamp(58px, 5.4vh, 124px);
+  height: auto;
+  padding: 6px;
+  border: 1px solid #65b9e899;
+  border-radius: 999px;
+  background: linear-gradient(110deg, #0c355575, #08274328);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  box-shadow: inset 0 0 18px #2578ab18;
+  color: #d6edfc;
+  font-size: clamp(14px, .8vw, 31px);
+  touch-action: manipulation;
+  pointer-events: auto;
+  transition: opacity .2s, background .2s;
+}
+.impact-theatre .impact-tools button:hover,
+.impact-theatre .impact-tools button:active,
+.impact-theatre .impact-tools button[aria-expanded=true] { border-color: #b7e6ff; background: #124a6d66; }
+.impact-theatre .impact-tools button svg {
+  width: clamp(25px, 1.5vw, 54px);
+  height: clamp(25px, 1.5vw, 54px);
+}
+.impact-theatre .impact-tools .impact-language { font-size: clamp(16px, .9vw, 34px); }
+.impact-theatre .controls-resting .impact-control-toggle span { display: none; }
+.impact-theatre.is-supply-open .impact-tools>.impact-control-toggle { display: flex; }
+.impact-theatre .impact-scrub { width: clamp(58px, 4.4vw, 138px); height: 44px; }
+.moment-company .impact-tools .impact-language { display: flex; }
+.is-depth-open .impact-scrub,
+.is-supply-open .impact-scrub { display: none; }
+@media (max-height: 700px) {
+  .impact-theatre .impact-tools button { min-height: 50px; }
+  .impact-theatre .impact-footer.has-chapter-navigation nav button { min-height: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .impact-theatre .impact-footer button { transition: none; }
+}
+
+/* Keep controls reachable in every existing depth scene. */
+.impact-theatre .impact-footer{opacity:1;visibility:visible;}
+.impact-theatre .impact-tools{pointer-events:auto;}
+.impact-theatre .impact-footer nav{background:#071c30ee!important;border-radius:12px;padding:8px!important;max-height:78vh;overflow:auto;}
+.impact-theatre .impact-scrub{display:none;}
+.impact-theatre .impact-tools .impact-menu-toggle{font-size:26px;}
+.impact-theatre .impact-reading-entry{bottom:auto;top:52%;right:16%;}
+.impact-theatre .impact-reel-control{bottom:auto;top:70%;}
+.impact-theatre .intelligence-navigation{top:50%;bottom:auto;left:4%;right:auto;width:clamp(180px,15vw,330px);height:auto;display:flex;flex-direction:column;transform:translateY(-50%);}
+.impact-theatre .intelligence-navigation button{min-height:56px;height:auto;display:flex;flex-direction:row;gap:12px;text-align:left;}
+.impact-theatre .intelligence-back{top:45%;bottom:auto;left:3%;min-height:56px;}
+.impact-theatre .intelligence-navigation ~ .intelligence-back{top:80%;}
+.impact-theatre .intelligence-copy{left:25%;max-width:55%;}
+.impact-theatre .brand-return,.impact-theatre .category-return{top:50%;bottom:auto;}
+.impact-theatre .advertising-status{pointer-events:none;}
+
+/* Map tools retain their behavior and occupy a separate, reachable rail. */
+.impact-theatre .distribution-map-tools {left:2.5%;right:auto;top:50%;bottom:auto;transform:translateY(-50%);z-index:7;}

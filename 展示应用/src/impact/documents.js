@@ -48,8 +48,8 @@ export function impactDocument(moment,payload,{official,productReading,catalog})
   }
   if(payload?.type==='brand'){
     const brand=payload.item,source=official?.brands?.find(b=>b.id===brand.id);
-    return {id:`impact-brand-${brand.id}`,category:pair('品牌介绍','Brand introduction'),title:brand.name,summary:brand.descriptor,status:brand.ownership==='company-confirmed'?pair('PARAMONT 旗下品牌','A PARAMONT brand'):pair('官方品牌资料','Official brand information'),
-      cover:{src:'/media/brand/'+brand.logo,caption:pair(`${brand.name} · 官方标志`,`${brand.name} · Official identity`)},
+    return {id:`impact-brand-${brand.id}`,category:pair('品牌介绍','Brand introduction'),title:brand.name,summary:brand.descriptor,status:brand.ownership==='upstream-brand'?pair('已发布品牌资料','Published brand information'):brand.ownership==='company-confirmed'?pair('PARAMONT 旗下品牌','A PARAMONT brand'):pair('官方品牌资料','Official brand information'),
+      cover:(brand.logoUrl||brand.logo)?{src:brand.logoUrl||('/media/brand/'+brand.logo),caption:brand.ownership==='upstream-brand'?pair(`${brand.name} · 维护的品牌标识`,`${brand.name} · Curated brand identity`):pair(`${brand.name} · 官方标志`,`${brand.name} · Official identity`)}:undefined,
       sections:[{id:'identity',title:brand.descriptor,paragraphs:[brand.description]},
         ...(source?.parent?[{id:'relationship',title:pair('业务关系','Business relationship'),paragraphs:[pair(`官网在 ${source.parent} 业务下介绍 ${brand.name}。`, `The company website presents ${brand.name} within the ${source.parent} business.`)]}]:[]),
         {id:'scope',title:pair('展示说明','About this presentation'),paragraphs:[pair('品牌介绍与原创产品概念分别呈现。品类页中的美妆、玩具等概念样品不代表本品牌的实际商品。','Brand information and original product concepts are presented separately. Cosmetic and toy concepts on the category page are not actual products of this brand.')]}],

@@ -45,5 +45,6 @@ export function safeDocumentURL(value) {
   if (typeof value !== 'string' || !value.trim()) return null;
   const url = value.trim();
   if (url.startsWith('/') && !url.startsWith('//') && !url.includes('\\')) return url;
+  if (typeof location !== 'undefined' && url.startsWith(`blob:${location.origin}/`)) return url;
   try { const parsed = new URL(url); return ['https:', 'http:'].includes(parsed.protocol) ? parsed.href : null; } catch { return null; }
 }

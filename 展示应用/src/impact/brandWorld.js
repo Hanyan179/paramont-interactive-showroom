@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {brandFlowPose} from './brandLayout.js';
 import {wrapReel} from './content.js';
 
+function brandNameTexture(name){const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=256;const ctx=canvas.getContext('2d');ctx.fillStyle='#eef6ff';ctx.font='52px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(name,512,128,980);return new THREE.CanvasTexture(canvas);}
 function identity(brand,loader){
   const isKokoMilo=brand.id==='koko-milo';
   const paperRange=brand.id==='crafty-creations'?'.80,.96':null;
@@ -10,10 +11,11 @@ function identity(brand,loader){
   const ink=new THREE.MeshBasicMaterial({transparent:true,depthWrite:false,toneMapped:false});
   const shape=new THREE.PlaneGeometry(1,1);
   const logo=new THREE.Mesh(shape,ink);root.add(logo);
-  const map=loader.load('/media/brand/'+brand.logo,texture=>{
+  const map=brand.logoUrl||brand.logo?loader.load(brand.logoUrl||('/media/brand/'+brand.logo),texture=>{
     const ratio=texture.image.width/texture.image.height,width=Math.min(10.1,5.4*ratio);
     logo.scale.set(width,width/ratio,1);edge.scale.copy(logo.scale);outlineTexel.set(1/texture.image.width,1/texture.image.height);
-  });map.colorSpace=THREE.SRGBColorSpace;ink.map=map;
+  }):brandNameTexture(brand.name);map.colorSpace=THREE.SRGBColorSpace;ink.map=map;
+  if(!brand.logoUrl&&!brand.logo)logo.scale.set(9,3,1);
   if(paperRange)ink.onBeforeCompile=shader=>{
     shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>',`#include <map_fragment>\n diffuseColor.a*=1.-smoothstep(${paperRange},min(diffuseColor.r,min(diffuseColor.g,diffuseColor.b)));`);
   };
